@@ -14,6 +14,7 @@ public class TablePosition : MonoBehaviour
     [SerializeField] private XROrigin xrOrigin;
    
     [SerializeField] private InputAction alignToTable;
+
     
     private void Start()
     { 

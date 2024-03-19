@@ -94,7 +94,7 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
-    - _Depth_Fade_Distance: 42.5
+    - _Depth_Fade_Distance: 86.8
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -104,7 +104,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Lacunarity: 4.72
+    - _Lacunarity: 2.01
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -118,7 +118,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _Weight_Multiplier: 1.5
+    - _Weight_Multiplier: 2.81
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
