@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
@@ -17,15 +18,20 @@ public class TouchDraw : MonoBehaviour
     private Material _material;
     private RenderTexture _fingerHistory;
     private ComputeBuffer _fingerPositionsBuffer;
-    private uint4[] _currentFingerPositions;
+    private ComputeBuffer _lastFingerPositionsBuffer;
+    private float4[] _currentFingerPositions;
+    private float4[] _lastFingerPositions;
 
-    private static readonly int ShaderGroupSize = 8;
+    private const int ShaderGroupSize = 8;
     private static readonly int FingerHistory = Shader.PropertyToID("_Finger_History");
     private static readonly int ComputeFingerHistory = Shader.PropertyToID("finger_history");
     private static readonly int FingerPositions = Shader.PropertyToID("finger_positions");
     private static readonly int LinearDecayRate = Shader.PropertyToID("linear_decay_rate");
     private static readonly int QuadraticDecayRate = Shader.PropertyToID("quadratic_decay_rate");
     private static readonly int DeltaTime = Shader.PropertyToID("delta_time");
+    private static readonly int LastFingerPositions = Shader.PropertyToID("last_finger_positions");
+
+    private HashSet<Finger> _fingers;
 
     private void Awake()
     {
@@ -34,7 +40,11 @@ public class TouchDraw : MonoBehaviour
 
     private void Start()
     {
-        _fingerHistory = new RenderTexture(Screen.width, Screen.height, 0, RenderTextureFormat.ARGBHalf, RenderTextureReadWrite.Linear)
+        _fingerHistory = new RenderTexture(Screen.width,
+            Screen.height,
+            0,
+            RenderTextureFormat.ARGBHalf,
+            RenderTextureReadWrite.Linear)
         {
             filterMode = FilterMode.Point,
             wrapMode = TextureWrapMode.Clamp,
@@ -47,30 +57,110 @@ public class TouchDraw : MonoBehaviour
         GL.Clear(true, true, Color.black);
         RenderTexture.active = currentActive;
         
-        _currentFingerPositions = new uint4[2];
-        _fingerPositionsBuffer = new ComputeBuffer(2, sizeof(uint) * 4);
+        _currentFingerPositions = new float4[2];
+        _lastFingerPositions = new float4[2];
+        _fingerPositionsBuffer = new ComputeBuffer(2, sizeof(float) * 8);
+        _lastFingerPositionsBuffer = new ComputeBuffer(2, sizeof(float) * 8);
+        
+        Array.Fill(_currentFingerPositions,
+            new float4(
+                (_fingerHistory.width + 1),
+                (_fingerHistory.height + 1),
+                (_fingerHistory.width + 1),
+                (_fingerHistory.height + 1)
+            )
+        );
+        Array.Fill(_lastFingerPositions,
+            new float4(
+                (_fingerHistory.width + 1),
+                (_fingerHistory.height + 1),
+                (_fingerHistory.width + 1),
+                (_fingerHistory.height + 1)
+            )
+        );
         
         _material = GetComponent<Renderer>().material; 
         _material.SetTexture(FingerHistory, _fingerHistory);
         
         decayFingerHistory.SetTexture(0, ComputeFingerHistory, _fingerHistory);
         decayFingerHistory.SetBuffer(0, FingerPositions, _fingerPositionsBuffer);
+        decayFingerHistory.SetBuffer(0, LastFingerPositions, _lastFingerPositionsBuffer);
+        decayFingerHistory.SetFloat(LinearDecayRate, fingerDecay);
+        decayFingerHistory.SetFloat(QuadraticDecayRate, fingerQuadraticDecay);
+        
+        _fingers = new HashSet<Finger>();
+    }
+
+    private void OnDestroy()
+    {
+        _fingerPositionsBuffer.Release();
+        _lastFingerPositionsBuffer.Release();
+        Destroy(_fingerHistory);
+    }
+
+    private void OnValidate()
+    {
         decayFingerHistory.SetFloat(LinearDecayRate, fingerDecay);
         decayFingerHistory.SetFloat(QuadraticDecayRate, fingerQuadraticDecay);
     }
 
+    private static void UpdateFingerPosition(ref float4[] fingerPositions, int index, float2 newPosition)
+    {
+        var innerIndex = index % 2;
+        var outerIndex = index / 2;
+
+        if (innerIndex == 0)
+        {
+            fingerPositions[outerIndex].xy = newPosition;
+        }
+        else
+        {
+            fingerPositions[outerIndex].zw = newPosition; 
+        }
+    }
+    
+    private static float2 GetFingerPosition(ref float4[] fingerPositions, int index)
+    {
+        var innerIndex = index % 2;
+        var outerIndex = index / 2;
+
+        return innerIndex == 0 ? fingerPositions[outerIndex].xy : fingerPositions[outerIndex].zw;
+    }
+
     private void Update()
     {
-        decayFingerHistory.SetFloat(DeltaTime, Time.deltaTime);
         foreach (var finger in Touch.activeFingers)
         {
-            Debug.Log(finger.screenPosition);
             var screenPosition = finger.screenPosition;
-            var fingerPosition = new uint4((uint)screenPosition.x, (uint)screenPosition.y, 0, 0);
-            _currentFingerPositions[finger.index] = fingerPosition;
+            var newPosition = new float2(screenPosition.x, screenPosition.y);
+
+            if (_fingers.Add(finger))
+            {
+                UpdateFingerPosition(ref _lastFingerPositions, finger.index, newPosition);
+            }
+            else
+            {
+                UpdateFingerPosition(ref _lastFingerPositions, finger.index, GetFingerPosition(ref _currentFingerPositions, finger.index));
+            }
+            
+            UpdateFingerPosition(ref _currentFingerPositions, finger.index, newPosition);
         }
+
+        var resetPosition = new float2(_fingerHistory.width + 1, _fingerHistory.height + 1);
+        foreach (var finger in _fingers.Where(finger => !finger.isActive))
+        {
+            UpdateFingerPosition(ref _lastFingerPositions, finger.index, resetPosition);
+            UpdateFingerPosition(ref _currentFingerPositions, finger.index, resetPosition);
+        }
+        _fingers.RemoveWhere(finger => !finger.isActive);
         
         _fingerPositionsBuffer.SetData(_currentFingerPositions);
-        decayFingerHistory.Dispatch(0, _fingerHistory.width / 8, _fingerHistory.height / 8, 1);
+        _lastFingerPositionsBuffer.SetData(_lastFingerPositions);
+        
+        decayFingerHistory.SetFloat(DeltaTime, Time.deltaTime);
+        decayFingerHistory.Dispatch(0,
+            _fingerHistory.width / ShaderGroupSize,
+            _fingerHistory.height / ShaderGroupSize,
+            1);
     }
 }

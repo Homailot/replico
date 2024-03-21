@@ -1,11 +1,21 @@
 #pragma kernel decay_finger_history
 
 RWTexture2D<half4> finger_history;
-RWStructuredBuffer<uint4> finger_positions;
+RWStructuredBuffer<float4> finger_positions;
+RWStructuredBuffer<float4> last_finger_positions;
 
 float delta_time;
 float linear_decay_rate;
 float quadratic_decay_rate;
+
+uint point_in_line (float2 p, float2 a, float2 b)
+{
+    float2 ab = b - a;
+    float2 ap = p - a;
+
+    float h = saturate(dot(ap, ab) / dot(ab, ab));
+    return length(ap - h * ab) < 1 ? 1 : 0;
+}
 
 [numthreads(8,8,1)]
 void decay_finger_history (uint3 id : SV_DispatchThreadID)
@@ -13,7 +23,10 @@ void decay_finger_history (uint3 id : SV_DispatchThreadID)
     finger_history[id.xy] = saturate(
         finger_history[id.xy] - linear_decay_rate * delta_time - quadratic_decay_rate * delta_time * delta_time);
 
-    const uint first_finger = saturate(1 - distance(id.xy, finger_positions[0].xy));
+    const float2 a1 = last_finger_positions[0].xy;
+    const float2 b1 = finger_positions[0].xy;
+
+    const uint first_finger = point_in_line(float2(float(id.x), float(id.y)), a1, b1);
     const uint second_finger = saturate(1 - distance(id.xy, finger_positions[0].zw));
     const uint third_finger = saturate(1 - distance(id.xy, finger_positions[1].xy));
     const uint fourth_finger = saturate(1 - distance(id.xy, finger_positions[1].zw));
