@@ -23,7 +23,6 @@ public class TouchDraw : MonoBehaviour
     private float4[] _lastFingerPositions;
 
     private const int ShaderGroupSize = 8;
-    private static readonly int FingerHistory = Shader.PropertyToID("_Finger_History");
     private static readonly int ComputeFingerHistory = Shader.PropertyToID("finger_history");
     private static readonly int FingerPositions = Shader.PropertyToID("finger_positions");
     private static readonly int LinearDecayRate = Shader.PropertyToID("linear_decay_rate");
@@ -32,6 +31,8 @@ public class TouchDraw : MonoBehaviour
     private static readonly int LastFingerPositions = Shader.PropertyToID("last_finger_positions");
 
     private HashSet<Finger> _fingers;
+    private static readonly int FingerRadius = Shader.PropertyToID("finger_radius");
+    private static readonly int FingerHistory = Shader.PropertyToID("_Finger_History");
 
     private void Awake()
     {
@@ -43,7 +44,7 @@ public class TouchDraw : MonoBehaviour
         _fingerHistory = new RenderTexture(Screen.width,
             Screen.height,
             0,
-            RenderTextureFormat.ARGBHalf,
+            RenderTextureFormat.ARGBFloat,
             RenderTextureReadWrite.Linear)
         {
             filterMode = FilterMode.Point,
@@ -54,7 +55,7 @@ public class TouchDraw : MonoBehaviour
         
         var currentActive = RenderTexture.active;
         RenderTexture.active = _fingerHistory;
-        GL.Clear(true, true, Color.black);
+        GL.Clear(true, true, Color.clear);
         RenderTexture.active = currentActive;
         
         _currentFingerPositions = new float4[2];
@@ -79,7 +80,7 @@ public class TouchDraw : MonoBehaviour
             )
         );
         
-        _material = GetComponent<Renderer>().material; 
+        _material = GetComponent<Renderer>().material;
         _material.SetTexture(FingerHistory, _fingerHistory);
         
         decayFingerHistory.SetTexture(0, ComputeFingerHistory, _fingerHistory);
@@ -87,6 +88,7 @@ public class TouchDraw : MonoBehaviour
         decayFingerHistory.SetBuffer(0, LastFingerPositions, _lastFingerPositionsBuffer);
         decayFingerHistory.SetFloat(LinearDecayRate, fingerDecay);
         decayFingerHistory.SetFloat(QuadraticDecayRate, fingerQuadraticDecay);
+        decayFingerHistory.SetFloat(FingerRadius, fingerRadius);
         
         _fingers = new HashSet<Finger>();
     }
@@ -102,6 +104,7 @@ public class TouchDraw : MonoBehaviour
     {
         decayFingerHistory.SetFloat(LinearDecayRate, fingerDecay);
         decayFingerHistory.SetFloat(QuadraticDecayRate, fingerQuadraticDecay);
+        decayFingerHistory.SetFloat(FingerRadius, fingerRadius);
     }
 
     private static void UpdateFingerPosition(ref float4[] fingerPositions, int index, float2 newPosition)
@@ -126,6 +129,11 @@ public class TouchDraw : MonoBehaviour
 
         return innerIndex == 0 ? fingerPositions[outerIndex].xy : fingerPositions[outerIndex].zw;
     }
+    
+    private static float2 Remap(float2 value, float2 low1, float2 high1, float2 low2, float2 high2)
+    {
+        return low2 + (value - low1) * (high2 - low2) / (high1 - low1); 
+    }
 
     private void Update()
     {
@@ -133,7 +141,13 @@ public class TouchDraw : MonoBehaviour
         {
             var screenPosition = finger.screenPosition;
             var newPosition = new float2(screenPosition.x, screenPosition.y);
-
+            newPosition = Remap(newPosition,
+                float2.zero,
+                new float2(Screen.width, Screen.height),
+                float2.zero,
+                new float2(_fingerHistory.width, _fingerHistory.height)); 
+            newPosition = math.clamp(newPosition, float2.zero, new float2(_fingerHistory.width, _fingerHistory.height));
+            
             if (_fingers.Add(finger))
             {
                 UpdateFingerPosition(ref _lastFingerPositions, finger.index, newPosition);
