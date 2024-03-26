@@ -112,7 +112,7 @@ Material:
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _Persistence: 0.53
+    - _Persistence: 0.83
     - _QueueControl: 1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -122,7 +122,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _Weight_Multiplier: 0.75
+    - _Weight_Multiplier: 0.15
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
