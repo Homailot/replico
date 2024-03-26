@@ -3,26 +3,39 @@
 RWTexture2D<float4> finger_history;
 RWStructuredBuffer<float4> finger_positions;
 RWStructuredBuffer<float4> last_finger_positions;
+RWStructuredBuffer<float4> last_last_finger_positions;
+RWStructuredBuffer<float> average_incline;
 
 float delta_time;
 float linear_decay_rate;
 float quadratic_decay_rate;
 float finger_radius;
 
-float2 distance_to_line (float2 p, float2 a, float2 b)
+float distance_to_line (float2 p, float2 a, float2 b)
 {
     float2 ab = b - a;
     float2 ap = p - a;
 
     float h = saturate(dot(ap, ab) / dot(ab, ab));
-    return float2(length(ap - h * ab) / finger_radius, dot(ap, ab) / dot(ab, ab));
+    return length(ap - h * ab) / finger_radius;
+}
+
+bool point_in_front (float2 p, float2 a, float incline)
+{
+    float2 b = float2(a.x + cos(incline), a.y + sin(incline));
+
+    float2 ab = b - a;
+    float2 ap = p - a;
+
+    return (dot(ap, ab) / dot(ab, ab)) > 0;
 }
 
 [numthreads(8,8,1)]
 void decay_finger_history (uint3 id : SV_DispatchThreadID)
 {
+    const float last_decay = finger_history[id.xy].y;
     const float finger_1_decay =
-        finger_history[id.xy].z - linear_decay_rate * delta_time - quadratic_decay_rate * delta_time * delta_time;
+        finger_history[id.xy].y - linear_decay_rate * delta_time - quadratic_decay_rate * delta_time * delta_time;
 
     const float2 a1 = last_finger_positions[0].xy;
     const float2 a2 = last_finger_positions[0].zw;
@@ -32,22 +45,26 @@ void decay_finger_history (uint3 id : SV_DispatchThreadID)
     const float2 b2 = finger_positions[0].zw;
     const float2 b3 = finger_positions[1].xy;
     const float2 b4 = finger_positions[1].zw;
+    const float2 c1 = last_last_finger_positions[0].xy;
 
-    const float2 first_finger_distance = distance_to_line(float2(float(id.x), float(id.y)), a1, b1);
+    const float first_finger_distance = distance_to_line(float2(float(id.x), float(id.y)), a1, b1);
+    const bool first_in_front = point_in_front(float2(float(id.x), float(id.y)), a1, average_incline[0]);
+    
     //const float second_finger_distance = distance_to_line(float2(float(id.x), float(id.y)), a2, b2);
     //const float third_finger_distance = distance_to_line(float2(float(id.x), float(id.y)), a3, b3);
     //const float fourth_finger_distance = distance_to_line(float2(float(id.x), float(id.y)), a4, b4);
 
-    const float inverse_finger1_distance = saturate(1.0 - first_finger_distance.x);
+    const float inverse_finger1_distance = saturate(1.0 - first_finger_distance);
     const float previous_finger1_distance = finger_history[id.xy].x * (1.0 - step(1.0, 1.0 - finger_1_decay));
 
     const float distance_to_first = length(float2(float(id.x), float(id.y)) - a1);
     float test;
-    if (distance_to_first <= finger_radius && first_finger_distance.y > 0.0)
+    
+    if (first_in_front && distance_to_first <= 1.0)
     {
-        test = max(inverse_finger1_distance, previous_finger1_distance);     
-    }
-    else if (first_finger_distance.y > 0.0 && first_finger_distance.x <= 1.0)
+        test = lerp(previous_finger1_distance, inverse_finger1_distance, inverse_finger1_distance);
+    } 
+    else if (first_in_front && first_finger_distance <= 1.0)
     {
         test = inverse_finger1_distance;
     } else
@@ -57,8 +74,9 @@ void decay_finger_history (uint3 id : SV_DispatchThreadID)
     
     finger_history[id.xy] = float4(
         test,
+        //first_in_front ? 1.0 : 0.0,
+        saturate(finger_1_decay + 1.0 * (1.0 - step(1.0, first_finger_distance))),
         0, 
-        saturate(finger_1_decay + 1.0 * (1.0 - step(1.0, first_finger_distance.x))),
         1
         );
     // (1.0 - step(1.0, 1.0 - finger_1_decay))
