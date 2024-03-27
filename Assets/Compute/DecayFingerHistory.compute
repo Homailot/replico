@@ -38,57 +38,23 @@ void decay_finger_history (uint3 id : SV_DispatchThreadID)
 
     const float2 a1 = last_finger_positions[0].xy;
     const float2 a2 = last_finger_positions[0].zw;
-    const float2 a3 = last_finger_positions[1].xy;
-    const float2 a4 = last_finger_positions[1].zw;
     const float2 b1 = finger_positions[0].xy;
     const float2 b2 = finger_positions[0].zw;
-    const float2 b3 = finger_positions[1].xy;
-    const float2 b4 = finger_positions[1].zw;
 
     const float first_finger_distance = distance_to_line(float2(float(id.x), float(id.y)), a1, b1);
     const float first_in_front = point_in_front(float2(float(id.x), float(id.y)), a1, average_incline[0]);
 
     const float inverse_finger1_distance = saturate(1.0 - first_finger_distance);
     const float previous_finger1_distance = finger_history[id.xy].x * (1.0 - step(1.0, 1.0 - finger_1_decay));
-
-    const float distance_to_first = length(float2(float(id.x), float(id.y)) - a1);
-    float test;
-    
-    if (first_in_front && distance_to_first <= 1.0)
-    {
-        test = lerp(previous_finger1_distance, inverse_finger1_distance, inverse_finger1_distance);
-    } 
-    else if (first_in_front && first_finger_distance <= 1.0)
-    {
-        test = inverse_finger1_distance;
-    } else
-    {
-        test = lerp(previous_finger1_distance, inverse_finger1_distance, 0.5f);
-    }
     
     finger_history[id.xy] = float4(
-        //inverse_finger1_distance,
-        //test,
         lerp(
-            //lerp(
-            //    //max(previous_finger1_distance, inverse_finger1_distance),
-            //    //lerp(
-            //    //    previous_finger1_distance,
-            //    //    inverse_finger1_distance,
-            //    //    inverse_finger1_distance
-            //    //),
-            //    inverse_finger1_distance,
-            //    max(previous_finger1_distance, inverse_finger1_distance),
-            //    saturate(distance_to_first / finger_radius)
-            //),
             previous_finger1_distance > 0.0 ? max(inverse_finger1_distance, previous_finger1_distance) : inverse_finger1_distance,
             first_finger_distance <= 1.0 ? inverse_finger1_distance : previous_finger1_distance,
             saturate(first_in_front + 0.5)
         ),
-        //first_in_front ? 1.0 : 0.0,
         saturate(finger_1_decay + 1.0 * (1.0 - step(1.0, first_finger_distance))),
         0, 
         1
         );
-    // (1.0 - step(1.0, 1.0 - finger_1_decay))
 }
