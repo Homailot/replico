@@ -29,32 +29,48 @@ float point_in_front (float2 p, float2 a, float incline)
     return (dot(ap, ab) / dot(ab, ab));
 }
 
+float2 get_finger_radius(float2 p, float2 a, float2 b, float average_incline, float decay, float previous_radius)
+{
+    const float finger_distance = distance_to_line(p, a, b);
+    const float in_front = point_in_front(p, a, average_incline);
+
+    const float inverse_finger_distance = saturate(1.0 - finger_distance);
+    const float previous_inverse_distance = previous_radius * (1.0 - step(1.0, 1.0 - decay));
+
+    return float2(
+        lerp(
+            previous_inverse_distance > 0.0 ? max(inverse_finger_distance, previous_inverse_distance) : inverse_finger_distance,
+            finger_distance <= 1.0 ? inverse_finger_distance : previous_inverse_distance,
+            saturate(in_front + 0.5)
+        ),
+        saturate(decay + 1.0 * (1.0 - step(1.0, finger_distance)))
+    );
+}
+
+float calculate_decay(float decay)
+{
+    return decay - linear_decay_rate * delta_time - quadratic_decay_rate * delta_time * delta_time;
+}
+
 [numthreads(8,8,1)]
 void decay_finger_history (uint3 id : SV_DispatchThreadID)
 {
-    const float last_decay = finger_history[id.xy].y;
-    const float finger_1_decay =
-        finger_history[id.xy].y - linear_decay_rate * delta_time - quadratic_decay_rate * delta_time * delta_time;
-
+    const float finger_1_decay = calculate_decay(finger_history[id.xy].y);
     const float2 a1 = last_finger_positions[0].xy;
-    const float2 a2 = last_finger_positions[0].zw;
     const float2 b1 = finger_positions[0].xy;
+
+    float2 finger1_radius = get_finger_radius(float2(id.xy), a1, b1, average_incline[0], finger_1_decay, finger_history[id.xy].x);
+
+    const float finger_2_decay = calculate_decay(finger_history[id.xy].w);
+    const float2 a2 = last_finger_positions[0].zw;
     const float2 b2 = finger_positions[0].zw;
 
-    const float first_finger_distance = distance_to_line(float2(float(id.x), float(id.y)), a1, b1);
-    const float first_in_front = point_in_front(float2(float(id.x), float(id.y)), a1, average_incline[0]);
-
-    const float inverse_finger1_distance = saturate(1.0 - first_finger_distance);
-    const float previous_finger1_distance = finger_history[id.xy].x * (1.0 - step(1.0, 1.0 - finger_1_decay));
+    float2 finger2_radius = get_finger_radius(float2(id.xy), a2, b2, average_incline[1], finger_2_decay, finger_history[id.xy].z);
     
     finger_history[id.xy] = float4(
-        lerp(
-            previous_finger1_distance > 0.0 ? max(inverse_finger1_distance, previous_finger1_distance) : inverse_finger1_distance,
-            first_finger_distance <= 1.0 ? inverse_finger1_distance : previous_finger1_distance,
-            saturate(first_in_front + 0.5)
-        ),
-        saturate(finger_1_decay + 1.0 * (1.0 - step(1.0, first_finger_distance))),
-        0, 
-        1
+        finger1_radius.x,
+        finger1_radius.y,
+        finger2_radius.x,
+        finger2_radius.y
         );
 }

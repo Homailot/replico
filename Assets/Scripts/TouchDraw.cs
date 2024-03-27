@@ -169,7 +169,6 @@ public class TouchDraw : MonoBehaviour
         foreach (var finger in Touch.activeFingers)
         {
             var screenPosition = finger.screenPosition;
-            Debug.Log("prev" + screenPosition);
             var newPosition = new float2(screenPosition.x, screenPosition.y);
             newPosition = Remap(newPosition,
                 float2.zero,
@@ -177,7 +176,6 @@ public class TouchDraw : MonoBehaviour
                 float2.zero,
                 new float2(_writeWidth, _writeHeight)); 
             newPosition = math.clamp(newPosition, float2.zero, new float2(_writeWidth, _writeHeight));
-            Debug.Log(newPosition);
             
             if (_fingers.Add(finger))
             {
@@ -197,14 +195,7 @@ public class TouchDraw : MonoBehaviour
             
             var currentInclination = math.atan2(newPosition.y - GetFingerPosition(ref _lastFingerPositions, finger.index).y,
                 newPosition.x - GetFingerPosition(ref _lastFingerPositions, finger.index).x);
-            //if (Mathf.DeltaAngle(Mathf.Rad2Deg * _averageInclination[finger.index], Mathf.Rad2Deg * currentInclination) > 90)
-            //{
-            //    _averageInclination[finger.index] = currentInclination;
-            //}
-            //else
-            //{
-                _averageInclination[finger.index] = Mathf.LerpAngle(_averageInclination[finger.index] * Mathf.Rad2Deg, currentInclination * Mathf.Rad2Deg, 0.5f) * Mathf.Deg2Rad;
-            //}
+            _averageInclination[finger.index] = Mathf.LerpAngle(_averageInclination[finger.index] * Mathf.Rad2Deg, currentInclination * Mathf.Rad2Deg, 0.5f) * Mathf.Deg2Rad;
         }
 
         var resetPosition = new float2(_fingerHistory.width + 1, _fingerHistory.height + 1);
