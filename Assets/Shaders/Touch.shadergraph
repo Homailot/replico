@@ -4,10 +4,46 @@
     "m_ObjectId": "9b5e1d9028374911b9f2eef17d86f23c",
     "m_Properties": [
         {
+            "m_Id": "2e23b5474e0040ecb66ed715f992e9ad"
+        },
+        {
+            "m_Id": "ef0c379f91014053a7488fa200b8f137"
+        },
+        {
+            "m_Id": "8de1230f352e4d82a96600ae4b116839"
+        },
+        {
+            "m_Id": "25f48c68b1b540759068646f9449e297"
+        },
+        {
             "m_Id": "165abb8fcc484c52a0562c1d8d3871dc"
         },
         {
             "m_Id": "aaadf586616a42a0af587b8d884d0a5e"
+        },
+        {
+            "m_Id": "094113614da544b18f5873488b4a8f7a"
+        },
+        {
+            "m_Id": "e1118975e9ea43ee8f7d12f9e78a3c8e"
+        },
+        {
+            "m_Id": "d0c3efa21a9b4c5ca9350bc1d166fb46"
+        },
+        {
+            "m_Id": "7a240a530771454389346ae6ea967c6e"
+        },
+        {
+            "m_Id": "8825b95905b74183b4a53b9d52110a41"
+        },
+        {
+            "m_Id": "74509f6f52c1419ca3b41cda8f7a669c"
+        },
+        {
+            "m_Id": "be049aaf82424c2d90feaee22c1b00ab"
+        },
+        {
+            "m_Id": "3184943f377b477da09d34b786e12eeb"
         },
         {
             "m_Id": "a43f826134f943fbb971d3d3a24091e9"
@@ -74,6 +110,102 @@
         },
         {
             "m_Id": "356796eefdf64af5842b47d9a6a84b9a"
+        },
+        {
+            "m_Id": "7a4428145bae4861a651d177b0888eac"
+        },
+        {
+            "m_Id": "38944319b6154f36abbd28d24a5055ef"
+        },
+        {
+            "m_Id": "7e6f9a71b9c548429eaa7910c37b517a"
+        },
+        {
+            "m_Id": "8b1671593fa84748a817d4a85f463006"
+        },
+        {
+            "m_Id": "ede29559d81c4abfba8d92215b040674"
+        },
+        {
+            "m_Id": "93586b053a2745bb9e5067b7279701c9"
+        },
+        {
+            "m_Id": "e4dae5b5144745a2b4a2c3e9f9be3da8"
+        },
+        {
+            "m_Id": "bb6adab7a4974a5ba25fb6c6fea2a6a8"
+        },
+        {
+            "m_Id": "cc5fed70093b4110a49fa4523db9707a"
+        },
+        {
+            "m_Id": "cac766ad634a4bcfb86359eba4b622f8"
+        },
+        {
+            "m_Id": "731398bc8cfa44988909b3a1f515dddb"
+        },
+        {
+            "m_Id": "e0148839670f4093964ef71d08898711"
+        },
+        {
+            "m_Id": "8e7ccb28c56d4973b5e12ffbdc192d2e"
+        },
+        {
+            "m_Id": "79232e7b1e6f47a9820f5b5e9f070040"
+        },
+        {
+            "m_Id": "2bde287752db4b8f8aaafaa4ea3b8db0"
+        },
+        {
+            "m_Id": "b6a13b4fdcdd4c24b9bc6545351f1cb9"
+        },
+        {
+            "m_Id": "02589fe99b3f494c95c4001b029c8f80"
+        },
+        {
+            "m_Id": "e63850f120bc45769d37a6138b990ebf"
+        },
+        {
+            "m_Id": "f4ad4b383b8c4964be99cca6a65835a6"
+        },
+        {
+            "m_Id": "af8be7ae768d4c40b12e8bd26907a578"
+        },
+        {
+            "m_Id": "b63df7b34dc14dae94fc59d6ab7607b1"
+        },
+        {
+            "m_Id": "dc478d21a43c4449a2100d9d065f7b98"
+        },
+        {
+            "m_Id": "1b0cf84bc1064528ac15ca23f9af8121"
+        },
+        {
+            "m_Id": "208b8fa84d1646039c26d359a5cd9481"
+        },
+        {
+            "m_Id": "2363c14ba392423f9385989943d3e173"
+        },
+        {
+            "m_Id": "26b3783efc624afcaeab7480a57c64b1"
+        },
+        {
+            "m_Id": "49d84e67075047bd8d4c8faae93ad00a"
+        },
+        {
+            "m_Id": "2fdb9674fc8746d9b4beef564890cd93"
+        },
+        {
+            "m_Id": "fe76b3f71a9e42c6af7ec2f14f434d87"
+        },
+        {
+            "m_Id": "798bd66e2dfb4fb6b37e376af5fb4b2e"
+        },
+        {
+            "m_Id": "4e610bc9d4e143dd91921fac5a0bbab6"
+        },
+        {
+            "m_Id": "8efcc09b90e646c9801cfdf5071a474f"
         }
     ],
     "m_GroupDatas": [],
@@ -91,6 +223,104 @@
                     "m_Id": "63f3ff72fe2e4315b3f9082774c43f01"
                 },
                 "m_SlotId": 406264992
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "02589fe99b3f494c95c4001b029c8f80"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "cc5fed70093b4110a49fa4523db9707a"
+                },
+                "m_SlotId": 843738445
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "1b0cf84bc1064528ac15ca23f9af8121"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "e0148839670f4093964ef71d08898711"
+                },
+                "m_SlotId": 843738445
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "208b8fa84d1646039c26d359a5cd9481"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "e0148839670f4093964ef71d08898711"
+                },
+                "m_SlotId": -847917330
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "2363c14ba392423f9385989943d3e173"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "cc5fed70093b4110a49fa4523db9707a"
+                },
+                "m_SlotId": 406264992
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "26b3783efc624afcaeab7480a57c64b1"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "cc5fed70093b4110a49fa4523db9707a"
+                },
+                "m_SlotId": 1924686346
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "2bde287752db4b8f8aaafaa4ea3b8db0"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "731398bc8cfa44988909b3a1f515dddb"
+                },
+                "m_SlotId": -1703154973
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "2fdb9674fc8746d9b4beef564890cd93"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "cac766ad634a4bcfb86359eba4b622f8"
+                },
+                "m_SlotId": 1924686346
             }
         },
         {
@@ -124,6 +354,20 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
+                    "m_Id": "38944319b6154f36abbd28d24a5055ef"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "7e6f9a71b9c548429eaa7910c37b517a"
+                },
+                "m_SlotId": -68044422
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
                     "m_Id": "45c4b9106b704559bfe13e19cb631b6f"
                 },
                 "m_SlotId": 0
@@ -133,6 +377,34 @@
                     "m_Id": "63f3ff72fe2e4315b3f9082774c43f01"
                 },
                 "m_SlotId": 843738445
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "49d84e67075047bd8d4c8faae93ad00a"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "cac766ad634a4bcfb86359eba4b622f8"
+                },
+                "m_SlotId": 406264992
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "4e610bc9d4e143dd91921fac5a0bbab6"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "e0148839670f4093964ef71d08898711"
+                },
+                "m_SlotId": 406264992
             }
         },
         {
@@ -200,9 +472,93 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "8ba9bc5730a849238bc31a2749914440"
+                    "m_Id": "7a4428145bae4861a651d177b0888eac"
+                },
+                "m_SlotId": -68044422
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "731398bc8cfa44988909b3a1f515dddb"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "ede29559d81c4abfba8d92215b040674"
+                },
+                "m_SlotId": 307709961
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "731398bc8cfa44988909b3a1f515dddb"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "93586b053a2745bb9e5067b7279701c9"
+                },
+                "m_SlotId": 307709961
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "79232e7b1e6f47a9820f5b5e9f070040"
                 },
                 "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "cac766ad634a4bcfb86359eba4b622f8"
+                },
+                "m_SlotId": -1703154973
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "798bd66e2dfb4fb6b37e376af5fb4b2e"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "731398bc8cfa44988909b3a1f515dddb"
+                },
+                "m_SlotId": 1924686346
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "7a4428145bae4861a651d177b0888eac"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "38944319b6154f36abbd28d24a5055ef"
+                },
+                "m_SlotId": -68044422
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "7e6f9a71b9c548429eaa7910c37b517a"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "8b1671593fa84748a817d4a85f463006"
+                },
+                "m_SlotId": -68044422
             }
         },
         {
@@ -217,6 +573,272 @@
                     "m_Id": "f6bf90f575e943a395c5e3c37703628e"
                 },
                 "m_SlotId": -68044422
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "8b1671593fa84748a817d4a85f463006"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "ede29559d81c4abfba8d92215b040674"
+                },
+                "m_SlotId": -68044422
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "8e7ccb28c56d4973b5e12ffbdc192d2e"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "cc5fed70093b4110a49fa4523db9707a"
+                },
+                "m_SlotId": -1703154973
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "8efcc09b90e646c9801cfdf5071a474f"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "e0148839670f4093964ef71d08898711"
+                },
+                "m_SlotId": 1924686346
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "93586b053a2745bb9e5067b7279701c9"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "e4dae5b5144745a2b4a2c3e9f9be3da8"
+                },
+                "m_SlotId": -68044422
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "af8be7ae768d4c40b12e8bd26907a578"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "cac766ad634a4bcfb86359eba4b622f8"
+                },
+                "m_SlotId": -847917330
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "b63df7b34dc14dae94fc59d6ab7607b1"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "731398bc8cfa44988909b3a1f515dddb"
+                },
+                "m_SlotId": 843738445
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "b6a13b4fdcdd4c24b9bc6545351f1cb9"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "e0148839670f4093964ef71d08898711"
+                },
+                "m_SlotId": -1703154973
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "bb6adab7a4974a5ba25fb6c6fea2a6a8"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "8ba9bc5730a849238bc31a2749914440"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "cac766ad634a4bcfb86359eba4b622f8"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "7e6f9a71b9c548429eaa7910c37b517a"
+                },
+                "m_SlotId": 307709961
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "cac766ad634a4bcfb86359eba4b622f8"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "8b1671593fa84748a817d4a85f463006"
+                },
+                "m_SlotId": 307709961
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "cc5fed70093b4110a49fa4523db9707a"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "7a4428145bae4861a651d177b0888eac"
+                },
+                "m_SlotId": 307709961
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "cc5fed70093b4110a49fa4523db9707a"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "38944319b6154f36abbd28d24a5055ef"
+                },
+                "m_SlotId": 307709961
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "dc478d21a43c4449a2100d9d065f7b98"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "731398bc8cfa44988909b3a1f515dddb"
+                },
+                "m_SlotId": -847917330
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "e0148839670f4093964ef71d08898711"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "e4dae5b5144745a2b4a2c3e9f9be3da8"
+                },
+                "m_SlotId": 307709961
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "e0148839670f4093964ef71d08898711"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "bb6adab7a4974a5ba25fb6c6fea2a6a8"
+                },
+                "m_SlotId": 307709961
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "e4dae5b5144745a2b4a2c3e9f9be3da8"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "bb6adab7a4974a5ba25fb6c6fea2a6a8"
+                },
+                "m_SlotId": -68044422
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "e63850f120bc45769d37a6138b990ebf"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "cc5fed70093b4110a49fa4523db9707a"
+                },
+                "m_SlotId": -847917330
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "ede29559d81c4abfba8d92215b040674"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "93586b053a2745bb9e5067b7279701c9"
+                },
+                "m_SlotId": -68044422
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "f4ad4b383b8c4964be99cca6a65835a6"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "cac766ad634a4bcfb86359eba4b622f8"
+                },
+                "m_SlotId": 843738445
             }
         },
         {
@@ -246,12 +868,26 @@
                 },
                 "m_SlotId": -847917330
             }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "fe76b3f71a9e42c6af7ec2f14f434d87"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "731398bc8cfa44988909b3a1f515dddb"
+                },
+                "m_SlotId": 406264992
+            }
         }
     ],
     "m_VertexContext": {
         "m_Position": {
-            "x": 2689.599853515625,
-            "y": -88.00000762939453
+            "x": 4823.2001953125,
+            "y": -79.20001220703125
         },
         "m_Blocks": [
             {
@@ -267,8 +903,8 @@
     },
     "m_FragmentContext": {
         "m_Position": {
-            "x": 2689.599853515625,
-            "y": 131.1999969482422
+            "x": 4823.2001953125,
+            "y": 140.0
         },
         "m_Blocks": [
             {
@@ -363,6 +999,67 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "02589fe99b3f494c95c4001b029c8f80",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 1955.23681640625,
+            "y": 479.37982177734377,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "d71d95f5bde3470c812be568a32c54a3"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "094113614da544b18f5873488b4a8f7a"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "05650020ca3b4131a879741797c85004",
+    "m_Id": 307709961,
+    "m_DisplayName": "Finger Trail",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Trail",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.ColorRGBMaterialSlot",
     "m_ObjectId": "05923e2e967f435eb2b98a57e748aa54",
     "m_Id": 0,
@@ -389,6 +1086,86 @@
         "b": 0.5,
         "a": 1.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "06d9fa3403684151bd03294943712d16",
+    "m_Id": -68044422,
+    "m_DisplayName": "Background Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Background_Color",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "092592423e4240969a34508b6c052707",
+    "m_Id": 307709961,
+    "m_DisplayName": "Finger Trail",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Trail",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "094113614da544b18f5873488b4a8f7a",
+    "m_Guid": {
+        "m_GuidSerialized": "18c3e7b5-bf2c-47ad-ad02-6b7b9eefdd7d"
+    },
+    "m_Name": "Finger 3 Color",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Finger 3 Color",
+    "m_DefaultReferenceName": "_Finger_3_Color",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "isMainColor": false,
+    "m_ColorMode": 0
 }
 
 {
@@ -442,6 +1219,31 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "15eccda4bd584b64a8985d648445d46f",
+    "m_Id": 1924686346,
+    "m_DisplayName": "Finger Border Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Border_Color",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
     "m_ObjectId": "165abb8fcc484c52a0562c1d8d3871dc",
     "m_Guid": {
@@ -472,6 +1274,153 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "1722c72f1fca489682f81582e55e6b11",
+    "m_Id": 1,
+    "m_DisplayName": "Blend",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Blend",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "1b0cf84bc1064528ac15ca23f9af8121",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3719.2001953125,
+            "y": 465.60003662109377,
+            "width": 151.19970703125,
+            "height": 33.5999755859375
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "f3f0e8a3397d419e89bd7bdf9533033d"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "be049aaf82424c2d90feaee22c1b00ab"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "1d171b6f224a4f14a8727f93e1ada94e",
+    "m_Id": -68044422,
+    "m_DisplayName": "Background Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Background_Color",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "2023a2682f8740a68f3a8ae19dfceec9",
+    "m_Id": 0,
+    "m_DisplayName": "Finger 5 Color",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "208b8fa84d1646039c26d359a5cd9481",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3719.2001953125,
+            "y": 500.7999572753906,
+            "width": 156.7998046875,
+            "height": 33.600067138671878
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "ebb94a31ca254420b7d66ba185762934"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "3184943f377b477da09d34b786e12eeb"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.BlockNode",
     "m_ObjectId": "218ef95fcbf6401386638bf55d36aba7",
     "m_Group": {
@@ -482,10 +1431,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 0.0,
-            "height": 0.0
+            "x": 4884.0,
+            "y": -40.800025939941409,
+            "width": 200.0,
+            "height": 40.79998779296875
         }
     },
     "m_Slots": [
@@ -502,6 +1451,31 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "VertexDescription.Position"
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "21c9efd075ef49539ca9bc7d4ed02142",
+    "m_Id": -68044422,
+    "m_DisplayName": "Background Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Background_Color",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
 }
 
 {
@@ -540,6 +1514,133 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "2363c14ba392423f9385989943d3e173",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 1934.39990234375,
+            "y": 589.6000366210938,
+            "width": 202.400146484375,
+            "height": 33.5999755859375
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "adb7dc2cc76f4e4e849c3802f412150b"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "01186f9dc6014b0fbf096128fe528078"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
+    "m_ObjectId": "25f48c68b1b540759068646f9449e297",
+    "m_Guid": {
+        "m_GuidSerialized": "3d1dd037-b532-4ab2-ab3b-41e29b04aa58"
+    },
+    "m_Name": "Finger History 5",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Finger History 5",
+    "m_DefaultReferenceName": "_Finger_History_5",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": false,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_Guid": ""
+    },
+    "isMainTexture": false,
+    "useTilingAndOffset": false,
+    "m_Modifiable": true,
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "26b3783efc624afcaeab7480a57c64b1",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 1957.5999755859375,
+            "y": 555.9999389648438,
+            "width": 179.9998779296875,
+            "height": 33.5999755859375
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "f8261e446da84476b5efdd455798a878"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "f9f923d7f3334f8dba1f7919e5faeff9"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "27a149d6e8694c24ae5b6906dc77bdb2",
+    "m_Id": 307709961,
+    "m_DisplayName": "Finger Trail",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Trail",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Texture2DInputMaterialSlot",
     "m_ObjectId": "28a900ed19fd4218a6a545d328d8ad6d",
     "m_Id": -1703154973,
@@ -554,6 +1655,31 @@
         "m_Guid": ""
     },
     "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "29708b4eee1249f8b2d7ad758a27f62d",
+    "m_Id": 0,
+    "m_DisplayName": "Finger 7 Color",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
 }
 
 {
@@ -579,6 +1705,188 @@
         "w": 0.0
     },
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "2bde287752db4b8f8aaafaa4ea3b8db0",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3153.60009765625,
+            "y": 427.20001220703127,
+            "width": 157.599853515625,
+            "height": 33.5999755859375
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "3a413c1ae341460895fcc2eb4fe8527f"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "8de1230f352e4d82a96600ae4b116839"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
+    "m_ObjectId": "2e23b5474e0040ecb66ed715f992e9ad",
+    "m_Guid": {
+        "m_GuidSerialized": "9ee0d3c7-fe50-4d19-9676-880a3c0781f0"
+    },
+    "m_Name": "Finger History 2",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Finger History 2",
+    "m_DefaultReferenceName": "_Finger_History_2",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": false,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_Guid": ""
+    },
+    "isMainTexture": false,
+    "useTilingAndOffset": false,
+    "m_Modifiable": true,
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "2fdb9674fc8746d9b4beef564890cd93",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 2566.39990234375,
+            "y": 606.3999633789063,
+            "width": 180.0,
+            "height": 33.60009765625
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "652cda9309754c30a883e15c49e4c497"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "f9f923d7f3334f8dba1f7919e5faeff9"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "30b7d026063648ee9f21292970f87d10",
+    "m_Id": 843738445,
+    "m_DisplayName": "First Finger Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_First_Finger_Color",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "310e39ef626e4f15bff34dc894844f7e",
+    "m_Id": 1,
+    "m_DisplayName": "First_Finger_Trail",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "First_Finger_Trail",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "3184943f377b477da09d34b786e12eeb",
+    "m_Guid": {
+        "m_GuidSerialized": "db3a00a9-79fc-40bd-a59f-3adf93b87083"
+    },
+    "m_Name": "Finger 10 Color",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Finger 10 Color",
+    "m_DefaultReferenceName": "_Finger_10_Color",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "isMainColor": false,
+    "m_ColorMode": 0
 }
 
 {
@@ -619,6 +1927,31 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "331f54a73aa3457ab28856168a551807",
+    "m_Id": 0,
+    "m_DisplayName": "Finger 8 Color",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.NormalMaterialSlot",
     "m_ObjectId": "33e1a793007f4532acdca6056ca74d1d",
     "m_Id": 0,
@@ -639,6 +1972,31 @@
     },
     "m_Labels": [],
     "m_Space": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "342165ff248e44dc9054d6c75a26e551",
+    "m_Id": 2,
+    "m_DisplayName": "Second_Finger_Trail",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Second_Finger_Trail",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
 }
 
 {
@@ -680,12 +2038,163 @@
 {
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "383bcc17d4b3425c9875ebfdb7e23ca4",
+    "m_Id": 843738445,
+    "m_DisplayName": "First Finger Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_First_Finger_Color",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "38944319b6154f36abbd28d24a5055ef",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Blend Finger Trail",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 2901.599853515625,
+            "y": 137.5999755859375,
+            "width": 226.39990234375,
+            "height": 118.39997863769531
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "21c9efd075ef49539ca9bc7d4ed02142"
+        },
+        {
+            "m_Id": "092592423e4240969a34508b6c052707"
+        },
+        {
+            "m_Id": "c1c49f99644e4cce8d422b83ddaff28f"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": false,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"e274ad6deeef8474c852bf41e568705e\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "f86f49d3-c7fb-4b9f-94b8-eb24c68fea6c",
+        "be4f188d-4413-44c5-a754-9d933040407b"
+    ],
+    "m_PropertyIds": [
+        -68044422,
+        307709961
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "3997e4c4f5f84e83a6070be4fe61de09",
     "m_Id": -68044422,
     "m_DisplayName": "Background Color",
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "_Background_Color",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
+    "m_ObjectId": "3a413c1ae341460895fcc2eb4fe8527f",
+    "m_Id": 0,
+    "m_DisplayName": "Finger History 4",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_BareResource": false
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
+    "m_ObjectId": "3bf5bbf2699c45259fa1dcfb39b500bb",
+    "m_Id": 0,
+    "m_DisplayName": "Finger History 3",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_BareResource": false
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "3d6d1f2d2f1c4d56acc41e6d03ac7c06",
+    "m_Id": 307709961,
+    "m_DisplayName": "Finger Trail",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Trail",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "3ddac330583a4d4c875481822ca2d804",
+    "m_Id": 1,
+    "m_DisplayName": "Blend",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Blend",
     "m_StageCapability": 3,
     "m_Value": {
         "x": 0.0,
@@ -740,10 +2249,270 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "49d84e67075047bd8d4c8faae93ad00a",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 2544.800048828125,
+            "y": 640.0000610351563,
+            "width": 202.39990234375,
+            "height": 33.5999755859375
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "ec10762f4358498787b5945dcdaa3ed9"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "01186f9dc6014b0fbf096128fe528078"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "4ab64495236a4c3782c1fa35127c3b74",
+    "m_Id": 2,
+    "m_DisplayName": "Second_Finger_Trail",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Second_Finger_Trail",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "4b7f22e1240c457cb1a623fe5348a680",
+    "m_Id": 1,
+    "m_DisplayName": "Blend",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Blend",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "4c61941dfbf6464a9403dda311deb075",
+    "m_Id": 1,
+    "m_DisplayName": "First_Finger_Trail",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "First_Finger_Trail",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "4e610bc9d4e143dd91921fac5a0bbab6",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3648.0,
+            "y": 656.7999267578125,
+            "width": 202.39990234375,
+            "height": 33.60009765625
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "d981d5e37f5a4cfd9ced71fc40784474"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "01186f9dc6014b0fbf096128fe528078"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "508b4c8543954a6d861a88a5a1f68890",
+    "m_Id": 307709961,
+    "m_DisplayName": "Finger Trail",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Trail",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "52b703bb5c05411a97c748d749094b14",
+    "m_Id": 0,
+    "m_DisplayName": "Finger Border Color",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "52f75ad2816a4cfd80b1f71c96765b97",
+    "m_Id": 1,
+    "m_DisplayName": "Blend",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Blend",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "53e003ac956d4497adf08ebcc2443817",
     "m_Id": 0,
     "m_DisplayName": "Background Color",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
+    "m_ObjectId": "56938fad20034499b5e82cbfe4b9b64e",
+    "m_Id": 0,
+    "m_DisplayName": "Finger History 2",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_BareResource": false
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "5940b385848648fbb1337fd5c36102e8",
+    "m_Id": 0,
+    "m_DisplayName": "Finger 6 Color",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -773,6 +2542,31 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "_First_Finger_Color",
     "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "5f683d3d4f8e4e40b081589d65023b57",
+    "m_Id": -68044422,
+    "m_DisplayName": "Background Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Background_Color",
+    "m_StageCapability": 3,
     "m_Value": {
         "x": 0.0,
         "y": 0.0,
@@ -878,6 +2672,106 @@
     ],
     "m_Dropdowns": [],
     "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "649f9d68c96a4b4db268f92e8b21ba3d",
+    "m_Id": 1,
+    "m_DisplayName": "Blend",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Blend",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "652cda9309754c30a883e15c49e4c497",
+    "m_Id": 0,
+    "m_DisplayName": "Finger Border Color",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "68747d4172c549b6b2dfb7aa81a1bdea",
+    "m_Id": 1924686346,
+    "m_DisplayName": "Finger Border Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Border_Color",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "6a0c63ac69d5416b84dca63bbe399356",
+    "m_Id": -68044422,
+    "m_DisplayName": "Background Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Background_Color",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
 }
 
 {
@@ -1067,6 +2961,74 @@
 }
 
 {
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "731398bc8cfa44988909b3a1f515dddb",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Get Finger Trails",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3358.39990234375,
+            "y": 416.0,
+            "width": 332.800048828125,
+            "height": 190.4000244140625
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "acf43153ccc24238adfcbb8acab1a884"
+        },
+        {
+            "m_Id": "fc425d1a800748d1a549d04fda1559a3"
+        },
+        {
+            "m_Id": "c3b362a88e3a4a00844bfb5c3774c0d0"
+        },
+        {
+            "m_Id": "15eccda4bd584b64a8985d648445d46f"
+        },
+        {
+            "m_Id": "d837ed1032414fefb941e9ce6e6c196f"
+        },
+        {
+            "m_Id": "de1ef30fcf4c47e3bc32514deffa21de"
+        },
+        {
+            "m_Id": "ce3ad3fcacf24a91964e407fb4e287e5"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": false,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"22012b02f5196814685a5001555f0d72\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "e1105641-deb7-4946-881b-b8039d799531",
+        "94c9d26a-16ec-4137-a532-01882994472f",
+        "efa4e0d6-fbfd-4969-b331-1f4ad54798de",
+        "aef842ba-afa9-4cb0-99d2-7b812a23047b",
+        "777b7a36-fb12-42cb-bf84-9cce75cb5936"
+    ],
+    "m_PropertyIds": [
+        -1703154973,
+        1924686346,
+        843738445,
+        406264992,
+        -847917330
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
+}
+
+{
     "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
     "m_ObjectId": "741f39e21c5a42038fe5e42c457183f5",
@@ -1097,9 +3059,266 @@
 }
 
 {
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "74509f6f52c1419ca3b41cda8f7a669c",
+    "m_Guid": {
+        "m_GuidSerialized": "69da59dd-e72d-491c-a36c-51d2fcfc50ff"
+    },
+    "m_Name": "Finger 8 Color",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Finger 8 Color",
+    "m_DefaultReferenceName": "_Finger_8_Color",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "isMainColor": false,
+    "m_ColorMode": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "75aaf50b15424048b71e0ab54f9620e9",
+    "m_Id": 1924686346,
+    "m_DisplayName": "Finger Border Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Border_Color",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
     "m_SGVersion": 2,
     "m_Type": "UnityEditor.Rendering.Universal.ShaderGraph.UniversalUnlitSubTarget",
     "m_ObjectId": "76118da9f53149c193d7c7f9bfbd38ec"
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "7715fa8da5a24357b95a0e28032f6923",
+    "m_Id": -68044422,
+    "m_DisplayName": "Background Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Background_Color",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "78ccd7bcde4d42c0b34ed523e919f1bf",
+    "m_Id": 1,
+    "m_DisplayName": "Blend",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Blend",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "79232e7b1e6f47a9820f5b5e9f070040",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 2623.205078125,
+            "y": 410.0279541015625,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "3bf5bbf2699c45259fa1dcfb39b500bb"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "ef0c379f91014053a7488fa200b8f137"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "798bd66e2dfb4fb6b37e376af5fb4b2e",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3128.0,
+            "y": 601.5999145507813,
+            "width": 180.0,
+            "height": 33.60009765625
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "c667c119f6e34392b041c0a9009960de"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "f9f923d7f3334f8dba1f7919e5faeff9"
+    }
+}
+
+{
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "7a240a530771454389346ae6ea967c6e",
+    "m_Guid": {
+        "m_GuidSerialized": "a3ac835c-c8f2-4726-9b40-53e27861ab55"
+    },
+    "m_Name": "Finger 6 Color",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Finger 6 Color",
+    "m_DefaultReferenceName": "_Finger_6_Color",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "isMainColor": false,
+    "m_ColorMode": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "7a4428145bae4861a651d177b0888eac",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Blend Finger Trail",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 2597.599853515625,
+            "y": 137.59999084472657,
+            "width": 226.400146484375,
+            "height": 118.39999389648438
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "06d9fa3403684151bd03294943712d16"
+        },
+        {
+            "m_Id": "e8d2e5546d984d3a9e8545421dc6d47c"
+        },
+        {
+            "m_Id": "3ddac330583a4d4c875481822ca2d804"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": false,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"e274ad6deeef8474c852bf41e568705e\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "f86f49d3-c7fb-4b9f-94b8-eb24c68fea6c",
+        "be4f188d-4413-44c5-a754-9d933040407b"
+    ],
+    "m_PropertyIds": [
+        -68044422,
+        307709961
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
 }
 
 {
@@ -1140,6 +3359,86 @@
         "w": 0.0
     },
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "7e6f9a71b9c548429eaa7910c37b517a",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Blend Finger Trail",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3181.599609375,
+            "y": 137.60000610351563,
+            "width": 226.400146484375,
+            "height": 118.39999389648438
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "5f683d3d4f8e4e40b081589d65023b57"
+        },
+        {
+            "m_Id": "05650020ca3b4131a879741797c85004"
+        },
+        {
+            "m_Id": "1722c72f1fca489682f81582e55e6b11"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": false,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"e274ad6deeef8474c852bf41e568705e\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "f86f49d3-c7fb-4b9f-94b8-eb24c68fea6c",
+        "be4f188d-4413-44c5-a754-9d933040407b"
+    ],
+    "m_PropertyIds": [
+        -68044422,
+        307709961
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "8825b95905b74183b4a53b9d52110a41",
+    "m_Guid": {
+        "m_GuidSerialized": "7d1f4d77-1623-414c-8661-2499e7fdd0b6"
+    },
+    "m_Name": "Finger 7 Color",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Finger 7 Color",
+    "m_DefaultReferenceName": "_Finger_7_Color",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "isMainColor": false,
+    "m_ColorMode": 0
 }
 
 {
@@ -1204,6 +3503,81 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "89855101045140148fb4c54b1d8656ef",
+    "m_Id": 307709961,
+    "m_DisplayName": "Finger Trail",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Trail",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "8b1671593fa84748a817d4a85f463006",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Blend Finger Trail",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3464.7998046875,
+            "y": 137.60000610351563,
+            "width": 226.39990234375,
+            "height": 118.39999389648438
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "7715fa8da5a24357b95a0e28032f6923"
+        },
+        {
+            "m_Id": "c532a09d90644f51afefb9d1b45685d5"
+        },
+        {
+            "m_Id": "78ccd7bcde4d42c0b34ed523e919f1bf"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": false,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"e274ad6deeef8474c852bf41e568705e\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "f86f49d3-c7fb-4b9f-94b8-eb24c68fea6c",
+        "be4f188d-4413-44c5-a754-9d933040407b"
+    ],
+    "m_PropertyIds": [
+        -68044422,
+        307709961
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.BlockNode",
     "m_ObjectId": "8ba9bc5730a849238bc31a2749914440",
     "m_Group": {
@@ -1257,6 +3631,133 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
+    "m_ObjectId": "8de1230f352e4d82a96600ae4b116839",
+    "m_Guid": {
+        "m_GuidSerialized": "b571285c-fb7c-458f-b550-3689c3045ae6"
+    },
+    "m_Name": "Finger History 4",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Finger History 4",
+    "m_DefaultReferenceName": "_Finger_History_4",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": false,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_Guid": ""
+    },
+    "isMainTexture": false,
+    "useTilingAndOffset": false,
+    "m_Modifiable": true,
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "8e7ccb28c56d4973b5e12ffbdc192d2e",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 2023.3721923828125,
+            "y": 427.06170654296877,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "56938fad20034499b5e82cbfe4b9b64e"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "2e23b5474e0040ecb66ed715f992e9ad"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "8ee9831cff0e4392833c493bd96d4ac8",
+    "m_Id": 2,
+    "m_DisplayName": "Second_Finger_Trail",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Second_Finger_Trail",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "8efcc09b90e646c9801cfdf5071a474f",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3671.199951171875,
+            "y": 623.199951171875,
+            "width": 179.199951171875,
+            "height": 33.5999755859375
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "52b703bb5c05411a97c748d749094b14"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "f9f923d7f3334f8dba1f7919e5faeff9"
     }
 }
 
@@ -1317,6 +3818,84 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "VertexDescription.Normal"
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "9338cfe62a264c2d84fd382b4864aa80",
+    "m_Id": 406264992,
+    "m_DisplayName": "Finger Border Threshold",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Border_Threshold",
+    "m_StageCapability": 2,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "93586b053a2745bb9e5067b7279701c9",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Blend Finger Trail",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 4005.599853515625,
+            "y": 137.5998992919922,
+            "width": 226.400146484375,
+            "height": 118.39999389648438
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "1d171b6f224a4f14a8727f93e1ada94e"
+        },
+        {
+            "m_Id": "27a149d6e8694c24ae5b6906dc77bdb2"
+        },
+        {
+            "m_Id": "649f9d68c96a4b4db268f92e8b21ba3d"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": false,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"e274ad6deeef8474c852bf41e568705e\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "f86f49d3-c7fb-4b9f-94b8-eb24c68fea6c",
+        "be4f188d-4413-44c5-a754-9d933040407b"
+    ],
+    "m_PropertyIds": [
+        -68044422,
+        307709961
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DMaterialSlot",
+    "m_ObjectId": "97e1f783feb04f01b59bd81602024dc8",
+    "m_Id": 0,
+    "m_DisplayName": "Finger History 5",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_BareResource": false
 }
 
 {
@@ -1383,6 +3962,56 @@
 }
 
 {
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "a09590aff0ee491e90764f9597c58efc",
+    "m_Id": 843738445,
+    "m_DisplayName": "First Finger Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_First_Finger_Color",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "a3c65d5ac0f94f039a2df1733a69c9b7",
+    "m_Id": 1,
+    "m_DisplayName": "Blend",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Blend",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
     "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
     "m_ObjectId": "a43f826134f943fbb971d3d3a24091e9",
@@ -1413,6 +4042,31 @@
 }
 
 {
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "a85a8f9759534ad198db4fb51230f9d9",
+    "m_Id": -68044422,
+    "m_DisplayName": "Background Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Background_Color",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
     "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
     "m_ObjectId": "aaadf586616a42a0af587b8d884d0a5e",
@@ -1423,6 +4077,360 @@
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "Finger 2 Color",
     "m_DefaultReferenceName": "_Finger_2_Color",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "isMainColor": false,
+    "m_ColorMode": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DInputMaterialSlot",
+    "m_ObjectId": "acf43153ccc24238adfcbb8acab1a884",
+    "m_Id": -1703154973,
+    "m_DisplayName": "Finger History",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_History",
+    "m_StageCapability": 2,
+    "m_BareResource": false,
+    "m_Texture": {
+        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_Guid": ""
+    },
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "adb7dc2cc76f4e4e849c3802f412150b",
+    "m_Id": 0,
+    "m_DisplayName": "Finger Border Threshold",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "ae6bff3c6a7449cda68d23dadbefe4f6",
+    "m_Id": -847917330,
+    "m_DisplayName": "Second Finger Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Second_Finger_Color",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "af8be7ae768d4c40b12e8bd26907a578",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 2623.199951171875,
+            "y": 499.1999816894531,
+            "width": 151.199951171875,
+            "height": 33.599945068359378
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "5940b385848648fbb1337fd5c36102e8"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "7a240a530771454389346ae6ea967c6e"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "b189222041c5488a9702b6dc4b9055ac",
+    "m_Id": -847917330,
+    "m_DisplayName": "Second Finger Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Second_Finger_Color",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "b515af33f19a4fbaa2edb79a1c8d9383",
+    "m_Id": 1924686346,
+    "m_DisplayName": "Finger Border Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Border_Color",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "b63df7b34dc14dae94fc59d6ab7607b1",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3179.237060546875,
+            "y": 467.2128601074219,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "29708b4eee1249f8b2d7ad758a27f62d"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "8825b95905b74183b4a53b9d52110a41"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "b6a13b4fdcdd4c24b9bc6545351f1cb9",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3719.2001953125,
+            "y": 415.99993896484377,
+            "width": 156.7998046875,
+            "height": 33.600067138671878
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "97e1f783feb04f01b59bd81602024dc8"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "25f48c68b1b540759068646f9449e297"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DInputMaterialSlot",
+    "m_ObjectId": "b81ca5d10eff49d3a41096f8ef2e798e",
+    "m_Id": -1703154973,
+    "m_DisplayName": "Finger History",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_History",
+    "m_StageCapability": 2,
+    "m_BareResource": false,
+    "m_Texture": {
+        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_Guid": ""
+    },
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "b895a4f39cff4ad691bc6966518ea417",
+    "m_Id": -847917330,
+    "m_DisplayName": "Second Finger Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Second_Finger_Color",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "bb6adab7a4974a5ba25fb6c6fea2a6a8",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Blend Finger Trail",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 4521.60009765625,
+            "y": 137.59996032714845,
+            "width": 226.39990234375,
+            "height": 118.40007019042969
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "d4a9542a94d94da6bf26f30922b9a488"
+        },
+        {
+            "m_Id": "3d6d1f2d2f1c4d56acc41e6d03ac7c06"
+        },
+        {
+            "m_Id": "4b7f22e1240c457cb1a623fe5348a680"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": false,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"e274ad6deeef8474c852bf41e568705e\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "f86f49d3-c7fb-4b9f-94b8-eb24c68fea6c",
+        "be4f188d-4413-44c5-a754-9d933040407b"
+    ],
+    "m_PropertyIds": [
+        -68044422,
+        307709961
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "bd9471c247bd4781acf3a4557effd329",
+    "m_Id": 406264992,
+    "m_DisplayName": "Finger Border Threshold",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Border_Threshold",
+    "m_StageCapability": 2,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "be049aaf82424c2d90feaee22c1b00ab",
+    "m_Guid": {
+        "m_GuidSerialized": "bd084b7d-20c2-40fd-8ee9-0beeae9c655a"
+    },
+    "m_Name": "Finger 9 Color",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Finger 9 Color",
+    "m_DefaultReferenceName": "_Finger_9_Color",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -1516,6 +4524,31 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "c1c49f99644e4cce8d422b83ddaff28f",
+    "m_Id": 1,
+    "m_DisplayName": "Blend",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Blend",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.CategoryData",
     "m_ObjectId": "c2a600c2be7048f0a7153b204703be9a",
     "m_Name": "",
@@ -1524,21 +4557,438 @@
             "m_Id": "165abb8fcc484c52a0562c1d8d3871dc"
         },
         {
+            "m_Id": "2e23b5474e0040ecb66ed715f992e9ad"
+        },
+        {
+            "m_Id": "ef0c379f91014053a7488fa200b8f137"
+        },
+        {
+            "m_Id": "8de1230f352e4d82a96600ae4b116839"
+        },
+        {
+            "m_Id": "25f48c68b1b540759068646f9449e297"
+        },
+        {
             "m_Id": "a43f826134f943fbb971d3d3a24091e9"
         },
         {
             "m_Id": "aaadf586616a42a0af587b8d884d0a5e"
         },
         {
+            "m_Id": "094113614da544b18f5873488b4a8f7a"
+        },
+        {
+            "m_Id": "e1118975e9ea43ee8f7d12f9e78a3c8e"
+        },
+        {
+            "m_Id": "d0c3efa21a9b4c5ca9350bc1d166fb46"
+        },
+        {
+            "m_Id": "7a240a530771454389346ae6ea967c6e"
+        },
+        {
+            "m_Id": "8825b95905b74183b4a53b9d52110a41"
+        },
+        {
+            "m_Id": "74509f6f52c1419ca3b41cda8f7a669c"
+        },
+        {
+            "m_Id": "be049aaf82424c2d90feaee22c1b00ab"
+        },
+        {
+            "m_Id": "3184943f377b477da09d34b786e12eeb"
+        },
+        {
             "m_Id": "741f39e21c5a42038fe5e42c457183f5"
         },
         {
-            "m_Id": "01186f9dc6014b0fbf096128fe528078"
+            "m_Id": "f9f923d7f3334f8dba1f7919e5faeff9"
         },
         {
-            "m_Id": "f9f923d7f3334f8dba1f7919e5faeff9"
+            "m_Id": "01186f9dc6014b0fbf096128fe528078"
         }
     ]
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "c3b362a88e3a4a00844bfb5c3774c0d0",
+    "m_Id": -847917330,
+    "m_DisplayName": "Second Finger Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Second_Finger_Color",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "c532a09d90644f51afefb9d1b45685d5",
+    "m_Id": 307709961,
+    "m_DisplayName": "Finger Trail",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Trail",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "c667c119f6e34392b041c0a9009960de",
+    "m_Id": 0,
+    "m_DisplayName": "Finger Border Color",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "cac766ad634a4bcfb86359eba4b622f8",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Get Finger Trails",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 2795.199951171875,
+            "y": 416.0,
+            "width": 332.800048828125,
+            "height": 190.4000244140625
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "ec0e7ee6b13849caab1df67dbb4df103"
+        },
+        {
+            "m_Id": "30b7d026063648ee9f21292970f87d10"
+        },
+        {
+            "m_Id": "b895a4f39cff4ad691bc6966518ea417"
+        },
+        {
+            "m_Id": "68747d4172c549b6b2dfb7aa81a1bdea"
+        },
+        {
+            "m_Id": "e0e9fee522f24a68ab51b8a793d8ef70"
+        },
+        {
+            "m_Id": "cdb701ab0bba4087a6a36405b110d0e5"
+        },
+        {
+            "m_Id": "4ab64495236a4c3782c1fa35127c3b74"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": false,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"22012b02f5196814685a5001555f0d72\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "e1105641-deb7-4946-881b-b8039d799531",
+        "94c9d26a-16ec-4137-a532-01882994472f",
+        "efa4e0d6-fbfd-4969-b331-1f4ad54798de",
+        "aef842ba-afa9-4cb0-99d2-7b812a23047b",
+        "777b7a36-fb12-42cb-bf84-9cce75cb5936"
+    ],
+    "m_PropertyIds": [
+        -1703154973,
+        1924686346,
+        843738445,
+        406264992,
+        -847917330
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "cc5fed70093b4110a49fa4523db9707a",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Get Finger Trails",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 2228.800048828125,
+            "y": 416.0,
+            "width": 332.7998046875,
+            "height": 190.39996337890626
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "daa6c5315cdc49c395116963cb461115"
+        },
+        {
+            "m_Id": "a09590aff0ee491e90764f9597c58efc"
+        },
+        {
+            "m_Id": "b189222041c5488a9702b6dc4b9055ac"
+        },
+        {
+            "m_Id": "75aaf50b15424048b71e0ab54f9620e9"
+        },
+        {
+            "m_Id": "bd9471c247bd4781acf3a4557effd329"
+        },
+        {
+            "m_Id": "310e39ef626e4f15bff34dc894844f7e"
+        },
+        {
+            "m_Id": "342165ff248e44dc9054d6c75a26e551"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": false,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"22012b02f5196814685a5001555f0d72\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "e1105641-deb7-4946-881b-b8039d799531",
+        "94c9d26a-16ec-4137-a532-01882994472f",
+        "efa4e0d6-fbfd-4969-b331-1f4ad54798de",
+        "aef842ba-afa9-4cb0-99d2-7b812a23047b",
+        "777b7a36-fb12-42cb-bf84-9cce75cb5936"
+    ],
+    "m_PropertyIds": [
+        -1703154973,
+        1924686346,
+        843738445,
+        406264992,
+        -847917330
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "cdb701ab0bba4087a6a36405b110d0e5",
+    "m_Id": 1,
+    "m_DisplayName": "First_Finger_Trail",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "First_Finger_Trail",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "ce3ad3fcacf24a91964e407fb4e287e5",
+    "m_Id": 2,
+    "m_DisplayName": "Second_Finger_Trail",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Second_Finger_Trail",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "ced182afbd4d44b983f42c03dc765931",
+    "m_Id": 0,
+    "m_DisplayName": "Finger 4 Color",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "d0c3efa21a9b4c5ca9350bc1d166fb46",
+    "m_Guid": {
+        "m_GuidSerialized": "ea1a6c05-2516-4314-801d-8a8821d014e2"
+    },
+    "m_Name": "Finger 5 Color",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Finger 5 Color",
+    "m_DefaultReferenceName": "_Finger_5_Color",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "isMainColor": false,
+    "m_ColorMode": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "d4a9542a94d94da6bf26f30922b9a488",
+    "m_Id": -68044422,
+    "m_DisplayName": "Background Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Background_Color",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "d71d95f5bde3470c812be568a32c54a3",
+    "m_Id": 0,
+    "m_DisplayName": "Finger 3 Color",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "d837ed1032414fefb941e9ce6e6c196f",
+    "m_Id": 406264992,
+    "m_DisplayName": "Finger Border Threshold",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Border_Threshold",
+    "m_StageCapability": 2,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -1568,6 +5018,39 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "d981d5e37f5a4cfd9ced71fc40784474",
+    "m_Id": 0,
+    "m_DisplayName": "Finger Border Threshold",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DInputMaterialSlot",
+    "m_ObjectId": "daa6c5315cdc49c395116963cb461115",
+    "m_Id": -1703154973,
+    "m_DisplayName": "Finger History",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_History",
+    "m_StageCapability": 2,
+    "m_BareResource": false,
+    "m_Texture": {
+        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_Guid": ""
+    },
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "dc0ca1e405504ae5bd01a97864b954cc",
     "m_Id": 1,
@@ -1588,6 +5071,364 @@
         "z": 0.0,
         "w": 0.0
     },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "dc478d21a43c4449a2100d9d065f7b98",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3197.487548828125,
+            "y": 509.79736328125,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "331f54a73aa3457ab28856168a551807"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "74509f6f52c1419ca3b41cda8f7a669c"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "de1ef30fcf4c47e3bc32514deffa21de",
+    "m_Id": 1,
+    "m_DisplayName": "First_Finger_Trail",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "First_Finger_Trail",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "e0148839670f4093964ef71d08898711",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Get Finger Trails",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3899.19970703125,
+            "y": 416.0,
+            "width": 332.80029296875,
+            "height": 190.39996337890626
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "b81ca5d10eff49d3a41096f8ef2e798e"
+        },
+        {
+            "m_Id": "383bcc17d4b3425c9875ebfdb7e23ca4"
+        },
+        {
+            "m_Id": "ae6bff3c6a7449cda68d23dadbefe4f6"
+        },
+        {
+            "m_Id": "b515af33f19a4fbaa2edb79a1c8d9383"
+        },
+        {
+            "m_Id": "9338cfe62a264c2d84fd382b4864aa80"
+        },
+        {
+            "m_Id": "4c61941dfbf6464a9403dda311deb075"
+        },
+        {
+            "m_Id": "8ee9831cff0e4392833c493bd96d4ac8"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": false,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"22012b02f5196814685a5001555f0d72\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "e1105641-deb7-4946-881b-b8039d799531",
+        "94c9d26a-16ec-4137-a532-01882994472f",
+        "efa4e0d6-fbfd-4969-b331-1f4ad54798de",
+        "aef842ba-afa9-4cb0-99d2-7b812a23047b",
+        "777b7a36-fb12-42cb-bf84-9cce75cb5936"
+    ],
+    "m_PropertyIds": [
+        -1703154973,
+        1924686346,
+        843738445,
+        406264992,
+        -847917330
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "e06a433cbf6e420a9fb443ff77208418",
+    "m_Id": 0,
+    "m_DisplayName": "Finger Border Threshold",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "e0e9fee522f24a68ab51b8a793d8ef70",
+    "m_Id": 406264992,
+    "m_DisplayName": "Finger Border Threshold",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Border_Threshold",
+    "m_StageCapability": 2,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "e1118975e9ea43ee8f7d12f9e78a3c8e",
+    "m_Guid": {
+        "m_GuidSerialized": "033a0d5a-171f-4692-bdbf-806db8db58d3"
+    },
+    "m_Name": "Finger 4 Color",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Finger 4 Color",
+    "m_DefaultReferenceName": "_Finger_4_Color",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "isMainColor": false,
+    "m_ColorMode": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "e4dae5b5144745a2b4a2c3e9f9be3da8",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Blend Finger Trail",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 4272.80029296875,
+            "y": 137.5998992919922,
+            "width": 226.39990234375,
+            "height": 118.39999389648438
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "a85a8f9759534ad198db4fb51230f9d9"
+        },
+        {
+            "m_Id": "89855101045140148fb4c54b1d8656ef"
+        },
+        {
+            "m_Id": "52f75ad2816a4cfd80b1f71c96765b97"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": false,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"e274ad6deeef8474c852bf41e568705e\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "f86f49d3-c7fb-4b9f-94b8-eb24c68fea6c",
+        "be4f188d-4413-44c5-a754-9d933040407b"
+    ],
+    "m_PropertyIds": [
+        -68044422,
+        307709961
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "e63850f120bc45769d37a6138b990ebf",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 1960.0,
+            "y": 515.9999389648438,
+            "width": 151.199951171875,
+            "height": 33.5999755859375
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "ced182afbd4d44b983f42c03dc765931"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "e1118975e9ea43ee8f7d12f9e78a3c8e"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "e8d2e5546d984d3a9e8545421dc6d47c",
+    "m_Id": 307709961,
+    "m_DisplayName": "Finger Trail",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_Trail",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "ebb94a31ca254420b7d66ba185762934",
+    "m_Id": 0,
+    "m_DisplayName": "Finger 10 Color",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Texture2DInputMaterialSlot",
+    "m_ObjectId": "ec0e7ee6b13849caab1df67dbb4df103",
+    "m_Id": -1703154973,
+    "m_DisplayName": "Finger History",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Finger_History",
+    "m_StageCapability": 2,
+    "m_BareResource": false,
+    "m_Texture": {
+        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_Guid": ""
+    },
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "ec10762f4358498787b5945dcdaa3ed9",
+    "m_Id": 0,
+    "m_DisplayName": "Finger Border Threshold",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
     "m_Labels": []
 }
 
@@ -1614,6 +5455,147 @@
         "w": 0.0
     },
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SubGraphNode",
+    "m_ObjectId": "ede29559d81c4abfba8d92215b040674",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Blend Finger Trail",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3736.7998046875,
+            "y": 137.60000610351563,
+            "width": 226.39990234375,
+            "height": 118.39999389648438
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "6a0c63ac69d5416b84dca63bbe399356"
+        },
+        {
+            "m_Id": "508b4c8543954a6d861a88a5a1f68890"
+        },
+        {
+            "m_Id": "a3c65d5ac0f94f039a2df1733a69c9b7"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": false,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"e274ad6deeef8474c852bf41e568705e\",\n        \"type\": 3\n    }\n}",
+    "m_PropertyGuids": [
+        "f86f49d3-c7fb-4b9f-94b8-eb24c68fea6c",
+        "be4f188d-4413-44c5-a754-9d933040407b"
+    ],
+    "m_PropertyIds": [
+        -68044422,
+        307709961
+    ],
+    "m_Dropdowns": [],
+    "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Texture2DShaderProperty",
+    "m_ObjectId": "ef0c379f91014053a7488fa200b8f137",
+    "m_Guid": {
+        "m_GuidSerialized": "9e21ae80-a25f-4486-9cd4-2f82f7f38242"
+    },
+    "m_Name": "Finger History 3",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Finger History 3",
+    "m_DefaultReferenceName": "_Finger_History_3",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": false,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_Guid": ""
+    },
+    "isMainTexture": false,
+    "useTilingAndOffset": false,
+    "m_Modifiable": true,
+    "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "f3f0e8a3397d419e89bd7bdf9533033d",
+    "m_Id": 0,
+    "m_DisplayName": "Finger 9 Color",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "f4ad4b383b8c4964be99cca6a65835a6",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 2637.8056640625,
+            "y": 465.99609375,
+            "width": 0.0,
+            "height": 0.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "2023a2682f8740a68f3a8ae19dfceec9"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "d0c3efa21a9b4c5ca9350bc1d166fb46"
+    }
 }
 
 {
@@ -1664,6 +5646,31 @@
     ],
     "m_Dropdowns": [],
     "m_DropdownSelectedEntries": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "f8261e446da84476b5efdd455798a878",
+    "m_Id": 0,
+    "m_DisplayName": "Finger Border Color",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
 }
 
 {
@@ -1734,6 +5741,31 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "fc425d1a800748d1a549d04fda1559a3",
+    "m_Id": 843738445,
+    "m_DisplayName": "First Finger Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_First_Finger_Color",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "fe4346601a0845ea86ff3f38c0f02164",
     "m_Id": 0,
@@ -1753,6 +5785,42 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "fe76b3f71a9e42c6af7ec2f14f434d87",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 3108.800048828125,
+            "y": 635.2000122070313,
+            "width": 202.39990234375,
+            "height": 33.5999755859375
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "e06a433cbf6e420a9fb443ff77208418"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "01186f9dc6014b0fbf096128fe528078"
     }
 }
 

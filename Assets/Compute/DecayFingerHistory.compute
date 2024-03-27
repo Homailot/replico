@@ -1,6 +1,16 @@
 #pragma kernel decay_finger_history
 
+// This is the compute shader that calculates the decay of the finger history
+// based on the current finger positions and the previous finger history.
+// Each texture can store the history of two fingers, so we have 5 textures
+// X is the inverse distance to the line, Y is the decay or longevity of the finger
+// Z is the inverse distance to the line for the second finger, W is the decay or longevity of the finger for the second finger
 RWTexture2D<float4> finger_history;
+RWTexture2D<float4> finger_history_2;
+RWTexture2D<float4> finger_history_3;
+RWTexture2D<float4> finger_history_4;
+RWTexture2D<float4> finger_history_5;
+
 RWStructuredBuffer<float4> finger_positions;
 RWStructuredBuffer<float4> last_finger_positions;
 RWStructuredBuffer<float> average_incline;
@@ -52,25 +62,54 @@ float calculate_decay(float decay)
     return decay - linear_decay_rate * delta_time - quadratic_decay_rate * delta_time * delta_time;
 }
 
-[numthreads(8,8,1)]
-void decay_finger_history (uint3 id : SV_DispatchThreadID)
+float4 calculate_finger_history(float2 p, float4 previous_history, float4 last_positions, float4 current_positions, float2 average_incline)
 {
-    const float finger_1_decay = calculate_decay(finger_history[id.xy].y);
-    const float2 a1 = last_finger_positions[0].xy;
-    const float2 b1 = finger_positions[0].xy;
+    const float finger_1_decay = calculate_decay(previous_history.y);
+    const float2 a1 = last_positions.xy;
+    const float2 b1 = current_positions.xy;
 
-    float2 finger1_radius = get_finger_radius(float2(id.xy), a1, b1, average_incline[0], finger_1_decay, finger_history[id.xy].x);
+    const float2 finger1_radius = get_finger_radius(p, a1, b1, average_incline.x, finger_1_decay, previous_history.x);
 
-    const float finger_2_decay = calculate_decay(finger_history[id.xy].w);
-    const float2 a2 = last_finger_positions[0].zw;
-    const float2 b2 = finger_positions[0].zw;
+    const float finger_2_decay = calculate_decay(previous_history.w);
+    const float2 a2 = last_positions.zw;
+    const float2 b2 = current_positions.zw;
 
-    float2 finger2_radius = get_finger_radius(float2(id.xy), a2, b2, average_incline[1], finger_2_decay, finger_history[id.xy].z);
-    
-    finger_history[id.xy] = float4(
+    const float2 finger2_radius = get_finger_radius(p, a2, b2, average_incline.y, finger_2_decay, previous_history.z);
+
+    return float4(
         finger1_radius.x,
         finger1_radius.y,
         finger2_radius.x,
         finger2_radius.y
-        );
+    );
+}
+
+[numthreads(8,8,1)]
+void decay_finger_history (uint3 id : SV_DispatchThreadID)
+{
+    const float2 p = float2(id.xy);
+    float4 history;
+
+    switch (id.z)
+    {
+        case 0:
+            history = finger_history[id.xy];
+            break;
+        case 1:
+            history = finger_history_2[id.xy];
+            break;
+        case 2:
+            history = finger_history_3[id.xy];
+            break;
+        case 3:
+            history = finger_history_4[id.xy];
+            break;
+        default:
+            history = finger_history_5[id.xy];
+            break;
+    }
+    
+    const float4 first_finger_history = calculate_finger_history(p, history, last_finger_positions[id.z], finger_positions[id.z], float2(average_incline[id.z * 2], average_incline[id.z * 2 + 1]));
+    
+    finger_history[id.xy] = first_finger_history;
 }

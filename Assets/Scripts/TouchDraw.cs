@@ -19,6 +19,10 @@ public class TouchDraw : MonoBehaviour
     
     private Material _material;
     private RenderTexture _fingerHistory;
+    private RenderTexture _finger2History;
+    private RenderTexture _finger3History;
+    private RenderTexture _finger4History;
+    private RenderTexture _finger5History;
     private ComputeBuffer _fingerPositionsBuffer;
     private ComputeBuffer _lastFingerPositionsBuffer;
     private ComputeBuffer _averageInclinationBuffer;
@@ -28,6 +32,10 @@ public class TouchDraw : MonoBehaviour
     
     private const int ShaderGroupSize = 8;
     private static readonly int ComputeFingerHistory = Shader.PropertyToID("finger_history");
+    private static readonly int ComputeFinger2History = Shader.PropertyToID("finger_history_2");
+    private static readonly int ComputeFinger3History = Shader.PropertyToID("finger_history_3");
+    private static readonly int ComputeFinger4History = Shader.PropertyToID("finger_history_4");
+    private static readonly int ComputeFinger5History = Shader.PropertyToID("finger_history_5");
     private static readonly int FingerPositions = Shader.PropertyToID("finger_positions");
     private static readonly int LinearDecayRate = Shader.PropertyToID("linear_decay_rate");
     private static readonly int QuadraticDecayRate = Shader.PropertyToID("quadratic_decay_rate");
@@ -38,6 +46,10 @@ public class TouchDraw : MonoBehaviour
     private HashSet<Finger> _fingers;
     private static readonly int FingerRadius = Shader.PropertyToID("finger_radius");
     private static readonly int FingerHistory = Shader.PropertyToID("_Finger_History");
+    private static readonly int Finger2History = Shader.PropertyToID("_Finger_History_2");
+    private static readonly int Finger3History = Shader.PropertyToID("_Finger_History_3");
+    private static readonly int Finger4History = Shader.PropertyToID("_Finger_History_4");
+    private static readonly int Finger5History = Shader.PropertyToID("_Finger_History_5");
 
     private void Awake()
     {
@@ -52,19 +64,12 @@ public class TouchDraw : MonoBehaviour
         
         _writeWidth = Screen.width;
         _writeHeight = Screen.height;
-        
-        _fingerHistory = new RenderTexture(textureSize,
-            textureSize,
-            0,
-            RenderTextureFormat.ARGBFloat,
-            RenderTextureReadWrite.Linear)
-        {
-            filterMode = FilterMode.Point,
-            wrapMode = TextureWrapMode.Clamp,
-            autoGenerateMips = false,
-            enableRandomWrite = true
-        };
-        _fingerHistory.Create();
+
+        _fingerHistory = CreateRenderTexture(textureSize, textureSize);
+        _finger2History = CreateRenderTexture(textureSize, textureSize);
+        _finger3History = CreateRenderTexture(textureSize, textureSize);
+        _finger4History = CreateRenderTexture(textureSize, textureSize);
+        _finger5History = CreateRenderTexture(textureSize, textureSize);
         
         var mesh = GetComponent<MeshFilter>().mesh;
         // Update the UVs of the mesh to match the aspect ratio of the screen
@@ -83,9 +88,9 @@ public class TouchDraw : MonoBehaviour
         _averageInclination = new float[2];
         _currentFingerPositions = new float4[2];
         _lastFingerPositions = new float4[2];
-        _averageInclinationBuffer = new ComputeBuffer(2, sizeof(float));
-        _fingerPositionsBuffer = new ComputeBuffer(2, sizeof(float) * 4);
-        _lastFingerPositionsBuffer = new ComputeBuffer(2, sizeof(float) * 4);
+        _averageInclinationBuffer = new ComputeBuffer(10, sizeof(float));
+        _fingerPositionsBuffer = new ComputeBuffer(5, sizeof(float) * 4);
+        _lastFingerPositionsBuffer = new ComputeBuffer(5, sizeof(float) * 4);
         
         Array.Fill(_averageInclination, 0);
         
@@ -109,8 +114,16 @@ public class TouchDraw : MonoBehaviour
         
         _material = GetComponent<Renderer>().material;
         _material.SetTexture(FingerHistory, _fingerHistory);
+        _material.SetTexture(Finger2History, _finger2History);
+        _material.SetTexture(Finger3History, _finger3History);
+        _material.SetTexture(Finger4History, _finger4History);
+        _material.SetTexture(Finger5History, _finger5History);
         
         decayFingerHistory.SetTexture(0, ComputeFingerHistory, _fingerHistory);
+        decayFingerHistory.SetTexture(0, ComputeFinger2History, _finger2History);
+        decayFingerHistory.SetTexture(0, ComputeFinger3History, _finger3History);
+        decayFingerHistory.SetTexture(0, ComputeFinger4History, _finger4History);
+        decayFingerHistory.SetTexture(0, ComputeFinger5History, _finger5History);
         decayFingerHistory.SetBuffer(0, FingerPositions, _fingerPositionsBuffer);
         decayFingerHistory.SetBuffer(0, LastFingerPositions, _lastFingerPositionsBuffer);
         decayFingerHistory.SetBuffer(0, AverageIncline, _averageInclinationBuffer);
@@ -136,6 +149,19 @@ public class TouchDraw : MonoBehaviour
         decayFingerHistory.SetFloat(FingerRadius, fingerRadius);
     }
 
+    private static RenderTexture CreateRenderTexture(int width, int height)
+    {
+        var texture = new RenderTexture(width, height, 0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear)
+        {
+            filterMode = FilterMode.Point,
+            wrapMode = TextureWrapMode.Clamp,
+            autoGenerateMips = false,
+            enableRandomWrite = true
+        };
+        texture.Create();
+        return texture;
+    }
+    
     private static void UpdateFingerPosition(ref float4[] fingerPositions, int index, float2 newPosition)
     {
         var innerIndex = index % 2;
@@ -214,6 +240,6 @@ public class TouchDraw : MonoBehaviour
         decayFingerHistory.Dispatch(0,
             _fingerHistory.width / ShaderGroupSize,
             _fingerHistory.height / ShaderGroupSize,
-            1);
+            5);
     }
 }
