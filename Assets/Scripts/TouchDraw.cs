@@ -52,7 +52,7 @@ public class TouchDraw : MonoBehaviour
     private static readonly int Finger5History = Shader.PropertyToID("_Finger_History_5");
 
     private void Awake()
-    {
+    { 
         EnhancedTouchSupport.Enable(); 
     }
 
@@ -79,15 +79,20 @@ public class TouchDraw : MonoBehaviour
         uvs[2] = new Vector2((float) Screen.width / _fingerHistory.width, (float) Screen.height / _fingerHistory.height);
         uvs[3] = new Vector2((float) Screen.width / _fingerHistory.width, 0);
         mesh.uv = uvs;
+
+        foreach (var uv in mesh.uv)
+        {
+            Debug.Log(uv);
+        }
         
         var currentActive = RenderTexture.active;
         RenderTexture.active = _fingerHistory;
         GL.Clear(true, true, Color.clear);
         RenderTexture.active = currentActive;
         
-        _averageInclination = new float[2];
-        _currentFingerPositions = new float4[2];
-        _lastFingerPositions = new float4[2];
+        _averageInclination = new float[10];
+        _currentFingerPositions = new float4[5];
+        _lastFingerPositions = new float4[5];
         _averageInclinationBuffer = new ComputeBuffer(10, sizeof(float));
         _fingerPositionsBuffer = new ComputeBuffer(5, sizeof(float) * 4);
         _lastFingerPositionsBuffer = new ComputeBuffer(5, sizeof(float) * 4);

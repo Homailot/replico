@@ -137,9 +137,17 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Finger_10_Color: {r: 0, g: 0, b: 0, a: 0}
     - _Finger_1_Color: {r: 1, g: 0.101960786, b: 0.078431375, a: 0}
     - _Finger_1_Position: {r: 1920, g: 300.3, b: 0, a: 0}
     - _Finger_2_Color: {r: 1, g: 0, b: 0.4858632, a: 0}
+    - _Finger_3_Color: {r: 0, g: 0.052875042, b: 1, a: 0}
+    - _Finger_4_Color: {r: 0.61142457, g: 1, b: 0, a: 0}
+    - _Finger_5_Color: {r: 0, g: 1, b: 0.5203762, a: 0}
+    - _Finger_6_Color: {r: 0.12163275, g: 0.51572317, b: 0.42353055, a: 0}
+    - _Finger_7_Color: {r: 0.2187017, g: 0.46748194, b: 0.7169812, a: 0}
+    - _Finger_8_Color: {r: 0.8882994, g: 0.003144443, b: 1, a: 0}
+    - _Finger_9_Color: {r: 0.037671328, g: 1, b: 0, a: 0}
     - _Finger_Border_Color: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

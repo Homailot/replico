@@ -20,26 +20,26 @@ float linear_decay_rate;
 float quadratic_decay_rate;
 float finger_radius;
 
-float distance_to_line (float2 p, float2 a, float2 b)
+float distance_to_line (const float2 p, const float2 a, const float2 b)
 {
-    float2 ab = b - a;
-    float2 ap = p - a;
+    const float2 ab = b - a;
+    const float2 ap = p - a;
 
-    float h = saturate(dot(ap, ab) / dot(ab, ab));
+    const float h = saturate(dot(ap, ab) / dot(ab, ab));
     return length(ap - h * ab) / finger_radius;
 }
 
-float point_in_front (float2 p, float2 a, float incline)
+float point_in_front (const float2 p, float2 a, const float incline)
 {
-    float2 b = float2(a.x + finger_radius * cos(incline), a.y + finger_radius * sin(incline));
+    const float2 b = float2(a.x + finger_radius * cos(incline), a.y + finger_radius * sin(incline));
 
-    float2 ab = b - a;
-    float2 ap = p - a;
+    const float2 ab = b - a;
+    const float2 ap = p - a;
 
     return (dot(ap, ab) / dot(ab, ab));
 }
 
-float2 get_finger_radius(float2 p, float2 a, float2 b, float average_incline, float decay, float previous_radius)
+float2 get_finger_radius(const float2 p, const float2 a, const float2 b, const float average_incline, const float decay, const float previous_radius)
 {
     const float finger_distance = distance_to_line(p, a, b);
     const float in_front = point_in_front(p, a, average_incline);
@@ -57,12 +57,12 @@ float2 get_finger_radius(float2 p, float2 a, float2 b, float average_incline, fl
     );
 }
 
-float calculate_decay(float decay)
+float calculate_decay(const float decay)
 {
     return decay - linear_decay_rate * delta_time - quadratic_decay_rate * delta_time * delta_time;
 }
 
-float4 calculate_finger_history(float2 p, float4 previous_history, float4 last_positions, float4 current_positions, float2 average_incline)
+float4 calculate_finger_history(const float2 p, float4 previous_history, float4 last_positions, float4 current_positions, float2 average_incline)
 {
     const float finger_1_decay = calculate_decay(previous_history.y);
     const float2 a1 = last_positions.xy;
@@ -94,22 +94,35 @@ void decay_finger_history (uint3 id : SV_DispatchThreadID)
     {
         case 0:
             history = finger_history[id.xy];
+            const float4 first_finger_history = calculate_finger_history(p, history, last_finger_positions[id.z], finger_positions[id.z], float2(average_incline[id.z * 2], average_incline[id.z * 2 + 1]));
+
+            finger_history[id.xy] = first_finger_history;
             break;
         case 1:
             history = finger_history_2[id.xy];
+
+            const float4 second_finger_history = calculate_finger_history(p, history, last_finger_positions[id.z], finger_positions[id.z], float2(average_incline[id.z * 2], average_incline[id.z * 2 + 1]));
+            finger_history_2[id.xy] = second_finger_history;
             break;
         case 2:
             history = finger_history_3[id.xy];
+
+            const float4 third_finger_history = calculate_finger_history(p, history, last_finger_positions[id.z], finger_positions[id.z], float2(average_incline[id.z * 2], average_incline[id.z * 2 + 1]));
+            finger_history_3[id.xy] = third_finger_history;
             break;
         case 3:
             history = finger_history_4[id.xy];
+
+            const float4 fourth_finger_history = calculate_finger_history(p, history, last_finger_positions[id.z], finger_positions[id.z], float2(average_incline[id.z * 2], average_incline[id.z * 2 + 1]));
+            finger_history_4[id.xy] = fourth_finger_history;
             break;
         default:
             history = finger_history_5[id.xy];
+
+            const float4 fifth_finger_history = calculate_finger_history(p, history, last_finger_positions[id.z], finger_positions[id.z], float2(average_incline[id.z * 2], average_incline[id.z * 2 + 1]));
+            finger_history_5[id.xy] = fifth_finger_history;
             break;
     }
     
-    const float4 first_finger_history = calculate_finger_history(p, history, last_finger_positions[id.z], finger_positions[id.z], float2(average_incline[id.z * 2], average_incline[id.z * 2 + 1]));
     
-    finger_history[id.xy] = first_finger_history;
 }
