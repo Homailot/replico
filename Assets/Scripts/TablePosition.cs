@@ -37,8 +37,6 @@ public class TablePosition : MonoBehaviour
 
     private void AlignCameraToTable()
     {
-//        xrOrigin.MatchOriginUpOriginForward(table.up, table.forward);
-        
         var trackerToOrigin = xrOrigin.CameraInOriginSpacePos - tableTracker.position; 
         
         table.rotation = Quaternion.LookRotation(-tableTracker.forward, -tableTracker.up); 
