@@ -35,6 +35,11 @@ public class Replica : MonoBehaviour
         _replicaAnimation.RevertAnimation(onComplete);
     }
     
+    public void CompleteAnimation(Action onComplete = null)
+    {
+        _replicaAnimation.CompleteAnimation(onComplete);
+    }
+    
     public void AnimateTo(float t)
     {
         _replicaAnimation.AnimateTo(t);

@@ -20,7 +20,7 @@ namespace Gestures
         {
             if (Touch.activeFingers.Count == _gestureConfiguration.swipeFingers)
             {
-                _gestureDetector.SwitchState(new SwipeReplicaGesture(_gestureDetector, _gestureConfiguration)); 
+                _gestureDetector.SwitchState(new SwipeUpReplicaGesture(_gestureDetector, _gestureConfiguration)); 
             }
         }
     }

@@ -5,16 +5,19 @@ using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 namespace Gestures
 {
-    public class SwipeReplicaGesture : IGestureState
+    public abstract class SwipeReplicaGesture : IGestureState
     {
-        private readonly GestureDetector _gestureDetector;
-        private readonly List<Vector2> _fingerStarts = new List<Vector2>();
-        
+        private readonly List<Vector2> _fingerStarts = new();
         private readonly GestureConfiguration _gestureConfiguration;
+        private float _t;
         
-        public SwipeReplicaGesture(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration)
+        protected abstract Vector2 swipeThreshold { get; }
+        protected abstract void OnSwipeDetected();
+        protected abstract void OnSwipeCancelled(float t);
+        protected abstract void OnSwipeMoved(float t);
+
+        protected SwipeReplicaGesture(GestureConfiguration gestureConfiguration)
         {
-            _gestureDetector = gestureDetector;
             _gestureConfiguration = gestureConfiguration;
             
             var fingers = Touch.activeFingers;
@@ -28,8 +31,6 @@ namespace Gestures
             {
                 _fingerStarts.Add(finger.screenPosition);
             }
-            _gestureConfiguration.replica.AnimateTo(0);
-            _gestureConfiguration.replica.EnableReplica();
         }
         
         public void OnUpdate()
@@ -37,8 +38,7 @@ namespace Gestures
             var fingers = Touch.activeFingers;
             if (fingers.Count != _gestureConfiguration.swipeFingers)
             {
-                _gestureDetector.SwitchState(new InitialGesture(_gestureDetector, _gestureConfiguration));
-                _gestureConfiguration.replica.RevertAnimation(() => _gestureConfiguration.replica.DisableReplica());
+                OnSwipeCancelled(_t);
                 return;
             }
             
@@ -52,13 +52,14 @@ namespace Gestures
             var fingerDeltaAverage = fingerDeltaSum / fingers.Count;
             var fingerDeltaAverageRelativeToScreen = fingerDeltaAverage / new Vector2(Screen.width, Screen.height);
             
-            var fingerDeltaProjected = Vector2.Dot(fingerDeltaAverageRelativeToScreen, _gestureConfiguration.swipeThreshold) / _gestureConfiguration.swipeThreshold.sqrMagnitude;
-            _gestureConfiguration.replica.AnimateTo(Mathf.Clamp01(fingerDeltaProjected));
+            var fingerDeltaProjected = Vector2.Dot(fingerDeltaAverageRelativeToScreen, swipeThreshold) / swipeThreshold.sqrMagnitude;
+            OnSwipeMoved(fingerDeltaProjected);
+            _t = fingerDeltaProjected;
             
             if (!(fingerDeltaProjected > 1f)) return;
             
             Debug.Log("Swipe detected");
-            _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _gestureConfiguration));
+            OnSwipeDetected();
         } 
     }
 }

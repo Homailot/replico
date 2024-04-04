@@ -8,6 +8,7 @@ namespace Gestures
     {
         public Vector2 swipeThreshold;
         public int swipeFingers;
+        public float swipeHalfThreshold;
         public Replica replica;
     }
 }

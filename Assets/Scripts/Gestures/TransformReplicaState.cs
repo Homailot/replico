@@ -1,3 +1,5 @@
+using UnityEngine.InputSystem.EnhancedTouch;
+
 namespace Gestures
 {
     public class TransformReplicaState : IGestureState
@@ -13,6 +15,11 @@ namespace Gestures
         
         public void OnUpdate()
         {
+            if (Touch.activeFingers.Count == _gestureConfiguration.swipeFingers)
+            {
+                _gestureDetector.SwitchState(new SwipeDownReplicaGesture(_gestureDetector, _gestureConfiguration));
+                return;
+            }
         }
     }
 }

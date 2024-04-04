@@ -63,6 +63,16 @@ public class ReplicaAnimation : MonoBehaviour
         
         _currentCoroutine = StartCoroutine(AnimateToCoroutine(0.0f, onComplete));
     }
+    
+    public void CompleteAnimation(Action onComplete = null)
+    {
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
+        }
+        
+        _currentCoroutine = StartCoroutine(AnimateToCoroutine(1.0f, onComplete));
+    }
 
     private IEnumerator AnimateToCoroutine(float t, Action onComplete = null)
     {
@@ -84,8 +94,7 @@ public class ReplicaAnimation : MonoBehaviour
         while (currentTime < duration)
         {
             currentTime += Time.deltaTime;
-            var curveValue = animationCurve.Evaluate(currentTime / duration);
-            curveValue = _t + curveValue * (t - _t);
+            var curveValue = animationCurve.Evaluate(_t + (currentTime / duration) * (t - _t));
             Debug.Log("Curve value: " + curveValue);
             
             _replica.GetReplica().transform.position = Vector3.Lerp(startTransformPosition, endTransformPosition, curveValue);
