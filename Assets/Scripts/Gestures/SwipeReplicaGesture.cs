@@ -8,8 +8,7 @@ namespace Gestures
     public class SwipeReplicaGesture : IGestureState
     {
         private readonly GestureDetector _gestureDetector;
-        private readonly Vector2 _finger1Start;
-        private readonly Vector2 _finger2Start; 
+        private readonly List<Vector2> _fingerStarts = new List<Vector2>();
         
         private readonly GestureConfiguration _gestureConfiguration;
         
@@ -20,45 +19,47 @@ namespace Gestures
             
             var fingers = Touch.activeFingers;
             
-            if (fingers.Count != 2)
+            if (fingers.Count != gestureConfiguration.swipeFingers)
             {
                 return;
             }
             
-            _finger1Start = fingers[0].screenPosition;
-            _finger2Start = fingers[1].screenPosition;
+            foreach (var finger in fingers)
+            {
+                _fingerStarts.Add(finger.screenPosition);
+            }
+            _gestureConfiguration.replica.AnimateTo(0);
+            _gestureConfiguration.replica.EnableReplica();
         }
         
         public void OnUpdate()
         {
             var fingers = Touch.activeFingers;
-            if (fingers.Count != 2)
+            if (fingers.Count != _gestureConfiguration.swipeFingers)
             {
                 _gestureDetector.SwitchState(new InitialGesture(_gestureDetector, _gestureConfiguration));
+                // TODO: animate back to 0 with a smooth transition before disabling the replica
+                _gestureConfiguration.replica.DisableReplica();
                 return;
             }
             
-            var finger1 = fingers[0];
-            var finger2 = fingers[1];
+            var fingerDeltaSum = Vector2.zero;
+            for (var i = 0; i < fingers.Count; i++)
+            {
+                var fingerDelta = fingers[i].screenPosition - _fingerStarts[i];
+                fingerDeltaSum += fingerDelta;
+            }
             
-            var finger1Delta = finger1.screenPosition - _finger1Start;
-            var finger2Delta = finger2.screenPosition - _finger2Start;
-            
-            var fingerDeltaAverage = (finger1Delta + finger2Delta) / 2;
+            var fingerDeltaAverage = fingerDeltaSum / fingers.Count;
             var fingerDeltaAverageRelativeToScreen = fingerDeltaAverage / new Vector2(Screen.width, Screen.height);
             
-            Debug.Log($"Finger delta average: {fingerDeltaAverage}");
-            Debug.Log($"Finger delta average relative to screen: {fingerDeltaAverageRelativeToScreen}");
-            
-            Debug.Log($"Swipe threshold: {_gestureConfiguration.swipeThreshold}");
             var fingerDeltaProjected = Vector2.Dot(fingerDeltaAverageRelativeToScreen, _gestureConfiguration.swipeThreshold) / _gestureConfiguration.swipeThreshold.sqrMagnitude;
-
-            Debug.Log($"Finger delta projected: {fingerDeltaProjected}");
+            _gestureConfiguration.replica.AnimateTo(Mathf.Clamp01(fingerDeltaProjected));
             
             if (!(fingerDeltaProjected > 1f)) return;
             
             Debug.Log("Swipe detected");
-            _gestureDetector.SwitchState(new InitialGesture(_gestureDetector, _gestureConfiguration));
+            _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _gestureConfiguration));
         } 
     }
 }

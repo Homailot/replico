@@ -4,8 +4,10 @@ using UnityEngine;
 namespace Gestures
 {
     [Serializable]
-    public struct GestureConfiguration
+    public class GestureConfiguration
     {
         public Vector2 swipeThreshold;
+        public int swipeFingers;
+        public Replica replica;
     }
 }

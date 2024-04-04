@@ -14,7 +14,6 @@ namespace Gestures
         private void Awake()
         {
             EnhancedTouchSupport.Enable();
-            Debug.Log($"gesutreConfiguration: {gestureConfiguration.swipeThreshold}");
             _currentState = new InitialGesture(this, gestureConfiguration);
             _currentState.OnEnter();
         }

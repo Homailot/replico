@@ -18,7 +18,7 @@ namespace Gestures
         
         public void OnUpdate()
         {
-            if (Touch.activeFingers.Count == 2)
+            if (Touch.activeFingers.Count == _gestureConfiguration.swipeFingers)
             {
                 _gestureDetector.SwitchState(new SwipeReplicaGesture(_gestureDetector, _gestureConfiguration)); 
             }
