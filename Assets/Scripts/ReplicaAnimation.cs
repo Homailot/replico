@@ -34,6 +34,11 @@ public class ReplicaAnimation : MonoBehaviour
     
     public void AnimateTo(float t)
     {
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
+        }
+        
         var startTransformPosition = startTransform.position;
         var endTransformPosition = endTransform.position;
         var startTransformScale = startTransform.localScale;
@@ -49,7 +54,17 @@ public class ReplicaAnimation : MonoBehaviour
         _t = t;
     }
 
-    private IEnumerator AnimateToCoroutine(float t)
+    public void RevertAnimation(Action onComplete = null)
+    {
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
+        }
+        
+        _currentCoroutine = StartCoroutine(AnimateToCoroutine(0.0f, onComplete));
+    }
+
+    private IEnumerator AnimateToCoroutine(float t, Action onComplete = null)
     {
         Debug.Log("Animating from " + _t + " to " + t);
         if (Mathf.Abs(t - _t) < 0.00001f)
@@ -88,5 +103,6 @@ public class ReplicaAnimation : MonoBehaviour
 
         _currentCoroutine = null;
         _t = t;
+        onComplete?.Invoke();
     }
 }

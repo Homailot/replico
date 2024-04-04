@@ -38,8 +38,7 @@ namespace Gestures
             if (fingers.Count != _gestureConfiguration.swipeFingers)
             {
                 _gestureDetector.SwitchState(new InitialGesture(_gestureDetector, _gestureConfiguration));
-                // TODO: animate back to 0 with a smooth transition before disabling the replica
-                _gestureConfiguration.replica.DisableReplica();
+                _gestureConfiguration.replica.RevertAnimation(() => _gestureConfiguration.replica.DisableReplica());
                 return;
             }
             
