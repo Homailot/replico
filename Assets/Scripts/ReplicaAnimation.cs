@@ -9,8 +9,6 @@ public class ReplicaAnimation : MonoBehaviour
     [SerializeField] private AnimationCurve animationCurve = AnimationCurve.EaseInOut(0.0f, 0.0f, 1.0f, 1.0f);
     // Duration used for single events, such as a swipe being cancelled. In seconds
     [SerializeField] private float duration;
-    // Duration used in smaller steps, such as when in the middle of a swipe. In seconds
-    [SerializeField] private float steppedDuration;
     [SerializeField] private float startAlpha;
     [SerializeField] private float endAlpha;
     [SerializeField] private Transform startTransform;
@@ -22,8 +20,7 @@ public class ReplicaAnimation : MonoBehaviour
     private Replica _replica;
 
     private float _t;
-    private readonly Queue<Action> _animationQueue = new Queue<Action>();
-    private Action _currentAnimation;
+    private Coroutine _currentCoroutine;
     
     private void Start()
     {
@@ -33,11 +30,6 @@ public class ReplicaAnimation : MonoBehaviour
 
     private void Update()
     {
-        if (_currentAnimation != null || _animationQueue.Count <= 0) return;
-        
-        Debug.Log("Dequeueing animation");
-        _currentAnimation = _animationQueue.Dequeue();
-        _currentAnimation();
     }
     
     public void AnimateTo(float t)
@@ -62,7 +54,7 @@ public class ReplicaAnimation : MonoBehaviour
         Debug.Log("Animating from " + _t + " to " + t);
         if (Mathf.Abs(t - _t) < 0.00001f)
         {
-            _currentAnimation = null;
+            _currentCoroutine = null;
             _t = t;
             yield break;
         }
@@ -74,10 +66,10 @@ public class ReplicaAnimation : MonoBehaviour
         var startAngle = rotationStart;
         var endAngle = rotationEnd;
 
-        while (currentTime < steppedDuration)
+        while (currentTime < duration)
         {
             currentTime += Time.deltaTime;
-            var curveValue = animationCurve.Evaluate(currentTime / steppedDuration);
+            var curveValue = animationCurve.Evaluate(currentTime / duration);
             curveValue = _t + curveValue * (t - _t);
             Debug.Log("Curve value: " + curveValue);
             
@@ -93,8 +85,8 @@ public class ReplicaAnimation : MonoBehaviour
         _replica.GetReplica().transform.position = Vector3.Lerp(startTransformPosition, endTransformPosition, t);
         _replica.GetReplica().transform.localScale = Vector3.Lerp(startTransformScale, endTransformScale, t);
         _replica.GetReplica().transform.rotation = Quaternion.AngleAxis(Mathf.Lerp(startAngle, endAngle, t), rotationAxis);
-        
-        _currentAnimation = null;
+
+        _currentCoroutine = null;
         _t = t;
     }
 }
