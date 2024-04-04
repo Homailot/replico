@@ -30,6 +30,21 @@ public class Replica : MonoBehaviour
         _replica.SetActive(false);
     }
     
+    public void SetStartTransform(Transform start)
+    {
+        _replicaAnimation.SetStartTransform(start);
+    }
+    
+    public void SetEndTransform(Transform end)
+    {
+        _replicaAnimation.SetEndTransform(end);
+    }
+    
+    public void ResetTransforms()
+    {
+        _replicaAnimation.ResetTransforms();
+    }
+    
     public void RevertAnimation(Action onComplete = null)
     {
         _replicaAnimation.RevertAnimation(onComplete);

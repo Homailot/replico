@@ -58,7 +58,6 @@ namespace Gestures
             
             if (!(fingerDeltaProjected > 1f)) return;
             
-            Debug.Log("Swipe detected");
             OnSwipeDetected();
         } 
     }

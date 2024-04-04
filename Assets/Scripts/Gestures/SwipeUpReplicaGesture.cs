@@ -20,6 +20,7 @@ namespace Gestures
         protected override Vector2 swipeThreshold { get; }
         protected override void OnSwipeDetected()
         {
+            _gestureConfiguration.replica.ResetTransforms();
             _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _gestureConfiguration));
         }
 
@@ -27,7 +28,7 @@ namespace Gestures
         {
             if (t > _gestureConfiguration.swipeHalfThreshold)
             {
-                _gestureConfiguration.replica.CompleteAnimation();
+                _gestureConfiguration.replica.CompleteAnimation(() => _gestureConfiguration.replica.ResetTransforms());
                 _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _gestureConfiguration));
                 return;
             }

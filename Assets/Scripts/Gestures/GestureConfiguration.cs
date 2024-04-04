@@ -10,5 +10,7 @@ namespace Gestures
         public int swipeFingers;
         public float swipeHalfThreshold;
         public Replica replica;
+        
+        public float translateSpeed;
     }
 }

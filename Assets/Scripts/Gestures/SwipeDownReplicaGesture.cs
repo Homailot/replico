@@ -10,6 +10,7 @@ namespace Gestures
         public SwipeDownReplicaGesture(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration) : base(gestureConfiguration)
         {
             swipeThreshold = -gestureConfiguration.swipeThreshold;
+            gestureConfiguration.replica.SetEndTransform(gestureConfiguration.replica.GetReplica().transform);
             gestureConfiguration.replica.AnimateTo(1.0f);
             gestureConfiguration.replica.EnableReplica();
             
@@ -21,6 +22,7 @@ namespace Gestures
         protected override void OnSwipeDetected()
         {
             _gestureDetector.SwitchState(new InitialGesture(_gestureDetector, _gestureConfiguration));
+            _gestureConfiguration.replica.ResetTransforms();
             _gestureConfiguration.replica.DisableReplica();
         }
 
@@ -28,7 +30,11 @@ namespace Gestures
         {
             if (t > _gestureConfiguration.swipeHalfThreshold)
             {
-                _gestureConfiguration.replica.RevertAnimation(() => _gestureConfiguration.replica.DisableReplica());
+                _gestureConfiguration.replica.RevertAnimation(() =>
+                {
+                    _gestureConfiguration.replica.DisableReplica();
+                    _gestureConfiguration.replica.ResetTransforms();
+                });
                 _gestureDetector.SwitchState(new InitialGesture(_gestureDetector, _gestureConfiguration));
                 return;
             }
