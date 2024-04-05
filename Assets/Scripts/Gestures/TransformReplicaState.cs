@@ -31,6 +31,53 @@ namespace Gestures
                 return obj.index;
             }
         }
+            
+        private Vector2 calcCenter(List<Finger> touches)
+        {
+            Vector2 tMax = touches[0].screenPosition;
+            Vector2 tMin = tMax;
+
+            for (int i = 1; i < touches.Count; i++)
+            {
+                Vector2 tPos = touches[i].screenPosition;
+                tMax = new Vector2(Mathf.Max(tMax.x, tPos.x), Mathf.Max(tMax.y, tPos.y));
+                tMin = new Vector2(Mathf.Min(tMin.x, tPos.x), Mathf.Min(tMin.y, tPos.y));
+            }
+
+            return (tMin + tMax) / 2.0f;
+        }
+
+        private float calcAvgDistance(List<Finger> touches, Vector2 center)
+        {
+            float avgDistance = 0;
+            for (int i = 0; i < touches.Count; i++)
+            {
+                avgDistance += (center - touches[i].screenPosition).magnitude;
+            }
+            avgDistance /= (float)touches.Count;
+
+            return avgDistance;
+        }
+
+        private float calcAvgRotation(List<Finger> touches, Vector2 center, Vector2 lastCenter, int lastTouchCount)
+        {
+            float avgRotation = 0;
+            if (lastTouchCount == touches.Count && touches.Count > 1)
+            {
+                for (int i = 0; i < touches.Count; i++)
+                {
+                    Vector2 oldDir = _lastFingerPositions[touches[i]] - lastCenter;
+                    Vector2 newDir = touches[i].screenPosition - center;
+                    float angle = Vector2.Angle(oldDir, newDir);
+                    if (Vector3.Cross(oldDir, newDir).z < 0) angle = -angle;
+                    avgRotation += angle;
+                }
+                avgRotation /= (float)touches.Count;
+            }
+
+            return avgRotation;
+        }
+
         
         public TransformReplicaState(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration)
         {

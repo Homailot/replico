@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.Serialization;
@@ -21,6 +22,7 @@ namespace Gestures
         private void Update()
         {
             _currentState.OnUpdate();
+            //Debug.Log(Touch.activeFingers.Count(finger => finger.isActive));
         }
         
         public void SwitchState(IGestureState newState)
