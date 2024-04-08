@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
@@ -9,6 +10,7 @@ namespace Gestures
     {
         private readonly List<Vector2> _fingerStarts = new();
         private readonly GestureConfiguration _gestureConfiguration;
+        private bool _cancelled;
         private float _t;
         
         protected abstract Vector2 swipeThreshold { get; }
@@ -36,9 +38,28 @@ namespace Gestures
         public void OnUpdate()
         {
             var fingers = Touch.activeFingers;
+            if (_cancelled)
+            {
+                if (fingers.Count == _gestureConfiguration.swipeFingers)
+                {
+                    _cancelled = false;
+                    _fingerStarts.Clear();
+
+                    foreach (var finger in fingers)
+                    {
+                        _fingerStarts.Add(finger.screenPosition - swipeThreshold * new Vector2(Screen.width, Screen.height) * _t);
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+            
             if (fingers.Count != _gestureConfiguration.swipeFingers)
             {
                 OnSwipeCancelled(_t);
+                _cancelled = true;
                 return;
             }
             

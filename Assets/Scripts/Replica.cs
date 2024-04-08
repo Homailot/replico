@@ -12,7 +12,6 @@ public class Replica : MonoBehaviour
         var transform1 = transform;
         _replica = Instantiate(objectToReplicate, transform1.position, transform1.rotation);
         _replica.transform.parent = transform1;
-        _replica.SetActive(false);
     }
 
     private void Start()

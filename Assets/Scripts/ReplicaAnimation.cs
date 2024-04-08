@@ -36,6 +36,7 @@ public class ReplicaAnimation : MonoBehaviour
         _endPosition = endTransform.position;
         _startScale = startTransform.localScale;
         _endScale = endTransform.localScale;
+        AnimateTo(0.0f);
     }
     
     public void SetStartTransform(Transform start)
@@ -102,12 +103,6 @@ public class ReplicaAnimation : MonoBehaviour
 
     private IEnumerator AnimateToCoroutine(float t, Action onComplete = null)
     {
-        if (Mathf.Abs(t - _t) < 0.00001f)
-        {
-            _currentCoroutine = null;
-            _t = t;
-            yield break;
-        }
         var currentTime = 0.0f;
         var startTransformPosition = _startPosition;
         var endTransformPosition = _endPosition;

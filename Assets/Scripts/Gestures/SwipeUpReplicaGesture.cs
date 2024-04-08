@@ -11,7 +11,6 @@ namespace Gestures
         {
             swipeThreshold = gestureConfiguration.swipeThreshold;
             gestureConfiguration.replica.AnimateTo(0.0f);
-            gestureConfiguration.replica.EnableReplica();
             
             _gestureDetector = gestureDetector;
             _gestureConfiguration = gestureConfiguration;
@@ -28,14 +27,17 @@ namespace Gestures
         {
             if (t > _gestureConfiguration.swipeHalfThreshold)
             {
-                _gestureConfiguration.replica.CompleteAnimation(() => _gestureConfiguration.replica.ResetTransforms());
-                _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _gestureConfiguration));
+                _gestureConfiguration.replica.CompleteAnimation(() =>
+                {
+                    _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _gestureConfiguration));
+                });
                 return;
             }
             
-            Debug.Log("t: " + t + " Swipe cancelled");
-            _gestureConfiguration.replica.RevertAnimation(() => _gestureConfiguration.replica.DisableReplica());
-            _gestureDetector.SwitchState(new InitialGesture(_gestureDetector, _gestureConfiguration));
+            _gestureConfiguration.replica.RevertAnimation(() =>
+            {
+                _gestureDetector.SwitchState(new InitialGesture(_gestureDetector, _gestureConfiguration));
+            });
         }
 
         protected override void OnSwipeMoved(float t)
