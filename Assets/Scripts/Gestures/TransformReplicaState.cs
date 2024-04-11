@@ -11,6 +11,8 @@ namespace Gestures
         private readonly GestureDetector _gestureDetector;
         private readonly GestureConfiguration _gestureConfiguration;
 
+        private Vector2 _lastCenter;
+        private float _lastDistance;
         private readonly Dictionary<Finger, Vector2> _lastFingerPositions =
             new Dictionary<Finger, Vector2>(new FingerEqualityComparer());
         
@@ -32,14 +34,14 @@ namespace Gestures
             }
         }
             
-        private Vector2 calcCenter(List<Finger> touches)
+        private Vector2 CalculateCenter(IReadOnlyList<Finger> touches)
         {
-            Vector2 tMax = touches[0].screenPosition;
-            Vector2 tMin = tMax;
+            var tMax = touches[0].screenPosition;
+            var tMin = tMax;
 
             for (int i = 1; i < touches.Count; i++)
             {
-                Vector2 tPos = touches[i].screenPosition;
+                var tPos = touches[i].screenPosition;
                 tMax = new Vector2(Mathf.Max(tMax.x, tPos.x), Mathf.Max(tMax.y, tPos.y));
                 tMin = new Vector2(Mathf.Min(tMin.x, tPos.x), Mathf.Min(tMin.y, tPos.y));
             }
@@ -47,37 +49,36 @@ namespace Gestures
             return (tMin + tMax) / 2.0f;
         }
 
-        private float calcAvgDistance(List<Finger> touches, Vector2 center)
+        private float CalculateAverageDistance(IReadOnlyCollection<Finger> touches, Vector2 center)
         {
             float avgDistance = 0;
-            for (int i = 0; i < touches.Count; i++)
+            foreach (var finger in touches)
             {
-                avgDistance += (center - touches[i].screenPosition).magnitude;
+                avgDistance += (center - finger.screenPosition).magnitude;
             }
-            avgDistance /= (float)touches.Count;
+            avgDistance /= touches.Count;
 
             return avgDistance;
         }
 
-        private float calcAvgRotation(List<Finger> touches, Vector2 center, Vector2 lastCenter, int lastTouchCount)
+        private float CalculateAverageRotation(IReadOnlyCollection<Finger> touches, Vector2 center, Vector2 lastCenter, int lastTouchCount)
         {
             float avgRotation = 0;
-            if (lastTouchCount == touches.Count && touches.Count > 1)
+            if (lastTouchCount != touches.Count || touches.Count <= 1) return avgRotation;
+            
+            foreach (var finger in touches)
             {
-                for (int i = 0; i < touches.Count; i++)
-                {
-                    Vector2 oldDir = _lastFingerPositions[touches[i]] - lastCenter;
-                    Vector2 newDir = touches[i].screenPosition - center;
-                    float angle = Vector2.Angle(oldDir, newDir);
-                    if (Vector3.Cross(oldDir, newDir).z < 0) angle = -angle;
-                    avgRotation += angle;
-                }
-                avgRotation /= (float)touches.Count;
+                var oldDir = _lastFingerPositions[finger] - lastCenter;
+                var newDir = finger.screenPosition - center;
+                var angle = Vector2.Angle(oldDir, newDir);
+                
+                if (Vector3.Cross(oldDir, newDir).z < 0) angle = -angle;
+                avgRotation += angle;
             }
+            avgRotation /= touches.Count;
 
             return avgRotation;
         }
-
         
         public TransformReplicaState(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration)
         {
@@ -100,31 +101,53 @@ namespace Gestures
             }
 
             if (Touch.activeFingers.Count == 0) {
+                _lastFingerPositions.Clear();
+                _lastCenter = Vector2.zero;
+                _lastDistance = 0;
+                return;
+            }
+            
+            if (_lastFingerPositions.Count == 0)
+            {
+                foreach (var finger in Touch.activeFingers)
+                {
+                    _lastFingerPositions.Add(finger, finger.screenPosition);
+                }
+                _lastCenter = CalculateCenter(Touch.activeFingers);
+                _lastDistance = CalculateAverageDistance(Touch.activeFingers, _lastCenter);
                 return;
             }
 
-            var fingerXDelta = 0.0f;
-            var fingerYDelta = 0.0f;
+            var touchCount = Touch.activeFingers.Count;
+            var touchCenter = CalculateCenter(Touch.activeFingers);
+            var touchDistance = CalculateAverageDistance(Touch.activeFingers, touchCenter);
+            var touchRotation = CalculateAverageRotation(Touch.activeFingers, touchCenter, _lastCenter, _lastFingerPositions.Count);
+            
+            var scale = touchDistance / _lastDistance;
+
+            if (_lastFingerPositions.Count == touchCount)
+            {
+                if (touchCount > 1)
+                {
+                    _gestureConfiguration.replica.GetReplica().transform.localScale *= scale;
+                } 
+                
+                _gestureConfiguration.replica.GetReplica().transform.Rotate(0, touchRotation, 0);
+                
+                _gestureConfiguration.replica.GetReplica().transform.position += new Vector3(
+                                     (touchCenter.x - _lastCenter.x) * _gestureConfiguration.translateSpeed, 
+                                     0.0f,
+                                     (touchCenter.y - _lastCenter.y) * _gestureConfiguration.translateSpeed
+                                     );               
+            }
+           
+            _lastFingerPositions.Clear();
             foreach (var finger in Touch.activeFingers)
             {
-                if (!_lastFingerPositions.ContainsKey(finger))
-                {
-                    _lastFingerPositions.Add(finger, finger.screenPosition);
-                    continue;
-                }
-                
-                var lastFingerPosition = _lastFingerPositions[finger];
-                fingerXDelta += finger.screenPosition.x - lastFingerPosition.x;
-                fingerYDelta += finger.screenPosition.y - lastFingerPosition.y;
-                
-                _lastFingerPositions[finger] = finger.screenPosition;
+                _lastFingerPositions.Add(finger, finger.screenPosition);
             }
-
-            _gestureConfiguration.replica.GetReplica().transform.position += new Vector3(
-                fingerXDelta * _gestureConfiguration.translateSpeed / Touch.activeFingers.Count, 
-                0.0f,
-                fingerYDelta * _gestureConfiguration.translateSpeed / Touch.activeFingers.Count
-                );               
+            _lastCenter = touchCenter;
+            _lastDistance = touchDistance;
         }
     }
 }
