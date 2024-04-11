@@ -10,8 +10,8 @@ namespace Gestures
         public SwipeDownReplicaGesture(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration) : base(gestureConfiguration)
         {
             swipeThreshold = -gestureConfiguration.swipeThreshold;
-            gestureConfiguration.replica.SetEndTransform(gestureConfiguration.replica.GetReplica().transform);
-            gestureConfiguration.replica.AnimateTo(1.0f);
+            gestureConfiguration.replicaController.SetEndTransform(gestureConfiguration.replicaController.GetReplica().transform);
+            gestureConfiguration.replicaController.AnimateTo(1.0f);
             
             _gestureDetector = gestureDetector;
             _gestureConfiguration = gestureConfiguration;
@@ -21,22 +21,22 @@ namespace Gestures
         protected override void OnSwipeDetected()
         {
             _gestureDetector.SwitchState(new InitialGesture(_gestureDetector, _gestureConfiguration));
-            _gestureConfiguration.replica.ResetTransforms();
+            _gestureConfiguration.replicaController.ResetTransforms();
         }
 
         protected override void OnSwipeCancelled(float t)
         {
             if (t > _gestureConfiguration.swipeHalfThreshold)
             {
-                _gestureConfiguration.replica.RevertAnimation(() =>
+                _gestureConfiguration.replicaController.RevertAnimation(() =>
                 {
-                    _gestureConfiguration.replica.ResetTransforms();
+                    _gestureConfiguration.replicaController.ResetTransforms();
                     _gestureDetector.SwitchState(new InitialGesture(_gestureDetector, _gestureConfiguration));
                 });
                 return;
             }
 
-            _gestureConfiguration.replica.CompleteAnimation(() =>
+            _gestureConfiguration.replicaController.CompleteAnimation(() =>
             {
                 _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _gestureConfiguration));
             });
@@ -44,7 +44,7 @@ namespace Gestures
 
         protected override void OnSwipeMoved(float t)
         {
-            _gestureConfiguration.replica.AnimateTo(1 - Mathf.Clamp01(t));
+            _gestureConfiguration.replicaController.AnimateTo(1 - Mathf.Clamp01(t));
         }
     }
 }

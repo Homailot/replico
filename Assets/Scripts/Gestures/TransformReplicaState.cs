@@ -13,8 +13,9 @@ namespace Gestures
 
         private Vector2 _lastCenter;
         private float _lastDistance;
-        private readonly Dictionary<Finger, Vector2> _lastFingerPositions =
-            new Dictionary<Finger, Vector2>(new FingerEqualityComparer());
+        private readonly Dictionary<Finger, Vector2> _lastFingerPositions = new(new FingerEqualityComparer());
+        
+        private float _timeSinceLastTouch;
         
         private class FingerEqualityComparer : IEqualityComparer<Finger>
         {
@@ -34,12 +35,12 @@ namespace Gestures
             }
         }
             
-        private Vector2 CalculateCenter(IReadOnlyList<Finger> touches)
+        private static Vector2 CalculateCenter(IReadOnlyList<Finger> touches)
         {
             var tMax = touches[0].screenPosition;
             var tMin = tMax;
 
-            for (int i = 1; i < touches.Count; i++)
+            for (var i = 1; i < touches.Count; i++)
             {
                 var tPos = touches[i].screenPosition;
                 tMax = new Vector2(Mathf.Max(tMax.x, tPos.x), Mathf.Max(tMax.y, tPos.y));
@@ -49,7 +50,7 @@ namespace Gestures
             return (tMin + tMax) / 2.0f;
         }
 
-        private float CalculateAverageDistance(IReadOnlyCollection<Finger> touches, Vector2 center)
+        private static float CalculateAverageDistance(IReadOnlyCollection<Finger> touches, Vector2 center)
         {
             float avgDistance = 0;
             foreach (var finger in touches)
@@ -88,22 +89,17 @@ namespace Gestures
 
         public void OnUpdate()
         {
-            if (Touch.activeFingers.Count == _gestureConfiguration.swipeFingers)
+            if (Touch.activeFingers.Count == _gestureConfiguration.swipeFingers && _timeSinceLastTouch <= _gestureConfiguration.swipeGestureTimeDetection)
             {
                 _gestureDetector.SwitchState(new SwipeDownReplicaGesture(_gestureDetector, _gestureConfiguration));
                 return;
             }
             
-            var inactiveFingers = _lastFingerPositions.Keys.Where(finger => !finger.isActive).ToList();
-            foreach (var inactiveFinger in inactiveFingers)
-            {
-                _lastFingerPositions.Remove(inactiveFinger);
-            }
-
             if (Touch.activeFingers.Count == 0) {
                 _lastFingerPositions.Clear();
                 _lastCenter = Vector2.zero;
                 _lastDistance = 0;
+                _timeSinceLastTouch = 0;
                 return;
             }
             
@@ -117,24 +113,23 @@ namespace Gestures
                 _lastDistance = CalculateAverageDistance(Touch.activeFingers, _lastCenter);
                 return;
             }
+            _timeSinceLastTouch += Time.deltaTime;
 
             var touchCount = Touch.activeFingers.Count;
             var touchCenter = CalculateCenter(Touch.activeFingers);
             var touchDistance = CalculateAverageDistance(Touch.activeFingers, touchCenter);
             var touchRotation = CalculateAverageRotation(Touch.activeFingers, touchCenter, _lastCenter, _lastFingerPositions.Count);
             
-            var scale = touchDistance / _lastDistance;
-
             if (_lastFingerPositions.Count == touchCount)
             {
                 if (touchCount > 1)
                 {
-                    _gestureConfiguration.replica.GetReplica().transform.localScale *= scale;
+                    var scale = touchDistance / _lastDistance;
+                    _gestureConfiguration.movementTarget.localScale *= scale;
                 } 
                 
-                _gestureConfiguration.replica.GetReplica().transform.Rotate(0, touchRotation, 0);
-                
-                _gestureConfiguration.replica.GetReplica().transform.position += new Vector3(
+                _gestureConfiguration.movementTarget.Rotate(0, -touchRotation, 0);
+                _gestureConfiguration.movementTarget.position += new Vector3(
                                      (touchCenter.x - _lastCenter.x) * _gestureConfiguration.translateSpeed, 
                                      0.0f,
                                      (touchCenter.y - _lastCenter.y) * _gestureConfiguration.translateSpeed
@@ -148,6 +143,21 @@ namespace Gestures
             }
             _lastCenter = touchCenter;
             _lastDistance = touchDistance;
+        }
+
+        public void OnEnter()
+        {
+            var replicaTransform = _gestureConfiguration.replicaController.GetReplica().transform;
+            
+            _gestureConfiguration.movementTarget.position = replicaTransform.position;
+            _gestureConfiguration.movementTarget.rotation = replicaTransform.rotation;
+            _gestureConfiguration.movementTarget.localScale = replicaTransform.localScale;
+            _gestureConfiguration.replicaController.SetMovementTarget(_gestureConfiguration.movementTarget);
+        }
+
+        public void OnExit()
+        {
+            _gestureConfiguration.replicaController.SetMovementTarget(null);
         }
     }
 }

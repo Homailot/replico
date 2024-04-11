@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Gestures
 {
@@ -7,10 +8,12 @@ namespace Gestures
     public class GestureConfiguration
     {
         public Vector2 swipeThreshold;
-        public int swipeFingers;
         public float swipeHalfThreshold;
-        public Replica replica;
+        public float swipeGestureTimeDetection;
+        public int swipeFingers;
+        [FormerlySerializedAs("replica")] public Replica.ReplicaController replicaController;
         
         public float translateSpeed;
+        public Transform movementTarget;
     }
 }

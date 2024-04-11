@@ -10,7 +10,7 @@ namespace Gestures
         public SwipeUpReplicaGesture(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration) : base(gestureConfiguration)
         {
             swipeThreshold = gestureConfiguration.swipeThreshold;
-            gestureConfiguration.replica.AnimateTo(0.0f);
+            gestureConfiguration.replicaController.AnimateTo(0.0f);
             
             _gestureDetector = gestureDetector;
             _gestureConfiguration = gestureConfiguration;
@@ -19,7 +19,7 @@ namespace Gestures
         protected override Vector2 swipeThreshold { get; }
         protected override void OnSwipeDetected()
         {
-            _gestureConfiguration.replica.ResetTransforms();
+            _gestureConfiguration.replicaController.ResetTransforms();
             _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _gestureConfiguration));
         }
 
@@ -27,14 +27,14 @@ namespace Gestures
         {
             if (t > _gestureConfiguration.swipeHalfThreshold)
             {
-                _gestureConfiguration.replica.CompleteAnimation(() =>
+                _gestureConfiguration.replicaController.CompleteAnimation(() =>
                 {
                     _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _gestureConfiguration));
                 });
                 return;
             }
             
-            _gestureConfiguration.replica.RevertAnimation(() =>
+            _gestureConfiguration.replicaController.RevertAnimation(() =>
             {
                 _gestureDetector.SwitchState(new InitialGesture(_gestureDetector, _gestureConfiguration));
             });
@@ -42,7 +42,7 @@ namespace Gestures
 
         protected override void OnSwipeMoved(float t)
         {
-            _gestureConfiguration.replica.AnimateTo(Mathf.Clamp01(t));
+            _gestureConfiguration.replicaController.AnimateTo(Mathf.Clamp01(t));
         }
     }
 }

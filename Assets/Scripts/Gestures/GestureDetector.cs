@@ -18,11 +18,10 @@ namespace Gestures
             _currentState = new InitialGesture(this, gestureConfiguration);
             _currentState.OnEnter();
         }
-    
+
         private void Update()
         {
             _currentState.OnUpdate();
-            //Debug.Log(Touch.activeFingers.Count(finger => finger.isActive));
         }
         
         public void SwitchState(IGestureState newState)
