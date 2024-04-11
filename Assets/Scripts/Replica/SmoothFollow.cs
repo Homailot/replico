@@ -36,7 +36,6 @@ namespace Replica
             var distance = Vector3.Distance(position, targetPosition);
             var scaleDistance = Vector3.Distance(localScale, targetLocalScale);
             var rotationDistance = Quaternion.Angle(rotation, targetRotation);
-            Debug.Log($"Distance: {distance}, Scale Distance: {scaleDistance}, Rotation Distance: {rotationDistance}");
             
             var translationT = translationCurve.Evaluate(distance);
             var scaleT = scaleCurve.Evaluate(scaleDistance);
