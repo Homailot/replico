@@ -189,11 +189,6 @@ public class TouchDraw : MonoBehaviour
 
         return innerIndex == 0 ? fingerPositions[outerIndex].xy : fingerPositions[outerIndex].zw;
     }
-    
-    private static float2 Remap(float2 value, float2 low1, float2 high1, float2 low2, float2 high2)
-    {
-        return low2 + (value - low1) * (high2 - low2) / (high1 - low1); 
-    }
 
     private void Update()
     {
@@ -201,7 +196,7 @@ public class TouchDraw : MonoBehaviour
         {
             var screenPosition = finger.screenPosition;
             var newPosition = new float2(screenPosition.x, screenPosition.y);
-            newPosition = Remap(newPosition,
+            newPosition = Utils.Remap(newPosition,
                 float2.zero,
                 new float2(Screen.width, Screen.height),
                 float2.zero,

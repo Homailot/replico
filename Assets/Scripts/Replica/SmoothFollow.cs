@@ -8,9 +8,17 @@ namespace Replica
         [SerializeField] private AnimationCurve rotationCurve = AnimationCurve.EaseInOut(0.0f, 0.0f, 2.0f * Mathf.PI, 1.0f);
         [SerializeField] private AnimationCurve scaleCurve = AnimationCurve.EaseInOut(0.0f, 0.0f, 1.0f, 1.0f);
         
+        [SerializeField] private float translationSpeed = 1.0f;
+        [SerializeField] private float rotationSpeed = 1.0f;
+        [SerializeField] private float scaleSpeed = 1.0f;
+        
         private ReplicaController _replicaController;
         private Transform _target;
 
+        private Vector3 _translationVelocity = Vector3.zero;
+        private Vector3 _scaleVelocity = Vector3.zero;
+        private Vector3 _rotationVelocity = Vector3.zero;
+        
         private void Start()
         {
             _replicaController = GetComponent<ReplicaController>();
@@ -41,13 +49,28 @@ namespace Replica
             var scaleT = scaleCurve.Evaluate(scaleDistance);
             var rotationT = rotationCurve.Evaluate(rotationDistance);
             
-            position = Vector3.Lerp(position, targetPosition, translationT);
-            localScale = Vector3.Lerp(localScale, targetLocalScale, scaleT);
-            rotation = Quaternion.Lerp(rotation, targetRotation, rotationT);
+//            var translation = translationT * translationSpeed * Time.deltaTime;
+//            var translationDirection = (targetPosition - position).normalized;
+//            position += translationDirection * translation;
+//            
+//            var scale = scaleT * scaleSpeed * Time.deltaTime;
+//            var scaleDirection = (targetLocalScale - localScale).normalized;
+//            localScale += scaleDirection * scale;
+//            
+//            var rotationAmount = rotationT * rotationSpeed * Time.deltaTime;
+//            rotation = Quaternion.RotateTowards(rotation, targetRotation, rotationAmount);
             
-            replicaTransform.position = position;
-            replicaTransform.localScale = localScale;
-            replicaTransform.rotation = rotation;
+            replicaTransform.position = Vector3.SmoothDamp(position, targetPosition, ref _translationVelocity, translationSpeed);
+            replicaTransform.localScale = Vector3.SmoothDamp(localScale, targetLocalScale, ref _scaleVelocity, scaleSpeed);
+
+            replicaTransform.rotation = Quaternion.Euler(
+                Mathf.SmoothDampAngle(rotation.eulerAngles.x, targetRotation.eulerAngles.x, ref _rotationVelocity.x,
+                    rotationSpeed),
+                Mathf.SmoothDampAngle(rotation.eulerAngles.y, targetRotation.eulerAngles.y, ref _rotationVelocity.y,
+                    rotationSpeed),
+                Mathf.SmoothDampAngle(rotation.eulerAngles.z, targetRotation.eulerAngles.z, ref _rotationVelocity.z,
+                    rotationSpeed)
+            );
         }
         
         public void SetTarget(Transform target)

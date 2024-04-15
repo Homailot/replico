@@ -12,6 +12,7 @@ namespace Gestures
         public float swipeGestureTimeDetection;
         public int swipeFingers;
         [FormerlySerializedAs("replica")] public Replica.ReplicaController replicaController;
+        public TouchToPosition touchToPosition;
         
         public float translateSpeed;
         public float scaleSpeed;

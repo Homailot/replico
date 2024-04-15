@@ -150,9 +150,10 @@ namespace Gestures
                     // apply scale speed
                     scale = Mathf.Pow(scale, _gestureConfiguration.scaleSpeed);
                     _gestureConfiguration.movementTarget.localScale *= scale;
-                } 
-                
-                _gestureConfiguration.movementTarget.Rotate(0, -touchRotation, 0);
+                }
+
+                var touchPlaneFingerPosition = _gestureConfiguration.touchToPosition.GetTouchPosition(touchCenter);
+                _gestureConfiguration.movementTarget.RotateAround(touchPlaneFingerPosition, Vector3.up, -touchRotation);
                 _gestureConfiguration.movementTarget.position += new Vector3(
                                      (touchCenter.x - _lastCenter.x) * _gestureConfiguration.translateSpeed, 
                                      0.0f,
