@@ -13,12 +13,12 @@ namespace Gestures
     {
         private readonly GestureDetector _gestureDetector;
         private readonly GestureConfiguration _gestureConfiguration;
-        private readonly DBScan _dbscan;
         private readonly KMeans _kMeans;
 
         private Vector2 _lastCenter;
         private float _lastDistance;
         private readonly Dictionary<Finger, Vector2> _lastFingerPositions = new(new FingerEqualityComparer());
+        private readonly List<Finger> _fingerOrder = new();
         
         private float _timeSinceLastTouch;
         
@@ -90,22 +90,25 @@ namespace Gestures
         {
             _gestureDetector = gestureDetector;
             _gestureConfiguration = gestureConfiguration;
-            _dbscan = new DBScan(_gestureConfiguration.clusterEps, gestureConfiguration.clusterMinPts, System.Numerics.Vector2.Distance);
             _kMeans = new KMeans(2, System.Numerics.Vector2.Distance);
         }
 
         private void ToClusters(ReadOnlyArray<Finger> fingers)
         {
-            var points = fingers.Select(finger => new System.Numerics.Vector2(finger.screenPosition.x / Screen.width,
-                finger.screenPosition.y / Screen.height));
+            var points = fingers.Select(finger => new System.Numerics.Vector2(finger.screenPosition.x,
+                finger.screenPosition.y));
             
-            var clusters = _dbscan.Cluster(points.ToArray());
+            var cluster = _kMeans.Cluster(points.ToArray());
             
-            Debug.Log("Clusters: " + string.Join(", ", clusters.Select(cluster => cluster.ToString()).ToArray()));
+            // TODO: calculate the centroids
+            // then calculate the distance between the centroids
+            // if the distance is less than a threshold, then we will have either vertical movement
+            // or the initiation of balloon selection
             
-            var cluster1 = _kMeans.Cluster(points.ToArray());
-            
-            Debug.Log("Cluster 1: " + string.Join(", ", cluster1.Select(cluster => cluster.ToString()).ToArray()));
+            // also check which cluster was the first one to be created
+            // to do this, we can check the first finger that was pressed
+            // by checking the time of the first finger press 
+            //
         }
 
         public void OnUpdate()

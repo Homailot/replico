@@ -19,6 +19,8 @@ namespace Clustering
             var labels = new int[points.Length];
             
             var centroidLength = _k > points.Length ? points.Length : _k;
+            
+            // TODO: k-means++ initialization 
             var initialCentroids = new Vector2[centroidLength];
             for (var i = 0; i < centroidLength; i++)
             {
