@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Clustering;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
+using UnityEngine.InputSystem.Utilities;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 namespace Gestures
@@ -10,6 +13,8 @@ namespace Gestures
     {
         private readonly GestureDetector _gestureDetector;
         private readonly GestureConfiguration _gestureConfiguration;
+        private readonly DBScan _dbscan;
+        private readonly KMeans _kMeans;
 
         private Vector2 _lastCenter;
         private float _lastDistance;
@@ -85,6 +90,22 @@ namespace Gestures
         {
             _gestureDetector = gestureDetector;
             _gestureConfiguration = gestureConfiguration;
+            _dbscan = new DBScan(_gestureConfiguration.clusterEps, gestureConfiguration.clusterMinPts, System.Numerics.Vector2.Distance);
+            _kMeans = new KMeans(2, System.Numerics.Vector2.Distance);
+        }
+
+        private void ToClusters(ReadOnlyArray<Finger> fingers)
+        {
+            var points = fingers.Select(finger => new System.Numerics.Vector2(finger.screenPosition.x / Screen.width,
+                finger.screenPosition.y / Screen.height));
+            
+            var clusters = _dbscan.Cluster(points.ToArray());
+            
+            Debug.Log("Clusters: " + string.Join(", ", clusters.Select(cluster => cluster.ToString()).ToArray()));
+            
+            var cluster1 = _kMeans.Cluster(points.ToArray());
+            
+            Debug.Log("Cluster 1: " + string.Join(", ", cluster1.Select(cluster => cluster.ToString()).ToArray()));
         }
 
         public void OnUpdate()
@@ -102,6 +123,7 @@ namespace Gestures
                 _timeSinceLastTouch = 0;
                 return;
             }
+            ToClusters(Touch.activeFingers);
             
             if (_lastFingerPositions.Count == 0)
             {
@@ -125,6 +147,8 @@ namespace Gestures
                 if (touchCount > 1)
                 {
                     var scale = touchDistance / _lastDistance;
+                    // apply scale speed
+                    scale = Mathf.Pow(scale, _gestureConfiguration.scaleSpeed);
                     _gestureConfiguration.movementTarget.localScale *= scale;
                 } 
                 

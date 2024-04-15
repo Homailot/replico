@@ -1422,6 +1422,9 @@
             "m_Id": "c60b56c36e994496b84cfde13c5e6ed2"
         },
         {
+            "m_Id": "ff80aa10c302497787c14aeb5c632087"
+        },
+        {
             "m_Id": "dafdd78d911a4ecc9b0a803ae6a5689a"
         },
         {
@@ -1438,10 +1441,12 @@
     },
     "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"5837b97d48db2c7458f3157a0c54d8a7\",\n        \"type\": 3\n    }\n}",
     "m_PropertyGuids": [
-        "cd47b499-0578-44dd-84f6-7a419bc04e99"
+        "cd47b499-0578-44dd-84f6-7a419bc04e99",
+        "6686db36-a93b-407f-be65-b6828ba1bcae"
     ],
     "m_PropertyIds": [
-        1370392574
+        1370392574,
+        183744056
     ],
     "m_Dropdowns": [],
     "m_DropdownSelectedEntries": []
@@ -6621,5 +6626,19 @@
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.BooleanMaterialSlot",
+    "m_ObjectId": "ff80aa10c302497787c14aeb5c632087",
+    "m_Id": 183744056,
+    "m_DisplayName": "Max Step",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Max_Step",
+    "m_StageCapability": 2,
+    "m_Value": true,
+    "m_DefaultValue": false
 }
 

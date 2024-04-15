@@ -14,6 +14,10 @@ namespace Gestures
         [FormerlySerializedAs("replica")] public Replica.ReplicaController replicaController;
         
         public float translateSpeed;
+        public float scaleSpeed;
         public Transform movementTarget;
+        
+        public float clusterEps;
+        public int clusterMinPts;
     }
 }
