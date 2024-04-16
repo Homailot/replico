@@ -18,7 +18,6 @@ namespace Gestures
         public float scaleSpeed;
         public Transform movementTarget;
         
-        public float clusterEps;
-        public int clusterMinPts;
+        public float handDistanceThreshold;
     }
 }

@@ -17,6 +17,17 @@ namespace Gestures
             EnhancedTouchSupport.Enable();
             _currentState = new InitialGesture(this, gestureConfiguration);
             _currentState.OnEnter();
+
+        }
+
+        private void Start()
+        {
+            gestureConfiguration.replicaController.CompleteAnimation(() =>
+                {
+                    gestureConfiguration.replicaController.ResetTransforms();
+                    SwitchState(new TransformReplicaState(this, gestureConfiguration));
+                }
+            );
         }
 
         private void Update()
