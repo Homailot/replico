@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -7,12 +8,14 @@ namespace Clustering
     {
         private readonly int _k;
         private readonly IClusterDetector.DistanceFunction _distanceFunction;
+        private readonly Random _random = new Random();
         
         public KMeans(int k, IClusterDetector.DistanceFunction distanceFunction)
         {
             _k = k;
             _distanceFunction = distanceFunction;
         }
+        
         
         public IEnumerable<int> Cluster(Vector2[] points)
         {

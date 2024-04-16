@@ -13,7 +13,7 @@ namespace Gestures
     {
         private readonly GestureDetector _gestureDetector;
         private readonly GestureConfiguration _gestureConfiguration;
-        private readonly KMeans _kMeans;
+        private readonly IClusterDetector _kMeans;
 
         private Vector2 _lastCenter;
         private float _lastDistance;
@@ -90,7 +90,7 @@ namespace Gestures
         {
             _gestureDetector = gestureDetector;
             _gestureConfiguration = gestureConfiguration;
-            _kMeans = new KMeans(2, System.Numerics.Vector2.Distance);
+            _kMeans = new MlNetKMeans(2, System.Numerics.Vector2.Distance);
         }
 
         private Hands DetectHands(ReadOnlyArray<Finger> fingers)
