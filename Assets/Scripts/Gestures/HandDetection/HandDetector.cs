@@ -13,6 +13,7 @@ namespace Gestures.HandDetection
     {
         private readonly IClusterDetector _kMeans;
         private readonly float _handDistanceThreshold;
+        private readonly OrderedSet<Finger> _fingerQueue = new(new FingerEqualityComparer());
         
         public HandDetector(int k, float handDistanceThreshold)
         {
@@ -31,25 +32,35 @@ namespace Gestures.HandDetection
             handFingers.UnionWith(firstHand);
             handFingers.UnionWith(secondHand);
             
+            Debug.Log("identified clusters");
+            for (var i = 0; i < fingers.Count; i++) 
+            {
+                Debug.Log("Finger: " + fingers[i].screenPosition + " Cluster: " + clusters[i]); 
+            }
+            
             // identify which cluster corresponds to which hand
-            var firstHandCluster1Count = 0;
-            var firstHandCluster2Count = 0;
+            var firstHandClusterCount = new Dictionary<int, int>();
             for (var i = 0; i < fingers.Count; i++)
             {
                 var finger = fingers[i];
                 var cluster = clusters[i];
-                if (!firstHand.Contains(finger)) continue;
-                if (cluster == 0)
+                var quantity = firstHand.Contains(finger) ? 1 : -1;
+                
+                if (!firstHandClusterCount.TryAdd(cluster, quantity))
                 {
-                    firstHandCluster1Count++;
-                }
-                else
-                {
-                    firstHandCluster2Count++;
+                    firstHandClusterCount[cluster] += quantity;
                 }
             }
+
+            var firstCluster = firstHandClusterCount.Count == 0 ? -1 : firstHandClusterCount.First().Key;
+            foreach (var (cluster, count) in firstHandClusterCount)
+            {
+                if (count > firstHandClusterCount[firstCluster])
+                {
+                    firstCluster = cluster;
+                } 
+            }
             
-            var firstCluster = firstHandCluster1Count > firstHandCluster2Count ? 0 : 1;
             for (var i = 0; i < fingers.Count; i++)
             {
                 var finger = fingers[i];
@@ -71,8 +82,18 @@ namespace Gestures.HandDetection
             return new Hands(firstHand, secondHand);
         }
 
-        public Hands DetectHands(ReadOnlyArray<Finger> fingers, Hands previousHands, OrderedSet<Finger> fingerQueue)
+        public Hands DetectHands(ReadOnlyArray<Finger> fingers, Hands previousHands)
         {
+            while (_fingerQueue.Count != 0 && (!_fingerQueue.GetFirst()?.isActive ?? false))
+            {
+                _fingerQueue.RemoveFirst();
+            }
+            
+            foreach (var finger in fingers)
+            {
+                _fingerQueue.Add(finger);
+            }
+
             var points = fingers.Select(finger => new System.Numerics.Vector2(finger.screenPosition.x,
                 finger.screenPosition.y));
             
@@ -88,12 +109,13 @@ namespace Gestures.HandDetection
             // Determine which cluster is the first one
             for (var i = 0; i < fingers.Count; i++)
             {
-                var firstFinger = fingerQueue.GetFirst();
+                var firstFinger = _fingerQueue.GetFirst();
                 if (firstFinger != fingers[i]) continue;
                 
                 firstCluster = clustersArray[i];
                 break;
             }
+            Debug.Log("First first cluster: " + firstCluster);
             
             // Calculate centroids
             var firstHand = new HashSet<Finger>(new FingerEqualityComparer());

@@ -26,7 +26,7 @@ namespace Gestures
             gestureConfiguration.replicaController.CompleteAnimation(() =>
                 {
                     gestureConfiguration.replicaController.ResetTransforms();
-                    SwitchState(new TransformReplicaState(this, gestureConfiguration));
+                    SwitchState(new TransformReplicaInitialState(this, gestureConfiguration));
                 }
             );
         }

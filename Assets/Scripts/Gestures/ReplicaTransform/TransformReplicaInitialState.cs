@@ -1,4 +1,5 @@
-using UnityEngine.InputSystem.EnhancedTouch;
+using UnityEngine;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 namespace Gestures.ReplicaTransform
 {
@@ -11,13 +12,14 @@ namespace Gestures.ReplicaTransform
         {
             _gestureDetector = gestureDetector;
             _gestureConfiguration = gestureConfiguration;
+            Debug.Log("in initial");
         }
         
         public void OnUpdate()
         {
             if (Touch.activeFingers.Count > 0)
             {
-                _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _gestureConfiguration));
+                _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, new ReplicaTransformer(_gestureConfiguration), _gestureConfiguration));
             }
         }
     }

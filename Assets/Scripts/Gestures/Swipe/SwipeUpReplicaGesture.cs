@@ -21,7 +21,7 @@ namespace Gestures.Swipe
         protected override void OnSwipeDetected()
         {
             _gestureConfiguration.replicaController.ResetTransforms();
-            _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _gestureConfiguration));
+            _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
         }
 
         protected override void OnSwipeCancelled(float t)
@@ -30,7 +30,7 @@ namespace Gestures.Swipe
             {
                 _gestureConfiguration.replicaController.CompleteAnimation(() =>
                 {
-                    _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _gestureConfiguration));
+                    _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
                 });
                 return;
             }

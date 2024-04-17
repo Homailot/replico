@@ -39,7 +39,7 @@ namespace Gestures.Swipe
 
             _gestureConfiguration.replicaController.CompleteAnimation(() =>
             {
-                _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _gestureConfiguration));
+                _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
             });
         }
 
