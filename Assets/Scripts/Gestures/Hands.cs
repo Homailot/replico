@@ -5,16 +5,16 @@ namespace Gestures
 {
     public readonly struct Hands
     {
-        public List<Finger> firstHand { get; }
-        public List<Finger> secondHand { get; }
+        public HashSet<Finger> firstHand { get; }
+        public HashSet<Finger> secondHand { get; }
 
-        public Hands(List<Finger> firstHand, List<Finger> secondHand)
+        public Hands(HashSet<Finger> firstHand, HashSet<Finger> secondHand)
         {
             this.firstHand = firstHand;
             this.secondHand = secondHand;
         }
         
-        public static Hands none => new(new List<Finger>(), new List<Finger>());
+        public static Hands none => new(new HashSet<Finger>(), new HashSet<Finger>());
         public bool IsEmpty() => firstHand.Count == 0 && secondHand.Count == 0;
     }
 }

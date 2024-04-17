@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Clustering;
+using CustomCollections;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.InputSystem.Utilities;
@@ -18,28 +19,21 @@ namespace Gestures
         private Vector2 _lastCenter;
         private float _lastDistance;
         private readonly Dictionary<Finger, Vector2> _lastFingerPositions = new(new FingerEqualityComparer());
-        private readonly Queue<Finger> _fingerQueue = new();
+        private readonly OrderedSet<Finger> _fingerQueue = new(new FingerEqualityComparer());
         
         private float _timeSinceLastTouch;
-        
-        private class FingerEqualityComparer : IEqualityComparer<Finger>
-        {
-            public bool Equals(Finger x, Finger y)
-            {
-                if (x == null || y == null)
-                {
-                    return false;
-                }
-                
-                return x.index == y.index;
-            }
+        private float _timeSinceHandsDetected;
 
-            public int GetHashCode(Finger obj)
-            {
-                return obj.index;
-            }
+        private Hands _hands;
+        
+        public TransformReplicaState(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration)
+        {
+            _gestureDetector = gestureDetector;
+            _gestureConfiguration = gestureConfiguration;
+            _kMeans = new MlNetKMeans(2, System.Numerics.Vector2.Distance);
+            _hands = Hands.none;
         }
-            
+           
         private static Vector2 CalculateCenter(IReadOnlyList<Finger> touches)
         {
             var tMax = touches[0].screenPosition;
@@ -86,11 +80,55 @@ namespace Gestures
             return avgRotation;
         }
         
-        public TransformReplicaState(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration)
+        private Hands UpdateHands(ReadOnlyArray<Finger> fingers, IReadOnlyList<int> clusters)
         {
-            _gestureDetector = gestureDetector;
-            _gestureConfiguration = gestureConfiguration;
-            _kMeans = new MlNetKMeans(2, System.Numerics.Vector2.Distance);
+            var firstHand = new HashSet<Finger>(new FingerEqualityComparer());
+            firstHand.UnionWith(_hands.firstHand.Where(finger => finger.isActive));
+            var secondHand = new HashSet<Finger>(new FingerEqualityComparer());
+            secondHand.UnionWith(_hands.secondHand.Where(finger => finger.isActive));
+            
+            var handFingers = new HashSet<Finger>(new FingerEqualityComparer());
+            handFingers.UnionWith(firstHand);
+            handFingers.UnionWith(secondHand);
+            
+            // identify which cluster corresponds to which hand
+            var firstHandCluster1Count = 0;
+            var firstHandCluster2Count = 0;
+            for (var i = 0; i < fingers.Count; i++)
+            {
+                var finger = fingers[i];
+                var cluster = clusters[i];
+                if (!firstHand.Contains(finger)) continue;
+                if (cluster == 0)
+                {
+                    firstHandCluster1Count++;
+                }
+                else
+                {
+                    firstHandCluster2Count++;
+                }
+            }
+            
+            var firstCluster = firstHandCluster1Count > firstHandCluster2Count ? 0 : 1;
+            for (var i = 0; i < fingers.Count; i++)
+            {
+                var finger = fingers[i];
+                var cluster = clusters[i];
+                
+                // only consider fingers that aren't already in a hand
+                if (handFingers.Contains(finger)) continue;
+                
+                if (cluster == firstCluster)
+                {
+                    firstHand.Add(finger);
+                }
+                else
+                {
+                    secondHand.Add(finger);
+                }
+            }
+            
+            return new Hands(firstHand, secondHand);
         }
 
         private Hands DetectHands(ReadOnlyArray<Finger> fingers)
@@ -100,20 +138,26 @@ namespace Gestures
             
             var clusters = _kMeans.Cluster(points.ToArray());
             var clustersArray = clusters as int[] ?? clusters.ToArray();
-            var firstCluster = clustersArray[0];
 
+            if (!_hands.IsEmpty())
+            {
+                return UpdateHands(fingers, clustersArray);
+            }
+
+            var firstCluster = clustersArray[0];
             // Determine which cluster is the first one
             for (var i = 0; i < fingers.Count; i++)
             {
-                if (!_fingerQueue.TryPeek(out var firstFinger) || firstFinger != fingers[i]) continue;
+                var firstFinger = _fingerQueue.GetFirst();
+                if (firstFinger != fingers[i]) continue;
                 
                 firstCluster = clustersArray[i];
                 break;
             }
             
             // Calculate centroids
-            var firstHand = new List<Finger>();
-            var secondHand = new List<Finger>();
+            var firstHand = new HashSet<Finger>(new FingerEqualityComparer());
+            var secondHand = new HashSet<Finger>(new FingerEqualityComparer());
             
             var centroid1 = new Vector2(0, 0);
             var centroid2 = new Vector2(0, 0);
@@ -159,6 +203,7 @@ namespace Gestures
             if (Touch.activeFingers.Count == 0) {
                 _lastFingerPositions.Clear();
                 _fingerQueue.Clear();
+                _hands = Hands.none;
                 _lastCenter = Vector2.zero;
                 _lastDistance = 0;
                 _timeSinceLastTouch = 0;
@@ -177,18 +222,21 @@ namespace Gestures
             }
             _timeSinceLastTouch += Time.deltaTime;
 
-            while (_fingerQueue.Count != 0 && !_fingerQueue.Peek().isActive)
+            while (_fingerQueue.Count != 0 && (!_fingerQueue.GetFirst()?.isActive ?? false))
             {
-                _fingerQueue.Dequeue();     
+                _fingerQueue.RemoveFirst();
             }
-            foreach (var finger in Touch.activeFingers.Where(finger => !_fingerQueue.Contains(finger)))
+            
+            foreach (var finger in Touch.activeFingers)
             {
-                _fingerQueue.Enqueue(finger);
+                _fingerQueue.Add(finger);
             }
+
             var hands = DetectHands(Touch.activeFingers);
             Debug.Log(hands.IsEmpty()
                 ? "No hands detected"
                 : $"Hands detected: {hands.firstHand.Count} {hands.secondHand.Count}");
+            _hands = hands;
 
             var touchCount = Touch.activeFingers.Count;
             var touchCenter = CalculateCenter(Touch.activeFingers);

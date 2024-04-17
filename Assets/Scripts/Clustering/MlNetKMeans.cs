@@ -34,7 +34,7 @@ namespace Clustering
             _mlContext = new MLContext();
         }
         
-        private IEnumerable<Point> ConvertToPoints(IEnumerable<Vector2> points)
+        private static IEnumerable<Point> ConvertToPoints(IEnumerable<Vector2> points)
         {
             return points.Select(point => new Point
             {
