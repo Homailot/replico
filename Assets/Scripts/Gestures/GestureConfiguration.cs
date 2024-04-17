@@ -19,5 +19,7 @@ namespace Gestures
         public Transform movementTarget;
         
         public float handDistanceThreshold;
+        public float handMovementDetectionDistance;
+        public float handMovementDetectionTime;
     }
 }
