@@ -65,7 +65,7 @@ namespace Gestures.ReplicaTransform
             return avgRotation;
         }
         
-        public void Update(ReadOnlyArray<Finger> touches)
+        public void Update(ReadOnlyArray<Finger> touches, bool vertical = false)
         {
             if (touches.Count == 0)
             {
@@ -104,8 +104,8 @@ namespace Gestures.ReplicaTransform
                 _gestureConfiguration.movementTarget.RotateAround(touchPlaneFingerPosition, Vector3.up, -touchRotation);
                 _gestureConfiguration.movementTarget.position += new Vector3(
                                      (touchCenter.x - _lastCenter.x) * _gestureConfiguration.translateSpeed, 
-                                     0.0f,
-                                     (touchCenter.y - _lastCenter.y) * _gestureConfiguration.translateSpeed
+                                     vertical ? (touchCenter.y - _lastCenter.y) * _gestureConfiguration.translateSpeed : 0,
+                                     vertical ? 0 : (touchCenter.y - _lastCenter.y) * _gestureConfiguration.translateSpeed
                                      );               
             }
            

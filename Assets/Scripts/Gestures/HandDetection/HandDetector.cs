@@ -32,12 +32,6 @@ namespace Gestures.HandDetection
             handFingers.UnionWith(firstHand);
             handFingers.UnionWith(secondHand);
             
-            Debug.Log("identified clusters");
-            for (var i = 0; i < fingers.Count; i++) 
-            {
-                Debug.Log("Finger: " + fingers[i].screenPosition + " Cluster: " + clusters[i]); 
-            }
-            
             // identify which cluster corresponds to which hand
             var firstHandClusterCount = new Dictionary<int, int>();
             for (var i = 0; i < fingers.Count; i++)
@@ -115,7 +109,6 @@ namespace Gestures.HandDetection
                 firstCluster = clustersArray[i];
                 break;
             }
-            Debug.Log("First first cluster: " + firstCluster);
             
             // Calculate centroids
             var firstHand = new HashSet<Finger>(new FingerEqualityComparer());

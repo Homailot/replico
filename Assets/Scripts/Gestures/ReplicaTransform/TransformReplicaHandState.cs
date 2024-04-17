@@ -1,5 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using Gestures.HandDetection;
 using UnityEngine;
+using UnityEngine.InputSystem.EnhancedTouch;
+using Utils;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 namespace Gestures.ReplicaTransform
@@ -10,7 +14,9 @@ namespace Gestures.ReplicaTransform
         private readonly GestureConfiguration _gestureConfiguration;
         private readonly HandDetector _handDetector;
         private readonly ReplicaTransformer _replicaTransformer;
-        private readonly Hands _firstHands;
+
+        private readonly Dictionary<Finger, Vector2> _previousFirstHand = new(new FingerEqualityComparer());
+        private readonly Dictionary<Finger, Vector2> _previousSecondHand = new(new FingerEqualityComparer());
         
         private Hands _hands;
         private float _timeSinceHandsDetected;
@@ -23,7 +29,16 @@ namespace Gestures.ReplicaTransform
             _handDetector = handDetector;
             _replicaTransformer = replicaTransform;
             _hands = hands;
-            _firstHands = hands;
+            
+            foreach (var finger in hands.firstHand)
+            {
+                _previousFirstHand.Add(finger, finger.screenPosition);
+            }
+            
+            foreach (var finger in hands.secondHand)
+            {
+                _previousSecondHand.Add(finger, finger.screenPosition);
+            }
         }
         
         private bool DetectHandsStill(Hands hands)
@@ -33,22 +48,31 @@ namespace Gestures.ReplicaTransform
             var screenMax = Mathf.Max(Screen.width, Screen.height);
             foreach (var finger in hands.firstHand)
             {
-                if (!_firstHands.firstHand.TryGetValue(finger, out var previousFinger) ||
-                    !(Vector2.Distance(finger.screenPosition, previousFinger.screenPosition) / screenMax >
-                      _gestureConfiguration.handMovementDetectionDistance)) continue;
-                _timeSinceHandsDetected = 0;
-                _handsMoved = true;
-                return false;
+                if (_previousFirstHand.TryGetValue(finger, out var previousFinger) &&
+                    Vector2.Distance(finger.screenPosition, previousFinger) / screenMax >
+                    _gestureConfiguration.handMovementDetectionDistance)
+                {
+                    _timeSinceHandsDetected = 0;
+                    _handsMoved = true;
+                    return false;
+                }
             }
 
             foreach (var finger in hands.secondHand)
             {
-                if (!_firstHands.secondHand.TryGetValue(finger, out var previousFinger) ||
-                    !(Vector2.Distance(finger.screenPosition, previousFinger.screenPosition) / screenMax >
-                      _gestureConfiguration.handMovementDetectionDistance)) continue;
-                _timeSinceHandsDetected = 0;
-                _handsMoved = true;
-                return false;
+                if (_previousSecondHand.TryGetValue(finger, out var f))
+                {
+                    Debug.Log(Vector2.Distance(finger.screenPosition, f) / screenMax);
+                }
+                
+                if (_previousSecondHand.TryGetValue(finger, out var previousFinger) &&
+                    Vector2.Distance(finger.screenPosition, previousFinger) / screenMax >
+                    _gestureConfiguration.handMovementDetectionDistance)
+                {
+                    _timeSinceHandsDetected = 0;
+                    _handsMoved = true;
+                    return false;
+                }
             }
             _timeSinceHandsDetected += Time.deltaTime;
 
@@ -64,22 +88,18 @@ namespace Gestures.ReplicaTransform
             {
                 _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
                 return;
-            }
+            } 
             
             if (DetectHandsStill(hands))
             {
-                Debug.Log("Hands still");
-            }
-            
-            Debug.Log($"Hands detected: {hands.firstHand.Count} {hands.secondHand.Count}");
-            foreach (var finger in hands.firstHand)
-            {
-                Debug.Log($"First hand: {finger.screenPosition}");
-            }
-            
-            foreach (var finger in hands.secondHand)
-            {
-                Debug.Log($"Second hand: {finger.screenPosition}");
+                if (hands.firstHand.Count >= 2)
+                {
+                    _gestureDetector.SwitchState(new TransformReplicaVerticalState(_gestureDetector, _gestureConfiguration, _handDetector, hands));
+                    return;
+                }
+                
+                // go to balloon selection state
+                return;
             }
             
             _hands = hands;
