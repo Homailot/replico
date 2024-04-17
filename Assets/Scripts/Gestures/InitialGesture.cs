@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Gestures.Swipe;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;

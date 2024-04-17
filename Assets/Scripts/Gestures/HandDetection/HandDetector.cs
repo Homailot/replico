@@ -5,6 +5,7 @@ using CustomCollections;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.InputSystem.Utilities;
+using Utils;
 
 namespace Gestures.HandDetection
 {

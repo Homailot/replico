@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine.InputSystem.EnhancedTouch;
 
-namespace Gestures
+namespace Utils
 {
     public class FingerEqualityComparer : IEqualityComparer<Finger>
     {

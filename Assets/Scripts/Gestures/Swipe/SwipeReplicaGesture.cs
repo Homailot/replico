@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
-namespace Gestures
+namespace Gestures.Swipe
 {
     public abstract class SwipeReplicaGesture : IGestureState
     {

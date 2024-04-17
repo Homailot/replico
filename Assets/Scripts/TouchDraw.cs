@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
+using Utils;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 public class TouchDraw : MonoBehaviour
@@ -196,7 +197,7 @@ public class TouchDraw : MonoBehaviour
         {
             var screenPosition = finger.screenPosition;
             var newPosition = new float2(screenPosition.x, screenPosition.y);
-            newPosition = Utils.Remap(newPosition,
+            newPosition = MathUtils.Remap(newPosition,
                 float2.zero,
                 new float2(Screen.width, Screen.height),
                 float2.zero,

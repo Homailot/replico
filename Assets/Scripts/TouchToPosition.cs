@@ -1,6 +1,7 @@
 using System;
 using Unity.Mathematics;
 using UnityEngine;
+using Utils;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 public class TouchToPosition : MonoBehaviour
@@ -20,7 +21,7 @@ public class TouchToPosition : MonoBehaviour
         var max = new float2(bounds.max.x, bounds.max.z);
         var touch = new float2(Mathf.Clamp(touchPosition.x, 0, Screen.width), Mathf.Clamp(touchPosition.y, 0, Screen.height));
         
-        var remapped = Utils.Remap(touch, new float2(0, 0), new float2(Screen.width, Screen.height), min, max);
+        var remapped = MathUtils.Remap(touch, new float2(0, 0), new float2(Screen.width, Screen.height), min, max);
         return new Vector3(remapped.x, bounds.center.y, remapped.y);
     }
 }

@@ -1,6 +1,7 @@
+using Gestures.ReplicaTransform;
 using UnityEngine;
 
-namespace Gestures
+namespace Gestures.Swipe
 {
     public class SwipeUpReplicaGesture : SwipeReplicaGesture
     {
