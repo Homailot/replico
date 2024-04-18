@@ -60,19 +60,16 @@ namespace Gestures.ReplicaTransform
 
             foreach (var finger in hands.secondHand)
             {
-                if (_previousSecondHand.TryGetValue(finger, out var f))
-                {
-                    Debug.Log(Vector2.Distance(finger.screenPosition, f) / screenMax);
-                }
-                
-                if (_previousSecondHand.TryGetValue(finger, out var previousFinger) &&
-                    Vector2.Distance(finger.screenPosition, previousFinger) / screenMax >
-                    _gestureConfiguration.handMovementDetectionDistance)
-                {
-                    _timeSinceHandsDetected = 0;
-                    _handsMoved = true;
-                    return false;
-                }
+                // TODO: gonna relax this check for now, seems more friendly to the user
+                // perhaps allow the second hand to be added later on
+                //if (_previousSecondHand.TryGetValue(finger, out var previousFinger) &&
+                //    Vector2.Distance(finger.screenPosition, previousFinger) / screenMax >
+                //    _gestureConfiguration.handMovementDetectionDistance)
+                //{
+                //    _timeSinceHandsDetected = 0;
+                //    _handsMoved = true;
+                //    return false;
+                //}
             }
             _timeSinceHandsDetected += Time.deltaTime;
 
@@ -94,6 +91,7 @@ namespace Gestures.ReplicaTransform
             {
                 if (hands.firstHand.Count >= 2)
                 {
+                    _gestureDetector.OnGestureDetected();
                     _gestureDetector.SwitchState(new TransformReplicaVerticalState(_gestureDetector, _gestureConfiguration, _handDetector, hands));
                     return;
                 }

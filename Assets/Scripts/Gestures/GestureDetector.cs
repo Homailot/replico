@@ -12,13 +12,15 @@ namespace Gestures
     {
         private IGestureState _currentState;
         [SerializeField] private GestureConfiguration gestureConfiguration;
+        [SerializeField] private Renderer effectRenderer; 
         
+        private static readonly int ActivationTime = Shader.PropertyToID("_ActivationTime");
+
         private void Awake()
         {
             EnhancedTouchSupport.Enable();
             _currentState = new InitialGesture(this, gestureConfiguration);
             _currentState.OnEnter();
-
         }
 
         private void Start()
@@ -34,6 +36,12 @@ namespace Gestures
         private void Update()
         {
             _currentState.OnUpdate();
+        }
+
+        public void OnGestureDetected()
+        {
+            if (effectRenderer == null) return;
+            effectRenderer.material.SetFloat(ActivationTime, Time.time);
         }
         
         public void SwitchState(IGestureState newState)
