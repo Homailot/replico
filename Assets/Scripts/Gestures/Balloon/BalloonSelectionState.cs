@@ -1,6 +1,8 @@
+using System.Linq;
 using Gestures.HandDetection;
 using Gestures.ReplicaTransform;
-using UnityEngine.InputSystem.EnhancedTouch;
+using UnityEngine;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 namespace Gestures.Balloon
 {
@@ -25,12 +27,15 @@ namespace Gestures.Balloon
             if (hands.IsEmpty() || hands.firstHand.Count < 1 || hands.secondHand.Count < 1)
             {
                 _gestureDetector.ResetBalloonPlanePositions();
+                _gestureDetector.DisableBalloon();
                 _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
                 return;
             }
             
             _hands = hands; 
-            _gestureDetector.UpdateBalloonPlanePositions(_hands.GetFirstHandCenter(), _hands.GetSecondHandCenter());
+            _gestureDetector.UpdateBalloonPlanePositions(_hands.firstHand.First().screenPosition, _hands.secondHand.First().screenPosition);
+            var balloonScreenPosition = _hands.secondHand.First().screenPosition;
+            _gestureDetector.UpdateBalloonPosition(new Vector3(balloonScreenPosition.x, 0, balloonScreenPosition.y));
         }
     }
 }

@@ -99,6 +99,7 @@ namespace Gestures.ReplicaTransform
                 
                 _gestureDetector.OnGestureDetected();
                 _gestureDetector.UpdateBalloonPlanePositions(_hands.GetFirstHandCenter(), _hands.GetSecondHandCenter());
+                _gestureDetector.EnableBalloon();
                 _gestureDetector.SwitchState(new BalloonSelectionInitialState(_gestureDetector, _gestureConfiguration, _handDetector, hands));
                 return;
             }

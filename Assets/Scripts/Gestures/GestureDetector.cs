@@ -14,6 +14,7 @@ namespace Gestures
         [SerializeField] private GestureConfiguration gestureConfiguration;
         [SerializeField] private Renderer effectRenderer;
         [SerializeField] private Renderer balloonPlaneRenderer;
+        [SerializeField] private Transform balloon;
         
         private static readonly int ActivationTime = Shader.PropertyToID("_ActivationTime");
         private static readonly int FirstHand = Shader.PropertyToID("_First_Hand");
@@ -28,6 +29,7 @@ namespace Gestures
 
         private void Start()
         {
+            DisableBalloon(); 
             gestureConfiguration.replicaController.CompleteAnimation(() =>
                 {
                     gestureConfiguration.replicaController.ResetTransforms();
@@ -47,6 +49,27 @@ namespace Gestures
             effectRenderer.material.SetFloat(ActivationTime, Time.time);
         }
 
+        public void EnableBalloon()
+        {
+            if (balloon == null) return;
+            balloon.gameObject.SetActive(true);
+        }
+        
+        public void DisableBalloon()
+        {
+            if (balloon == null) return;
+            balloon.gameObject.SetActive(false);
+        }
+        
+        public void UpdateBalloonPosition(Vector3 position)
+        {
+            if (balloon == null) return;
+            var screenPosition = new Vector2(position.x, position.z);
+            balloon.position = gestureConfiguration.touchToPosition.GetTouchPosition(screenPosition);
+            
+            balloon.position = new Vector3(balloon.position.x, balloon.position.y + position.y, balloon.position.z);
+        }
+        
         public void UpdateBalloonPlanePositions(Vector2 firstHand, Vector2 secondHand)
         {
             if (balloonPlaneRenderer == null) return;
