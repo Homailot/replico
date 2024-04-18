@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Gestures.Balloon;
 using Gestures.HandDetection;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
@@ -96,7 +97,9 @@ namespace Gestures.ReplicaTransform
                     return;
                 }
                 
-                // go to balloon selection state
+                _gestureDetector.OnGestureDetected();
+                _gestureDetector.UpdateBalloonPlanePositions(_hands.GetFirstHandCenter(), _hands.GetSecondHandCenter());
+                _gestureDetector.SwitchState(new BalloonSelectionInitialState(_gestureDetector, _gestureConfiguration, _handDetector, hands));
                 return;
             }
             
