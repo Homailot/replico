@@ -57,6 +57,7 @@ namespace Gestures.Balloon
                 secondHandPosition = _hands.secondHand.Last().screenPosition;
                 var screenMax = Mathf.Max(Screen.width, Screen.height);
                 distance = Vector2.Distance(_hands.firstHand.First().screenPosition / screenMax, secondHandPosition / screenMax); 
+                // TODO: this could be a state, but im lazy :D
                 if (_lastEmpty)
                 {
                     _startingValue = GetValueFromDistance(_lastDistance);

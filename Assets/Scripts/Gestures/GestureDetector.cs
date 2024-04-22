@@ -15,6 +15,8 @@ namespace Gestures
         [SerializeField] private Renderer effectRenderer;
         [SerializeField] private Renderer balloonPlaneRenderer;
         [SerializeField] private Transform balloon;
+        [SerializeField] private Transform balloonBillboard;
+        [SerializeField] private BalloonHeightToCoordinates balloonHeightToCoordinates;
         
         private static readonly int ActivationTime = Shader.PropertyToID("_ActivationTime");
         private static readonly int FirstHand = Shader.PropertyToID("_First_Hand");
@@ -54,12 +56,14 @@ namespace Gestures
         {
             if (balloon == null) return;
             balloon.gameObject.SetActive(true);
+            balloonBillboard.gameObject.SetActive(true);
         }
         
         public void DisableBalloon()
         {
             if (balloon == null) return;
             balloon.gameObject.SetActive(false);
+            balloonBillboard.gameObject.SetActive(false);
         }
         
         public void UpdateBalloonPosition(Vector3 position)
@@ -67,8 +71,11 @@ namespace Gestures
             if (balloon == null) return;
             var screenPosition = new Vector2(position.x, position.z);
             balloon.position = gestureConfiguration.touchToPosition.GetTouchPosition(screenPosition);
-            
             balloon.position = new Vector3(balloon.position.x, balloon.position.y + position.y, balloon.position.z);
+            
+            if (balloonHeightToCoordinates == null) return;
+            balloonHeightToCoordinates.SetBalloonHeight(balloon.position.y);
+            balloonBillboard.position = new Vector3(balloon.position.x, balloonBillboard.position.y, balloon.position.z);
         }
         
         public void ToggleBalloonPlaneLine(bool active)
@@ -90,8 +97,9 @@ namespace Gestures
             if (balloonPlaneRenderer == null) return;
             balloonPlaneRenderer.material.SetVector(FirstHand, new Vector2(-1f, -1f));
             balloonPlaneRenderer.material.SetVector(SecondHand, new Vector2(-1f, -1f)); 
+            balloonHeightToCoordinates.ResetBalloonHeight();
         }
-        
+
         public void SwitchState(IGestureState newState)
         {
             _currentState.OnExit();
