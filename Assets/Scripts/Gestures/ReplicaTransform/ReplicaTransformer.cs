@@ -12,11 +12,13 @@ namespace Gestures.ReplicaTransform
         
         private Vector2 _lastCenter;
         private float _lastDistance;
+        private bool _vertical;
         private readonly Dictionary<Finger, Vector2> _lastFingerPositions = new(new FingerEqualityComparer());
         
-        public ReplicaTransformer(GestureConfiguration gestureConfiguration)
+        public ReplicaTransformer(GestureConfiguration gestureConfiguration, bool vertical = false)
         {
             _gestureConfiguration = gestureConfiguration;
+            _vertical = vertical;
         }
         
         public static Vector2 CalculateCenter(IReadOnlyList<Finger> touches)
@@ -65,7 +67,7 @@ namespace Gestures.ReplicaTransform
             return avgRotation;
         }
         
-        public void Update(ReadOnlyArray<Finger> touches, bool vertical = false)
+        public void Update(ReadOnlyArray<Finger> touches)
         {
             if (touches.Count == 0)
             {
@@ -104,8 +106,8 @@ namespace Gestures.ReplicaTransform
                 _gestureConfiguration.movementTarget.RotateAround(touchPlaneFingerPosition, Vector3.up, -touchRotation);
                 _gestureConfiguration.movementTarget.position += new Vector3(
                                      (touchCenter.x - _lastCenter.x) * _gestureConfiguration.translateSpeed, 
-                                     vertical ? (touchCenter.y - _lastCenter.y) * _gestureConfiguration.translateSpeed : 0,
-                                     vertical ? 0 : (touchCenter.y - _lastCenter.y) * _gestureConfiguration.translateSpeed
+                                     _vertical ? (touchCenter.y - _lastCenter.y) * _gestureConfiguration.translateSpeed : 0,
+                                     _vertical ? 0 : (touchCenter.y - _lastCenter.y) * _gestureConfiguration.translateSpeed
                                      );               
             }
            

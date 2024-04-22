@@ -13,6 +13,7 @@ namespace Gestures.ReplicaTransform
         private readonly GestureConfiguration _gestureConfiguration;
         private readonly HandDetector _handDetector;
         private readonly ReplicaTransformer _replicaTransformer;
+        private readonly ReplicaTransformer _replicaTransformerVertical;
         
         private Hands _hands;
 
@@ -22,15 +23,20 @@ namespace Gestures.ReplicaTransform
             _gestureConfiguration = gestureConfiguration;
             _handDetector = handDetector;
             _replicaTransformer = new ReplicaTransformer(_gestureConfiguration);
+            _replicaTransformerVertical = new ReplicaTransformer(_gestureConfiguration, true);
             _hands = hands;
             Debug.Log("in vertical");
         }
 
         public void OnUpdate()
         {
+            var firstHandArray = new ReadOnlyArray<Finger>(_hands.firstHand.ToArray());
             var fingerArray = new ReadOnlyArray<Finger>(_hands.secondHand.ToArray());
-            _replicaTransformer.Update(fingerArray, true);
+            
+            _replicaTransformer.Update(firstHandArray);
+            _replicaTransformerVertical.Update(fingerArray);
             var hands = _handDetector.DetectHands(Touch.activeFingers, _hands);
+            hands.Print();
 
             if (hands.IsEmpty())
             {
@@ -38,11 +44,12 @@ namespace Gestures.ReplicaTransform
                 return;
             }
             
-            if (hands.firstHand.Count < 2)
-            {
-                _gestureDetector.SwitchState(new TransformReplicaHandState(_gestureDetector, _gestureConfiguration, _handDetector, _replicaTransformer, hands));
-                return;
-            }
+            // what if it's better to not switch state if one of the hands is missing?
+           // if (hands.secondHand.Count < 1)
+           // {
+           //     _gestureDetector.SwitchState(new TransformReplicaHandState(_gestureDetector, _gestureConfiguration, _handDetector, _replicaTransformer, hands));
+           //     return;
+           // }
             
             _hands = hands;
         }

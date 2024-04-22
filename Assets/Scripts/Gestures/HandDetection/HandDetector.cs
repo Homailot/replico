@@ -33,28 +33,11 @@ namespace Gestures.HandDetection
             handFingers.UnionWith(secondHand);
             
             // identify which cluster corresponds to which hand
-            var firstHandClusterCount = new Dictionary<int, int>();
-            for (var i = 0; i < fingers.Count; i++)
-            {
-                var finger = fingers[i];
-                var cluster = clusters[i];
-                var quantity = firstHand.Contains(finger) ? 1 : -1;
-                
-                if (!firstHandClusterCount.TryAdd(cluster, quantity))
-                {
-                    firstHandClusterCount[cluster] += quantity;
-                }
-            }
+            // TODO:
+            // if first finger is there, then problem solved
+            // if not, then we need to check which cluster has the most fingers from the first hand
+            var firstCluster = DetermineFirstCluster(fingers, clusters, firstHand, secondHand);
 
-            var firstCluster = firstHandClusterCount.Count == 0 ? -1 : firstHandClusterCount.First().Key;
-            foreach (var (cluster, count) in firstHandClusterCount)
-            {
-                if (count > firstHandClusterCount[firstCluster])
-                {
-                    firstCluster = cluster;
-                } 
-            }
-            
             for (var i = 0; i < fingers.Count; i++)
             {
                 var finger = fingers[i];
@@ -75,8 +58,61 @@ namespace Gestures.HandDetection
             
             return new Hands(firstHand, secondHand);
         }
+        
+        private Hands RefreshHands(ReadOnlyArray<Finger> fingers, IReadOnlyList<int> clusters, Hands previousHands)
+        {
+            var firstHand = new HashSet<Finger>(new FingerEqualityComparer());
+            var secondHand = new HashSet<Finger>(new FingerEqualityComparer());
+            
+            var firstCluster = DetermineFirstCluster(fingers, clusters, previousHands.firstHand, previousHands.secondHand);
+            
+            for (var i = 0; i < fingers.Count; i++)
+            {
+                var finger = fingers[i];
+                var cluster = clusters[i];
+                
+                if (cluster == firstCluster)
+                {
+                    firstHand.Add(finger);
+                }
+                else
+                {
+                    secondHand.Add(finger);
+                }
+            }
 
-        public Hands DetectHands(ReadOnlyArray<Finger> fingers, Hands previousHands)
+            return new Hands(firstHand, secondHand);
+        }
+
+        private static int DetermineFirstCluster(ReadOnlyArray<Finger> fingers, IReadOnlyList<int> clusters, ICollection<Finger> firstHand, ICollection<Finger> secondHand)
+        {
+            var firstHandClusterCount = new Dictionary<int, int>();
+            for (var i = 0; i < fingers.Count; i++)
+            {
+                var finger = fingers[i];
+                var cluster = clusters[i];
+                var quantity = firstHand.Contains(finger) ? 1 : 0;
+                quantity += secondHand.Contains(finger) ? -1 : 0;
+                
+                if (!firstHandClusterCount.TryAdd(cluster, quantity))
+                {
+                    firstHandClusterCount[cluster] += quantity;
+                }
+            }
+
+            var firstCluster = firstHandClusterCount.Count == 0 ? -1 : firstHandClusterCount.First().Key;
+            foreach (var (cluster, count) in firstHandClusterCount)
+            {
+                if (count > firstHandClusterCount[firstCluster])
+                {
+                    firstCluster = cluster;
+                } 
+            }
+
+            return firstCluster;
+        }
+
+        public Hands DetectHands(ReadOnlyArray<Finger> fingers, Hands previousHands, bool keepPreviousHands = true)
         {
             while (_fingerQueue.Count != 0 && (!_fingerQueue.GetFirst()?.isActive ?? false))
             {
@@ -96,7 +132,7 @@ namespace Gestures.HandDetection
 
             if (!previousHands.IsEmpty())
             {
-                return UpdateHands(fingers, clustersArray, previousHands);
+                return keepPreviousHands ? UpdateHands(fingers, clustersArray, previousHands) : RefreshHands(fingers, clustersArray, previousHands);
             }
 
             var firstCluster = clustersArray[0];

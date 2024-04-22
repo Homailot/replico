@@ -6,10 +6,10 @@ namespace Gestures.HandDetection
 {
     public readonly struct Hands
     {
-        public HashSet<Finger> firstHand { get; }
-        public HashSet<Finger> secondHand { get; }
+        public ISet<Finger> firstHand { get; }
+        public ISet<Finger> secondHand { get; }
 
-        public Hands(HashSet<Finger> firstHand, HashSet<Finger> secondHand)
+        public Hands(ISet<Finger> firstHand, ISet<Finger> secondHand)
         {
             this.firstHand = firstHand;
             this.secondHand = secondHand;
@@ -37,5 +37,19 @@ namespace Gestures.HandDetection
         
         public static Hands none => new(new HashSet<Finger>(), new HashSet<Finger>());
         public bool IsEmpty() => firstHand.Count == 0 && secondHand.Count == 0;
+        
+        public void Print()
+        {
+            Debug.Log("First Hand:");
+            foreach (var finger in firstHand)
+            {
+                Debug.Log(finger.screenPosition);
+            }
+            Debug.Log("Second Hand:");
+            foreach (var finger in secondHand)
+            {
+                Debug.Log(finger.screenPosition);
+            }
+        }
     }
 }

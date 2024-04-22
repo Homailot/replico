@@ -16,12 +16,12 @@ namespace Gestures.ReplicaTransform
         private readonly HandDetector _handDetector;
         private readonly ReplicaTransformer _replicaTransformer;
 
-        private readonly Dictionary<Finger, Vector2> _previousFirstHand = new(new FingerEqualityComparer());
-        private readonly Dictionary<Finger, Vector2> _previousSecondHand = new(new FingerEqualityComparer());
+        private readonly IDictionary<int, Vector2> _previousFirstHand = new Dictionary<int, Vector2>();
+        private readonly IDictionary<int, Vector2> _previousSecondHand = new Dictionary<int, Vector2>();
         
         private Hands _hands;
         private float _timeSinceHandsDetected;
-        private bool _handsMoved;
+        private readonly ISet<Finger> _movedFingers = new HashSet<Finger>(new FingerEqualityComparer());
 
         public TransformReplicaHandState(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration, HandDetector handDetector, ReplicaTransformer replicaTransform, Hands hands)
         {
@@ -33,78 +33,91 @@ namespace Gestures.ReplicaTransform
             
             foreach (var finger in hands.firstHand)
             {
-                _previousFirstHand.Add(finger, finger.screenPosition);
+                _previousFirstHand.Add(finger.index, finger.screenPosition);
             }
             
             foreach (var finger in hands.secondHand)
             {
-                _previousSecondHand.Add(finger, finger.screenPosition);
+                _previousSecondHand.Add(finger.index, finger.screenPosition);
             }
         }
-        
-        private bool DetectHandsStill(Hands hands)
+
+        private ISet<Finger> DetectHandMovement(IEnumerable<Finger> hand, bool firstHand)
         {
-            if (hands.IsEmpty() || _handsMoved) return false;
-           
-            var screenMax = Mathf.Max(Screen.width, Screen.height);
-            foreach (var finger in hands.firstHand)
+            var previousHand = firstHand ? _previousFirstHand : _previousSecondHand;
+            var movedFingers = new HashSet<Finger>();
+            
+            foreach (var finger in hand)
             {
-                if (_previousFirstHand.TryGetValue(finger, out var previousFinger) &&
-                    Vector2.Distance(finger.screenPosition, previousFinger) / screenMax >
+                if (_movedFingers.Contains(finger))
+                {
+                    movedFingers.Add(finger);
+                    continue;
+                }
+                
+                if (previousHand.TryGetValue(finger.index, out var previousFinger) &&
+                    Vector2.Distance(finger.screenPosition, previousFinger) / Mathf.Max(Screen.width, Screen.height) >
                     _gestureConfiguration.handMovementDetectionDistance)
                 {
-                    _timeSinceHandsDetected = 0;
-                    _handsMoved = true;
-                    return false;
+                    movedFingers.Add(finger);
                 }
             }
+            
+            return movedFingers;
+        }
+        
+        private bool DetectVerticalGesture(Hands hands)
+        {
+            if (hands.IsEmpty()) return false;
 
-            foreach (var finger in hands.secondHand)
+            ISet<Finger> fingersToRemove = new HashSet<Finger>();
+            foreach (var finger in _movedFingers)
             {
-                // TODO: gonna relax this check for now, seems more friendly to the user
-                // perhaps allow the second hand to be added later on
-                //if (_previousSecondHand.TryGetValue(finger, out var previousFinger) &&
-                //    Vector2.Distance(finger.screenPosition, previousFinger) / screenMax >
-                //    _gestureConfiguration.handMovementDetectionDistance)
-                //{
-                //    _timeSinceHandsDetected = 0;
-                //    _handsMoved = true;
-                //    return false;
-                //}
+                if (!hands.firstHand.Contains(finger) && !hands.secondHand.Contains(finger))
+                {
+                    fingersToRemove.Add(finger);
+                }
+            }
+            _movedFingers.ExceptWith(fingersToRemove);
+
+            var movedFingers = DetectHandMovement(hands.secondHand, false);
+            if (movedFingers.Count > 0)
+            {
+                _timeSinceHandsDetected = 0;
+                _movedFingers.UnionWith(movedFingers);
+                return false;
             }
             _timeSinceHandsDetected += Time.deltaTime;
 
-            return _timeSinceHandsDetected > _gestureConfiguration.handMovementDetectionTime;
+            return _timeSinceHandsDetected > _gestureConfiguration.handMovementDetectionTime && hands.secondHand.Count >= 2;
         }
          
         public void OnUpdate()
         {
             _replicaTransformer.Update(Touch.activeFingers);
-            var hands = _handDetector.DetectHands(Touch.activeFingers, _hands);
-
-            if (hands.IsEmpty())
+           
+            if (DetectVerticalGesture(_hands))
             {
-                _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
-                return;
-            } 
-            
-            if (DetectHandsStill(hands))
-            {
-                if (hands.firstHand.Count >= 2)
-                {
-                    _gestureDetector.OnGestureDetected();
-                    _gestureDetector.SwitchState(new TransformReplicaVerticalState(_gestureDetector, _gestureConfiguration, _handDetector, hands));
-                    return;
-                }
-                
                 _gestureDetector.OnGestureDetected();
-                _gestureDetector.UpdateBalloonPlanePositions(_hands.GetFirstHandCenter(), _hands.GetSecondHandCenter());
-                _gestureDetector.EnableBalloon();
-                _gestureDetector.SwitchState(new BalloonSelectionInitialState(_gestureDetector, _gestureConfiguration, _handDetector, hands));
+                _gestureDetector.SwitchState(new TransformReplicaVerticalState(_gestureDetector, _gestureConfiguration, _handDetector, _hands));
+                return;
+                
+               // _gestureDetector.OnGestureDetected();
+               // _gestureDetector.UpdateBalloonPlanePositions(_hands.GetFirstHandCenter(), _hands.GetSecondHandCenter());
+               // _gestureDetector.EnableBalloon();
+               // _gestureDetector.SwitchState(new BalloonSelectionInitialState(_gestureDetector, _gestureConfiguration, _handDetector, hands));
                 return;
             }
+
+            var secondHandMoved = _hands.secondHand.Any(finger => _movedFingers.Contains(finger));
+
+            _hands = secondHandMoved ? _handDetector.DetectHands(Touch.activeFingers, _hands, false) : _handDetector.DetectHands(Touch.activeFingers, _hands);
+            _hands.Print();
             
-            _hands = hands;
+            if (_hands.IsEmpty() || _hands.firstHand.Count < 1 || _hands.secondHand.Count < 1)
+            {
+                _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
+            }
         }
     }
 }
