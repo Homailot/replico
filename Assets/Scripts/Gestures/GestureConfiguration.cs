@@ -22,5 +22,7 @@ namespace Gestures
         public float handDistanceThreshold;
         public float handMovementDetectionDistance;
         public float handMovementDetectionTime;
+        
+        public float balloonDistanceMultiplier;
     }
 }

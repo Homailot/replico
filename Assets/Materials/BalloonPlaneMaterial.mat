@@ -50,6 +50,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Disable_Strength: 0.3
+    - _Disabled: 0
     - _Line_Count: 0.15
     - _Line_Gap: 0.6
     - _Line_Length: 0.05

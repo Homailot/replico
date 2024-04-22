@@ -19,6 +19,7 @@ namespace Gestures
         private static readonly int ActivationTime = Shader.PropertyToID("_ActivationTime");
         private static readonly int FirstHand = Shader.PropertyToID("_First_Hand");
         private static readonly int SecondHand = Shader.PropertyToID("_Second_Hand");
+        private static readonly int Disabled = Shader.PropertyToID("_Disabled");
 
         private void Awake()
         {
@@ -68,6 +69,12 @@ namespace Gestures
             balloon.position = gestureConfiguration.touchToPosition.GetTouchPosition(screenPosition);
             
             balloon.position = new Vector3(balloon.position.x, balloon.position.y + position.y, balloon.position.z);
+        }
+        
+        public void ToggleBalloonPlaneLine(bool active)
+        {
+            if (balloonPlaneRenderer == null) return;
+            balloonPlaneRenderer.material.SetInt(Disabled, active ? 0 : 1);
         }
         
         public void UpdateBalloonPlanePositions(Vector2 firstHand, Vector2 secondHand)

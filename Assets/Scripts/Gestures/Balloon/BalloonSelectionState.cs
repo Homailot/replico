@@ -11,8 +11,13 @@ namespace Gestures.Balloon
         private readonly GestureDetector _gestureDetector;
         private readonly GestureConfiguration _gestureConfiguration;
         private readonly HandDetector _handDetector;
-        private Vector2 _lastSecondHandPosition;
+        private float _initialDistance;
+        private float _startingValue;
+        private Vector2 _lastDirection;
         private Hands _hands;
+        private float _lastDistance;
+        
+        private bool _lastEmpty = false;
         
         public BalloonSelectionInitialState(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration, HandDetector handDetector, Hands hands)
         {
@@ -20,7 +25,16 @@ namespace Gestures.Balloon
             _gestureConfiguration = gestureConfiguration;
             _handDetector = handDetector;
             _hands = hands;
-            _lastSecondHandPosition = hands.secondHand.First().screenPosition;
+            _lastDirection = hands.secondHand.First().screenPosition - hands.firstHand.First().screenPosition;
+            var screenMax = Mathf.Max(Screen.width, Screen.height);
+            _initialDistance = Vector2.Distance(hands.firstHand.First().screenPosition / screenMax, hands.secondHand.First().screenPosition / screenMax);
+            _lastDistance = _initialDistance;
+            _startingValue = 0;
+        }
+        
+        public float GetValueFromDistance(float distance)
+        {
+            return Mathf.Max(_initialDistance - distance + _startingValue, 0) * _gestureConfiguration.balloonDistanceMultiplier;
         }
         
         public void OnUpdate()
@@ -33,21 +47,38 @@ namespace Gestures.Balloon
                 _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
                 return;
             }
-            
+
             _hands = hands;
 
-            var secondHandPosition = _lastSecondHandPosition;
+            var secondHandPosition = _hands.firstHand.First().screenPosition + _lastDirection;
+            var distance = _lastDistance;
             if (_hands.secondHand.Count >= 1)
             {
                 secondHandPosition = _hands.secondHand.Last().screenPosition;
-                _lastSecondHandPosition = secondHandPosition;
+                var screenMax = Mathf.Max(Screen.width, Screen.height);
+                distance = Vector2.Distance(_hands.firstHand.First().screenPosition / screenMax, secondHandPosition / screenMax); 
+                if (_lastEmpty)
+                {
+                    _startingValue = GetValueFromDistance(_lastDistance);
+                    _initialDistance = distance;
+                }
+                
+                _gestureDetector.ToggleBalloonPlaneLine(true);
+            }
+            else
+            {
+                _gestureDetector.ToggleBalloonPlaneLine(false);
             }
             
             _gestureDetector.UpdateBalloonPlanePositions(
                 _hands.firstHand.First().screenPosition, 
                 secondHandPosition);
             var balloonScreenPosition = _hands.firstHand.First().screenPosition;
-            _gestureDetector.UpdateBalloonPosition(new Vector3(balloonScreenPosition.x, 0, balloonScreenPosition.y));
+            _gestureDetector.UpdateBalloonPosition(new Vector3(balloonScreenPosition.x, GetValueFromDistance(distance), balloonScreenPosition.y));
+            
+            _lastEmpty = hands.secondHand.Count < 1;
+            _lastDirection = secondHandPosition - _hands.firstHand.First().screenPosition;
+            _lastDistance = distance;
         }
     }
 }
