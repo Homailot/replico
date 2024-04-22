@@ -70,16 +70,6 @@ namespace Gestures.ReplicaTransform
         {
             if (hands.IsEmpty()) return false;
 
-            ISet<Finger> fingersToRemove = new HashSet<Finger>();
-            foreach (var finger in _movedFingers)
-            {
-                if (!hands.firstHand.Contains(finger) && !hands.secondHand.Contains(finger))
-                {
-                    fingersToRemove.Add(finger);
-                }
-            }
-            _movedFingers.ExceptWith(fingersToRemove);
-
             var movedFingers = DetectHandMovement(hands.secondHand, false);
             if (movedFingers.Count > 0)
             {
@@ -91,28 +81,58 @@ namespace Gestures.ReplicaTransform
 
             return _timeSinceHandsDetected > _gestureConfiguration.handMovementDetectionTime && hands.secondHand.Count >= 2;
         }
+
+        private bool DetectBalloonGesture(Hands hands)
+        {
+            if (hands.IsEmpty()) return false;
+            
+            var movedFingers = DetectHandMovement(hands.firstHand, true);
+            var movedFingersSecondHand = DetectHandMovement(hands.secondHand, false);
+            
+            if (movedFingers.Count > 0 || movedFingersSecondHand.Count > 0)
+            {
+                _timeSinceHandsDetected = 0;
+                _movedFingers.UnionWith(movedFingers);
+                _movedFingers.UnionWith(movedFingersSecondHand);
+                return false;
+            }
+            _timeSinceHandsDetected += Time.deltaTime;
+            
+            return _timeSinceHandsDetected > _gestureConfiguration.handMovementDetectionTime && hands.firstHand.Count == 1 && hands.secondHand.Count == 1;
+        }
          
         public void OnUpdate()
         {
-            _replicaTransformer.Update(Touch.activeFingers);
-           
+            _replicaTransformer.Update(Touch.activeFingers); 
+            ISet<Finger> fingersToRemove = new HashSet<Finger>(); 
+            foreach (var finger in _movedFingers) 
+            { 
+                if (!_hands.firstHand.Contains(finger) && !_hands.secondHand.Contains(finger)) 
+                { 
+                    fingersToRemove.Add(finger);
+                }
+            }
+            _movedFingers.ExceptWith(fingersToRemove);
+
             if (DetectVerticalGesture(_hands))
             {
                 _gestureDetector.OnGestureDetected();
                 _gestureDetector.SwitchState(new TransformReplicaVerticalState(_gestureDetector, _gestureConfiguration, _handDetector, _hands));
                 return;
-                
-               // _gestureDetector.OnGestureDetected();
-               // _gestureDetector.UpdateBalloonPlanePositions(_hands.GetFirstHandCenter(), _hands.GetSecondHandCenter());
-               // _gestureDetector.EnableBalloon();
-               // _gestureDetector.SwitchState(new BalloonSelectionInitialState(_gestureDetector, _gestureConfiguration, _handDetector, hands));
+            }
+            
+            if (DetectBalloonGesture(_hands))
+            {
+                _gestureDetector.OnGestureDetected();
+                _gestureDetector.UpdateBalloonPosition(_hands.GetFirstHandCenter());
+                _gestureDetector.EnableBalloon();
+                _gestureDetector.SwitchState(new BalloonSelectionInitialState(_gestureDetector, _gestureConfiguration, _handDetector, _hands));
                 return;
             }
 
             var secondHandMoved = _hands.secondHand.Any(finger => _movedFingers.Contains(finger));
 
             _hands = secondHandMoved ? _handDetector.DetectHands(Touch.activeFingers, _hands, false) : _handDetector.DetectHands(Touch.activeFingers, _hands);
-            _hands.Print();
             
             if (_hands.IsEmpty() || _hands.firstHand.Count < 1 || _hands.secondHand.Count < 1)
             {

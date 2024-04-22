@@ -95,7 +95,7 @@ namespace Gestures.ReplicaTransform
             
             if (_lastFingerPositions.Count == touchCount)
             {
-                if (touchCount > 1)
+                if (touchCount > 1 && !_vertical)
                 {
                     var scale = touchDistance / _lastDistance;
                     scale = Mathf.Pow(scale, _gestureConfiguration.scaleSpeed);
@@ -103,7 +103,10 @@ namespace Gestures.ReplicaTransform
                 }
 
                 var touchPlaneFingerPosition = _gestureConfiguration.touchToPosition.GetTouchPosition(touchCenter);
-                _gestureConfiguration.movementTarget.RotateAround(touchPlaneFingerPosition, Vector3.up, -touchRotation);
+                if (!_vertical)
+                {
+                    _gestureConfiguration.movementTarget.RotateAround(touchPlaneFingerPosition, Vector3.up, -touchRotation);
+                }
                 _gestureConfiguration.movementTarget.position += new Vector3(
                                      (touchCenter.x - _lastCenter.x) * _gestureConfiguration.translateSpeed, 
                                      _vertical ? (touchCenter.y - _lastCenter.y) * _gestureConfiguration.translateSpeed : 0,

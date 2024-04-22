@@ -36,20 +36,12 @@ namespace Gestures.ReplicaTransform
             _replicaTransformer.Update(firstHandArray);
             _replicaTransformerVertical.Update(fingerArray);
             var hands = _handDetector.DetectHands(Touch.activeFingers, _hands);
-            hands.Print();
 
             if (hands.IsEmpty())
             {
                 _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
                 return;
             }
-            
-            // what if it's better to not switch state if one of the hands is missing?
-           // if (hands.secondHand.Count < 1)
-           // {
-           //     _gestureDetector.SwitchState(new TransformReplicaHandState(_gestureDetector, _gestureConfiguration, _handDetector, _replicaTransformer, hands));
-           //     return;
-           // }
             
             _hands = hands;
         }
