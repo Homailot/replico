@@ -16,6 +16,7 @@ namespace Gestures.ReplicaTransform
         private readonly ReplicaTransformer _replicaTransformerVertical;
         
         private Hands _hands;
+        private float _timeSinceSecondHandEmpty;
 
         public TransformReplicaVerticalState(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration, HandDetector handDetector, Hands hands)
         {
@@ -36,14 +37,29 @@ namespace Gestures.ReplicaTransform
             _replicaTransformer.Update(firstHandArray);
             _replicaTransformerVertical.Update(fingerArray);
             var hands = _handDetector.DetectHands(Touch.activeFingers, _hands);
-
-            if (hands.IsEmpty())
+            
+            if (hands.secondHand.Count == 0)
+            {
+                _timeSinceSecondHandEmpty += Time.deltaTime;
+                Debug.Log(_timeSinceSecondHandEmpty);
+            }
+            else
+            {
+                _timeSinceSecondHandEmpty = 0;
+            }
+            
+            if (_timeSinceSecondHandEmpty > _gestureConfiguration.verticalGestureHandEmptyAllowance || hands.IsEmpty())
             {
                 _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
                 return;
             }
             
             _hands = hands;
+        }
+
+        public void OnExit()
+        {
+            _gestureDetector.OnGestureExit();
         }
     }
 }

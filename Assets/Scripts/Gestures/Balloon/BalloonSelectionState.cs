@@ -42,6 +42,7 @@ namespace Gestures.Balloon
             var hands = _handDetector.DetectHands(Touch.activeFingers, _hands);
             if (hands.IsEmpty() || hands.firstHand.Count < 1)
             {
+                _gestureDetector.OnGestureExit();
                 _gestureDetector.ResetBalloonPlanePositions();
                 _gestureDetector.DisableBalloon();
                 _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));

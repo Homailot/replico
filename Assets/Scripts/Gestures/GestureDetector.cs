@@ -22,6 +22,8 @@ namespace Gestures
         private static readonly int FirstHand = Shader.PropertyToID("_First_Hand");
         private static readonly int SecondHand = Shader.PropertyToID("_Second_Hand");
         private static readonly int Disabled = Shader.PropertyToID("_Disabled");
+        private static readonly int Activated = Shader.PropertyToID("_Activated");
+        private static readonly int ActivatedMin = Shader.PropertyToID("_ActivatedMin");
 
         private void Awake()
         {
@@ -50,6 +52,16 @@ namespace Gestures
         {
             if (effectRenderer == null) return;
             effectRenderer.material.SetFloat(ActivationTime, Time.time);
+            effectRenderer.material.SetInt(Activated, 1);
+        }
+        
+        public void OnGestureExit()
+        {
+            if (effectRenderer == null) return;
+            effectRenderer.material.SetInt(Activated, 0);
+            // some sneaky stuff here
+            var activatedMin = effectRenderer.material.GetFloat(ActivatedMin);
+            effectRenderer.material.SetFloat(ActivationTime, Time.time - activatedMin);
         }
 
         public void EnableBalloon()

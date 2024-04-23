@@ -17,6 +17,8 @@ namespace Gestures.HandDetection
         
         public Vector2 GetFirstHandCenter()
         {
+            if (firstHand.Count == 0) return Vector2.zero;
+            
             var center = Vector2.zero;
             foreach (var finger in firstHand)
             {
@@ -27,6 +29,8 @@ namespace Gestures.HandDetection
         
         public Vector2 GetSecondHandCenter()
         {
+            if (secondHand.Count == 0) return Vector2.zero;
+            
             var center = Vector2.zero;
             foreach (var finger in secondHand)
             {

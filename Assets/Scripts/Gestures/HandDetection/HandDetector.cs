@@ -32,10 +32,6 @@ namespace Gestures.HandDetection
             handFingers.UnionWith(firstHand);
             handFingers.UnionWith(secondHand);
             
-            // identify which cluster corresponds to which hand
-            // TODO:
-            // if first finger is there, then problem solved
-            // if not, then we need to check which cluster has the most fingers from the first hand
             var firstCluster = DetermineFirstCluster(fingers, clusters, firstHand, secondHand);
 
             for (var i = 0; i < fingers.Count; i++)
