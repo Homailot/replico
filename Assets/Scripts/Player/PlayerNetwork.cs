@@ -24,8 +24,6 @@ namespace Player
         [Header("Prefab References")]
         [SerializeField] private GameObject touchPlanePrefab;
 
-        [SerializeField] private GameObject replica;
-
         private void Awake()
         {
             playerTransform.xrOrigin = GetComponent<XROrigin>();

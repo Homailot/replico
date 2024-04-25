@@ -2872,7 +2872,6 @@ MonoBehaviour:
   leftController: {fileID: 3936266896301420519}
   playerTransform: {fileID: 4814728690922370877}
   touchPlanePrefab: {fileID: 3100504565609626022, guid: 5b5f020a55da4d644b2725951b538b40, type: 3}
-  replica: {fileID: 0}
 --- !u!1 &4824754921539859895
 GameObject:
   m_ObjectHideFlags: 0

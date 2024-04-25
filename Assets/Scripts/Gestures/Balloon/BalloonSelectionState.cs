@@ -40,8 +40,17 @@ namespace Gestures.Balloon
         public void OnUpdate()
         {
             var hands = _handDetector.DetectHands(Touch.activeFingers, _hands);
-            if (hands.IsEmpty() || hands.firstHand.Count < 1)
+            if (hands.IsEmpty() || hands.firstHand.Count < 1 || hands.secondHand.Count > 1)
             {
+                if (hands.secondHand.Count > 1)
+                {
+                    _gestureDetector.ResetBalloonPlanePositions();
+                    _gestureDetector.OnPointSelected();
+                    _gestureDetector.DisableBalloon();
+                    _gestureDetector.SwitchState(new BalloonSelectedState(_gestureDetector, _gestureConfiguration));
+                    return;
+                }
+                
                 _gestureDetector.OnGestureExit();
                 _gestureDetector.ResetBalloonPlanePositions();
                 _gestureDetector.DisableBalloon();

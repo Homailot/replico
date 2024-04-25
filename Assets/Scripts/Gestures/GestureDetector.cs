@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Gestures.ReplicaTransform;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.Serialization;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
@@ -17,6 +19,7 @@ namespace Gestures
         [SerializeField] private Transform balloon;
         [SerializeField] private Transform balloonBillboard;
         [SerializeField] private BalloonHeightToCoordinates balloonHeightToCoordinates;
+        [SerializeField] private PointSelected pointSelected;
         
         private static readonly int ActivationTime = Shader.PropertyToID("_ActivationTime");
         private static readonly int FirstHand = Shader.PropertyToID("_First_Hand");
@@ -35,6 +38,20 @@ namespace Gestures
         private void Start()
         {
             DisableBalloon(); 
+        }
+        
+        public void OnPointSelected()
+        {
+            var balloonPoint = Instantiate(balloon, balloon.position, Quaternion.identity);
+            balloonPoint.localScale = balloon.localScale; 
+            balloonPoint.parent = gestureConfiguration.replicaController.GetReplica().transform;
+            balloonPoint.position = balloon.position;
+            pointSelected.Invoke(balloonPoint.localPosition);
+        }
+        
+        public void AddPointSelectedListener(UnityAction<Vector3> action)
+        {
+            pointSelected.AddListener(action);
         }
 
         public void Init()
@@ -122,5 +139,8 @@ namespace Gestures
             _currentState = newState;
             _currentState.OnEnter();
         }
+        
+        [Serializable]
+        public class PointSelected : UnityEvent<Vector3> { }
     }
 }
