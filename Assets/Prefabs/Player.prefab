@@ -2843,7 +2843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2157828526
+  GlobalObjectIdHash: 2794079161
   InScenePlacedSourceGlobalObjectIdHash: 627057686
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 0
@@ -2871,6 +2871,8 @@ MonoBehaviour:
   rightController: {fileID: 2276161671542764325}
   leftController: {fileID: 3936266896301420519}
   playerTransform: {fileID: 4814728690922370877}
+  touchPlanePrefab: {fileID: 3100504565609626022, guid: 5b5f020a55da4d644b2725951b538b40, type: 3}
+  replica: {fileID: 0}
 --- !u!1 &4824754921539859895
 GameObject:
   m_ObjectHideFlags: 0

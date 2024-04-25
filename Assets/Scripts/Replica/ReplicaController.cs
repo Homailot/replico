@@ -12,15 +12,17 @@ namespace Replica
     
         private void Awake()
         {
+            _replicaAnimation = GetComponent<ReplicaAnimation>(); 
+            _smoothFollow = GetComponent<SmoothFollow>();
+        }
+        
+        public void SetObjectToReplicate(GameObject obj)
+        {
+            objectToReplicate = obj;
+            Debug.Log("whadfasdf"); 
             var transform1 = transform;
             _replica = Instantiate(objectToReplicate, transform1.position, transform1.rotation);
             _replica.transform.parent = transform1;
-        }
-
-        private void Start()
-        {
-            _replicaAnimation = GetComponent<ReplicaAnimation>(); 
-            _smoothFollow = GetComponent<SmoothFollow>();
         }
 
         public void EnableReplica()

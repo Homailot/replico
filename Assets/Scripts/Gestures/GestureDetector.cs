@@ -35,12 +35,16 @@ namespace Gestures
         private void Start()
         {
             DisableBalloon(); 
+        }
+
+        public void Init()
+        {
             gestureConfiguration.replicaController.CompleteAnimation(() =>
-                {
-                    gestureConfiguration.replicaController.ResetTransforms();
-                    SwitchState(new TransformReplicaInitialState(this, gestureConfiguration));
-                }
-            );
+                           {
+                               gestureConfiguration.replicaController.ResetTransforms();
+                               SwitchState(new TransformReplicaInitialState(this, gestureConfiguration));
+                           }
+                       ); 
         }
 
         private void Update()

@@ -1,4 +1,6 @@
 using System;
+using Gestures;
+using Replica;
 using Unity.Netcode;
 using Unity.XR.CoreUtils;
 using UnityEngine;
@@ -10,6 +12,7 @@ namespace Player
 {
     public class PlayerNetwork : NetworkBehaviour
     {
+        [Header("Local Player Components")]
         [SerializeField] private Camera playerCamera;
         [SerializeField] private AudioListener audioListener;
         [SerializeField] private TrackedPoseDriver trackedPoseDriver;
@@ -17,6 +20,11 @@ namespace Player
         [SerializeField] private GameObject rightController;
         [SerializeField] private GameObject leftController;
         [SerializeField] private PlayerTransform playerTransform;
+        
+        [Header("Prefab References")]
+        [SerializeField] private GameObject touchPlanePrefab;
+
+        [SerializeField] private GameObject replica;
 
         private void Awake()
         {
@@ -57,17 +65,27 @@ namespace Player
                 {
                     var firstAttach = table.firstSeatAttach;
                     playerTransform.SetTransform(firstAttach.position, firstAttach.up, firstAttach.forward);
+                    
+                    var trackerAttach = table.firstAttach;
+                    var touchPlane = Instantiate(touchPlanePrefab, trackerAttach.position, trackerAttach.rotation);
+                    var replicaController = touchPlane.GetComponentInChildren<ReplicaController>();
+                    replicaController.SetObjectToReplicate(GameObject.FindWithTag("ToReplicate"));
+                    touchPlane.GetComponentInChildren<GestureDetector>().Init();
                     break;
                 }
                 case 1:
                 {
                     var secondAttach = table.secondSeatAttach;
                     playerTransform.SetTransform(secondAttach.position, secondAttach.up, secondAttach.forward);
+                    
+                    var trackerAttach = table.secondAttach;
+                    var touchPlane = Instantiate(touchPlanePrefab, trackerAttach.position, trackerAttach.rotation);
+                    var replicaController = touchPlane.GetComponentInChildren<ReplicaController>();
+                    replicaController.SetObjectToReplicate(GameObject.FindWithTag("ToReplicate"));
+                    touchPlane.GetComponentInChildren<GestureDetector>().Init();
                     break;
                 }
             }
-            
-            // TODO: create local touch plane
         }
     }
 }

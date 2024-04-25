@@ -25,12 +25,10 @@ namespace Replica
 
         private float _t;
         private Coroutine _currentCoroutine;
-        private Transform _replicaTransform;
 
-        private void Start()
+        private void Awake()
         {
             _replicaController = GetComponent<ReplicaController>();
-            _replicaTransform = _replicaController.GetReplica().transform;
             _t = 0.0f;
 
             _startPosition = startTransform.position;
@@ -39,9 +37,8 @@ namespace Replica
             _endScale = endTransform.localScale;
             _startRotation = startTransform.rotation;
             _endRotation = endTransform.rotation;
-            AnimateTo(0.0f);
         }
-    
+
         public void SetStartTransform(Transform start)
         {
             _startPosition = start.position;
@@ -81,9 +78,10 @@ namespace Replica
             var endQuaternion = _endRotation;
         
             var curveValue = animationCurve.Evaluate(t);
-            _replicaTransform.position = Vector3.Lerp(startTransformPosition, endTransformPosition, curveValue);
-            _replicaTransform.localScale = Vector3.Lerp(startTransformScale, endTransformScale, curveValue);
-            _replicaTransform.rotation = Quaternion.Lerp(startQuaternion, endQuaternion, curveValue);
+            var replicaTransform = _replicaController.GetReplica().transform;
+            replicaTransform.position = Vector3.Lerp(startTransformPosition, endTransformPosition, curveValue);
+            replicaTransform.localScale = Vector3.Lerp(startTransformScale, endTransformScale, curveValue);
+            replicaTransform.rotation = Quaternion.Lerp(startQuaternion, endQuaternion, curveValue);
         
             _t = t;
         }
@@ -118,21 +116,22 @@ namespace Replica
             var startQuaternion = _startRotation;
             var endQuaternion = _endRotation;
 
+            var replicaTransform = _replicaController.GetReplica().transform;
             while (currentTime < duration)
             {
                 currentTime += Time.deltaTime;
                 var curveValue = animationCurve.Evaluate(_t + (currentTime / duration) * (t - _t));
             
-                _replicaTransform.position = Vector3.Lerp(startTransformPosition, endTransformPosition, curveValue);
-                _replicaTransform.localScale = Vector3.Lerp(startTransformScale, endTransformScale, curveValue);
-                _replicaTransform.rotation = Quaternion.Lerp(startQuaternion, endQuaternion, curveValue);
+                replicaTransform.position = Vector3.Lerp(startTransformPosition, endTransformPosition, curveValue);
+                replicaTransform.localScale = Vector3.Lerp(startTransformScale, endTransformScale, curveValue);
+                replicaTransform.rotation = Quaternion.Lerp(startQuaternion, endQuaternion, curveValue);
             
                 yield return null;
             }
         
-            _replicaTransform.position = Vector3.Lerp(startTransformPosition, endTransformPosition, t);
-            _replicaTransform.localScale = Vector3.Lerp(startTransformScale, endTransformScale, t);
-            _replicaTransform.rotation = Quaternion.Lerp(startQuaternion, endQuaternion, t);
+            replicaTransform.position = Vector3.Lerp(startTransformPosition, endTransformPosition, t);
+            replicaTransform.localScale = Vector3.Lerp(startTransformScale, endTransformScale, t);
+            replicaTransform.rotation = Quaternion.Lerp(startQuaternion, endQuaternion, t);
 
             _currentCoroutine = null;
             _t = t;
