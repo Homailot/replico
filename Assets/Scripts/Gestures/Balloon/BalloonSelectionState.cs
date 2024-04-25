@@ -31,8 +31,8 @@ namespace Gestures.Balloon
             _lastDistance = _initialDistance;
             _startingValue = 0;
         }
-        
-        public float GetValueFromDistance(float distance)
+
+        private float GetValueFromDistance(float distance)
         {
             return Mathf.Max(_initialDistance - distance + _startingValue, 0) * _gestureConfiguration.balloonDistanceMultiplier;
         }
