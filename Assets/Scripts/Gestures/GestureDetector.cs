@@ -20,6 +20,7 @@ namespace Gestures
         [SerializeField] private Transform balloonBillboard;
         [SerializeField] private BalloonHeightToCoordinates balloonHeightToCoordinates;
         [SerializeField] private PointSelected pointSelected;
+        [SerializeField] private GameObject balloonPointPrefab;
         
         private static readonly int ActivationTime = Shader.PropertyToID("_ActivationTime");
         private static readonly int FirstHand = Shader.PropertyToID("_First_Hand");
@@ -42,11 +43,20 @@ namespace Gestures
         
         public void OnPointSelected()
         {
-            var balloonPoint = Instantiate(balloon, balloon.position, Quaternion.identity);
-            balloonPoint.localScale = balloon.localScale; 
-            balloonPoint.parent = gestureConfiguration.replicaController.GetReplica().transform;
-            balloonPoint.position = balloon.position;
-            pointSelected.Invoke(balloonPoint.localPosition);
+            var balloonPoint = Instantiate(balloonPointPrefab, balloon.position, Quaternion.identity);
+            balloonPoint.transform.localScale = balloon.localScale; 
+            balloonPoint.transform.parent = gestureConfiguration.replicaController.GetReplica().transform;
+            balloonPoint.transform.position = balloon.position;
+            pointSelected.Invoke(balloonPoint.transform.localPosition);
+        }
+        
+        public void AddPointOfInterest(Vector3 position)
+        {
+            var balloonPoint = Instantiate(balloonPointPrefab, balloon.position, Quaternion.identity);
+            balloonPoint.transform.localScale = balloon.localScale; 
+            Debug.Log(balloonPoint.transform.localScale);
+            balloonPoint.transform.parent = gestureConfiguration.replicaController.GetReplica().transform;
+            balloonPoint.transform.localPosition = position;
         }
         
         public void AddPointSelectedListener(UnityAction<Vector3> action)
