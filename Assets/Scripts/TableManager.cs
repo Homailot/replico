@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Player;
 using Unity.Netcode;
 using UnityEngine;
@@ -41,18 +43,19 @@ public class TableManager : NetworkBehaviour
             }
         };
         
-        if (_table.isFirstSeatAvailable)
+        if (_table.isSecondSeatAvailable)
+        {
+            _table.secondSeat.Value = clientId;
+            MovePlayerToTableClientRpc(_tableNetworkObject, 1, clientRpcParams);
+        }    
+        else if (_table.isFirstSeatAvailable)
         {
             _table.firstSeat.Value = clientId;
             MovePlayerToTableClientRpc(_tableNetworkObject, 0, clientRpcParams);
         }
-        else if (_table.isSecondSeatAvailable)
-        {
-            _table.secondSeat.Value = clientId;
-            MovePlayerToTableClientRpc(_tableNetworkObject, 1, clientRpcParams);
-        }
-    }
     
+    }
+
     [ClientRpc]
     private void MovePlayerToTableClientRpc(NetworkObjectReference tableReference, int seat, ClientRpcParams clientRpcParams = default)
     {
