@@ -15,14 +15,22 @@ namespace TouchPlane
 
         public Vector3 GetTouchPosition(Vector2 touchPosition)
         {
-            var bounds = _renderer.bounds;
+            var bounds = _renderer.localBounds;
         
-            var min = new float2(bounds.min.x, bounds.min.z);
-            var max = new float2(bounds.max.x, bounds.max.z);
-            var touch = new float2(Mathf.Clamp(touchPosition.x, 0, Screen.width), Mathf.Clamp(touchPosition.y, 0, Screen.height));
+            var min = new float2(bounds.min.x, bounds.min.y);
+            Debug.Log($"Min: {min}");
+            var max = new float2(bounds.max.x, bounds.max.y);
+            Debug.Log($"Max: {max}");
+            var touch = new float2(Mathf.Clamp(touchPosition.y, 0, Screen.height),
+                Mathf.Clamp(touchPosition.x, 0, Screen.width));
+            Debug.Log($"Touch: {touch}");
         
-            var remapped = MathUtils.Remap(touch, new float2(0, 0), new float2(Screen.width, Screen.height), min, max);
-            return new Vector3(remapped.x, bounds.center.y, remapped.y);
+            var remapped = MathUtils.Remap(touch, new float2(0, 0), new float2(Screen.height, Screen.width), min, max);
+            Debug.Log($"Remapped: {remapped}");
+            var point = new Vector3(-remapped.x, remapped.y, bounds.center.z);
+            Debug.Log($"Point: {point}");
+
+            return transform.TransformPoint(point);
         }
     }
 }
