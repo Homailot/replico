@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Gestures.Balloon;
 using Gestures.ReplicaTransform;
 using UnityEngine;
 using UnityEngine.Events;
@@ -22,6 +23,8 @@ namespace Gestures
         [SerializeField] private PointSelected pointSelected;
         [SerializeField] private GameObject balloonPointPrefab;
         
+        private List<BalloonPoint> _pointsOfInterest = new List<BalloonPoint>();
+        
         private static readonly int ActivationTime = Shader.PropertyToID("_ActivationTime");
         private static readonly int FirstHand = Shader.PropertyToID("_First_Hand");
         private static readonly int SecondHand = Shader.PropertyToID("_Second_Hand");
@@ -40,23 +43,29 @@ namespace Gestures
         {
             DisableBalloon(); 
         }
-        
+
+        public void LateUpdate()
+        {
+            foreach (var balloonPoint in _pointsOfInterest)
+            {
+                balloonPoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
+            }
+        }
+
         public void OnPointSelected()
         {
-            var balloonPoint = Instantiate(balloonPointPrefab, balloon.position, Quaternion.identity);
-            balloonPoint.transform.localScale = balloon.localScale; 
-            balloonPoint.transform.parent = gestureConfiguration.replicaController.GetReplica().transform;
-            balloonPoint.transform.position = balloon.position;
-            pointSelected.Invoke(balloonPoint.transform.localPosition);
+            var localPoint = gestureConfiguration.replicaController.GetReplica().transform.InverseTransformPoint(balloon.position);
+            AddPointOfInterest(localPoint);
+            pointSelected.Invoke(localPoint);
         }
         
         public void AddPointOfInterest(Vector3 position)
         {
-            var balloonPoint = Instantiate(balloonPointPrefab, balloon.position, Quaternion.identity);
-            balloonPoint.transform.localScale = balloon.localScale; 
-            Debug.Log(balloonPoint.transform.localScale);
-            balloonPoint.transform.parent = gestureConfiguration.replicaController.GetReplica().transform;
-            balloonPoint.transform.localPosition = position;
+            var balloonPointObject = Instantiate(balloonPointPrefab, balloon.position, Quaternion.identity);
+            var balloonPoint = balloonPointObject.GetComponent<BalloonPoint>();
+            balloonPoint.localPosition = position;
+            balloonPoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
+            _pointsOfInterest.Add(balloonPoint);
         }
         
         public void AddPointSelectedListener(UnityAction<Vector3> action)
