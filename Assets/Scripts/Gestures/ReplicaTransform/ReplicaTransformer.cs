@@ -107,11 +107,13 @@ namespace Gestures.ReplicaTransform
                 {
                     _gestureConfiguration.movementTarget.RotateAround(touchPlaneFingerPosition, Vector3.up, -touchRotation);
                 }
-                _gestureConfiguration.movementTarget.position += new Vector3(
-                                     (touchCenter.x - _lastCenter.x) * _gestureConfiguration.translateSpeed, 
-                                     _vertical ? (touchCenter.y - _lastCenter.y) * _gestureConfiguration.translateSpeed : 0,
-                                     _vertical ? 0 : (touchCenter.y - _lastCenter.y) * _gestureConfiguration.translateSpeed
-                                     );               
+                var movement = new Vector3(
+                    (touchCenter.x - _lastCenter.x) * _gestureConfiguration.translateSpeed, 
+                    _vertical ? (touchCenter.y - _lastCenter.y) * _gestureConfiguration.translateSpeed : 0,
+                    _vertical ? 0 : (touchCenter.y - _lastCenter.y) * _gestureConfiguration.translateSpeed
+                    );
+                var transformedMovement = _gestureConfiguration.frame.TransformVector(movement);
+                _gestureConfiguration.movementTarget.position += transformedMovement;
             }
            
             _lastFingerPositions.Clear();

@@ -1143,6 +1143,7 @@ MonoBehaviour:
     swipeFingers: 11
     replicaController: {fileID: 5015059179080984275}
     touchToPosition: {fileID: 6791617473146403138}
+    frame: {fileID: 762086850128158217}
     translateSpeed: 0.0005
     scaleSpeed: 0.8
     movementTarget: {fileID: 6065435516907134566}
