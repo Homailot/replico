@@ -70,6 +70,14 @@ namespace Gestures
             _pointsOfInterest.Add(balloonPoint);
         }
         
+        public void RemovePointOfInterest(Vector3 position)
+        {
+            var balloonPoint = _pointsOfInterest.FirstOrDefault(point => point.localPosition == position);
+            if (balloonPoint == null) return;
+            _pointsOfInterest.Remove(balloonPoint);
+            Destroy(balloonPoint.gameObject);
+        }
+        
         public void AddPointSelectedListener(UnityAction<Vector3> action)
         {
             pointSelected.AddListener(action);
@@ -109,6 +117,7 @@ namespace Gestures
         public void EnableBalloon()
         {
             if (balloon == null) return;
+            balloon.rotation = Quaternion.identity;
             balloon.gameObject.SetActive(true);
             balloonBillboard.gameObject.SetActive(true);
         }

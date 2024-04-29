@@ -10,31 +10,71 @@ public class TableManager : NetworkBehaviour
     // magic variables for now
     [SerializeField] private Transform firstTableSpawnPosition;
     [SerializeField] private GameObject tablePrefab;
+    [SerializeField] private PlayerManager playerManager;
     
-    private Table _table;
-    private NetworkObject _tableNetworkObject;
+    private readonly List<Table> _tables = new List<Table>();
     
-    public void Start()
+    public void AddToAvailableTable(ulong playerId)
     {
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-    }
-    
-    private void OnClientConnected(ulong clientId)
-    {
+        Debug.Log($"Adding player {playerId} to available table");
         if (!NetworkManager.Singleton.IsServer) return;
-        if (_table == null)
+
+        var clientId = playerManager.GetClientId(playerId);
+        foreach (var table in _tables)
         {
-            var tableGameObject = Instantiate(tablePrefab);
-            _table = tableGameObject.GetComponent<Table>();
-            _tableNetworkObject = tableGameObject.GetComponent<NetworkObject>();
+            if (table.isFirstSeatAvailable)
+            {
+                AddToTable(table, 0, clientId, playerId);
+                return;
+            }
             
-            var tableTransform = _table.transform;
-            tableTransform.position = firstTableSpawnPosition.position;
-            tableTransform.rotation = firstTableSpawnPosition.rotation;
-            
-            _tableNetworkObject.Spawn();
+            if (table.isSecondSeatAvailable)
+            {
+                AddToTable(table, 1, clientId, playerId);
+                return;
+            }
         }
         
+        Debug.Log("Creating new table");
+        var tableGameObject = Instantiate(tablePrefab);
+        var newTable = tableGameObject.GetComponent<Table>();
+        _tables.Add(newTable);
+        
+        var tableTransform = newTable.transform;
+        tableTransform.position = firstTableSpawnPosition.position;
+        tableTransform.rotation = firstTableSpawnPosition.rotation;
+        
+        newTable.networkObject.Spawn();
+        
+        AddToTable(newTable, 0, clientId, playerId);
+    }
+    
+    public void RemoveFromTable(ulong playerId)
+    {
+        if (!NetworkManager.Singleton.IsServer) return;
+
+        foreach (var table in _tables)
+        {
+            if (table.firstSeat.Value == playerId)
+            {
+                Debug.Log($"Removing player {playerId} from table {table.networkObject.NetworkObjectId} in seat 0");
+                table.firstSeat.Value = ulong.MaxValue;
+                return;
+            }
+            
+            if (table.secondSeat.Value == playerId)
+            {
+                Debug.Log($"Removing player {playerId} from table {table.networkObject.NetworkObjectId} in seat 1");
+                table.secondSeat.Value = ulong.MaxValue;
+                return;
+            }
+        }
+        
+        // if table is empty, destroy it
+    }
+
+    private void AddToTable(Table table, int seat, ulong clientId, ulong playerId)
+    {
         var clientRpcParams = new ClientRpcParams
         {
             Send = new ClientRpcSendParams
@@ -43,17 +83,8 @@ public class TableManager : NetworkBehaviour
             }
         };
         
-        if (_table.isSecondSeatAvailable)
-        {
-            _table.secondSeat.Value = clientId;
-            MovePlayerToTableClientRpc(_tableNetworkObject, 1, clientRpcParams);
-        }    
-        else if (_table.isFirstSeatAvailable)
-        {
-            _table.firstSeat.Value = clientId;
-            MovePlayerToTableClientRpc(_tableNetworkObject, 0, clientRpcParams);
-        }
-    
+        table.AddToTable(playerId, seat);
+        MovePlayerToTableClientRpc(table.networkObject, seat, clientRpcParams);
     }
 
     [ClientRpc]

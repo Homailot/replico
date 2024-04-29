@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3646756071
+  GlobalObjectIdHash: 2373210771
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -245,8 +245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e0437d7d7c47a69c17f13474bf9d83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstSeatAttach: {fileID: 1470819997726693839}
-  secondSeatAttach: {fileID: 2235662301540856920}
   firstAttach: {fileID: 3182088707824106030}
   secondAttach: {fileID: 8253259035480045865}
 --- !u!1 &3349796173532529807

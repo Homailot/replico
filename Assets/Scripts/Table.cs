@@ -1,12 +1,9 @@
+using System;
 using Unity.Netcode;
 using UnityEngine;
 
 public class Table : NetworkBehaviour
 {
-    // TODO: TEMPORARY! USE TRACKER FOR TABLE POSITION, USING MAGIC VARIABLES FOR NOW
-    public Transform firstSeatAttach;
-    public Transform secondSeatAttach; 
-    
     public Transform firstAttach;
     public Transform secondAttach;
 
@@ -16,11 +13,31 @@ public class Table : NetworkBehaviour
     public bool isFirstSeatAvailable => firstSeat.Value == ulong.MaxValue;
     public bool isSecondSeatAvailable => secondSeat.Value == ulong.MaxValue;
     
+    public NetworkObject networkObject { get; private set; }
+
+    public void Awake()
+    {
+        networkObject = GetComponent<NetworkObject>();
+    }
+
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
         firstSeat.OnValueChanged += OnFirstSeatChanged;
         secondSeat.OnValueChanged += OnSecondSeatChanged;
+    }
+    
+    public void AddToTable(ulong playerId, int seat)
+    {
+        switch (seat)
+        {
+            case 0:
+                firstSeat.Value = playerId;
+                break;
+            case 1:
+                secondSeat.Value = playerId;
+                break;
+        }
     }
     
     private void OnFirstSeatChanged(ulong oldSeat, ulong newSeat)

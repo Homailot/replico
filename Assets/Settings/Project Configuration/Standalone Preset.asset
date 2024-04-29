@@ -71,7 +71,7 @@ MonoBehaviour:
     overrideMode: 1
     overrideDepthState: 1
     depthCompareFunction: 5
-    enableWrite: 1
+    enableWrite: 0
     stencilSettings:
       overrideStencilState: 0
       stencilReference: 0
@@ -100,11 +100,11 @@ MonoBehaviour:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7, type: 3}
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
   m_RendererFeatures:
-  - {fileID: 8185813672533138437}
   - {fileID: -5381739364100920473}
   - {fileID: -3575575686404342006}
+  - {fileID: 8185813672533138437}
   - {fileID: 1581780791935352457}
-  m_RendererFeatureMap: 059cdf342ada9971672b07e18f3850b50a7f5880db0061ce89bed7e73f9df315
+  m_RendererFeatureMap: 672b07e18f3850b50a7f5880db0061ce059cdf342ada997189bed7e73f9df315
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -165,14 +165,14 @@ MonoBehaviour:
         serializedVersion: 2
         m_Bits: 64
       PassNames: []
-    overrideMaterial: {fileID: 2100000, guid: 6bd5af706a97305448ab46b2a5ec9957, type: 2}
+    overrideMaterial: {fileID: 2100000, guid: a5b11c9f6a8637f46ba6028a334d2e38, type: 2}
     overrideMaterialPassIndex: 0
     overrideShader: {fileID: 0}
     overrideShaderPassIndex: 0
     overrideMode: 1
-    overrideDepthState: 0
-    depthCompareFunction: 5
-    enableWrite: 1
+    overrideDepthState: 1
+    depthCompareFunction: 4
+    enableWrite: 0
     stencilSettings:
       overrideStencilState: 0
       stencilReference: 0
@@ -207,7 +207,7 @@ MonoBehaviour:
         serializedVersion: 2
         m_Bits: 64
       PassNames: []
-    overrideMaterial: {fileID: 2100000, guid: 95e1a045c85c373429fcbe5b43848e16, type: 2}
+    overrideMaterial: {fileID: 2100000, guid: 04051245cd824344eaa89a72a2063b11, type: 2}
     overrideMaterialPassIndex: 0
     overrideShader: {fileID: 0}
     overrideShaderPassIndex: 0

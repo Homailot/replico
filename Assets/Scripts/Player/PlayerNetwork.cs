@@ -35,7 +35,17 @@ namespace Player
         private NetworkList<Vector3> _pointsOfInterest;
         
         private XROrigin _xrOrigin;
+        private readonly NetworkVariable<ulong> _playerId = new NetworkVariable<ulong>();
         private bool _inTable;
+        
+        public ulong PlayerId
+        {
+            get => _playerId.Value;
+            set {
+                // update gesture detector if is owner
+                _playerId.Value = value;  
+            }
+        }
 
         private void Awake()
         {
@@ -85,6 +95,7 @@ namespace Player
             }
             else
             {
+                // delayed to allow for player tracker to correctly update
                 StartCoroutine(FirstAttach(table, seat));
             }
         }
@@ -93,8 +104,9 @@ namespace Player
         { 
             var attachPoint = seat == 0 ? table.firstAttach : table.secondAttach; 
             var trackerToOrigin = playerCamera.transform.position - tracker.position;
+            var trackerToOriginTransformed = attachPoint.InverseTransformDirection(trackerToOrigin);
             var position = attachPoint.position;
-            playerTransform.SetTransform(position + trackerToOrigin, attachPoint.up, attachPoint.forward);
+            playerTransform.SetTransform(position + trackerToOriginTransformed, attachPoint.up, attachPoint.forward);
             var touchPlane = Instantiate(touchPlanePrefab, position, attachPoint.rotation);
             
             var replicaController = touchPlane.GetComponentInChildren<ReplicaController>();
@@ -102,7 +114,16 @@ namespace Player
             
             gestureDetector = touchPlane.GetComponentInChildren<GestureDetector>();
             gestureDetector.Init();
+            
             // TODO: all previous points of interest
+            foreach (var playerObject in FindObjectsByType<PlayerNetwork>(FindObjectsSortMode.None))
+            {
+                foreach (var point in playerObject._pointsOfInterest)
+                {
+                    gestureDetector.AddPointOfInterest(point);
+                }
+            } 
+            
             gestureDetector.AddPointSelectedListener(OnPointSelected);
         }
         
@@ -114,36 +135,35 @@ namespace Player
 
         private void OnPointSelected(Vector3 point)
         {
-            Debug.Log("OnPointSelected");
             if (!IsOwner) return;
-            Debug.Log($"Point selected: {point}");
             _pointsOfInterest.Add(point);
         }
 
         private void OnPointsOfInterestChanged(NetworkListEvent<Vector3> changeEvent)
         {
-            Debug.Log("OnPointsOfInterestChanged"); 
             if (IsOwner) return;
-            Debug.Log("IsOwner");
-            Debug.Log(changeEvent.Type);
-            Debug.Log(changeEvent.Value);
+            var player = NetworkManager.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
+            var playerGestureDetector = player.gestureDetector;
             
-            // todo: implement other cases
             switch (changeEvent.Type)
             {
                 case NetworkListEvent<Vector3>.EventType.Add:
-                    Debug.Log("Adding");
-                    var player = NetworkManager.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
-                    var playerGestureDetector = player.gestureDetector;
                     if (playerGestureDetector != null)
                     {
-                        Debug.Log("Adding");
                         playerGestureDetector.AddPointOfInterest(changeEvent.Value);
                     }
                     break;
                 case NetworkListEvent<Vector3>.EventType.Insert:
+                    if (playerGestureDetector != null)
+                    {
+                        playerGestureDetector.AddPointOfInterest(changeEvent.Value);
+                    }
                     break;
                 case NetworkListEvent<Vector3>.EventType.Remove:
+                    if (playerGestureDetector != null)
+                    {
+                        playerGestureDetector.RemovePointOfInterest(changeEvent.PreviousValue);
+                    }
                     break;
                 case NetworkListEvent<Vector3>.EventType.RemoveAt:
                     break;
