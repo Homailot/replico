@@ -136,6 +136,7 @@ namespace Gestures
         {
             if (balloonPlaneRenderer == null) return;
             balloonPlaneRenderer.material.SetInt(Disabled, active ? 0 : 1);
+            renderBehindPlaneMaterial.SetInt(Disabled, active ? 0 : 1);
         }
         
         public void UpdateBalloonPlanePositions(Vector2 firstHand, Vector2 secondHand)
