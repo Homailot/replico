@@ -17,13 +17,14 @@ namespace Gestures
         [SerializeField] private GestureConfiguration gestureConfiguration;
         [SerializeField] private Renderer effectRenderer;
         [SerializeField] private Renderer balloonPlaneRenderer;
+        [SerializeField] private Material renderBehindPlaneMaterial;
         [SerializeField] private Transform balloon;
         [SerializeField] private Transform balloonBillboard;
         [SerializeField] private BalloonHeightToCoordinates balloonHeightToCoordinates;
         [SerializeField] private PointSelected pointSelected;
         [SerializeField] private GameObject balloonPointPrefab;
         
-        private List<BalloonPoint> _pointsOfInterest = new List<BalloonPoint>();
+        private readonly List<BalloonPoint> _pointsOfInterest = new List<BalloonPoint>();
         
         private static readonly int ActivationTime = Shader.PropertyToID("_ActivationTime");
         private static readonly int FirstHand = Shader.PropertyToID("_First_Hand");
@@ -41,7 +42,8 @@ namespace Gestures
 
         private void Start()
         {
-            DisableBalloon(); 
+            DisableBalloon();
+            ResetBalloonPlanePositions();
         }
 
         public void LateUpdate()
@@ -142,6 +144,9 @@ namespace Gestures
             var screenMax = Mathf.Max(Screen.width, Screen.height);
             balloonPlaneRenderer.material.SetVector(FirstHand, firstHand / screenMax);
             balloonPlaneRenderer.material.SetVector(SecondHand, secondHand / screenMax);
+            
+            renderBehindPlaneMaterial.SetVector(FirstHand, firstHand / screenMax);
+            renderBehindPlaneMaterial.SetVector(SecondHand, secondHand / screenMax);
         }
         
         public void ResetBalloonPlanePositions()
@@ -149,6 +154,8 @@ namespace Gestures
             if (balloonPlaneRenderer == null) return;
             balloonPlaneRenderer.material.SetVector(FirstHand, new Vector2(-1f, -1f));
             balloonPlaneRenderer.material.SetVector(SecondHand, new Vector2(-1f, -1f)); 
+            renderBehindPlaneMaterial.SetVector(FirstHand, new Vector2(-1f, -1f));
+            renderBehindPlaneMaterial.SetVector(SecondHand, new Vector2(-1f, -1f));
             balloonHeightToCoordinates.ResetBalloonHeight();
         }
 

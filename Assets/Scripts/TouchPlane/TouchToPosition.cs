@@ -15,6 +15,7 @@ namespace TouchPlane
 
         public Vector3 GetTouchPosition(Vector2 touchPosition)
         {
+            if (_renderer == null) return Vector3.zero;
             var bounds = _renderer.localBounds;
         
             var min = new float2(bounds.min.x, bounds.min.y);

@@ -30,10 +30,9 @@ namespace Player
         
         [Header("Prefab References")]
         [SerializeField] private GameObject touchPlanePrefab;
-
-        private readonly NetworkList<Vector3> _pointsOfInterest =
-            new NetworkList<Vector3>(writePerm: NetworkVariableWritePermission.Owner);
         public GestureDetector gestureDetector;
+
+        private NetworkList<Vector3> _pointsOfInterest;
         
         private XROrigin _xrOrigin;
         private bool _inTable;
@@ -42,20 +41,7 @@ namespace Player
         {
             _xrOrigin = GetComponent<XROrigin>();
             playerTransform.xrOrigin = _xrOrigin;
-
-            InputDevices.deviceConnected += (device) =>
-            {
-                Debug.Log("Device connected: " + device.name);
-                Debug.Log(playerCamera.transform.position);
-                Debug.Log(tracker.position);
-            };
-            List<InputDevice> devices = new List<InputDevice>();
-            InputDevices.GetDevices(devices);
-            
-            foreach (var device in devices)
-            {
-                Debug.Log("Device: " + device.name);
-            }
+            _pointsOfInterest = new NetworkList<Vector3>(writePerm: NetworkVariableWritePermission.Owner);
         }
 
         private void Start()
@@ -104,49 +90,23 @@ namespace Player
         }
 
         private void ChangeSeat(Table table, int seat)
-        {
-             switch (seat)
-             {
-                 case 0:
-                 {
-                     Debug.Log($"Moving player to table seat {seat}");
-                     Debug.Log("First Attach: " + table.firstAttach.position);
-                     Debug.Log("Tracker position: " + tracker.position);
-                     Debug.Log("Camera in origin space: " + playerCamera.transform.position);
-                     Debug.Log("Tracker to origin: " + (playerCamera.transform.position - tracker.position));
-                     Debug.Log("final position: " + (table.firstAttach.position + (playerCamera.transform.position - tracker.position)));
-                     var trackerToOrigin = playerCamera.transform.position - tracker.position;
-                     var firstAttach = table.firstAttach;
-                     playerTransform.SetTransform(firstAttach.position + trackerToOrigin, firstAttach.up, firstAttach.forward);
-                     
-                     var trackerAttach = table.firstAttach;
-                     var touchPlane = Instantiate(touchPlanePrefab, trackerAttach.position, trackerAttach.rotation);
-                     var replicaController = touchPlane.GetComponentInChildren<ReplicaController>();
-                     replicaController.SetObjectToReplicate(GameObject.FindWithTag("ToReplicate"));
-                     gestureDetector = touchPlane.GetComponentInChildren<GestureDetector>();
-                     gestureDetector.Init();
-                     // todo: add all points of interest to the gesture detector
-                     gestureDetector.AddPointSelectedListener(OnPointSelected);
-                     break;
-                 }
-                 case 1:
-                 {
-                     var secondAttach = table.secondSeatAttach;
-                     playerTransform.SetTransform(secondAttach.position, secondAttach.up, secondAttach.forward);
-                     
-                     var trackerAttach = table.secondAttach;
-                     var touchPlane = Instantiate(touchPlanePrefab, trackerAttach.position, trackerAttach.rotation);
-                     var replicaController = touchPlane.GetComponentInChildren<ReplicaController>();
-                     replicaController.SetObjectToReplicate(GameObject.FindWithTag("ToReplicate"));
-                     gestureDetector = touchPlane.GetComponentInChildren<GestureDetector>();
-                     gestureDetector.Init();
-                     gestureDetector.AddPointSelectedListener(OnPointSelected);
-                     break;
-                 }
-             }           
+        { 
+            var attachPoint = seat == 0 ? table.firstAttach : table.secondAttach; 
+            var trackerToOrigin = playerCamera.transform.position - tracker.position;
+            var position = attachPoint.position;
+            playerTransform.SetTransform(position + trackerToOrigin, attachPoint.up, attachPoint.forward);
+            var touchPlane = Instantiate(touchPlanePrefab, position, attachPoint.rotation);
+            
+            var replicaController = touchPlane.GetComponentInChildren<ReplicaController>();
+            replicaController.SetObjectToReplicate(GameObject.FindWithTag("ToReplicate"));
+            
+            gestureDetector = touchPlane.GetComponentInChildren<GestureDetector>();
+            gestureDetector.Init();
+            // TODO: all previous points of interest
+            gestureDetector.AddPointSelectedListener(OnPointSelected);
         }
-
-        IEnumerator FirstAttach(Table table, int seat)
+        
+        private IEnumerator FirstAttach(Table table, int seat)
         {
             yield return new WaitForSeconds(1);
             ChangeSeat(table, seat);

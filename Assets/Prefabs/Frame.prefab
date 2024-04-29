@@ -550,7 +550,7 @@ GameObject:
   - component: {fileID: 822807600387723363}
   - component: {fileID: 6541997995535119204}
   - component: {fileID: 1706526885837280970}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -656,6 +656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 503d22d2170d4ebe9f3cb2ad65fd7860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  renderBehindVerticalMaterial: {fileID: 2100000, guid: 82cee6889a623394c8377677a0a6d1a8, type: 2}
 --- !u!1 &4361275976516390928
 GameObject:
   m_ObjectHideFlags: 0
@@ -920,7 +921,7 @@ GameObject:
   - component: {fileID: 1027186367300744832}
   - component: {fileID: 4261755210364554083}
   - component: {fileID: 7920714851255966407}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Balloon Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1154,6 +1155,7 @@ MonoBehaviour:
     balloonDistanceMultiplier: 1
   effectRenderer: {fileID: 2337578508288037818}
   balloonPlaneRenderer: {fileID: 1027186367300744832}
+  renderBehindPlaneMaterial: {fileID: 2100000, guid: 385557b0bcfea404cbab8db3e306de23, type: 2}
   balloon: {fileID: 8981277875658448488}
   balloonBillboard: {fileID: 7782311922904752002}
   balloonHeightToCoordinates: {fileID: 1706526885837280970}
