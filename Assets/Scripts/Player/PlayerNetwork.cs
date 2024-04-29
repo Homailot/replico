@@ -38,11 +38,15 @@ namespace Player
         private readonly NetworkVariable<ulong> _playerId = new NetworkVariable<ulong>();
         private bool _inTable;
         
-        public ulong PlayerId
+        public ulong playerId
         {
             get => _playerId.Value;
             set {
                 // update gesture detector if is owner
+                if (IsOwner && gestureDetector != null)
+                {
+                    gestureDetector.SetPlayerId(value);
+                }
                 _playerId.Value = value;  
             }
         }
@@ -114,13 +118,13 @@ namespace Player
             
             gestureDetector = touchPlane.GetComponentInChildren<GestureDetector>();
             gestureDetector.Init();
+            gestureDetector.SetPlayerId(playerId);
             
-            // TODO: all previous points of interest
             foreach (var playerObject in FindObjectsByType<PlayerNetwork>(FindObjectsSortMode.None))
             {
                 foreach (var point in playerObject._pointsOfInterest)
                 {
-                    gestureDetector.AddPointOfInterest(point);
+                    gestureDetector.AddPointOfInterest(point, playerObject.playerId);
                 }
             } 
             
@@ -150,13 +154,13 @@ namespace Player
                 case NetworkListEvent<Vector3>.EventType.Add:
                     if (playerGestureDetector != null)
                     {
-                        playerGestureDetector.AddPointOfInterest(changeEvent.Value);
+                        playerGestureDetector.AddPointOfInterest(changeEvent.Value, playerId);
                     }
                     break;
                 case NetworkListEvent<Vector3>.EventType.Insert:
                     if (playerGestureDetector != null)
                     {
-                        playerGestureDetector.AddPointOfInterest(changeEvent.Value);
+                        playerGestureDetector.AddPointOfInterest(changeEvent.Value, playerId);
                     }
                     break;
                 case NetworkListEvent<Vector3>.EventType.Remove:

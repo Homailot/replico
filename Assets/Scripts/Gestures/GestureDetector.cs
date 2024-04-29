@@ -23,8 +23,12 @@ namespace Gestures
         [SerializeField] private BalloonHeightToCoordinates balloonHeightToCoordinates;
         [SerializeField] private PointSelected pointSelected;
         [SerializeField] private GameObject balloonPointPrefab;
+
+        [SerializeField] private Mesh balloon1Mesh;
+        [SerializeField] private Mesh balloon2Mesh;
         
         private readonly List<BalloonPoint> _pointsOfInterest = new List<BalloonPoint>();
+        private ulong _playerId = 0;
         
         private static readonly int ActivationTime = Shader.PropertyToID("_ActivationTime");
         private static readonly int FirstHand = Shader.PropertyToID("_First_Hand");
@@ -57,14 +61,15 @@ namespace Gestures
         public void OnPointSelected()
         {
             var localPoint = gestureConfiguration.replicaController.GetReplica().transform.InverseTransformPoint(balloon.position);
-            AddPointOfInterest(localPoint);
+            AddPointOfInterest(localPoint, _playerId);
             pointSelected.Invoke(localPoint);
         }
         
-        public void AddPointOfInterest(Vector3 position)
+        public void AddPointOfInterest(Vector3 position, ulong playerId)
         {
             var balloonPointObject = Instantiate(balloonPointPrefab, balloon.position, Quaternion.identity);
             var balloonPoint = balloonPointObject.GetComponent<BalloonPoint>();
+            UpdateBalloonLayer(balloonPointObject, playerId); 
             balloonPoint.localPosition = position;
             balloonPoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
             _pointsOfInterest.Add(balloonPoint);
@@ -81,6 +86,33 @@ namespace Gestures
         public void AddPointSelectedListener(UnityAction<Vector3> action)
         {
             pointSelected.AddListener(action);
+        }
+
+        private void UpdateBalloonLayer(GameObject balloonGameObject, ulong playerId)
+        {
+            balloonGameObject.layer = playerId switch
+            {
+                0 => LayerMask.NameToLayer("Balloon"),
+                1 => LayerMask.NameToLayer("Balloon2"),
+                _ => balloonGameObject.layer
+            }; 
+            
+            var meshFilter = balloonGameObject.GetComponent<MeshFilter>();
+            
+            if (meshFilter == null) return;
+            
+            meshFilter.mesh = playerId switch
+            {
+                0 => balloon1Mesh,
+                1 => balloon2Mesh,
+                _ => meshFilter.mesh
+            };
+        }
+
+        public void SetPlayerId(ulong playerId)
+        {
+            _playerId = playerId;
+            UpdateBalloonLayer(balloon.gameObject, playerId);
         }
 
         public void Init()

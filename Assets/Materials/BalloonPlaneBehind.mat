@@ -39,7 +39,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Disable_Strength: 0.3
-    - _Disabled: 1
+    - _Disabled: 0
     - _Line_Gap: 0.6
     - _Line_Length: 0.05
     - _Line_Thickness: 0.006

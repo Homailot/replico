@@ -11,6 +11,7 @@ namespace Player
         
         private readonly Queue<ulong> _availablePlayerIds = new Queue<ulong>();
         private readonly Dictionary<ulong, ulong> _playerIdToClientId = new Dictionary<ulong, ulong>();
+        private readonly Dictionary<ulong, ulong> _clientIdToPlayerId = new Dictionary<ulong, ulong>();
         
         private bool _hostConnected;
         
@@ -37,8 +38,9 @@ namespace Player
 
             var playerId = _availablePlayerIds.Dequeue();
             var playerNetworkObject = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject;
-            playerNetworkObject.GetComponent<PlayerNetwork>().PlayerId = playerId;
+            playerNetworkObject.GetComponent<PlayerNetwork>().playerId = playerId;
             _playerIdToClientId[playerId] = clientId;
+            _clientIdToPlayerId[clientId] = playerId;
             
             tableManager.AddToAvailableTable(playerId);
         }
@@ -46,10 +48,13 @@ namespace Player
         private void OnClientDisconnected(ulong clientId)
         {
             if (!NetworkManager.Singleton.IsServer) return;
-            var playerNetworkObject = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject;
-            var playerId = playerNetworkObject.GetComponent<PlayerNetwork>().PlayerId;
+            var playerId = _clientIdToPlayerId.GetValueOrDefault(clientId, ulong.MaxValue);
+             
+            if (playerId == ulong.MaxValue) return;
+            
             _availablePlayerIds.Enqueue(playerId);
             _playerIdToClientId.Remove(playerId);
+            _clientIdToPlayerId.Remove(clientId);
             
             tableManager.RemoveFromTable(playerId);
         }
