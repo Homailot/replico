@@ -1073,6 +1073,7 @@ GameObject:
   - component: {fileID: 7128997651933812471}
   - component: {fileID: 488699091191272533}
   - component: {fileID: 6791617473146403138}
+  - component: {fileID: 7017441591039797979}
   m_Layer: 0
   m_Name: Touch Plane
   m_TagString: Untagged
@@ -1162,8 +1163,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   balloonPointPrefab: {fileID: 4404460346696739353, guid: e2ed673f59fc1cb4ea956f35ec77f82d, type: 3}
-  balloon1Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  balloon2Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  balloonMaterialUpdate: {fileID: 7017441591039797979}
 --- !u!33 &799011391277623803
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1248,6 +1248,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80493c18d94a450b94b7e8d4aafcc6e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7017441591039797979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8475391149215074147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171a548f9d7e45bfb029f8a2cfffc917, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  balloon1Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  balloon2Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  balloon1Material: {fileID: -876546973899608171, guid: cc915bda5528d2446bf7fdbe7694ee28, type: 3}
+  balloon2Material: {fileID: 2100000, guid: 74528ad1dd0be634bbd6deab4c3eea16, type: 2}
+  balloonNoneMaterial: {fileID: 2100000, guid: 6bd5af706a97305448ab46b2a5ec9957, type: 2}
+  balloon1MaterialBehind: {fileID: 2100000, guid: 04051245cd824344eaa89a72a2063b11, type: 2}
+  balloon2MaterialBehind: {fileID: 2100000, guid: d0d11b05a4fb7a44c8f216501d7e2446, type: 2}
+  balloonNoneMaterialBehind: {fileID: 2100000, guid: 95e1a045c85c373429fcbe5b43848e16, type: 2}
 --- !u!1001 &8359779951231827708
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1299,6 +1319,10 @@ PrefabInstance:
     - target: {fileID: 4404460346696739353, guid: e2ed673f59fc1cb4ea956f35ec77f82d, type: 3}
       propertyPath: m_Name
       value: Balloon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4404460346696739353, guid: e2ed673f59fc1cb4ea956f35ec77f82d, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4404460346696739353, guid: e2ed673f59fc1cb4ea956f35ec77f82d, type: 3}
       propertyPath: m_IsActive

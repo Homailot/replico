@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.Serialization;
+using Utils;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 namespace Gestures
@@ -23,10 +24,8 @@ namespace Gestures
         [SerializeField] private BalloonHeightToCoordinates balloonHeightToCoordinates;
         [SerializeField] private PointSelected pointSelected;
         [SerializeField] private GameObject balloonPointPrefab;
+        [SerializeField] private BalloonMaterialUpdate balloonMaterialUpdate;
 
-        [SerializeField] private Mesh balloon1Mesh;
-        [SerializeField] private Mesh balloon2Mesh;
-        
         private readonly List<BalloonPoint> _pointsOfInterest = new List<BalloonPoint>();
         private ulong _playerId = 0;
         
@@ -69,7 +68,7 @@ namespace Gestures
         {
             var balloonPointObject = Instantiate(balloonPointPrefab, balloon.position, Quaternion.identity);
             var balloonPoint = balloonPointObject.GetComponent<BalloonPoint>();
-            UpdateBalloonLayer(balloonPointObject, playerId); 
+            balloonMaterialUpdate.UpdateBalloonLayer(balloonPointObject, playerId);
             balloonPoint.localPosition = position;
             balloonPoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
             _pointsOfInterest.Add(balloonPoint);
@@ -88,31 +87,10 @@ namespace Gestures
             pointSelected.AddListener(action);
         }
 
-        private void UpdateBalloonLayer(GameObject balloonGameObject, ulong playerId)
-        {
-            balloonGameObject.layer = playerId switch
-            {
-                0 => LayerMask.NameToLayer("Balloon"),
-                1 => LayerMask.NameToLayer("Balloon2"),
-                _ => balloonGameObject.layer
-            }; 
-            
-            var meshFilter = balloonGameObject.GetComponent<MeshFilter>();
-            
-            if (meshFilter == null) return;
-            
-            meshFilter.mesh = playerId switch
-            {
-                0 => balloon1Mesh,
-                1 => balloon2Mesh,
-                _ => meshFilter.mesh
-            };
-        }
-
         public void SetPlayerId(ulong playerId)
         {
             _playerId = playerId;
-            UpdateBalloonLayer(balloon.gameObject, playerId);
+            balloonMaterialUpdate.UpdateBalloonNone(balloon.gameObject, playerId);
         }
 
         public void Init()
