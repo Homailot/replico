@@ -18,6 +18,8 @@ namespace Utils
         private static readonly int Player1 = Shader.PropertyToID("_Player");
         private static readonly int Color1 = Shader.PropertyToID("_Color");
         private static readonly int Color2 = Shader.PropertyToID("_Color2");
+        private static readonly int HorizontalFlash = Shader.PropertyToID("_HorizontalFlash");
+        private static readonly int FlashProgress = Shader.PropertyToID("_FlashProgress");
 
         public void UpdateBalloonNone(GameObject balloon, ulong playerId)
         {
@@ -25,11 +27,13 @@ namespace Utils
             balloonNoneMaterial.SetColor(Color1, playerId == 0 ? balloon1Material.GetColor(Color1) : balloon2Material.GetColor(Color1));
             balloonNoneMaterial.SetColor(Color2,
                 playerId == 0 ? balloon1Material.GetColor(Color2) : balloon2Material.GetColor(Color2));
+            balloonNoneMaterial.SetFloat(HorizontalFlash, playerId == 0 ? balloon1Material.GetFloat(HorizontalFlash) : balloon2Material.GetFloat(HorizontalFlash));
             
             balloonNoneMaterialBehind.SetInt(Player1, (int) playerId);
             balloonNoneMaterialBehind.SetColor(Color1, playerId == 0 ? balloon1MaterialBehind.GetColor(Color1) : balloon2MaterialBehind.GetColor(Color1));
             balloonNoneMaterialBehind.SetColor(Color2,
                 playerId == 0 ? balloon1MaterialBehind.GetColor(Color2) : balloon2MaterialBehind.GetColor(Color2));
+            balloonNoneMaterialBehind.SetFloat(HorizontalFlash, playerId == 0 ? balloon1MaterialBehind.GetFloat(HorizontalFlash) : balloon2MaterialBehind.GetFloat(HorizontalFlash));
             
             var meshFilter = balloon.GetComponent<MeshFilter>();
             if (meshFilter == null) return;
@@ -61,6 +65,12 @@ namespace Utils
                 1 => balloon2Mesh,
                 _ => meshFilter.mesh
             };
+        }
+
+        public void SetBalloonProgress(float progress)
+        {
+            balloonNoneMaterial.SetFloat(FlashProgress, progress);
+            balloonNoneMaterialBehind.SetFloat(FlashProgress, progress);
         }
     }
 }

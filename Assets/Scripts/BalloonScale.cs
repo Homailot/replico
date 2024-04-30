@@ -25,11 +25,7 @@ public class BalloonScale : MonoBehaviour
         } 
         
         var distance = Vector3.Distance(transform.position, _camera.transform.position);
-        Debug.Log($"Distance: {distance}");
-        Debug.Log("Initial scale: " + initialScale);
-        Debug.Log($"Multiplied: {distance * scaleMultiplier}");
         var scale = Mathf.Min(initialScale + distance * scaleMultiplier, maxScale);
-        Debug.Log($"Scale: {scale}");
         
         transform.localScale = new Vector3(scale, scale, scale);
     }

@@ -47,7 +47,7 @@ namespace Gestures
         private void Start()
         {
             DisableBalloon();
-            ResetBalloonPlanePositions();
+            ResetBalloonPlanePositionsAndHeight();
         }
 
         public void LateUpdate()
@@ -95,6 +95,11 @@ namespace Gestures
         public void AddPointSelectedListener(UnityAction<Vector3> action)
         {
             pointSelected.AddListener(action);
+        }
+
+        public void SetBalloonProgress(float progress)
+        {
+            balloonMaterialUpdate.SetBalloonProgress(progress);
         }
 
         public void SetPlayerId(ulong playerId)
@@ -179,7 +184,7 @@ namespace Gestures
             renderBehindPlaneMaterial.SetVector(SecondHand, secondHand / screenMax);
         }
         
-        public void ResetBalloonPlanePositions()
+        public void ResetBalloonPlanePositionsAndHeight()
         {
             if (balloonPlaneRenderer == null) return;
             balloonPlaneRenderer.material.SetVector(FirstHand, new Vector2(-1f, -1f));
@@ -187,6 +192,16 @@ namespace Gestures
             renderBehindPlaneMaterial.SetVector(FirstHand, new Vector2(-1f, -1f));
             renderBehindPlaneMaterial.SetVector(SecondHand, new Vector2(-1f, -1f));
             balloonHeightToCoordinates.ResetBalloonHeight();
+            balloonMaterialUpdate.SetBalloonProgress(0);
+        }
+
+        public void ResetBalloonPlanePositions()
+        {
+            if (balloonPlaneRenderer == null) return;
+            balloonPlaneRenderer.material.SetVector(FirstHand, new Vector2(-1f, -1f));
+            balloonPlaneRenderer.material.SetVector(SecondHand, new Vector2(-1f, -1f));
+            renderBehindPlaneMaterial.SetVector(FirstHand, new Vector2(-1f, -1f));
+            renderBehindPlaneMaterial.SetVector(SecondHand, new Vector2(-1f, -1f));
         }
 
         public void SwitchState(IGestureState newState)

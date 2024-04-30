@@ -37,6 +37,8 @@ namespace Player
         private XROrigin _xrOrigin;
         private readonly NetworkVariable<ulong> _playerId = new NetworkVariable<ulong>();
         private bool _inTable;
+
+        private GameObject _touchPlane;
         
         public ulong playerId
         {
@@ -111,25 +113,39 @@ namespace Player
             var trackerToOriginTransformed = attachPoint.InverseTransformDirection(trackerToOrigin);
             var position = attachPoint.position;
             playerTransform.SetTransform(position + trackerToOriginTransformed, attachPoint.up, attachPoint.forward);
-            var touchPlane = Instantiate(touchPlanePrefab, position, attachPoint.rotation);
 
-            var objectToReplicate = GameObject.FindWithTag("ToReplicate");
-            var world = objectToReplicate.GetComponent<World>();
-            
-            gestureDetector = touchPlane.GetComponentInChildren<GestureDetector>();
-            gestureDetector.SetWorld(world);
-            gestureDetector.Init();
-            gestureDetector.SetPlayerId(playerId);
-            
-            foreach (var playerObject in FindObjectsByType<PlayerNetwork>(FindObjectsSortMode.None))
+            GameObject touchPlane;
+            if (_touchPlane != null)
             {
-                foreach (var point in playerObject._pointsOfInterest)
+                touchPlane = _touchPlane;
+                // TODO: update position and rotation
+            }
+            else
+            {
+                touchPlane = Instantiate(touchPlanePrefab, position, attachPoint.rotation);
+                
+                var objectToReplicate = GameObject.FindWithTag("ToReplicate");
+                var world = objectToReplicate.GetComponent<World>();
+                
+                gestureDetector = touchPlane.GetComponentInChildren<GestureDetector>();
+                gestureDetector.SetWorld(world);
+                gestureDetector.Init();
+                gestureDetector.SetPlayerId(playerId);
+                
+                foreach (var playerObject in FindObjectsByType<PlayerNetwork>(FindObjectsSortMode.None))
                 {
-                    gestureDetector.AddPointOfInterest(point, playerObject.playerId);
-                }
-            } 
-            
-            gestureDetector.AddPointSelectedListener(OnPointSelected);
+                    foreach (var point in playerObject._pointsOfInterest)
+                    {
+                        gestureDetector.AddPointOfInterest(point, playerObject.playerId);
+                    }
+                } 
+                
+                gestureDetector.AddPointSelectedListener(OnPointSelected);
+                // TODO: add on teleport listener
+                // does a server rpc to update the table position, which checks if the table has one or two players
+                // if it has one player, it moves the table to the teleport position
+                // if it has two players, it creates a new table and moves the player to the new table
+            }
         }
         
         private IEnumerator FirstAttach(Table table, int seat)

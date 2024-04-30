@@ -45,14 +45,12 @@ namespace Gestures.Balloon
                 if (hands.secondHand.Count > 1)
                 {
                     _gestureDetector.ResetBalloonPlanePositions();
-                    _gestureDetector.OnPointSelected();
-                    _gestureDetector.DisableBalloon();
-                    _gestureDetector.SwitchState(new BalloonSelectedState(_gestureDetector, _gestureConfiguration));
+                    _gestureDetector.SwitchState(new BalloonHoldState(_gestureDetector, _gestureConfiguration, _handDetector, _hands));
                     return;
                 }
                 
                 _gestureDetector.OnGestureExit();
-                _gestureDetector.ResetBalloonPlanePositions();
+                _gestureDetector.ResetBalloonPlanePositionsAndHeight();
                 _gestureDetector.DisableBalloon();
                 _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
                 return;

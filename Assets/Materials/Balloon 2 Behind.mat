@@ -52,6 +52,8 @@ Material:
     m_Floats:
     - _Alpha: 0.65
     - _Blinking: 1
+    - _FlashProgress: 0
+    - _HorizontalFlash: 1
     - _Player: 1
     - _QueueControl: 0
     - _QueueOffset: 0

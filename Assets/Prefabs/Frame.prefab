@@ -1153,6 +1153,7 @@ MonoBehaviour:
     handMovementDetectionTime: 0.3
     verticalGestureHandEmptyAllowance: 0.55
     balloonDistanceMultiplier: 1
+    balloonTeleportTime: 1.2
   effectRenderer: {fileID: 2337578508288037818}
   balloonPlaneRenderer: {fileID: 1027186367300744832}
   renderBehindPlaneMaterial: {fileID: 2100000, guid: 385557b0bcfea404cbab8db3e306de23, type: 2}

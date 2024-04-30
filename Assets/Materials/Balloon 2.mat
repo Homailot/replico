@@ -50,8 +50,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha: 0.9
+    - _Alpha: 0.8
     - _Blinking: 1
+    - _FlashProgress: 0
+    - _HorizontalFlash: 1
     - _Player: 1
     - _QueueControl: 0
     - _QueueOffset: 0
