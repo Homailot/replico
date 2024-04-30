@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Gestures;
 using Replica;
+using Tables;
 using Unity.Netcode;
 using Unity.XR.CoreUtils;
 using UnityEngine;
@@ -36,7 +37,6 @@ namespace Player
         
         private XROrigin _xrOrigin;
         private readonly NetworkVariable<ulong> _playerId = new NetworkVariable<ulong>();
-        private PlayerManager _playerManager;
         private bool _inTable;
 
         private GameObject _touchPlane;
@@ -66,6 +66,7 @@ namespace Player
         private void Start()
         {
             _pointsOfInterest.OnListChanged += OnPointsOfInterestChanged;
+            playerManager = FindObjectOfType<PlayerManager>();
         }
 
         public override void OnNetworkSpawn()
@@ -112,10 +113,8 @@ namespace Player
         private void ChangeSeat(Table table, int seat)
         { 
             var attachPoint = seat == 0 ? table.firstAttach : table.secondAttach; 
-            var trackerToOrigin = playerCamera.transform.position - tracker.position;
-            var trackerToOriginTransformed = attachPoint.InverseTransformDirection(trackerToOrigin);
             var position = attachPoint.position;
-            playerTransform.SetTransform(position + trackerToOriginTransformed, attachPoint.up, attachPoint.forward);
+            playerTransform.SetTransform(playerCamera.transform, attachPoint, tracker);
 
             GameObject touchPlane;
             if (_touchPlane != null)

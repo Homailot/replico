@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Tables;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ namespace Player
             return _playerIdToClientId.GetValueOrDefault(playerId, ulong.MaxValue);
         }
         
-        [ServerRpc]
+        [ServerRpc(RequireOwnership = false)]
         public void MovePlayerFromTableToPositionServerRpc(ulong playerId, Vector3 position, Quaternion rotation)
         {
             var clientId = GetClientId(playerId);
@@ -44,7 +45,6 @@ namespace Player
             var playerNetworkObject = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject;
             var playerNetwork = playerNetworkObject.GetComponent<PlayerNetwork>();
             playerNetwork.playerId = playerId;
-            playerNetwork.playerManager = this;
             _playerIdToClientId[playerId] = clientId;
             _clientIdToPlayerId[clientId] = playerId;
             
