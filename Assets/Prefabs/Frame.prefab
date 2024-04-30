@@ -1262,7 +1262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   balloon1Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
   balloon2Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
-  balloon1Material: {fileID: -876546973899608171, guid: cc915bda5528d2446bf7fdbe7694ee28, type: 3}
+  balloon1Material: {fileID: 2100000, guid: a5b11c9f6a8637f46ba6028a334d2e38, type: 2}
   balloon2Material: {fileID: 2100000, guid: 74528ad1dd0be634bbd6deab4c3eea16, type: 2}
   balloonNoneMaterial: {fileID: 2100000, guid: 6bd5af706a97305448ab46b2a5ec9957, type: 2}
   balloon1MaterialBehind: {fileID: 2100000, guid: 04051245cd824344eaa89a72a2063b11, type: 2}
@@ -1326,6 +1326,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4404460346696739353, guid: e2ed673f59fc1cb4ea956f35ec77f82d, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818810496639377632, guid: e2ed673f59fc1cb4ea956f35ec77f82d, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

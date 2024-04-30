@@ -59,7 +59,7 @@ MonoBehaviour:
     passTag: DrawBalloon2
     Event: 500
     filterSettings:
-      RenderQueueType: 0
+      RenderQueueType: 1
       LayerMask:
         serializedVersion: 2
         m_Bits: 512
@@ -144,13 +144,14 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -5381739364100920473}
   - {fileID: -3575575686404342006}
+  - {fileID: 21142824730617863}
   - {fileID: 8185813672533138437}
   - {fileID: 1581780791935352457}
   - {fileID: 7982817984035068451}
   - {fileID: -4629245888234875147}
   - {fileID: 4471254960537961975}
   - {fileID: 4158552629953660797}
-  m_RendererFeatureMap: 672b07e18f3850b50a7f5880db0061ce059cdf342ada997189bed7e73f9df315239a0265a9aac86ef596d235649dc1bff7851167b2160d3e7d8727809525b639
+  m_RendererFeatureMap: 672b07e18f3850b50a7f5880db0061ce07e89d7d491d4b00059cdf342ada997189bed7e73f9df315239a0265a9aac86ef596d235649dc1bff7851167b2160d3e7d8727809525b639
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -175,7 +176,7 @@ MonoBehaviour:
     m_Bits: 447
   m_TransparentLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 447
   m_DefaultStencilState:
     overrideStencilState: 0
     stencilReference: 0
@@ -189,6 +190,48 @@ MonoBehaviour:
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 0
+--- !u!114 &21142824730617863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
+  m_Name: DrawFog
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    passTag: DrawFog
+    Event: 500
+    filterSettings:
+      RenderQueueType: 1
+      LayerMask:
+        serializedVersion: 2
+        m_Bits: 2048
+      PassNames: []
+    overrideMaterial: {fileID: 2100000, guid: 352d833f358b92a4e944b642b39f8d1a, type: 2}
+    overrideMaterialPassIndex: 0
+    overrideShader: {fileID: 0}
+    overrideShaderPassIndex: 0
+    overrideMode: 1
+    overrideDepthState: 1
+    depthCompareFunction: 4
+    enableWrite: 0
+    stencilSettings:
+      overrideStencilState: 0
+      stencilReference: 0
+      stencilCompareFunction: 8
+      passOperation: 0
+      failOperation: 0
+      zFailOperation: 0
+    cameraSettings:
+      overrideCamera: 0
+      restoreCamera: 1
+      offset: {x: 0, y: 0, z: 0, w: 0}
+      cameraFieldOfView: 60
 --- !u!114 &1581780791935352457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +249,7 @@ MonoBehaviour:
     passTag: Balloon
     Event: 500
     filterSettings:
-      RenderQueueType: 0
+      RenderQueueType: 1
       LayerMask:
         serializedVersion: 2
         m_Bits: 64
@@ -248,12 +291,12 @@ MonoBehaviour:
     passTag: DrawBalloonN
     Event: 500
     filterSettings:
-      RenderQueueType: 0
+      RenderQueueType: 1
       LayerMask:
         serializedVersion: 2
         m_Bits: 1024
       PassNames: []
-    overrideMaterial: {fileID: 0}
+    overrideMaterial: {fileID: 2100000, guid: 6bd5af706a97305448ab46b2a5ec9957, type: 2}
     overrideMaterialPassIndex: 0
     overrideShader: {fileID: 0}
     overrideShaderPassIndex: 0
@@ -290,7 +333,7 @@ MonoBehaviour:
     passTag: DrawBalloonNBehind
     Event: 500
     filterSettings:
-      RenderQueueType: 0
+      RenderQueueType: 1
       LayerMask:
         serializedVersion: 2
         m_Bits: 1024
@@ -332,7 +375,7 @@ MonoBehaviour:
     passTag: DrawBalloon2Behind
     Event: 500
     filterSettings:
-      RenderQueueType: 0
+      RenderQueueType: 1
       LayerMask:
         serializedVersion: 2
         m_Bits: 512
@@ -374,7 +417,7 @@ MonoBehaviour:
     passTag: DrawBalloonBehind
     Event: 500
     filterSettings:
-      RenderQueueType: 0
+      RenderQueueType: 1
       LayerMask:
         serializedVersion: 2
         m_Bits: 64

@@ -112,11 +112,12 @@ namespace Player
             var position = attachPoint.position;
             playerTransform.SetTransform(position + trackerToOriginTransformed, attachPoint.up, attachPoint.forward);
             var touchPlane = Instantiate(touchPlanePrefab, position, attachPoint.rotation);
-            
-            var replicaController = touchPlane.GetComponentInChildren<ReplicaController>();
-            replicaController.SetObjectToReplicate(GameObject.FindWithTag("ToReplicate"));
+
+            var objectToReplicate = GameObject.FindWithTag("ToReplicate");
+            var world = objectToReplicate.GetComponent<World>();
             
             gestureDetector = touchPlane.GetComponentInChildren<GestureDetector>();
+            gestureDetector.SetWorld(world);
             gestureDetector.Init();
             gestureDetector.SetPlayerId(playerId);
             

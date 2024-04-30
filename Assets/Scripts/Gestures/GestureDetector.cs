@@ -27,6 +27,7 @@ namespace Gestures
         [SerializeField] private BalloonMaterialUpdate balloonMaterialUpdate;
 
         private readonly List<BalloonPoint> _pointsOfInterest = new List<BalloonPoint>();
+        private World _world;
         private ulong _playerId = 0;
         
         private static readonly int ActivationTime = Shader.PropertyToID("_ActivationTime");
@@ -57,6 +58,12 @@ namespace Gestures
             }
         }
 
+        public void SetWorld(World world)
+        {
+            _world = world;
+            gestureConfiguration.replicaController.SetObjectToReplicate(world.gameObject);
+        }
+
         public void OnPointSelected()
         {
             var localPoint = gestureConfiguration.replicaController.GetReplica().transform.InverseTransformPoint(balloon.position);
@@ -68,10 +75,13 @@ namespace Gestures
         {
             var balloonPointObject = Instantiate(balloonPointPrefab, balloon.position, Quaternion.identity);
             var balloonPoint = balloonPointObject.GetComponent<BalloonPoint>();
+            balloonPointObject.GetComponent<BalloonScale>().enabled = false;
             balloonMaterialUpdate.UpdateBalloonLayer(balloonPointObject, playerId);
+            balloonPoint.playerId = playerId;
             balloonPoint.localPosition = position;
             balloonPoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
             _pointsOfInterest.Add(balloonPoint);
+            _world.AddPointOfInterest(new BalloonPointId(playerId, position));
         }
         
         public void RemovePointOfInterest(Vector3 position)
