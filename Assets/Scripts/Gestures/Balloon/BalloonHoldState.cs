@@ -43,8 +43,8 @@ namespace Gestures.Balloon
 
             if (timeDifference >= _gestureConfiguration.balloonTeleportTime)
             {
-                // Do teleport
                 _gestureDetector.ResetBalloonPlanePositionsAndHeight();
+                _gestureDetector.OnTeleportSelected();
                 _gestureDetector.DisableBalloon();
                 _gestureDetector.SwitchState(new BalloonSelectedState(_gestureDetector, _gestureConfiguration));
             }

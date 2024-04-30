@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Player;
 using Unity.Netcode;
 using UnityEngine;
@@ -74,18 +75,68 @@ public class TableManager : NetworkBehaviour
     }
 
     private void AddToTable(Table table, int seat, ulong clientId, ulong playerId)
-    {
-        var clientRpcParams = new ClientRpcParams
-        {
-            Send = new ClientRpcSendParams
-            {
-                TargetClientIds = new[] {clientId}
-            }
-        };
-        
-        table.AddToTable(playerId, seat);
-        MovePlayerToTableClientRpc(table.networkObject, seat, clientRpcParams);
+    { 
+        table.AddToTable(playerId, seat); 
+        SendToClient(table, seat, clientId);
     }
+
+    private void SendToClient(Table table, int seat, ulong clientId)
+    { 
+        var clientRpcParams = new ClientRpcParams 
+        { 
+            Send = new ClientRpcSendParams 
+            {
+                TargetClientIds = new[] {clientId} 
+            } 
+        };
+        MovePlayerToTableClientRpc(table.networkObject, seat, clientRpcParams); 
+    }
+    
+    public Table GetTableWithPlayer(ulong playerId)
+    {
+        return _tables.FirstOrDefault(table => table.HasPlayer(playerId));
+    }
+    
+    public void MovePlayerTableToPosition(ulong playerId, ulong clientId, Vector3 position, Quaternion rotation)
+    {
+        var table = GetTableWithPlayer(playerId);
+        if (table == null) return;
+
+        if (table.firstSeat.Value == playerId)
+        {
+            if (table.isSecondSeatAvailable)
+            {
+                MoveTableAndPlayer(table, playerId, clientId, 0, position, rotation);
+            }
+            else
+            {
+                CreateNewTableAndMovePlayer(table, playerId, clientId, 0, position, rotation);
+            }
+        } else if (table.secondSeat.Value == playerId)
+        {
+            if (table.isFirstSeatAvailable)
+            {
+                MoveTableAndPlayer(table, playerId, clientId, 1, position, rotation);
+            }
+            else
+            {
+                CreateNewTableAndMovePlayer(table, playerId, clientId, 1, position, rotation);
+            }
+        }
+    }
+
+    private void MoveTableAndPlayer(Table table, ulong playerId, ulong clientId, int seat, Vector3 position, Quaternion rotation)
+    {
+        table.transform.position = position;
+        table.transform.rotation = rotation;
+        
+        SendToClient(table, seat, clientId);
+    }
+    
+    private void CreateNewTableAndMovePlayer(Table table, ulong playerId, ulong clientId, int seat, Vector3 position, Quaternion rotation)
+    {
+         
+    } 
 
     [ClientRpc]
     private void MovePlayerToTableClientRpc(NetworkObjectReference tableReference, int seat, ClientRpcParams clientRpcParams = default)

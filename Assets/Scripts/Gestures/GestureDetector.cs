@@ -23,6 +23,7 @@ namespace Gestures
         [SerializeField] private Transform balloonBillboard;
         [SerializeField] private BalloonHeightToCoordinates balloonHeightToCoordinates;
         [SerializeField] private PointSelected pointSelected;
+        [SerializeField] private TeleportSelected teleportSelected;
         [SerializeField] private GameObject balloonPointPrefab;
         [SerializeField] private BalloonMaterialUpdate balloonMaterialUpdate;
 
@@ -63,6 +64,12 @@ namespace Gestures
             _world = world;
             gestureConfiguration.replicaController.SetObjectToReplicate(world.gameObject);
         }
+        
+        public void OnTeleportSelected()
+        {
+            var localPoint = gestureConfiguration.replicaController.GetReplica().transform.InverseTransformPoint(balloon.position);
+            teleportSelected.Invoke(localPoint);
+        }
 
         public void OnPointSelected()
         {
@@ -95,6 +102,11 @@ namespace Gestures
         public void AddPointSelectedListener(UnityAction<Vector3> action)
         {
             pointSelected.AddListener(action);
+        }
+
+        public void AddTeleportSelectedListener(UnityAction<Vector3> action)
+        {
+            teleportSelected.AddListener(action);
         }
 
         public void SetBalloonProgress(float progress)
@@ -213,5 +225,10 @@ namespace Gestures
         
         [Serializable]
         public class PointSelected : UnityEvent<Vector3> { }
+
+        [Serializable]
+        public class TeleportSelected : UnityEvent<Vector3>
+        {
+        }
     }
 }

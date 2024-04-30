@@ -36,6 +36,7 @@ namespace Player
         
         private XROrigin _xrOrigin;
         private readonly NetworkVariable<ulong> _playerId = new NetworkVariable<ulong>();
+        private PlayerManager _playerManager;
         private bool _inTable;
 
         private GameObject _touchPlane;
@@ -52,6 +53,8 @@ namespace Player
                 _playerId.Value = value;  
             }
         }
+        
+        public PlayerManager playerManager { get; set; }
 
         private void Awake()
         {
@@ -118,34 +121,33 @@ namespace Player
             if (_touchPlane != null)
             {
                 touchPlane = _touchPlane;
-                // TODO: update position and rotation
+                touchPlane.transform.position = position;
+                touchPlane.transform.rotation = attachPoint.rotation;
+                return;
             }
-            else
+            
+            touchPlane = Instantiate(touchPlanePrefab, position, attachPoint.rotation);
+            
+            var objectToReplicate = GameObject.FindWithTag("ToReplicate");
+            var world = objectToReplicate.GetComponent<World>();
+            
+            gestureDetector = touchPlane.GetComponentInChildren<GestureDetector>();
+            gestureDetector.SetWorld(world);
+            gestureDetector.Init();
+            gestureDetector.SetPlayerId(playerId);
+            
+            foreach (var playerObject in FindObjectsByType<PlayerNetwork>(FindObjectsSortMode.None))
             {
-                touchPlane = Instantiate(touchPlanePrefab, position, attachPoint.rotation);
-                
-                var objectToReplicate = GameObject.FindWithTag("ToReplicate");
-                var world = objectToReplicate.GetComponent<World>();
-                
-                gestureDetector = touchPlane.GetComponentInChildren<GestureDetector>();
-                gestureDetector.SetWorld(world);
-                gestureDetector.Init();
-                gestureDetector.SetPlayerId(playerId);
-                
-                foreach (var playerObject in FindObjectsByType<PlayerNetwork>(FindObjectsSortMode.None))
+                foreach (var point in playerObject._pointsOfInterest)
                 {
-                    foreach (var point in playerObject._pointsOfInterest)
-                    {
-                        gestureDetector.AddPointOfInterest(point, playerObject.playerId);
-                    }
-                } 
-                
-                gestureDetector.AddPointSelectedListener(OnPointSelected);
-                // TODO: add on teleport listener
-                // does a server rpc to update the table position, which checks if the table has one or two players
-                // if it has one player, it moves the table to the teleport position
-                // if it has two players, it creates a new table and moves the player to the new table
-            }
+                    gestureDetector.AddPointOfInterest(point, playerObject.playerId);
+                }
+            } 
+            
+            gestureDetector.AddPointSelectedListener(OnPointSelected);
+            gestureDetector.AddTeleportSelectedListener(OnTeleportSelected);
+            _touchPlane = touchPlane;
+            _inTable = true;
         }
         
         private IEnumerator FirstAttach(Table table, int seat)
@@ -158,6 +160,18 @@ namespace Player
         {
             if (!IsOwner) return;
             _pointsOfInterest.Add(point);
+        }
+
+        private void OnTeleportSelected(Vector3 point)
+        {
+            if (!IsOwner) return;
+             
+            //call server rpc to update table position
+            // does a server rpc to update the table position, which checks if the table has one or two players
+            // if it has one player, it moves the table to the teleport position
+            // if it has two players, it creates a new table and moves the player to the new table
+            // TODO: think about how to set rotation?
+            playerManager.MovePlayerFromTableToPositionServerRpc(playerId, point, Quaternion.identity);
         }
 
         private void OnPointsOfInterestChanged(NetworkListEvent<Vector3> changeEvent)

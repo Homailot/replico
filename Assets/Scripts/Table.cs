@@ -27,6 +27,11 @@ public class Table : NetworkBehaviour
         secondSeat.OnValueChanged += OnSecondSeatChanged;
     }
     
+    public bool HasPlayer(ulong playerId)
+    {
+        return firstSeat.Value == playerId || secondSeat.Value == playerId;
+    }
+    
     public void AddToTable(ulong playerId, int seat)
     {
         switch (seat)

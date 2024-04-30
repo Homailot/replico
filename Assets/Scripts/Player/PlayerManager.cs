@@ -13,8 +13,6 @@ namespace Player
         private readonly Dictionary<ulong, ulong> _playerIdToClientId = new Dictionary<ulong, ulong>();
         private readonly Dictionary<ulong, ulong> _clientIdToPlayerId = new Dictionary<ulong, ulong>();
         
-        private bool _hostConnected;
-        
         public void Start()
         {
             _availablePlayerIds.Enqueue(0);
@@ -28,17 +26,25 @@ namespace Player
         {
             return _playerIdToClientId.GetValueOrDefault(playerId, ulong.MaxValue);
         }
+        
+        [ServerRpc]
+        public void MovePlayerFromTableToPositionServerRpc(ulong playerId, Vector3 position, Quaternion rotation)
+        {
+            var clientId = GetClientId(playerId);
+            tableManager.MovePlayerTableToPosition(playerId, clientId, position, rotation);
+        }
 
         private void OnClientConnected(ulong clientId)
         {
             if (!NetworkManager.Singleton.IsServer) return;
             if (_availablePlayerIds.Count == 0) return;
-            if (_hostConnected && clientId == NetworkManager.Singleton.LocalClientId) return;
             Debug.Log($"Client {clientId} connected");
 
             var playerId = _availablePlayerIds.Dequeue();
             var playerNetworkObject = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject;
-            playerNetworkObject.GetComponent<PlayerNetwork>().playerId = playerId;
+            var playerNetwork = playerNetworkObject.GetComponent<PlayerNetwork>();
+            playerNetwork.playerId = playerId;
+            playerNetwork.playerManager = this;
             _playerIdToClientId[playerId] = clientId;
             _clientIdToPlayerId[clientId] = playerId;
             
