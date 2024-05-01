@@ -19,9 +19,9 @@ TagManager:
   - Balloon2
   - BalloonNone
   - Fog
-  - 
-  - 
-  - 
+  - ReplicaTable
+  - Player1Replica
+  - Player2Replica
   - 
   - 
   - 

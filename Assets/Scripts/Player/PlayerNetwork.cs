@@ -31,6 +31,7 @@ namespace Player
         
         [Header("Prefab References")]
         [SerializeField] private GameObject touchPlanePrefab;
+        [SerializeField] private List<GameObject> playerModels;
         public GestureDetector gestureDetector;
 
         private NetworkList<Vector3> _pointsOfInterest;
@@ -92,9 +93,16 @@ namespace Player
             else
             {
                 playerModel.SetActive(true);
+                _playerId.OnValueChanged += OnPlayerIdChanged;
+                OnPlayerIdChanged(0, playerId);
             }
         }
-        
+
+        private void OnPlayerIdChanged(ulong previous, ulong newValue)
+        {
+            SetPlayerModel(playerModels[(int)newValue % playerModels.Count]);
+        }
+
         public void MovePlayerToTable(Table table, int seat)
         {
             if (!IsOwner) return;
@@ -153,6 +161,16 @@ namespace Player
         {
             yield return new WaitForSeconds(1);
             ChangeSeat(table, seat);
+        }
+
+        private void SetPlayerModel(GameObject model)
+        {
+            if (playerModel.transform.childCount > 0)
+            {
+                Destroy(playerModel.transform.GetChild(0).gameObject);
+            }
+
+            Instantiate(model, playerModel.transform.position, playerModel.transform.rotation, playerModel.transform);
         }
 
         private void OnPointSelected(Vector3 point)
