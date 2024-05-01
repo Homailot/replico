@@ -10,6 +10,7 @@ namespace Gestures.Balloon
         public void UpdatePosition(Transform parent)
         {
             transform.position = parent.TransformPoint(localPosition);
+            transform.rotation = parent.rotation;
         }
     }
 }

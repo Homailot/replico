@@ -1,3 +1,4 @@
+using Player;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -24,6 +25,17 @@ namespace Tables
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
+
+            if (IsClient)
+            {
+                var playerNetwork = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
+                if (playerNetwork != null && playerNetwork.gestureDetector != null)
+                {
+                    playerNetwork.gestureDetector.CreateTable(NetworkObjectId, firstSeat.Value, secondSeat.Value,
+                        transform.position, transform.rotation);
+                }
+            }
+            
             firstSeat.OnValueChanged += OnFirstSeatChanged;
             secondSeat.OnValueChanged += OnSecondSeatChanged;
         }
@@ -60,6 +72,7 @@ namespace Tables
     
         private void OnFirstSeatChanged(ulong oldSeat, ulong newSeat)
         {
+            
             Debug.Log($"First seat changed from {oldSeat} to {newSeat}");
         }
     

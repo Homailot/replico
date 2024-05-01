@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 2321148612786958752}
   - component: {fileID: 1844142691219097410}
   - component: {fileID: 763927697518724808}
-  m_Layer: 3
-  m_Name: PlayerModel
+  m_Layer: 13
+  m_Name: Player Model 1 Replica
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 7420487690659611221}
   - component: {fileID: 5908071474918067327}
   - component: {fileID: 2460618744386027126}
-  m_Layer: 3
+  m_Layer: 13
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}

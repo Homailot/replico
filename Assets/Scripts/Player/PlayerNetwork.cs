@@ -38,7 +38,8 @@ namespace Player
         
         private XROrigin _xrOrigin;
         private readonly NetworkVariable<ulong> _playerId = new NetworkVariable<ulong>();
-        private bool _inTable;
+        private readonly NetworkVariable<NetworkObjectReference> _table = new NetworkVariable<NetworkObjectReference>();
+        private bool _initialized;
 
         private GameObject _touchPlane;
         
@@ -107,7 +108,7 @@ namespace Player
         {
             if (!IsOwner) return;
 
-            if (_inTable)
+            if (_initialized)
             {
                 ChangeSeat(table, seat);
             }
@@ -123,6 +124,7 @@ namespace Player
             var attachPoint = seat == 0 ? table.firstAttach : table.secondAttach; 
             var position = attachPoint.position;
             playerTransform.SetTransform(playerCamera.transform, attachPoint, tracker);
+            _table.Value = table.networkObject;
 
             GameObject touchPlane;
             if (_touchPlane != null)
@@ -149,12 +151,19 @@ namespace Player
                 {
                     gestureDetector.AddPointOfInterest(point, playerObject.playerId);
                 }
-            } 
+            }
+
+            foreach (var tableObject in FindObjectsByType<Table>(FindObjectsSortMode.None))
+            {
+                gestureDetector.CreateTable(tableObject.NetworkObjectId, tableObject.firstSeat.Value,
+                    tableObject.secondSeat.Value,
+                    tableObject.transform.position, tableObject.transform.rotation);
+            }
             
             gestureDetector.AddPointSelectedListener(OnPointSelected);
             gestureDetector.AddTeleportSelectedListener(OnTeleportSelected);
             _touchPlane = touchPlane;
-            _inTable = true;
+            _initialized = true;
         }
         
         private IEnumerator FirstAttach(Table table, int seat)
@@ -194,6 +203,7 @@ namespace Player
         private void OnPointsOfInterestChanged(NetworkListEvent<Vector3> changeEvent)
         {
             if (IsOwner) return;
+            if (!IsClient) return;
             var player = NetworkManager.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
             var playerGestureDetector = player.gestureDetector;
             

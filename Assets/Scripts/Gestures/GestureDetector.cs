@@ -26,8 +26,11 @@ namespace Gestures
         [SerializeField] private TeleportSelected teleportSelected;
         [SerializeField] private GameObject balloonPointPrefab;
         [SerializeField] private BalloonMaterialUpdate balloonMaterialUpdate;
+        [SerializeField] private List<GameObject> playerReplicaPrefabs;
+        [SerializeField] private GameObject tableReplicaPrefab;
 
         private readonly List<BalloonPoint> _pointsOfInterest = new List<BalloonPoint>();
+        private readonly IDictionary<ulong, TablePoint> _tablePoints = new Dictionary<ulong, TablePoint>();
         private World _world;
         private ulong _playerId = 0;
         
@@ -56,6 +59,11 @@ namespace Gestures
             foreach (var balloonPoint in _pointsOfInterest)
             {
                 balloonPoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
+            }
+            
+            foreach (var tablePoint in _tablePoints.Values)
+            {
+                tablePoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
             }
         }
 
@@ -97,6 +105,30 @@ namespace Gestures
             if (balloonPoint == null) return;
             _pointsOfInterest.Remove(balloonPoint);
             Destroy(balloonPoint.gameObject);
+        }
+
+        public void CreateTable(ulong tableId, ulong firstPlayerId, ulong secondPlayerId, Vector3 position,
+            Quaternion rotation)
+        {
+            if (!_tablePoints.TryGetValue(tableId, out var tablePoint))
+            {
+                var tablePointObject = Instantiate(tableReplicaPrefab);
+                tablePoint = tablePointObject.GetComponent<TablePoint>();
+                _tablePoints.Add(tableId, tablePoint);
+            }
+            
+            tablePoint.localPosition = position;
+            tablePoint.transform.rotation = rotation;
+            tablePoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
+            if (tablePoint.firstPlayerId != firstPlayerId)
+            {
+                tablePoint.AttachPlayer(playerReplicaPrefabs[(int) firstPlayerId % playerReplicaPrefabs.Count], firstPlayerId, 0);
+            }
+            
+            if (tablePoint.secondPlayerId != secondPlayerId)
+            {
+                tablePoint.AttachPlayer(playerReplicaPrefabs[(int) secondPlayerId % playerReplicaPrefabs.Count], secondPlayerId, 1);
+            }
         }
         
         public void AddPointSelectedListener(UnityAction<Vector3> action)

@@ -1163,8 +1163,15 @@ MonoBehaviour:
   pointSelected:
     m_PersistentCalls:
       m_Calls: []
+  teleportSelected:
+    m_PersistentCalls:
+      m_Calls: []
   balloonPointPrefab: {fileID: 4404460346696739353, guid: e2ed673f59fc1cb4ea956f35ec77f82d, type: 3}
   balloonMaterialUpdate: {fileID: 7017441591039797979}
+  playerReplicaPrefabs:
+  - {fileID: 7307262443725044764, guid: 0f85b0f6200471c489ad592932d8040b, type: 3}
+  - {fileID: 1083769217727515275, guid: f8dc5b0d4e1fc4e4ea34dbee8acac01c, type: 3}
+  tableReplicaPrefab: {fileID: 2479536120904888997, guid: 149d8ab13f6505f40aac6d46841c0b80, type: 3}
 --- !u!33 &799011391277623803
 MeshFilter:
   m_ObjectHideFlags: 0
