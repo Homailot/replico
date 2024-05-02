@@ -29,6 +29,7 @@ namespace Gestures
         [SerializeField] private List<GameObject> playerReplicaPrefabs;
         [SerializeField] private GameObject tableReplicaPrefab;
         [SerializeField] private Transform balloonArrow;
+        [SerializeField] private Transform forward;
 
         private readonly List<BalloonPoint> _pointsOfInterest = new List<BalloonPoint>();
         private readonly IDictionary<ulong, TablePoint> _tablePoints = new Dictionary<ulong, TablePoint>();
@@ -77,7 +78,9 @@ namespace Gestures
         public void OnTeleportSelected()
         {
             var localPoint = gestureConfiguration.replicaController.GetReplica().transform.InverseTransformPoint(balloon.position);
-            teleportSelected.Invoke(localPoint);
+            var localRotation = gestureConfiguration.replicaController.GetReplica().transform.InverseTransformDirection(balloonArrow.forward);
+            var rotation = Quaternion.LookRotation(localRotation, Vector3.up);
+            teleportSelected.Invoke(localPoint, rotation);
         }
 
         public void OnPointSelected()
@@ -119,7 +122,7 @@ namespace Gestures
             }
             
             tablePoint.localPosition = position;
-            tablePoint.transform.rotation = rotation;
+            tablePoint.localRotation = rotation;
             tablePoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
             if (tablePoint.firstPlayerId != firstPlayerId)
             {
@@ -142,7 +145,7 @@ namespace Gestures
         {
             if (!_tablePoints.TryGetValue(tableId, out var tablePoint)) return;
             tablePoint.localPosition = position;
-            tablePoint.transform.rotation = rotation;
+            tablePoint.localRotation = rotation;
             tablePoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
         }
         
@@ -163,7 +166,7 @@ namespace Gestures
             pointSelected.AddListener(action);
         }
 
-        public void AddTeleportSelectedListener(UnityAction<Vector3> action)
+        public void AddTeleportSelectedListener(UnityAction<Vector3, Quaternion> action)
         {
             teleportSelected.AddListener(action);
         }
@@ -213,7 +216,7 @@ namespace Gestures
         public void EnableBalloonArrow()
         {
             balloonArrow.gameObject.SetActive(true);
-            balloonArrow.rotation = Quaternion.identity;
+            balloonArrow.rotation = forward.rotation;
         } 
         
         public void RotateBalloonArrow(float yRotation)
@@ -298,7 +301,7 @@ namespace Gestures
         public class PointSelected : UnityEvent<Vector3> { }
 
         [Serializable]
-        public class TeleportSelected : UnityEvent<Vector3>
+        public class TeleportSelected : UnityEvent<Vector3, Quaternion>
         {
         }
     }

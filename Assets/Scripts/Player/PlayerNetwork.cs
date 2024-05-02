@@ -186,7 +186,7 @@ namespace Player
             _pointsOfInterest.Add(point);
         }
 
-        private void OnTeleportSelected(Vector3 point)
+        private void OnTeleportSelected(Vector3 point, Quaternion rotation)
         {
             if (!IsOwner) return;
              
@@ -195,7 +195,7 @@ namespace Player
             // if it has one player, it moves the table to the teleport position
             // if it has two players, it creates a new table and moves the player to the new table
             // TODO: think about how to set rotation?
-            playerManager.MovePlayerFromTableToPositionServerRpc(playerId, point, Quaternion.identity);
+            playerManager.MovePlayerFromTableToPositionServerRpc(playerId, point, rotation);
         }
 
         private void OnPointsOfInterestChanged(NetworkListEvent<Vector3> changeEvent)

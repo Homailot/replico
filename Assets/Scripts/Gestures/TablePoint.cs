@@ -7,8 +7,9 @@ namespace Gestures
     {
         [SerializeField] private Transform firstAttach;
         [SerializeField] private Transform secondAttach;
-        
+
         public Vector3 localPosition { get; set; }
+        public Quaternion localRotation { get; set; }
         public ulong firstPlayerId { get; set; }
         public ulong secondPlayerId { get; set; }
         
@@ -24,7 +25,7 @@ namespace Gestures
         public void UpdatePosition(Transform parent)
         {
             transform.position = parent.TransformPoint(localPosition);
-            transform.rotation = parent.rotation;
+            transform.rotation = parent.rotation * localRotation;
         }
 
         public void AttachPlayer(GameObject playerPrefab, ulong playerId, int seat)

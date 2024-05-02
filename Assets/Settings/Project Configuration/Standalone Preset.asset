@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: DrawFog
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   settings:
     passTag: DrawFog
     Event: 500
@@ -464,7 +464,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     passTag: DrawArrow
-    Event: 300
+    Event: 500
     filterSettings:
       RenderQueueType: 0
       LayerMask:
@@ -716,7 +716,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     passTag: DrawArrowBehind
-    Event: 300
+    Event: 500
     filterSettings:
       RenderQueueType: 0
       LayerMask:

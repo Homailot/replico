@@ -96,8 +96,8 @@ namespace Gestures.Balloon
 
             _hands = hands;
         }
-        
-        public void Teleport()
+
+        private void Teleport()
         {
             _gestureDetector.ResetBalloonPlanePositionsAndHeight();
             _gestureDetector.OnTeleportSelected();

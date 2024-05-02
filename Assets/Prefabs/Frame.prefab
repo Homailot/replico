@@ -1208,6 +1208,7 @@ MonoBehaviour:
   - {fileID: 1083769217727515275, guid: f8dc5b0d4e1fc4e4ea34dbee8acac01c, type: 3}
   tableReplicaPrefab: {fileID: 2479536120904888997, guid: 149d8ab13f6505f40aac6d46841c0b80, type: 3}
   balloonArrow: {fileID: 1164022710440134631}
+  forward: {fileID: 4034004866824837548}
 --- !u!33 &799011391277623803
 MeshFilter:
   m_ObjectHideFlags: 0

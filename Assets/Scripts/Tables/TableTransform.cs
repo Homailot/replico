@@ -83,6 +83,7 @@ namespace Tables
             var playerNetwork = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
             if (playerNetwork != null && playerNetwork.gestureDetector != null)
             {
+                Debug.Log(newData.rotation);
                 playerNetwork.gestureDetector.UpdateTablePosition(NetworkObjectId, newData.position, Quaternion.Euler(newData.rotation));
             }
         }
