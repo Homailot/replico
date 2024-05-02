@@ -37,10 +37,8 @@ namespace Gestures
                         Destroy(_firstPlayer);
                     }
 
-                    _firstPlayer = Instantiate(playerPrefab, firstAttach, true);
-                    _firstPlayer.transform.localPosition = Vector3.zero;
+                    _firstPlayer = Instantiate(playerPrefab, firstAttach);
                     _firstPlayer.transform.localRotation = Quaternion.identity;
-                    _firstPlayer.transform.localScale = Vector3.one;
                     
                     firstPlayerId = playerId;
                     break;
@@ -49,10 +47,8 @@ namespace Gestures
                     {
                         Destroy(_secondPlayer);
                     }
-                    _secondPlayer = Instantiate(playerPrefab, secondAttach, true);
-                    _secondPlayer.transform.localPosition = Vector3.zero;
+                    _secondPlayer = Instantiate(playerPrefab, secondAttach);
                     _secondPlayer.transform.localRotation = Quaternion.identity;
-                    _secondPlayer.transform.localScale = Vector3.one;
                     
                     secondPlayerId = playerId;
                     break;
@@ -61,17 +57,20 @@ namespace Gestures
         
         public void DetachPlayer(ulong playerId)
         {
+            Debug.Log($"Detaching player {playerId}");
+            Debug.Log($"First player: {firstPlayerId}");
+            Debug.Log($"Second player: {secondPlayerId}");
             if (firstPlayerId == playerId)
             {
+                Destroy(_firstPlayer);
                 _firstPlayer = null;
                 firstPlayerId = ulong.MaxValue;
-                Destroy(_firstPlayer);
             }
             else if (secondPlayerId == playerId)
             {
+                Destroy(_secondPlayer);
                 _secondPlayer = null;
                 secondPlayerId = ulong.MaxValue;
-                Destroy(_secondPlayer);
             }
         }
     }

@@ -76,7 +76,15 @@ namespace Tables
                 {
                     playerObject.MovePlayerToTable(_table, 1);
                 }
-            } 
+            }
+
+            if (!IsClient) return;
+            
+            var playerNetwork = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
+            if (playerNetwork != null && playerNetwork.gestureDetector != null)
+            {
+                playerNetwork.gestureDetector.UpdateTablePosition(NetworkObjectId, newData.position, Quaternion.Euler(newData.rotation));
+            }
         }
     }
 }

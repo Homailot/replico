@@ -131,6 +131,32 @@ namespace Gestures
             }
         }
         
+        public void RemoveTable(ulong tableId)
+        {
+            if (!_tablePoints.Remove(tableId, out var tablePoint)) return;
+            Destroy(tablePoint.gameObject);
+        }
+        
+        public void UpdateTablePosition(ulong tableId, Vector3 position, Quaternion rotation)
+        {
+            if (!_tablePoints.TryGetValue(tableId, out var tablePoint)) return;
+            tablePoint.localPosition = position;
+            tablePoint.transform.rotation = rotation;
+            tablePoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
+        }
+        
+        public void AttachPlayerToTable(ulong tableId, ulong playerId, int seat)
+        {
+            if (!_tablePoints.TryGetValue(tableId, out var tablePoint)) return;
+            tablePoint.AttachPlayer(playerReplicaPrefabs[(int) playerId % playerReplicaPrefabs.Count], playerId, seat);
+        }
+        
+        public void DetachPlayerFromTable(ulong tableId, ulong playerId)
+        {
+            if (!_tablePoints.TryGetValue(tableId, out var tablePoint)) return;
+            tablePoint.DetachPlayer(playerId);
+        }
+        
         public void AddPointSelectedListener(UnityAction<Vector3> action)
         {
             pointSelected.AddListener(action);

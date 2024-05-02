@@ -44,10 +44,11 @@ namespace Tables
 
             var tableTransform = newTable.GetComponent<TableTransform>();
             tableTransform.SetPositionAndRotation(firstTableSpawnPosition.position, firstTableSpawnPosition.rotation.eulerAngles);
+            newTable.AddToTable(playerId, 0);
         
             newTable.networkObject.Spawn();
         
-            AddToTable(newTable, 0, clientId, playerId);
+            SendToClient(newTable, 0, clientId);
         }
     
         public void RemoveFromTable(ulong playerId)
@@ -144,10 +145,11 @@ namespace Tables
             var newTableGameObject = Instantiate(tablePrefab, position, rotation);
             var newTable = newTableGameObject.GetComponent<Table>();
             _tables.Add(newTable);
+            newTable.AddToTable(playerId, seat);
         
             newTable.networkObject.Spawn();
         
-            AddToTable(newTable, seat, clientId, playerId);
+            SendToClient(newTable, seat, clientId);
         } 
 
         [ClientRpc]

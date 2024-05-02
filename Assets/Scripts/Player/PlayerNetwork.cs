@@ -38,7 +38,6 @@ namespace Player
         
         private XROrigin _xrOrigin;
         private readonly NetworkVariable<ulong> _playerId = new NetworkVariable<ulong>();
-        private readonly NetworkVariable<NetworkObjectReference> _table = new NetworkVariable<NetworkObjectReference>();
         private bool _initialized;
 
         private GameObject _touchPlane;
@@ -124,7 +123,6 @@ namespace Player
             var attachPoint = seat == 0 ? table.firstAttach : table.secondAttach; 
             var position = attachPoint.position;
             playerTransform.SetTransform(playerCamera.transform, attachPoint, tracker);
-            _table.Value = table.networkObject;
 
             GameObject touchPlane;
             if (_touchPlane != null)

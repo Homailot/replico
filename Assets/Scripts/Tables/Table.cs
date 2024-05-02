@@ -1,3 +1,4 @@
+using System;
 using Player;
 using Unity.Netcode;
 using UnityEngine;
@@ -21,25 +22,45 @@ namespace Tables
         {
             networkObject = GetComponent<NetworkObject>();
         }
-
+        
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
 
             if (IsClient)
             {
-                var playerNetwork = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
+                var localPlayer = NetworkManager.Singleton.LocalClient.PlayerObject;
+                if (localPlayer == null) return;
+                
+                var playerNetwork = localPlayer.GetComponent<PlayerNetwork>();
                 if (playerNetwork != null && playerNetwork.gestureDetector != null)
                 {
                     playerNetwork.gestureDetector.CreateTable(NetworkObjectId, firstSeat.Value, secondSeat.Value,
                         transform.position, transform.rotation);
                 }
             }
-            
+        }
+
+        private void Start()
+        {
             firstSeat.OnValueChanged += OnFirstSeatChanged;
             secondSeat.OnValueChanged += OnSecondSeatChanged;
         }
-    
+
+
+        public override void OnNetworkDespawn()
+        {
+            base.OnNetworkDespawn();
+
+            if (!IsClient) return;
+            
+            var playerNetwork = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
+            if (playerNetwork != null && playerNetwork.gestureDetector != null)
+            {
+                playerNetwork.gestureDetector.RemoveTable(NetworkObjectId);
+            }
+        }
+
         public bool HasPlayer(ulong playerId)
         {
             return firstSeat.Value == playerId || secondSeat.Value == playerId;
@@ -72,13 +93,47 @@ namespace Tables
     
         private void OnFirstSeatChanged(ulong oldSeat, ulong newSeat)
         {
-            
             Debug.Log($"First seat changed from {oldSeat} to {newSeat}");
+
+            if (!IsClient) return;
+            
+            var localPlayer = NetworkManager.Singleton.LocalClient.PlayerObject;
+            
+            if (localPlayer == null) return;
+            var playerNetwork = localPlayer.GetComponent<PlayerNetwork>();
+            if (playerNetwork == null || playerNetwork.gestureDetector == null) return;
+            
+            if (newSeat == ulong.MaxValue)
+            {
+                playerNetwork.gestureDetector.DetachPlayerFromTable(NetworkObjectId, oldSeat);
+            }
+            else
+            {
+                playerNetwork.gestureDetector.AttachPlayerToTable(NetworkObjectId, newSeat, 0);
+            }
         }
     
         private void OnSecondSeatChanged(ulong oldSeat, ulong newSeat)
         {
             Debug.Log($"Second seat changed from {oldSeat} to {newSeat}");
+            
+            if (!IsClient) return;
+            
+            var localPlayer = NetworkManager.Singleton.LocalClient.PlayerObject;
+            
+            if (localPlayer == null) return;
+            var playerNetwork = localPlayer.GetComponent<PlayerNetwork>();
+            if (playerNetwork == null || playerNetwork.gestureDetector == null) return;
+            
+            if (newSeat == ulong.MaxValue)
+            {
+                Debug.Log($"Detaching player {oldSeat} from table");
+                playerNetwork.gestureDetector.DetachPlayerFromTable(NetworkObjectId, oldSeat);
+            }
+            else
+            {
+                playerNetwork.gestureDetector.AttachPlayerToTable(NetworkObjectId, newSeat, 1);
+            }
         }
     }
 }
