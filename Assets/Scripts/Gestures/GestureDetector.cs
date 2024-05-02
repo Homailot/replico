@@ -28,6 +28,7 @@ namespace Gestures
         [SerializeField] private BalloonMaterialUpdate balloonMaterialUpdate;
         [SerializeField] private List<GameObject> playerReplicaPrefabs;
         [SerializeField] private GameObject tableReplicaPrefab;
+        [SerializeField] private Transform balloonArrow;
 
         private readonly List<BalloonPoint> _pointsOfInterest = new List<BalloonPoint>();
         private readonly IDictionary<ulong, TablePoint> _tablePoints = new Dictionary<ulong, TablePoint>();
@@ -209,6 +210,17 @@ namespace Gestures
             effectRenderer.material.SetFloat(ActivationTime, Time.time - activatedMin);
         }
 
+        public void EnableBalloonArrow()
+        {
+            balloonArrow.gameObject.SetActive(true);
+            balloonArrow.rotation = Quaternion.identity;
+        } 
+        
+        public void RotateBalloonArrow(float yRotation)
+        {
+            balloonArrow.Rotate(Vector3.up, yRotation);
+        }
+        
         public void EnableBalloon()
         {
             if (balloon == null) return;
@@ -263,6 +275,7 @@ namespace Gestures
             renderBehindPlaneMaterial.SetVector(SecondHand, new Vector2(-1f, -1f));
             balloonHeightToCoordinates.ResetBalloonHeight();
             balloonMaterialUpdate.SetBalloonProgress(0);
+            balloonArrow.gameObject.SetActive(false);
         }
 
         public void ResetBalloonPlanePositions()
