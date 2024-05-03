@@ -38,6 +38,7 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
+    - _Alpha: 0.25
     - _Disable_Strength: 0.3
     - _Disabled: 0
     - _Line_Gap: 0.6
