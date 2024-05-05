@@ -19,6 +19,8 @@ namespace Gestures.Balloon
         
         private bool _lastEmpty = false;
         
+        private IReplicaPoint _lastReplicaPoint;
+        
         public BalloonSelectionInitialState(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration, HandDetector handDetector, Hands hands)
         {
             _gestureDetector = gestureDetector;
@@ -45,7 +47,7 @@ namespace Gestures.Balloon
                 if (hands.secondHand.Count > 1)
                 {
                     _gestureDetector.ResetBalloonPlanePositions();
-                    _gestureDetector.SwitchState(new BalloonHoldState(_gestureDetector, _gestureConfiguration, _handDetector, _hands));
+                    _gestureDetector.SwitchState(new BalloonHoldState(_gestureDetector, _gestureConfiguration, _handDetector, _hands, _lastReplicaPoint));
                     return;
                 }
                 
@@ -84,10 +86,33 @@ namespace Gestures.Balloon
                 secondHandPosition);
             var balloonScreenPosition = _hands.firstHand.First().screenPosition;
             _gestureDetector.UpdateBalloonPosition(new Vector3(balloonScreenPosition.x, GetValueFromDistance(distance), balloonScreenPosition.y));
+
+            var replicaPoint = _gestureDetector.GetReplicaPointFromBalloon();
+            if (replicaPoint != null)
+            {
+                if (_lastReplicaPoint != null && _lastReplicaPoint != replicaPoint)
+                {
+                    _lastReplicaPoint.Unhighlight();
+                }
+                replicaPoint.Highlight();
+                _lastReplicaPoint = replicaPoint;
+            } else if (_lastReplicaPoint != null)
+            {
+                _lastReplicaPoint.Unhighlight();
+                _lastReplicaPoint = null;
+            }
             
             _lastEmpty = hands.secondHand.Count < 1;
             _lastDirection = secondHandPosition - _hands.firstHand.First().screenPosition;
             _lastDistance = distance;
+        }
+
+        public void OnExit()
+        {
+            if (_lastReplicaPoint != null)
+            {
+                _lastReplicaPoint.Unhighlight();
+            }
         }
     }
 }

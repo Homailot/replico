@@ -465,7 +465,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     passTag: DrawArrow
-    Event: 500
+    Event: 450
     filterSettings:
       RenderQueueType: 0
       LayerMask:
@@ -759,7 +759,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     passTag: DrawArrowBehind
-    Event: 500
+    Event: 450
     filterSettings:
       RenderQueueType: 0
       LayerMask:

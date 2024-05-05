@@ -12,6 +12,7 @@ namespace Gestures.Balloon
         private readonly GestureDetector _gestureDetector;
         private readonly GestureConfiguration _gestureConfiguration;
         private readonly HandDetector _handDetector;
+        private readonly IReplicaPoint _replicaPoint;
         private readonly int _fingerId;
 
         private float _fingerCenter;
@@ -22,10 +23,11 @@ namespace Gestures.Balloon
         
         private bool _enableArrow = false;
         
-        public BalloonHoldState(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration, HandDetector handDetector, Hands hands)
+        public BalloonHoldState(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration, HandDetector handDetector, Hands hands, IReplicaPoint replicaPoint)
         {
             _gestureDetector = gestureDetector;
             _gestureConfiguration = gestureConfiguration; 
+            _replicaPoint = replicaPoint;
             _holdTime = Time.time;
             _handDetector = handDetector;
             _hands = hands;
@@ -78,8 +80,16 @@ namespace Gestures.Balloon
                 // Do selection
                 if (!_enableArrow)
                 {
+                    if (_replicaPoint != null)
+                    {
+                        _replicaPoint.OnSelect(_gestureDetector);
+                    }
+                    else
+                    {
+                        _gestureDetector.OnPointSelected();
+                    }
+                    
                     _gestureDetector.ResetBalloonPlanePositionsAndHeight(); 
-                    _gestureDetector.OnPointSelected();
                     _gestureDetector.DisableBalloon();
                     _gestureDetector.SwitchState(new BalloonSelectedState(_gestureDetector, _gestureConfiguration));
                     return;                   

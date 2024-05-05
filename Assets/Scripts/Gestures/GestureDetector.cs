@@ -69,6 +69,21 @@ namespace Gestures
             }
         }
 
+        public IReplicaPoint GetReplicaPointFromBalloon()
+        {
+            var localPosition = gestureConfiguration.replicaController.GetReplica().transform.InverseTransformPoint(balloon.position);
+            
+            foreach (var balloonPoint in _pointsOfInterest)
+            {
+                if (Vector3.Distance(balloonPoint.localPosition, localPosition) < gestureConfiguration.balloonSelectionDistanceThreshold)
+                {
+                    return balloonPoint;
+                }
+            }
+            
+            return null;
+        }
+
         public void SetWorld(World world)
         {
             _world = world;
@@ -107,6 +122,11 @@ namespace Gestures
         {
             var balloonPoint = _pointsOfInterest.FirstOrDefault(point => point.localPosition == position);
             if (balloonPoint == null) return;
+            RemovePointOfInterest(balloonPoint);
+        }
+
+        public void RemovePointOfInterest(BalloonPoint balloonPoint)
+        {
             _pointsOfInterest.Remove(balloonPoint);
             Destroy(balloonPoint.gameObject);
         }
