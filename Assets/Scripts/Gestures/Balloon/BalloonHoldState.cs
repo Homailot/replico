@@ -73,25 +73,31 @@ namespace Gestures.Balloon
             
             _gestureDetector.SetBalloonProgress(timeDifference / _gestureConfiguration.balloonTeleportTime);
             
-            // in any case, either teleport or select, no turning back!
-            if ((Touch.activeFingers.Count == 0 || hands.firstHand.Count < 1 || hands.secondHand.Count < 2) && timeDifference < _gestureConfiguration.balloonTeleportTime)
+            if ((Touch.activeFingers.Count == 0 || hands.firstHand.Count < 1 || hands.secondHand.Count < 2))
             {
-                if (_hasMoved)
+                // Do selection
+                if (!_enableArrow)
                 {
-                    Teleport();
+                    _gestureDetector.ResetBalloonPlanePositionsAndHeight(); 
+                    _gestureDetector.OnPointSelected();
+                    _gestureDetector.DisableBalloon();
+                    _gestureDetector.SwitchState(new BalloonSelectedState(_gestureDetector, _gestureConfiguration));
+                    return;                   
+                }
+
+                if (timeDifference < _gestureConfiguration.balloonTeleportTime)
+                {
+                    _gestureDetector.ResetBalloonPlanePositionsAndHeight();
+                    _gestureDetector.DisableBalloon();
+                    _gestureDetector.SwitchState(new BalloonSelectedState(_gestureDetector, _gestureConfiguration));
                     return;
                 }
-                // Do selection
-                _gestureDetector.ResetBalloonPlanePositionsAndHeight();
-                _gestureDetector.OnPointSelected();
-                _gestureDetector.DisableBalloon();
-                _gestureDetector.SwitchState(new BalloonSelectedState(_gestureDetector, _gestureConfiguration));
-                return;
             }
 
             if (timeDifference >= _gestureConfiguration.balloonTeleportTime)
             {
                 Teleport();
+                return;
             }
 
             _hands = hands;
