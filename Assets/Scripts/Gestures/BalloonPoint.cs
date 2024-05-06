@@ -7,6 +7,7 @@ namespace Gestures
         [SerializeField] private GameObject highlightPrefab;
         private bool _isHighlighted;
         private GameObject _instantiatedHighlight; 
+        private bool _isIntersected;
         
         public ulong playerId;
         public Vector3 localPosition;
@@ -27,7 +28,7 @@ namespace Gestures
         public void Highlight()
         {
             if (!selectable) return;
-            if (_instantiatedHighlight == null)
+            if (!_isHighlighted)
             {
                 _instantiatedHighlight = Instantiate(highlightPrefab, transform);
             }
@@ -37,12 +38,17 @@ namespace Gestures
         public void Unhighlight()
         {
             if (!selectable) return;
-            if (_instantiatedHighlight != null)
+            if (_isHighlighted)
             {
                 Destroy(_instantiatedHighlight);
                 _instantiatedHighlight = null;
             }
             _isHighlighted = false;
+        }
+
+        public bool Intersects()
+        {
+            return _isIntersected;
         }
 
         public bool IsHighlighted()
@@ -54,6 +60,16 @@ namespace Gestures
         {
             if (!selectable) return;
             gestureDetector.OnPointRemoved(this);
+        }
+        
+        private void OnTriggerEnter(Collider other)
+        {
+            _isIntersected = true;
+        }
+        
+        private void OnTriggerExit(Collider other)
+        {
+            _isIntersected = false;
         }
     }
 }

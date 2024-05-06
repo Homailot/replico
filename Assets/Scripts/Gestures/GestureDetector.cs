@@ -74,9 +74,17 @@ namespace Gestures
         {
             foreach (var balloonPoint in _pointsOfInterest.Values)
             {
-                if (Vector3.Distance(balloonPoint.transform.position, balloon.position) < gestureConfiguration.balloonSelectionDistanceThreshold && balloonPoint.selectable)
+                if (balloonPoint.Intersects() && balloonPoint.selectable)
                 {
                     return balloonPoint;
+                }
+            } 
+            
+            foreach (var tablePoint in _tablePoints.Values)
+            {
+                if (tablePoint.Intersects() && tablePoint.selectable)
+                {
+                    return tablePoint;
                 }
             }
             
@@ -271,15 +279,14 @@ namespace Gestures
         {
             if (balloon == null) return;
             balloon.rotation = Quaternion.identity;
-            balloon.gameObject.SetActive(true);
             balloonBillboard.gameObject.SetActive(true);
         }
         
         public void DisableBalloon()
         {
             if (balloon == null) return;
-            balloon.gameObject.SetActive(false);
             balloonBillboard.gameObject.SetActive(false);
+            balloon.position = new Vector3(0, 1000, 0);
         }
         
         public void UpdateBalloonPosition(Vector3 position)

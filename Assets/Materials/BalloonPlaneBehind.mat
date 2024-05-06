@@ -40,7 +40,7 @@ Material:
     m_Floats:
     - _Alpha: 0.25
     - _Disable_Strength: 0.3
-    - _Disabled: 0
+    - _Disabled: 1
     - _Line_Gap: 0.6
     - _Line_Length: 0.05
     - _Line_Thickness: 0.006

@@ -3,25 +3,42 @@ using UnityEngine;
 
 namespace Gestures
 {
-    public class TablePoint : MonoBehaviour
+    public class TablePoint : MonoBehaviour, IReplicaPoint
     {
         [SerializeField] private Transform firstAttach;
         [SerializeField] private Transform secondAttach;
+        [SerializeField] private float highlightWidth;
+        [SerializeField] private float scaleMultiplier;  
 
         public Vector3 localPosition { get; set; }
         public Quaternion localRotation { get; set; }
         public ulong firstPlayerId { get; set; }
         public ulong secondPlayerId { get; set; }
+        public bool selectable { get; set; }
         
         private GameObject _firstPlayer;
         private GameObject _secondPlayer;
-
+        private Outline _outline;
+        private float _originalOutlineWidth;
+        private Vector3 _originalScale;
+        
+        private bool _isIntersected;
+        private bool _isHighlighted;
+        
         public void Awake()
         {
             firstPlayerId = ulong.MaxValue;
             secondPlayerId = ulong.MaxValue;
+            selectable = true;
         }
-        
+
+        public void Start()
+        {
+            _outline = GetComponent<Outline>();
+            _originalOutlineWidth = _outline.OutlineWidth;
+            _originalScale = transform.localScale;
+        }
+
         public void UpdatePosition(Transform parent)
         {
             transform.position = parent.TransformPoint(localPosition);
@@ -58,9 +75,6 @@ namespace Gestures
         
         public void DetachPlayer(ulong playerId)
         {
-            Debug.Log($"Detaching player {playerId}");
-            Debug.Log($"First player: {firstPlayerId}");
-            Debug.Log($"Second player: {secondPlayerId}");
             if (firstPlayerId == playerId)
             {
                 Destroy(_firstPlayer);
@@ -73,6 +87,53 @@ namespace Gestures
                 _secondPlayer = null;
                 secondPlayerId = ulong.MaxValue;
             }
+        }
+
+        public void Highlight()
+        {
+            if (!selectable) return;
+            if (!_isHighlighted)
+            {
+                _outline.OutlineWidth = highlightWidth;
+                transform.localScale = _originalScale * scaleMultiplier;
+            }
+            _isHighlighted = true;
+        }
+
+        public void Unhighlight()
+        {
+            if (!selectable) return;
+            if (_isHighlighted)
+            {
+                _outline.OutlineWidth = _originalOutlineWidth;
+                transform.localScale = _originalScale;
+            }
+            _isHighlighted = false;
+        }
+
+        public bool Intersects()
+        {
+            return _isIntersected;
+        }
+
+        public bool IsHighlighted()
+        {
+            return _isHighlighted;
+        }
+
+
+        public void OnSelect(GestureDetector gestureDetector)
+        {
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            _isIntersected = true;
+        }
+        
+        private void OnTriggerExit(Collider other)
+        {
+            _isIntersected = false;
         }
     }
 }
