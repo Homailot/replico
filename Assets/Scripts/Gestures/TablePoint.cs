@@ -14,6 +14,7 @@ namespace Gestures
         public Quaternion localRotation { get; set; }
         public ulong firstPlayerId { get; set; }
         public ulong secondPlayerId { get; set; }
+        public ulong tableId { get; set; }
         public bool selectable { get; set; }
         
         private GameObject _firstPlayer;
@@ -121,9 +122,9 @@ namespace Gestures
             return _isHighlighted;
         }
 
-
         public void OnSelect(GestureDetector gestureDetector)
         {
+            gestureDetector.OnTableSelected(tableId);
         }
 
         private void OnTriggerEnter(Collider other)

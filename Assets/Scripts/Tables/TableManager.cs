@@ -55,30 +55,36 @@ namespace Tables
         {
             if (!NetworkManager.Singleton.IsServer) return;
 
-            foreach (var table in _tables)
+            var table = GetTableWithPlayer(playerId);
+            if (table == null) return;
+            
+            RemoveFromTable(playerId, table);
+        }
+
+        private void RemoveFromTable(ulong playerId, Table table)
+        {
+            if (!NetworkManager.Singleton.IsServer) return;
+
+            if (table.firstSeat.Value == playerId)
             {
-                if (table.firstSeat.Value == playerId)
-                {
-                    Debug.Log($"Removing player {playerId} from table {table.networkObject.NetworkObjectId} in seat 0");
-                    table.firstSeat.Value = ulong.MaxValue;
-                }
-            
-                if (table.secondSeat.Value == playerId)
-                {
-                    Debug.Log($"Removing player {playerId} from table {table.networkObject.NetworkObjectId} in seat 1");
-                    table.secondSeat.Value = ulong.MaxValue;
-                }
-            
-                // if table is empty, destroy it
-                if (table.isFirstSeatAvailable && table.isSecondSeatAvailable)
-                {
-                    Debug.Log($"Destroying table {table.networkObject.NetworkObjectId}");
-                    _tables.Remove(table);
-                    table.networkObject.Despawn();
-                    Destroy(table.gameObject);
-                    break;
-                }
+                Debug.Log($"Removing player {playerId} from table {table.networkObject.NetworkObjectId} in seat 0");
+                table.firstSeat.Value = ulong.MaxValue;
             }
+            
+            if (table.secondSeat.Value == playerId)
+            {
+                Debug.Log($"Removing player {playerId} from table {table.networkObject.NetworkObjectId} in seat 1");
+                table.secondSeat.Value = ulong.MaxValue;
+            }
+            
+            // if table is empty, destroy it
+            if (table.isFirstSeatAvailable && table.isSecondSeatAvailable)
+            {
+                Debug.Log($"Destroying table {table.networkObject.NetworkObjectId}");
+                _tables.Remove(table);
+                table.networkObject.Despawn();
+                Destroy(table.gameObject);
+            } 
         }
 
         private void AddToTable(Table table, int seat, ulong clientId, ulong playerId)
@@ -98,10 +104,33 @@ namespace Tables
             };
             MovePlayerToTableClientRpc(table.networkObject, seat, clientRpcParams); 
         }
-    
-        public Table GetTableWithPlayer(ulong playerId)
+
+        private Table GetTableWithPlayer(ulong playerId)
         {
             return _tables.FirstOrDefault(table => table.HasPlayer(playerId));
+        }
+
+        public void MovePlayerToTable(ulong playerId, ulong clientId, ulong tableId)
+        {
+            var initialTable = GetTableWithPlayer(playerId);
+            if (initialTable == null) return;
+            
+            var table = _tables.FirstOrDefault(t => t.networkObject.NetworkObjectId == tableId);
+            if (table == null) return;
+            
+            RemoveFromTable(playerId, initialTable);
+            initialTable.RemoveFromTable(playerId);
+            
+            if (table.firstSeat.Value == ulong.MaxValue)
+            {
+                table.AddToTable(playerId, 0);
+                SendToClient(table, 0, clientId);
+            }
+            else if (table.secondSeat.Value == ulong.MaxValue)
+            {
+                table.AddToTable(playerId, 1);
+                SendToClient(table, 1, clientId);
+            }
         }
     
         public void MovePlayerTableToPosition(ulong playerId, ulong clientId, Vector3 position, Quaternion rotation)

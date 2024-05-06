@@ -161,6 +161,7 @@ namespace Player
             gestureDetector.AddPointSelectedListener(OnPointSelected);
             gestureDetector.AddPointRemovedListener(OnPointRemoved);
             gestureDetector.AddTeleportSelectedListener(OnTeleportSelected);
+            gestureDetector.AddTableSelectedListener(OnTableSelected);
             _touchPlane = touchPlane;
             _initialized = true;
         }
@@ -197,12 +198,14 @@ namespace Player
         {
             if (!IsOwner) return;
              
-            //call server rpc to update table position
-            // does a server rpc to update the table position, which checks if the table has one or two players
-            // if it has one player, it moves the table to the teleport position
-            // if it has two players, it creates a new table and moves the player to the new table
-            // TODO: think about how to set rotation?
             playerManager.MovePlayerFromTableToPositionServerRpc(playerId, point, rotation);
+        }
+
+        private void OnTableSelected(ulong tableId)
+        {
+            if (!IsOwner) return;
+            
+            playerManager.MovePlayerToTableServerRpc(playerId, tableId);
         }
 
         private void OnPointsOfInterestChanged(NetworkListEvent<Vector3> changeEvent)

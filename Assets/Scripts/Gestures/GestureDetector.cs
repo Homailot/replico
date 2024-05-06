@@ -22,9 +22,6 @@ namespace Gestures
         [SerializeField] private Transform balloon;
         [SerializeField] private Transform balloonBillboard;
         [SerializeField] private BalloonHeightToCoordinates balloonHeightToCoordinates;
-        [SerializeField] private PointSelected pointSelected;
-        [SerializeField] private TeleportSelected teleportSelected;
-        [SerializeField] private PointRemoved pointRemoved;
         [SerializeField] private GameObject balloonPointPrefab;
         [SerializeField] private BalloonMaterialUpdate balloonMaterialUpdate;
         [SerializeField] private List<GameObject> playerReplicaPrefabs;
@@ -43,7 +40,12 @@ namespace Gestures
         private static readonly int Disabled = Shader.PropertyToID("_Disabled");
         private static readonly int Activated = Shader.PropertyToID("_Activated");
         private static readonly int ActivatedMin = Shader.PropertyToID("_ActivatedMin");
-
+        
+        [SerializeField] private PointSelected pointSelected;
+        [SerializeField] private TeleportSelected teleportSelected;
+        [SerializeField] private PointRemoved pointRemoved;
+        [SerializeField] private TableSelected tableSelected;
+        
         private void Awake()
         {
             EnhancedTouchSupport.Enable();
@@ -95,6 +97,11 @@ namespace Gestures
         {
             _world = world;
             gestureConfiguration.replicaController.SetObjectToReplicate(world.gameObject);
+        }
+
+        public void OnTableSelected(ulong tableId)
+        {
+            tableSelected.Invoke(tableId); 
         }
         
         public void OnTeleportSelected()
@@ -169,6 +176,7 @@ namespace Gestures
             
             tablePoint.localPosition = position;
             tablePoint.localRotation = rotation;
+            tablePoint.tableId = tableId;
             tablePoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
             if (tablePoint.firstPlayerId != firstPlayerId)
             {
@@ -178,6 +186,11 @@ namespace Gestures
             if (tablePoint.secondPlayerId != secondPlayerId)
             {
                 tablePoint.AttachPlayer(playerReplicaPrefabs[(int) secondPlayerId % playerReplicaPrefabs.Count], secondPlayerId, 1);
+            }
+            
+            if (tablePoint.firstPlayerId == _playerId || tablePoint.secondPlayerId == _playerId)
+            {
+                tablePoint.selectable = false;
             }
         }
         
@@ -199,12 +212,22 @@ namespace Gestures
         {
             if (!_tablePoints.TryGetValue(tableId, out var tablePoint)) return;
             tablePoint.AttachPlayer(playerReplicaPrefabs[(int) playerId % playerReplicaPrefabs.Count], playerId, seat);
+            
+            if (tablePoint.firstPlayerId == _playerId || tablePoint.secondPlayerId == _playerId)
+            {
+                tablePoint.selectable = false;
+            }
         }
         
         public void DetachPlayerFromTable(ulong tableId, ulong playerId)
         {
             if (!_tablePoints.TryGetValue(tableId, out var tablePoint)) return;
             tablePoint.DetachPlayer(playerId);
+            
+            if (tablePoint.firstPlayerId != _playerId && tablePoint.secondPlayerId != _playerId)
+            {
+                tablePoint.selectable = true;
+            }
         }
         
         public void AddPointSelectedListener(UnityAction<Vector3> action)
@@ -220,6 +243,11 @@ namespace Gestures
         public void AddTeleportSelectedListener(UnityAction<Vector3, Quaternion> action)
         {
             teleportSelected.AddListener(action);
+        }
+        
+        public void AddTableSelectedListener(UnityAction<ulong> action)
+        {
+            tableSelected.AddListener(action);
         }
 
         public void SetBalloonProgress(float progress)
@@ -357,5 +385,8 @@ namespace Gestures
         public class TeleportSelected : UnityEvent<Vector3, Quaternion>
         {
         }
+        
+        [Serializable]
+        public class TableSelected : UnityEvent<ulong> {}
     }
 }

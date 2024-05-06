@@ -35,6 +35,13 @@ namespace Player
             tableManager.MovePlayerTableToPosition(playerId, clientId, position, rotation);
         }
 
+        [ServerRpc(RequireOwnership = false)]
+        public void MovePlayerToTableServerRpc(ulong playerId, ulong tableId)
+        {
+            var clientId = GetClientId(playerId);
+            tableManager.MovePlayerToTable(playerId, clientId, tableId);
+        }
+
         private void OnClientConnected(ulong clientId)
         {
             if (!NetworkManager.Singleton.IsServer) return;
