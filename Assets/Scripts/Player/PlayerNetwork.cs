@@ -229,7 +229,7 @@ namespace Player
                 case NetworkListEvent<Vector3>.EventType.Remove:
                     if (playerGestureDetector != null)
                     {
-                        playerGestureDetector.RemovePointOfInterest(changeEvent.Value);
+                        playerGestureDetector.RemovePointOfInterest(changeEvent.Value, playerId);
                     }
                     break;
                 case NetworkListEvent<Vector3>.EventType.RemoveAt:

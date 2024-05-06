@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 8563744545415745237}
   - component: {fileID: 481958737503493590}
   - component: {fileID: 7838142565220039977}
+  - component: {fileID: 1541011529624249192}
   m_Layer: 0
   m_Name: Table
   m_TagString: Table
@@ -103,7 +104,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 62e25ef75a2216f418d06453c9ad15cb, type: 2}
+  - {fileID: 2100000, guid: f602f28ea7734714f8a57b3d82952473, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -260,6 +261,69 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f97dc2de08ca46a0bb10a288d89404d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1541011529624249192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2479536120904888997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fdc0b25857c4825a3ea38483a725570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transparencyCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.15
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  inactivityThreshold: 5
+  transparencyDuration: 1
+  opaqueCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.15
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  opaqueDuration: 0.5
 --- !u!1 &3349796173532529807
 GameObject:
   m_ObjectHideFlags: 0

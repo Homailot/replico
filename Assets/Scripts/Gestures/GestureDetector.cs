@@ -32,7 +32,7 @@ namespace Gestures
         [SerializeField] private Transform balloonArrow;
         [SerializeField] private Transform forward;
 
-        private readonly List<BalloonPoint> _pointsOfInterest = new List<BalloonPoint>();
+        private readonly IDictionary<BalloonPointId, BalloonPoint> _pointsOfInterest = new Dictionary<BalloonPointId, BalloonPoint>(new BalloonEqualityComparer());
         private readonly IDictionary<ulong, TablePoint> _tablePoints = new Dictionary<ulong, TablePoint>();
         private World _world;
         private ulong _playerId = 0;
@@ -59,7 +59,7 @@ namespace Gestures
 
         public void LateUpdate()
         {
-            foreach (var balloonPoint in _pointsOfInterest)
+            foreach (var balloonPoint in _pointsOfInterest.Values)
             {
                 balloonPoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
             }
@@ -72,11 +72,9 @@ namespace Gestures
 
         public IReplicaPoint GetReplicaPointFromBalloon()
         {
-            var localPosition = gestureConfiguration.replicaController.GetReplica().transform.InverseTransformPoint(balloon.position);
-            
-            foreach (var balloonPoint in _pointsOfInterest)
+            foreach (var balloonPoint in _pointsOfInterest.Values)
             {
-                if (Vector3.Distance(balloonPoint.localPosition, localPosition) < gestureConfiguration.balloonSelectionDistanceThreshold)
+                if (Vector3.Distance(balloonPoint.transform.position, balloon.position) < gestureConfiguration.balloonSelectionDistanceThreshold && balloonPoint.selectable)
                 {
                     return balloonPoint;
                 }
@@ -117,28 +115,38 @@ namespace Gestures
             balloonPoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
             
             balloonPoint.selectable = playerId == _playerId;
-            _pointsOfInterest.Add(balloonPoint);
+            _pointsOfInterest.Add(new BalloonPointId(balloonPoint.playerId, balloonPoint.localPosition), balloonPoint);
             _world.AddPointOfInterest(new BalloonPointId(playerId, position));
         }
         
         public void OnPointRemoved(BalloonPoint balloonPoint)
         {
             var localPosition = balloonPoint.localPosition; 
-            RemovePointOfInterest(localPosition);
+            RemovePointOfInterest(localPosition, _playerId);
             pointRemoved.Invoke(localPosition);
         }
         
-        public void RemovePointOfInterest(Vector3 position)
+        public void RemovePointOfInterest(Vector3 position, ulong playerId)
         {
-            var balloonPoint = _pointsOfInterest.FirstOrDefault(point => point.localPosition == position);
+            BalloonPoint balloonPoint = null;
+            foreach (var point in _pointsOfInterest)
+            {
+                if (point.Key.position == position && point.Key.playerId == playerId)
+                {
+                    balloonPoint = point.Value;
+                    break;
+                }
+            }
+
             if (balloonPoint == null) return;
-            RemovePointOfInterest(balloonPoint);
+            RemovePointOfInterest(new BalloonPointId(balloonPoint.playerId, balloonPoint.localPosition), balloonPoint);
         }
 
-        public void RemovePointOfInterest(BalloonPoint balloonPoint)
+        public void RemovePointOfInterest(BalloonPointId balloonPointId, BalloonPoint balloonPoint)
         {
-            _pointsOfInterest.Remove(balloonPoint);
+            _pointsOfInterest.Remove(balloonPointId);
             Destroy(balloonPoint.gameObject);
+            _world.RemovePointOfInterest(balloonPointId);
         }
 
         public void CreateTable(ulong tableId, ulong firstPlayerId, ulong secondPlayerId, Vector3 position,

@@ -30,4 +30,16 @@ public class World : MonoBehaviour
         _pointsOfInterest.Add(balloonPointId, balloonPoint);
         balloonMaterialUpdate.UpdateBalloonLayer(balloon, balloonPointId.playerId);
     }
+    
+    public void RemovePointOfInterest(BalloonPointId balloonPointId)
+    {
+        if (!_pointsOfInterest.ContainsKey(balloonPointId))
+        {
+            return;
+        }
+        
+        var balloonPoint = _pointsOfInterest[balloonPointId];
+        _pointsOfInterest.Remove(balloonPointId);
+        Destroy(balloonPoint.gameObject);
+    }
 }

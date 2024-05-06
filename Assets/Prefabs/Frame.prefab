@@ -836,6 +836,7 @@ GameObject:
   - component: {fileID: 3975967644690137485}
   - component: {fileID: 1311436335743832516}
   - component: {fileID: 2706243097097653034}
+  - component: {fileID: 866571636569917291}
   m_Layer: 0
   m_Name: FrameBorders
   m_TagString: Untagged
@@ -886,7 +887,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 4071c766b289e1c4ea38337eee4952a1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -908,6 +909,69 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &866571636569917291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5177802005143123742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fdc0b25857c4825a3ea38483a725570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transparencyCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.6
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  inactivityThreshold: 5
+  transparencyDuration: 1
+  opaqueCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.6
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  opaqueDuration: 0.5
 --- !u!1 &5272990408786391107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1106,6 +1170,7 @@ GameObject:
   - component: {fileID: 488699091191272533}
   - component: {fileID: 6791617473146403138}
   - component: {fileID: 7017441591039797979}
+  - component: {fileID: 8040134072806150556}
   m_Layer: 0
   m_Name: Touch Plane
   m_TagString: Untagged
@@ -1189,7 +1254,7 @@ MonoBehaviour:
     balloonTeleportTime: 1.2
     balloonRotationSpeed: 500
     balloonShowArrowTime: 0.4
-    balloonSelectionDistanceThreshold: 12
+    balloonSelectionDistanceThreshold: 0.013
   effectRenderer: {fileID: 2337578508288037818}
   balloonPlaneRenderer: {fileID: 1027186367300744832}
   renderBehindPlaneMaterial: {fileID: 2100000, guid: 385557b0bcfea404cbab8db3e306de23, type: 2}
@@ -1319,6 +1384,69 @@ MonoBehaviour:
   balloonNoneMaterialBehind: {fileID: 2100000, guid: 95e1a045c85c373429fcbe5b43848e16, type: 2}
   balloon1Highlight: {fileID: 5550505244196777524, guid: e64ecd44f49b0d34493898138f126bfa, type: 3}
   balloon2Highlight: {fileID: 5550505244196777524, guid: 3512f18de1d53504b94a550879cfb4d6, type: 3}
+--- !u!114 &8040134072806150556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8475391149215074147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fdc0b25857c4825a3ea38483a725570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transparencyCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0.6
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  inactivityThreshold: 5
+  transparencyDuration: 1
+  opaqueCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.6
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  opaqueDuration: 0.5
 --- !u!1001 &3547236919768570503
 PrefabInstance:
   m_ObjectHideFlags: 0

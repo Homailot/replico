@@ -348,7 +348,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "124b737b1e0e4cef9ea7b42beb20d810",
     "m_Id": 0,
-    "m_DisplayName": "Base Color",
+    "m_DisplayName": "Color",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -687,10 +687,10 @@
     "m_Guid": {
         "m_GuidSerialized": "8df8ed04-b977-4961-964b-c278cbce4ac8"
     },
-    "m_Name": "Base Color",
+    "m_Name": "Color",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Base Color",
-    "m_DefaultReferenceName": "_Base_Color",
+    "m_RefNameGeneratedByDisplayName": "Color",
+    "m_DefaultReferenceName": "_Color",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
