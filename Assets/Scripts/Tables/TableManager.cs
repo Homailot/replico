@@ -123,11 +123,11 @@ namespace Tables
             {
                 if (table.isFirstSeatAvailable)
                 {
-                    MoveTableAndPlayer(table, playerId, clientId, 1, position, rotation);
+                    MoveTableAndPlayer(table, playerId, clientId, 0, position, rotation);
                 }
                 else
                 {
-                    CreateNewTableAndMovePlayer(table, playerId, clientId, 1, position, rotation);
+                    CreateNewTableAndMovePlayer(table, playerId, clientId, 0, position, rotation);
                 }
             }
         }

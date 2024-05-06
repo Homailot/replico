@@ -1202,6 +1202,9 @@ MonoBehaviour:
   teleportSelected:
     m_PersistentCalls:
       m_Calls: []
+  pointRemoved:
+    m_PersistentCalls:
+      m_Calls: []
   balloonPointPrefab: {fileID: 4404460346696739353, guid: e2ed673f59fc1cb4ea956f35ec77f82d, type: 3}
   balloonMaterialUpdate: {fileID: 7017441591039797979}
   playerReplicaPrefabs:
@@ -1314,6 +1317,8 @@ MonoBehaviour:
   balloon1MaterialBehind: {fileID: 2100000, guid: 04051245cd824344eaa89a72a2063b11, type: 2}
   balloon2MaterialBehind: {fileID: 2100000, guid: d0d11b05a4fb7a44c8f216501d7e2446, type: 2}
   balloonNoneMaterialBehind: {fileID: 2100000, guid: 95e1a045c85c373429fcbe5b43848e16, type: 2}
+  balloon1Highlight: {fileID: 5550505244196777524, guid: e64ecd44f49b0d34493898138f126bfa, type: 3}
+  balloon2Highlight: {fileID: 5550505244196777524, guid: 3512f18de1d53504b94a550879cfb4d6, type: 3}
 --- !u!1001 &3547236919768570503
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -863,7 +863,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "_Blinking",
     "m_StageCapability": 3,
-    "m_Value": true,
+    "m_Value": false,
     "m_DefaultValue": false
 }
 

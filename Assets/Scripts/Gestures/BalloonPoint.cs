@@ -10,15 +10,23 @@ namespace Gestures
         
         public ulong playerId;
         public Vector3 localPosition;
+        
+        public bool selectable { get; set; }
 
         public void UpdatePosition(Transform parent)
         {
             transform.position = parent.TransformPoint(localPosition);
             transform.rotation = parent.rotation;
         }
+        
+        public void SetHighlight(GameObject highlight)
+        {
+            highlightPrefab = highlight;
+        }
 
         public void Highlight()
         {
+            if (!selectable) return;
             if (_instantiatedHighlight == null)
             {
                 _instantiatedHighlight = Instantiate(highlightPrefab, transform);
@@ -28,6 +36,7 @@ namespace Gestures
 
         public void Unhighlight()
         {
+            if (!selectable) return;
             if (_instantiatedHighlight != null)
             {
                 Destroy(_instantiatedHighlight);
@@ -43,7 +52,8 @@ namespace Gestures
 
         public void OnSelect(GestureDetector gestureDetector)
         {
-            gestureDetector.RemovePointOfInterest(this);
+            if (!selectable) return;
+            gestureDetector.OnPointRemoved(this);
         }
     }
 }

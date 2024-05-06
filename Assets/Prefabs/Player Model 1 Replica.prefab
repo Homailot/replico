@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2321148612786958752}
   - component: {fileID: 1844142691219097410}
   - component: {fileID: 763927697518724808}
+  - component: {fileID: 5372807212023546632}
   m_Layer: 13
   m_Name: Player Model 1 Replica
   m_TagString: Untagged
@@ -106,6 +107,24 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5372807212023546632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7307262443725044764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2.5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &8119683792573240536
 GameObject:
   m_ObjectHideFlags: 0

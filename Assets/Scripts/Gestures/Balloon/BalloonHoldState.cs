@@ -80,7 +80,7 @@ namespace Gestures.Balloon
                 // Do selection
                 if (!_enableArrow)
                 {
-                    if (_replicaPoint != null)
+                    if (_replicaPoint is { selectable: true })
                     {
                         _replicaPoint.OnSelect(_gestureDetector);
                     }

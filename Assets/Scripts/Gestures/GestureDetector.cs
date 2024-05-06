@@ -24,6 +24,7 @@ namespace Gestures
         [SerializeField] private BalloonHeightToCoordinates balloonHeightToCoordinates;
         [SerializeField] private PointSelected pointSelected;
         [SerializeField] private TeleportSelected teleportSelected;
+        [SerializeField] private PointRemoved pointRemoved;
         [SerializeField] private GameObject balloonPointPrefab;
         [SerializeField] private BalloonMaterialUpdate balloonMaterialUpdate;
         [SerializeField] private List<GameObject> playerReplicaPrefabs;
@@ -114,8 +115,17 @@ namespace Gestures
             balloonPoint.playerId = playerId;
             balloonPoint.localPosition = position;
             balloonPoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
+            
+            balloonPoint.selectable = playerId == _playerId;
             _pointsOfInterest.Add(balloonPoint);
             _world.AddPointOfInterest(new BalloonPointId(playerId, position));
+        }
+        
+        public void OnPointRemoved(BalloonPoint balloonPoint)
+        {
+            var localPosition = balloonPoint.localPosition; 
+            RemovePointOfInterest(localPosition);
+            pointRemoved.Invoke(localPosition);
         }
         
         public void RemovePointOfInterest(Vector3 position)
@@ -184,6 +194,11 @@ namespace Gestures
         public void AddPointSelectedListener(UnityAction<Vector3> action)
         {
             pointSelected.AddListener(action);
+        }
+        
+        public void AddPointRemovedListener(UnityAction<Vector3> action)
+        {
+            pointRemoved.AddListener(action);
         }
 
         public void AddTeleportSelectedListener(UnityAction<Vector3, Quaternion> action)
@@ -319,6 +334,9 @@ namespace Gestures
         
         [Serializable]
         public class PointSelected : UnityEvent<Vector3> { }
+        
+        [Serializable]
+        public class PointRemoved : UnityEvent<Vector3> { }
 
         [Serializable]
         public class TeleportSelected : UnityEvent<Vector3, Quaternion>

@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[ExecuteInEditMode]
 public class BalloonScale : MonoBehaviour
 {
     private Camera _camera;

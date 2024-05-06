@@ -1,3 +1,4 @@
+using Gestures;
 using UnityEngine;
 
 namespace Utils
@@ -14,6 +15,9 @@ namespace Utils
         [SerializeField] private Material balloon1MaterialBehind;
         [SerializeField] private Material balloon2MaterialBehind;
         [SerializeField] private Material balloonNoneMaterialBehind;
+        
+        [SerializeField] private GameObject balloon1Highlight;
+        [SerializeField] private GameObject balloon2Highlight;
         
         private static readonly int Player1 = Shader.PropertyToID("_Player");
         private static readonly int Color1 = Shader.PropertyToID("_Color");
@@ -65,6 +69,11 @@ namespace Utils
                 1 => balloon2Mesh,
                 _ => meshFilter.mesh
             };
+            
+            var balloonPoint = balloonGameObject.GetComponent<BalloonPoint>();
+            if (balloonPoint == null) return;
+            
+            balloonPoint.SetHighlight(playerId == 0 ? balloon1Highlight : balloon2Highlight);
         }
 
         public void SetBalloonProgress(float progress)

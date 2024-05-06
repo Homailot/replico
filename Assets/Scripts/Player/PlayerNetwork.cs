@@ -159,6 +159,7 @@ namespace Player
             }
             
             gestureDetector.AddPointSelectedListener(OnPointSelected);
+            gestureDetector.AddPointRemovedListener(OnPointRemoved);
             gestureDetector.AddTeleportSelectedListener(OnTeleportSelected);
             _touchPlane = touchPlane;
             _initialized = true;
@@ -184,6 +185,12 @@ namespace Player
         {
             if (!IsOwner) return;
             _pointsOfInterest.Add(point);
+        }
+        
+        private void OnPointRemoved(Vector3 point)
+        {
+            if (!IsOwner) return;
+            _pointsOfInterest.Remove(point);
         }
 
         private void OnTeleportSelected(Vector3 point, Quaternion rotation)
@@ -222,7 +229,7 @@ namespace Player
                 case NetworkListEvent<Vector3>.EventType.Remove:
                     if (playerGestureDetector != null)
                     {
-                        playerGestureDetector.RemovePointOfInterest(changeEvent.PreviousValue);
+                        playerGestureDetector.RemovePointOfInterest(changeEvent.Value);
                     }
                     break;
                 case NetworkListEvent<Vector3>.EventType.RemoveAt:
