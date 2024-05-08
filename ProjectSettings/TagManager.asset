@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Table
   - ToReplicate
+  - Canvas
   layers:
   - Default
   - TransparentFX

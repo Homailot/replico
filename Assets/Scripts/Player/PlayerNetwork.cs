@@ -21,6 +21,7 @@ namespace Player
     {
         [Header("Local Player Components")]
         [SerializeField] private Camera playerCamera;
+        [SerializeField] private Camera uiCamera;
         [SerializeField] private AudioListener audioListener;
         [SerializeField] private TrackedPoseDriver trackedPoseDriver;
         [SerializeField] private GameObject playerModel;
@@ -81,6 +82,7 @@ namespace Player
             if (IsOwner)
             {
                 playerCamera.enabled = true;
+                uiCamera.enabled = true;
                 audioListener.enabled = true;
                 trackedPoseDriver.enabled = true;
                 rightController.SetActive(true);

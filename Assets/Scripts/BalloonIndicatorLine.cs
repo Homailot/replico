@@ -1,5 +1,6 @@
 using System;
 using System.Numerics;
+using TMPro;
 using UnityEngine;
 using Plane = UnityEngine.Plane;
 using Quaternion = UnityEngine.Quaternion;
@@ -18,6 +19,12 @@ public class BalloonIndicatorLine : MonoBehaviour
     [Header("Screen Space Restrictions")] [SerializeField]
     private float edgeScreenSpaceMargin;
 
+    [Header("Pin Indicator Settings")] [SerializeField]
+    private float pinIndicatorMargin;
+    [SerializeField] private float minIndicatorScale;
+    [SerializeField] private float maxIndicatorScale;
+    [SerializeField] private RectTransform pinIndicator;
+    [SerializeField] private TextMeshProUGUI text;
 
     private LineRenderer _lineRenderer;
     private Camera _camera;
@@ -38,7 +45,13 @@ public class BalloonIndicatorLine : MonoBehaviour
 
         var distance = Vector3.Distance(_camera.transform.position, transform.position);
         var height = Mathf.Lerp(minHeight, maxHeight, Mathf.InverseLerp(minDistance, maxDistance, distance));
+        var scale = Mathf.Lerp(minIndicatorScale, maxIndicatorScale, Mathf.InverseLerp(minDistance, maxDistance, distance));
+        var margin = Mathf.Lerp(pinIndicatorMargin, pinIndicatorMargin + (maxIndicatorScale - minIndicatorScale) / 2,
+            Mathf.InverseLerp(minDistance, maxDistance, distance));
         var endPosition = new Vector3(transform.position.x, transform.position.y + height, transform.position.z);
+        var pinIndicatorPosition = new Vector3(0, height + margin, 0);
+        var pinScale = new Vector3(scale, scale, scale);
+        var textScale = new Vector3(1, 1, 1);
         
         var endScreenPosition = _camera.WorldToScreenPoint(endPosition);
 
@@ -50,12 +63,17 @@ public class BalloonIndicatorLine : MonoBehaviour
             if (downScreenPosition.y >= edgeScreenSpaceMargin * Screen.height)
             {
                 endPosition = downEndPosition;
+                pinIndicatorPosition = new Vector3(0, -height - margin, 0);
+                pinScale = new Vector3(scale, -scale, scale);
+                textScale = new Vector3(1, -1, 1);
             }
         }
 
-
         _lineRenderer.SetPosition(0, transform.position);
         _lineRenderer.SetPosition(1, endPosition);
+        pinIndicator.localPosition = pinIndicatorPosition;
+        pinIndicator.localScale = pinScale;
+        text.transform.localScale = textScale;
     }
 
     private float Cotangent(float angle)
@@ -154,14 +172,5 @@ public class BalloonIndicatorLine : MonoBehaviour
                  (h * cot + 2 * h * q1 * q2 + 2 * h * q2 * q4 - 4 * q1 * q2 * s - 4 * q2 * q4 * s);
 
         return ny;
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        var truncY = _camera.ScreenToWorldPoint(new Vector3(0,
-            Screen.height - edgeScreenSpaceMargin * Screen.height,
-            0));
-        Gizmos.DrawSphere(truncY, 0.1f);
     }
 }

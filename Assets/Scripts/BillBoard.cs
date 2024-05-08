@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BillBoard : MonoBehaviour
 {
+    [SerializeField] private bool _invert;
+    
     private void LateUpdate()
     {
         var cameraTarget = Camera.main;
@@ -10,5 +12,10 @@ public class BillBoard : MonoBehaviour
         var target = cameraTarget.transform.position;
         target.y = transform.position.y;
         transform.LookAt(target);
+        
+        if (_invert)
+        {
+            transform.Rotate(0, 180, 0);
+        }
     } 
 }
