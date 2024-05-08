@@ -314,20 +314,21 @@ MonoBehaviour:
   - {fileID: 4462382780551667095}
   - {fileID: -3575575686404342006}
   - {fileID: -5381739364100920473}
+  - {fileID: -4947173573134872205}
+  - {fileID: -7119155773449635034}
+  - {fileID: -2581132841753817250}
+  - {fileID: 5724982118011479311}
+  - {fileID: -5957192170711424429}
   - {fileID: 8185813672533138437}
   - {fileID: 1581780791935352457}
   - {fileID: 7982817984035068451}
   - {fileID: -4629245888234875147}
-  - {fileID: -4947173573134872205}
-  - {fileID: -7119155773449635034}
   - {fileID: 4471254960537961975}
   - {fileID: 4158552629953660797}
-  - {fileID: -2581132841753817250}
-  - {fileID: 5724982118011479311}
-  - {fileID: -5957192170711424429}
   - {fileID: 8844559788183875956}
   - {fileID: 1788082706390404734}
-  m_RendererFeatureMap: 07e89d7d491d4b00971d9a067f91ed3d0a7f5880db0061ce672b07e18f3850b5059cdf342ada997189bed7e73f9df315239a0265a9aac86ef596d235649dc1bf739118b3d81b58bb26fbdcfe8aad339df7851167b2160d3e7d8727809525b6395e4f2b195bf92ddc0fa58971e738734f53e2018648cd53ad747167514430be7a7e4e6b6fbf8bd018
+  - {fileID: 4096734141548477393}
+  m_RendererFeatureMap: 07e89d7d491d4b00971d9a067f91ed3d0a7f5880db0061ce672b07e18f3850b5739118b3d81b58bb26fbdcfe8aad339d5e4f2b195bf92ddc0fa58971e738734f53e2018648cd53ad059cdf342ada997189bed7e73f9df315239a0265a9aac86ef596d235649dc1bff7851167b2160d3e7d8727809525b639747167514430be7a7e4e6b6fbf8bd018d13b360eff85da38
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -352,7 +353,7 @@ MonoBehaviour:
     m_Bits: 447
   m_TransparentLayerMask:
     serializedVersion: 2
-    m_Bits: 28863
+    m_Bits: 94399
   m_DefaultStencilState:
     overrideStencilState: 0
     stencilReference: 0
@@ -381,7 +382,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     passTag: DrawFog
-    Event: 500
+    Event: 450
     filterSettings:
       RenderQueueType: 1
       LayerMask:
@@ -480,6 +481,48 @@ MonoBehaviour:
     overrideDepthState: 0
     depthCompareFunction: 4
     enableWrite: 1
+    stencilSettings:
+      overrideStencilState: 0
+      stencilReference: 0
+      stencilCompareFunction: 8
+      passOperation: 0
+      failOperation: 0
+      zFailOperation: 0
+    cameraSettings:
+      overrideCamera: 0
+      restoreCamera: 1
+      offset: {x: 0, y: 0, z: 0, w: 0}
+      cameraFieldOfView: 60
+--- !u!114 &4096734141548477393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
+  m_Name: DrawLineIndicatorBehind
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    passTag: DrawLineIndicatorBehind
+    Event: 500
+    filterSettings:
+      RenderQueueType: 1
+      LayerMask:
+        serializedVersion: 2
+        m_Bits: 65536
+      PassNames: []
+    overrideMaterial: {fileID: 2100000, guid: 1754c24ea47ce6d4f95ce6a11457c0af, type: 2}
+    overrideMaterialPassIndex: 0
+    overrideShader: {fileID: 0}
+    overrideShaderPassIndex: 0
+    overrideMode: 1
+    overrideDepthState: 1
+    depthCompareFunction: 5
+    enableWrite: 0
     stencilSettings:
       overrideStencilState: 0
       stencilReference: 0

@@ -19,6 +19,11 @@ namespace Player
             _availablePlayerIds.Enqueue(0);
             _availablePlayerIds.Enqueue(1);
 
+            Quaternion rotation = new Quaternion(1, 2, 3, 4);
+            Debug.Log(rotation);
+            Quaternion inverse = Quaternion.Inverse(rotation);
+            Debug.Log(inverse);
+
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
         }
