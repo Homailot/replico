@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BillBoard : MonoBehaviour
+public class VerticalBillboard : MonoBehaviour
 {
     [SerializeField] private bool _invert;
     

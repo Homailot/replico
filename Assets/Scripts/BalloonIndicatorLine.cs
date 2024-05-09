@@ -25,6 +25,7 @@ public class BalloonIndicatorLine : MonoBehaviour
     [SerializeField] private float maxIndicatorScale;
     [SerializeField] private RectTransform pinIndicator;
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private TextMeshProUGUI balloonText;
 
     private LineRenderer _lineRenderer;
     private Camera _camera;
@@ -74,6 +75,23 @@ public class BalloonIndicatorLine : MonoBehaviour
         pinIndicator.localPosition = pinIndicatorPosition;
         pinIndicator.localScale = pinScale;
         text.transform.localScale = textScale;
+    }
+    
+    public void SetBalloonId(string id)
+    {
+        balloonText.text = id;
+        text.text = id;
+    }
+    
+    public void DisablePinIndicator()
+    {
+        pinIndicator.gameObject.SetActive(false);
+        text.gameObject.SetActive(false);
+    }
+    
+    public void DisableLine()
+    {
+        _lineRenderer.enabled = false;
     }
 
     private float Cotangent(float angle)

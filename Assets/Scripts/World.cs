@@ -27,8 +27,10 @@ public class World : MonoBehaviour
         balloonPoint.localPosition = balloonPointId.position;
         balloonPoint.transform.SetParent(balloonParent);
         balloonPoint.transform.localPosition = balloonPointId.position;
-        var lineRenderer = balloon.transform.GetChild(0);
-        lineRenderer.gameObject.SetActive(false);
+        var lineObject = balloon.transform.GetChild(0);
+        var indicatorLine = lineObject.GetComponent<BalloonIndicatorLine>();
+        indicatorLine.DisableLine();
+        indicatorLine.DisablePinIndicator();
         _pointsOfInterest.Add(balloonPointId, balloonPoint);
         balloonMaterialUpdate.UpdateBalloonLayer(balloon, balloonPointId.playerId);
     }
