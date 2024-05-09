@@ -143,7 +143,7 @@ namespace Gestures
         {
             var balloonPoint = CreateBalloonPoint(position, playerId);
             balloonPoint.id = id;
-            balloonPoint.selectable = playerId == _playerId; 
+            balloonPoint.selectable = true; 
             
             var indicatorLine = balloonPoint.GetIndicatorLine();
             indicatorLine.SetBalloonId(id.ToString());
@@ -172,7 +172,7 @@ namespace Gestures
         {
             if (!_tempPoints.TryGetValue(new BalloonPointTempId(playerIdValue, point), out var balloonPoint)) return;
             balloonPoint.id = id;
-            balloonPoint.selectable = playerIdValue == _playerId;
+            balloonPoint.selectable = true; 
             
             var indicatorLine = balloonPoint.GetIndicatorLine();
             indicatorLine.SetBalloonId(id.ToString());
@@ -184,6 +184,13 @@ namespace Gestures
         
         public void OnPointRemoved(BalloonPoint balloonPoint)
         {
+            if (balloonPoint.playerId != _playerId)
+            {
+                var line = balloonPoint.GetIndicatorLine();
+                line.DisableLine();
+                line.DisablePinIndicator();
+                return;
+            }
             RemovePointOfInterest(balloonPoint.id, _playerId);
             pointRemoved.Invoke(new BalloonPointId(balloonPoint.playerId, balloonPoint.id));
         }
