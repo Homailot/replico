@@ -5,11 +5,13 @@ namespace Gestures
     public class BalloonPoint : MonoBehaviour, IReplicaPoint
     {
         [SerializeField] private GameObject highlightPrefab;
+        [SerializeField] private BalloonIndicatorLine indicatorLine;
         private bool _isHighlighted;
         private GameObject _instantiatedHighlight; 
         private bool _isIntersected;
         
         public ulong playerId;
+        public ulong id;
         public Vector3 localPosition;
         
         public bool selectable { get; set; }
@@ -60,6 +62,11 @@ namespace Gestures
         {
             if (!selectable) return;
             gestureDetector.OnPointRemoved(this);
+        }
+        
+        public BalloonIndicatorLine GetIndicatorLine()
+        {
+            return indicatorLine;
         }
         
         private void OnTriggerEnter(Collider other)

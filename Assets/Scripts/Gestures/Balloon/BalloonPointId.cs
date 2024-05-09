@@ -4,13 +4,13 @@ namespace Gestures.Balloon
 {
     public class BalloonPointId
     {
+        public ulong id { get; }
         public ulong playerId { get; }
-        public Vector3 position { get; }
 
-        public BalloonPointId(ulong playerId, Vector3 position)
+        public BalloonPointId(ulong playerId, ulong id)
         {
             this.playerId = playerId;
-            this.position = position;
+            this.id = id;
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Gestures;
+using Gestures.Balloon;
 using Replica;
 using Tables;
 using Unity.Netcode;
@@ -19,6 +20,55 @@ namespace Player
 {
     public class PlayerNetwork : NetworkBehaviour
     {
+        private struct PointOfInterestData : INetworkSerializable, IEquatable<PointOfInterestData>
+        {
+            private float _x, _y, _z;
+            private ulong _playerId;
+            private ulong _id;
+            
+            internal Vector3 position
+            {
+                get => new Vector3(_x, _y, _z);
+                set => (_x, _y, _z) = (value.x, value.y, value.z);
+            }
+            
+            internal ulong playerId
+            {
+                get => _playerId;
+                set => _playerId = value;
+            }
+            
+            internal ulong id
+            {
+                get => _id;
+                set => _id = value;
+            }
+            
+            public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+            {
+                serializer.SerializeValue(ref _x);
+                serializer.SerializeValue(ref _y);
+                serializer.SerializeValue(ref _z);
+                serializer.SerializeValue(ref _playerId);
+                serializer.SerializeValue(ref _id);
+            }
+
+            public bool Equals(PointOfInterestData other)
+            {
+                return _x.Equals(other._x) && _y.Equals(other._y) && _z.Equals(other._z) && _playerId == other._playerId && _id == other._id;
+            }
+
+            public override bool Equals(object obj)
+            {
+                return obj is PointOfInterestData other && Equals(other);
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(_x, _y, _z, _playerId, _id);
+            }
+        }
+        
         [Header("Local Player Components")]
         [SerializeField] private Camera playerCamera;
         [SerializeField] private Camera uiCamera;
@@ -35,7 +85,7 @@ namespace Player
         [SerializeField] private List<GameObject> playerModels;
         public GestureDetector gestureDetector;
 
-        private NetworkList<Vector3> _pointsOfInterest;
+        private NetworkList<PointOfInterestData> _pointsOfInterest;
         
         private XROrigin _xrOrigin;
         private readonly NetworkVariable<ulong> _playerId = new NetworkVariable<ulong>();
@@ -62,7 +112,7 @@ namespace Player
         {
             _xrOrigin = GetComponent<XROrigin>();
             playerTransform.xrOrigin = _xrOrigin;
-            _pointsOfInterest = new NetworkList<Vector3>(writePerm: NetworkVariableWritePermission.Owner);
+            _pointsOfInterest = new NetworkList<PointOfInterestData>(writePerm: NetworkVariableWritePermission.Server);
         }
 
         private void Start()
@@ -149,7 +199,7 @@ namespace Player
             {
                 foreach (var point in playerObject._pointsOfInterest)
                 {
-                    gestureDetector.AddPointOfInterest(point, playerObject.playerId);
+                    gestureDetector.AddPointOfInterest(point.position, playerObject.playerId, point.id);
                 }
             }
 
@@ -187,13 +237,13 @@ namespace Player
         private void OnPointSelected(Vector3 point)
         {
             if (!IsOwner) return;
-            _pointsOfInterest.Add(point);
+            // todo : call server rpc to add point of interest
         }
         
-        private void OnPointRemoved(Vector3 point)
+        private void OnPointRemoved(BalloonPointId point)
         {
             if (!IsOwner) return;
-            _pointsOfInterest.Remove(point);
+            // todo : call server rpc to remove point of interest
         }
 
         private void OnTeleportSelected(Vector3 point, Quaternion rotation)
@@ -210,7 +260,7 @@ namespace Player
             playerManager.MovePlayerToTableServerRpc(playerId, tableId);
         }
 
-        private void OnPointsOfInterestChanged(NetworkListEvent<Vector3> changeEvent)
+        private void OnPointsOfInterestChanged(NetworkListEvent<PointOfInterestData> changeEvent)
         {
             if (IsOwner) return;
             if (!IsClient) return;
@@ -219,31 +269,31 @@ namespace Player
             
             switch (changeEvent.Type)
             {
-                case NetworkListEvent<Vector3>.EventType.Add:
+                case NetworkListEvent<PointOfInterestData>.EventType.Add:
                     if (playerGestureDetector != null)
                     {
-                        playerGestureDetector.AddPointOfInterest(changeEvent.Value, playerId);
+                        playerGestureDetector.AddPointOfInterest(changeEvent.Value.position, playerId, changeEvent.Value.id);
                     }
                     break;
-                case NetworkListEvent<Vector3>.EventType.Insert:
+                case NetworkListEvent<PointOfInterestData>.EventType.Insert:
                     if (playerGestureDetector != null)
                     {
-                        playerGestureDetector.AddPointOfInterest(changeEvent.Value, playerId);
+                        playerGestureDetector.AddPointOfInterest(changeEvent.Value.position, playerId, changeEvent.Value.id);
                     }
                     break;
-                case NetworkListEvent<Vector3>.EventType.Remove:
+                case NetworkListEvent<PointOfInterestData>.EventType.Remove:
                     if (playerGestureDetector != null)
                     {
-                        playerGestureDetector.RemovePointOfInterest(changeEvent.Value, playerId);
+                        playerGestureDetector.RemovePointOfInterest(changeEvent.Value.id, playerId);
                     }
                     break;
-                case NetworkListEvent<Vector3>.EventType.RemoveAt:
+                case NetworkListEvent<PointOfInterestData>.EventType.RemoveAt:
                     break;
-                case NetworkListEvent<Vector3>.EventType.Value:
+                case NetworkListEvent<PointOfInterestData>.EventType.Value:
                     break;
-                case NetworkListEvent<Vector3>.EventType.Clear:
+                case NetworkListEvent<PointOfInterestData>.EventType.Clear:
                     break;
-                case NetworkListEvent<Vector3>.EventType.Full:
+                case NetworkListEvent<PointOfInterestData>.EventType.Full:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

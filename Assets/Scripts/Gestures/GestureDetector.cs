@@ -30,6 +30,7 @@ namespace Gestures
         [SerializeField] private Transform forward;
 
         private readonly IDictionary<BalloonPointId, BalloonPoint> _pointsOfInterest = new Dictionary<BalloonPointId, BalloonPoint>(new BalloonEqualityComparer());
+        private readonly IDictionary<BalloonPointTempId, BalloonPoint> _tempPoints = new Dictionary<BalloonPointTempId, BalloonPoint>(new BalloonTempEqualityComparer());
         private readonly IDictionary<ulong, TablePoint> _tablePoints = new Dictionary<ulong, TablePoint>();
         private World _world;
         private ulong _playerId = 0;
@@ -64,6 +65,11 @@ namespace Gestures
             foreach (var balloonPoint in _pointsOfInterest.Values)
             {
                 balloonPoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
+            }
+
+            foreach (var tempPoint in _tempPoints.Values)
+            {
+                tempPoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
             }
             
             foreach (var tablePoint in _tablePoints.Values)
@@ -121,6 +127,30 @@ namespace Gestures
         
         public void AddPointOfInterest(Vector3 position, ulong playerId)
         {
+            var balloonPoint = CreateBalloonPoint(position, playerId);
+            balloonPoint.id = ulong.MaxValue;
+            balloonPoint.selectable = false;
+            
+            var indicatorLine = balloonPoint.GetIndicatorLine();
+            indicatorLine.DisableLine();
+            indicatorLine.DisablePinIndicator();
+            
+            _tempPoints.Add(new BalloonPointTempId(balloonPoint.playerId, balloonPoint.localPosition), balloonPoint);
+            _world.AddPointOfInterest(new BalloonPointTempId(playerId, position));
+        }
+
+        public void AddPointOfInterest(Vector3 position, ulong playerId, ulong id)
+        {
+            var balloonPoint = CreateBalloonPoint(position, playerId);
+            balloonPoint.id = id;
+            balloonPoint.selectable = playerId == _playerId; 
+            
+            var indicatorLine = balloonPoint.GetIndicatorLine();
+            indicatorLine.SetBalloonId(id.ToString());
+        }
+        
+        private BalloonPoint CreateBalloonPoint(Vector3 position, ulong playerId)
+        {
             var balloonPointObject = Instantiate(balloonPointPrefab, balloon.position, Quaternion.identity);
             var balloonPoint = balloonPointObject.GetComponent<BalloonPoint>();
             balloonPointObject.GetComponent<BalloonScale>().enabled = false;
@@ -129,24 +159,24 @@ namespace Gestures
             balloonPoint.localPosition = position;
             balloonPoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
             
-            balloonPoint.selectable = playerId == _playerId;
-            _pointsOfInterest.Add(new BalloonPointId(balloonPoint.playerId, balloonPoint.localPosition), balloonPoint);
-            _world.AddPointOfInterest(new BalloonPointId(playerId, position));
+            var indicatorLine = balloonPoint.GetIndicatorLine();
+            indicatorLine.SetPlayerId(playerId);
+            
+            return balloonPoint;
         }
         
         public void OnPointRemoved(BalloonPoint balloonPoint)
         {
-            var localPosition = balloonPoint.localPosition; 
-            RemovePointOfInterest(localPosition, _playerId);
-            pointRemoved.Invoke(localPosition);
+            RemovePointOfInterest(balloonPoint.id, _playerId);
+            pointRemoved.Invoke(new BalloonPointId(balloonPoint.playerId, balloonPoint.id));
         }
         
-        public void RemovePointOfInterest(Vector3 position, ulong playerId)
+        public void RemovePointOfInterest(ulong balloonId, ulong playerId)
         {
             BalloonPoint balloonPoint = null;
             foreach (var point in _pointsOfInterest)
             {
-                if (point.Key.position == position && point.Key.playerId == playerId)
+                if (point.Key.id == balloonId && point.Key.playerId == playerId)
                 {
                     balloonPoint = point.Value;
                     break;
@@ -154,7 +184,7 @@ namespace Gestures
             }
 
             if (balloonPoint == null) return;
-            RemovePointOfInterest(new BalloonPointId(balloonPoint.playerId, balloonPoint.localPosition), balloonPoint);
+            RemovePointOfInterest(new BalloonPointId(balloonPoint.playerId, balloonId), balloonPoint);
         }
 
         public void RemovePointOfInterest(BalloonPointId balloonPointId, BalloonPoint balloonPoint)
@@ -235,7 +265,7 @@ namespace Gestures
             pointSelected.AddListener(action);
         }
         
-        public void AddPointRemovedListener(UnityAction<Vector3> action)
+        public void AddPointRemovedListener(UnityAction<BalloonPointId> action)
         {
             pointRemoved.AddListener(action);
         }
@@ -379,7 +409,7 @@ namespace Gestures
         public class PointSelected : UnityEvent<Vector3> { }
         
         [Serializable]
-        public class PointRemoved : UnityEvent<Vector3> { }
+        public class PointRemoved : UnityEvent<BalloonPointId> { }
 
         [Serializable]
         public class TeleportSelected : UnityEvent<Vector3, Quaternion>

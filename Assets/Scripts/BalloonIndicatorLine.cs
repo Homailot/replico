@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
 using Plane = UnityEngine.Plane;
 using Quaternion = UnityEngine.Quaternion;
@@ -26,6 +28,7 @@ public class BalloonIndicatorLine : MonoBehaviour
     [SerializeField] private RectTransform pinIndicator;
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private TextMeshProUGUI balloonText;
+    [SerializeField] private List<GameObject> pinPlayers;
 
     private LineRenderer _lineRenderer;
     private Camera _camera;
@@ -75,6 +78,14 @@ public class BalloonIndicatorLine : MonoBehaviour
         pinIndicator.localPosition = pinIndicatorPosition;
         pinIndicator.localScale = pinScale;
         text.transform.localScale = textScale;
+    }
+
+    public void SetPlayerId(ulong id)
+    {
+        for (var i = 0; i < pinPlayers.Count; i++)
+        {
+            pinPlayers[i].SetActive(i == (int)(id % (ulong)pinPlayers.Count));
+        }
     }
     
     public void SetBalloonId(string id)

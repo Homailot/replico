@@ -13,10 +13,12 @@ public class World : MonoBehaviour
     
     private readonly IDictionary<BalloonPointId, BalloonPoint> _pointsOfInterest =
         new Dictionary<BalloonPointId, BalloonPoint>(new BalloonEqualityComparer());
+    private readonly IDictionary<BalloonPointTempId, BalloonPoint> _tempPointsOfInterest =
+        new Dictionary<BalloonPointTempId, BalloonPoint>(new BalloonTempEqualityComparer()); 
     
-    public void AddPointOfInterest(BalloonPointId balloonPointId)
+    public void AddPointOfInterest(BalloonPointTempId balloonPointId)
     {
-        if (_pointsOfInterest.ContainsKey(balloonPointId))
+        if (_tempPointsOfInterest.ContainsKey(balloonPointId))
         {
             return;
         }
@@ -27,11 +29,12 @@ public class World : MonoBehaviour
         balloonPoint.localPosition = balloonPointId.position;
         balloonPoint.transform.SetParent(balloonParent);
         balloonPoint.transform.localPosition = balloonPointId.position;
-        var lineObject = balloon.transform.GetChild(0);
-        var indicatorLine = lineObject.GetComponent<BalloonIndicatorLine>();
+
+        var indicatorLine = balloonPoint.GetIndicatorLine();
         indicatorLine.DisableLine();
         indicatorLine.DisablePinIndicator();
-        _pointsOfInterest.Add(balloonPointId, balloonPoint);
+        
+        _tempPointsOfInterest.Add(balloonPointId, balloonPoint);
         balloonMaterialUpdate.UpdateBalloonLayer(balloon, balloonPointId.playerId);
     }
     
