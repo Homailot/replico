@@ -147,6 +147,9 @@ namespace Gestures
             
             var indicatorLine = balloonPoint.GetIndicatorLine();
             indicatorLine.SetBalloonId(id.ToString());
+            
+            _pointsOfInterest.Add(new BalloonPointId(playerId, id), balloonPoint);
+            _world.AddPointOfInterest(new BalloonPointId(playerId, id), position);
         }
         
         private BalloonPoint CreateBalloonPoint(Vector3 position, ulong playerId)
@@ -163,6 +166,20 @@ namespace Gestures
             indicatorLine.SetPlayerId(playerId);
             
             return balloonPoint;
+        }
+        
+        public void UpdateBalloonId(ulong playerIdValue, Vector3 point, ulong id)
+        {
+            if (!_tempPoints.TryGetValue(new BalloonPointTempId(playerIdValue, point), out var balloonPoint)) return;
+            balloonPoint.id = id;
+            balloonPoint.selectable = playerIdValue == _playerId;
+            
+            var indicatorLine = balloonPoint.GetIndicatorLine();
+            indicatorLine.SetBalloonId(id.ToString());
+            
+            _pointsOfInterest.Add(new BalloonPointId(playerIdValue, id), balloonPoint);
+            _tempPoints.Remove(new BalloonPointTempId(playerIdValue, point));
+            _world.UpdateBalloonId(playerIdValue, point, id);
         }
         
         public void OnPointRemoved(BalloonPoint balloonPoint)
@@ -418,5 +435,7 @@ namespace Gestures
         
         [Serializable]
         public class TableSelected : UnityEvent<ulong> {}
+
+
     }
 }

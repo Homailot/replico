@@ -10,6 +10,7 @@ namespace Player
     {
         [SerializeField] private TableManager tableManager;
         
+        private ulong _currentBalloonId = 0;
         private readonly Queue<ulong> _availablePlayerIds = new Queue<ulong>();
         private readonly Dictionary<ulong, ulong> _playerIdToClientId = new Dictionary<ulong, ulong>();
         private readonly Dictionary<ulong, ulong> _clientIdToPlayerId = new Dictionary<ulong, ulong>();
@@ -18,11 +19,6 @@ namespace Player
         {
             _availablePlayerIds.Enqueue(0);
             _availablePlayerIds.Enqueue(1);
-
-            Quaternion rotation = new Quaternion(1, 2, 3, 4);
-            Debug.Log(rotation);
-            Quaternion inverse = Quaternion.Inverse(rotation);
-            Debug.Log(inverse);
 
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
@@ -45,6 +41,13 @@ namespace Player
         {
             var clientId = GetClientId(playerId);
             tableManager.MovePlayerToTable(playerId, clientId, tableId);
+        }
+
+        public ulong IncrementAndGetBalloonId()
+        {
+            if (!NetworkManager.Singleton.IsServer) return 0;
+            _currentBalloonId++;
+            return _currentBalloonId;
         }
 
         private void OnClientConnected(ulong clientId)

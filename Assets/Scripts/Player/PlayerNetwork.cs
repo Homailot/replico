@@ -105,8 +105,8 @@ namespace Player
                 _playerId.Value = value;  
             }
         }
-        
-        public PlayerManager playerManager { get; set; }
+
+        private PlayerManager playerManager { get; set; }
 
         private void Awake()
         {
@@ -237,13 +237,38 @@ namespace Player
         private void OnPointSelected(Vector3 point)
         {
             if (!IsOwner) return;
-            // todo : call server rpc to add point of interest
+            CreatePointOfInterestRpc(point); 
+        }
+
+        [Rpc(SendTo.Server)]
+        private void CreatePointOfInterestRpc(Vector3 point)
+        {
+            var id = playerManager.IncrementAndGetBalloonId();
+            _pointsOfInterest.Add(new PointOfInterestData
+            { 
+                position = point, 
+                playerId = playerId, 
+                id = id
+            });
         }
         
         private void OnPointRemoved(BalloonPointId point)
         {
             if (!IsOwner) return;
-            // todo : call server rpc to remove point of interest
+            RemovePointOfInterestRpc(point.id, playerId);
+        }
+        
+        [Rpc(SendTo.Server)]
+        private void RemovePointOfInterestRpc(ulong id, ulong playerId)
+        {
+            foreach (var pointOfInterest in _pointsOfInterest)
+            {
+                if (pointOfInterest.id == id && pointOfInterest.playerId == playerId)
+                {
+                    _pointsOfInterest.Remove(pointOfInterest);
+                    return;
+                }
+            }
         }
 
         private void OnTeleportSelected(Vector3 point, Quaternion rotation)
@@ -262,7 +287,21 @@ namespace Player
 
         private void OnPointsOfInterestChanged(NetworkListEvent<PointOfInterestData> changeEvent)
         {
-            if (IsOwner) return;
+            if (IsOwner)
+            {
+                switch (changeEvent.Type)
+                {
+                    case NetworkListEvent<PointOfInterestData>.EventType.Add:
+                    case NetworkListEvent<PointOfInterestData>.EventType.Insert:
+                        gestureDetector.UpdateBalloonId(_playerId.Value, changeEvent.Value.position, changeEvent.Value.id);
+                        break;
+                    case NetworkListEvent<PointOfInterestData>.EventType.Remove:
+                        gestureDetector.RemovePointOfInterest(changeEvent.Value.id, playerId);
+                        break;
+                }
+
+                return;
+            }
             if (!IsClient) return;
             var player = NetworkManager.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
             var playerGestureDetector = player.gestureDetector;

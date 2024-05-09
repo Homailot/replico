@@ -37,6 +37,43 @@ public class World : MonoBehaviour
         _tempPointsOfInterest.Add(balloonPointId, balloonPoint);
         balloonMaterialUpdate.UpdateBalloonLayer(balloon, balloonPointId.playerId);
     }
+
+    public void AddPointOfInterest(BalloonPointId id, Vector3 position)
+    {
+         if (_pointsOfInterest.ContainsKey(id))
+         {
+             return;
+         }
+         
+         var balloon = Instantiate(balloonPrefab, balloonParent);
+         var balloonPoint = balloon.GetComponent<BalloonPoint>();
+         balloonPoint.playerId = id.playerId;
+         balloonPoint.localPosition = position;
+         balloonPoint.id = id.id;
+         balloonPoint.transform.SetParent(balloonParent);
+         balloonPoint.transform.localPosition = position;
+ 
+         var indicatorLine = balloonPoint.GetIndicatorLine();
+         indicatorLine.DisableLine();
+         indicatorLine.DisablePinIndicator();
+         indicatorLine.SetBalloonId(id.id.ToString());
+         
+         _pointsOfInterest.Add(id, balloonPoint);
+         balloonMaterialUpdate.UpdateBalloonLayer(balloon, id.playerId);       
+    }
+    
+    public void UpdateBalloonId(ulong playerIdValue, Vector3 point, ulong id)
+    {
+        if (!_tempPointsOfInterest.TryGetValue(new BalloonPointTempId(playerIdValue, point), out var balloonPoint)) return;
+        balloonPoint.id = id;
+        balloonPoint.selectable = false;
+        
+        var indicatorLine = balloonPoint.GetIndicatorLine();
+        indicatorLine.SetBalloonId(id.ToString());
+        
+        _pointsOfInterest.Add(new BalloonPointId(playerIdValue, id), balloonPoint);
+        _tempPointsOfInterest.Remove(new BalloonPointTempId(playerIdValue, point));
+    }
     
     public void RemovePointOfInterest(BalloonPointId balloonPointId)
     {
