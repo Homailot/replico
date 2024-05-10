@@ -22,13 +22,8 @@ namespace Player
             xrOrigin.MatchOriginUpCameraForward(attachPoint.up, targetForward);
             
             var trackerToOrigin = playerCamera.position - tracker.position;
-            Debug.Log($"Tracker to origin: {trackerToOrigin}");
-            //var trackerToOriginTransformed = attachPoint.InverseTransformDirection(trackerToOrigin);
-            //Debug.Log($"Tracker to origin transformed: {trackerToOriginTransformed}");
             var position = attachPoint.position;
-            Debug.Log($"Position: {position}");
             xrOrigin.MoveCameraToWorldLocation(position + trackerToOrigin);
-            Debug.Log($"Player transform position: {transform.position}");
         }
         
         protected override bool OnIsServerAuthoritative()

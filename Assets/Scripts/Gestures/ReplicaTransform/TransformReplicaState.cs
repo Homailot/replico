@@ -24,7 +24,6 @@ namespace Gestures.ReplicaTransform
             _gestureConfiguration = gestureConfiguration;
             _handDetector = new HandDetector(2, _gestureConfiguration.handDistanceThreshold);
             _replicaTransformer = replicaTransformer;
-            Debug.Log("in normal");
         }
 
         public void OnUpdate()

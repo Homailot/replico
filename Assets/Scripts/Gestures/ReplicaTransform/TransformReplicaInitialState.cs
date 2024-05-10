@@ -12,7 +12,6 @@ namespace Gestures.ReplicaTransform
         {
             _gestureDetector = gestureDetector;
             _gestureConfiguration = gestureConfiguration;
-            Debug.Log("in initial");
         }
         
         public void OnUpdate()
