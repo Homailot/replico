@@ -637,6 +637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightPrefab: {fileID: 5550505244196777524, guid: e64ecd44f49b0d34493898138f126bfa, type: 3}
   indicatorLine: {fileID: 2399670293578396531}
+  canvas: {fileID: 7865717938411756285}
   playerId: 0
   id: 0
   localPosition: {x: 0, y: 0, z: 0}
@@ -924,7 +925,7 @@ MonoBehaviour:
   maxHeight: 0.4
   minDistance: 0.5
   maxDistance: 1.2
-  edgeScreenSpaceMargin: 0.15
+  edgeScreenSpaceMargin: 0.35
   pinIndicatorMargin: 0.035
   minIndicatorScale: 0.03
   maxIndicatorScale: 0.1

@@ -76,6 +76,35 @@ namespace Utils
             balloonPoint.SetHighlight(playerId == 0 ? balloon1Highlight : balloon2Highlight);
         }
 
+        public void UpdateBalloonWorld(GameObject balloonGameObject, ulong playerId)
+        {
+            balloonGameObject.layer = LayerMask.NameToLayer("Default");
+            balloonGameObject.GetComponent<Renderer>().material = playerId switch
+            {
+                0 => balloon1Material,
+                1 => balloon2Material,
+                _ => balloonNoneMaterial
+            };
+            
+            var meshFilter = balloonGameObject.GetComponent<MeshFilter>();
+                        
+            if (meshFilter == null) return;
+            
+            meshFilter.mesh = playerId switch
+            {
+                0 => balloon1Mesh,
+                1 => balloon2Mesh,
+                _ => meshFilter.mesh
+            };
+            
+            var balloonPoint = balloonGameObject.GetComponent<BalloonPoint>();
+            if (balloonPoint == null) return;
+            var canvas = balloonPoint.GetCanvas();
+            if (canvas == null) return;
+
+            canvas.gameObject.layer = LayerMask.NameToLayer("Default");
+        }
+
         public void SetBalloonProgress(float progress)
         {
             balloonNoneMaterial.SetFloat(FlashProgress, progress);

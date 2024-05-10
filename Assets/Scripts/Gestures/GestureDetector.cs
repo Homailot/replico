@@ -132,8 +132,9 @@ namespace Gestures
             balloonPoint.selectable = false;
             
             var indicatorLine = balloonPoint.GetIndicatorLine();
-            indicatorLine.DisableLine();
-            indicatorLine.DisablePinIndicator();
+            // TODO: uncomment
+            //indicatorLine.DisableLine();
+            //indicatorLine.DisablePinIndicator();
             
             _tempPoints.Add(new BalloonPointTempId(balloonPoint.playerId, balloonPoint.localPosition), balloonPoint);
             _world.AddPointOfInterest(new BalloonPointTempId(playerId, position));

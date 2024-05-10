@@ -6,6 +6,7 @@ namespace Gestures
     {
         [SerializeField] private GameObject highlightPrefab;
         [SerializeField] private BalloonIndicatorLine indicatorLine;
+        [SerializeField] private Canvas canvas;
         private bool _isHighlighted;
         private GameObject _instantiatedHighlight; 
         private bool _isIntersected;
@@ -67,6 +68,11 @@ namespace Gestures
         public BalloonIndicatorLine GetIndicatorLine()
         {
             return indicatorLine;
+        }
+        
+        public Canvas GetCanvas()
+        {
+            return canvas;
         }
         
         private void OnTriggerEnter(Collider other)

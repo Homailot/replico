@@ -35,7 +35,7 @@ public class World : MonoBehaviour
         indicatorLine.DisablePinIndicator();
         
         _tempPointsOfInterest.Add(balloonPointId, balloonPoint);
-        balloonMaterialUpdate.UpdateBalloonLayer(balloon, balloonPointId.playerId);
+        balloonMaterialUpdate.UpdateBalloonWorld(balloon, balloonPointId.playerId);
     }
 
     public void AddPointOfInterest(BalloonPointId id, Vector3 position)
@@ -59,7 +59,7 @@ public class World : MonoBehaviour
          indicatorLine.SetBalloonId(id.id.ToString());
          
          _pointsOfInterest.Add(id, balloonPoint);
-         balloonMaterialUpdate.UpdateBalloonLayer(balloon, id.playerId);       
+         balloonMaterialUpdate.UpdateBalloonWorld(balloon, id.playerId);       
     }
     
     public void UpdateBalloonId(ulong playerIdValue, Vector3 point, ulong id)
