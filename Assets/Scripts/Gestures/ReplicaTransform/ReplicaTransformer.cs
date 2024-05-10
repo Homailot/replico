@@ -114,6 +114,8 @@ namespace Gestures.ReplicaTransform
                     );
                 var transformedMovement = _gestureConfiguration.frame.TransformVector(movement);
                 _gestureConfiguration.movementTarget.position += transformedMovement;
+                
+                _gestureConfiguration.logger.UpdateReplicaTransform(_gestureConfiguration.movementTarget.localPosition, _gestureConfiguration.movementTarget.localRotation, _gestureConfiguration.movementTarget.localScale);
             }
            
             _lastFingerPositions.Clear();

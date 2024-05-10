@@ -13,6 +13,7 @@ namespace Gestures
         public float swipeGestureTimeDetection;
         public int swipeFingers;
         [FormerlySerializedAs("replica")] public Replica.ReplicaController replicaController;
+        public Logger logger;
         public TouchToPosition touchToPosition;
         public Transform frame;
         

@@ -105,6 +105,11 @@ namespace Gestures
             gestureConfiguration.replicaController.SetObjectToReplicate(world.gameObject);
         }
 
+        public void SetLogger(Logger logger)
+        {
+            gestureConfiguration.logger = logger;
+        }
+
         public void OnTableSelected(ulong tableId)
         {
             tableSelected.Invoke(tableId); 
@@ -133,8 +138,8 @@ namespace Gestures
             
             var indicatorLine = balloonPoint.GetIndicatorLine();
             // TODO: uncomment
-            //indicatorLine.DisableLine();
-            //indicatorLine.DisablePinIndicator();
+            indicatorLine.DisableLine();
+            indicatorLine.DisablePinIndicator();
             
             _tempPoints.Add(new BalloonPointTempId(balloonPoint.playerId, balloonPoint.localPosition), balloonPoint);
             _world.AddPointOfInterest(new BalloonPointTempId(playerId, position));

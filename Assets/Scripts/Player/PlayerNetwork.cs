@@ -194,6 +194,9 @@ namespace Player
             gestureDetector.SetWorld(world);
             gestureDetector.Init();
             gestureDetector.SetPlayerId(playerId);
+
+            var logger = GameObject.FindWithTag("Logger");
+            gestureDetector.SetLogger(logger.GetComponent<Logger>());
             
             foreach (var playerObject in FindObjectsByType<PlayerNetwork>(FindObjectsSortMode.None))
             {

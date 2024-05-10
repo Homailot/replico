@@ -24,6 +24,13 @@ public class Logger : MonoBehaviour
         public Quaternion Rotation;
     }
 
+    private enum GestureType
+    {
+        Transform,
+        VerticalTransform,
+        BalloonSelection
+    }
+
     [SerializeField] private string outputFilePath = "Assets/Resources/Logs/";
     private Camera _camera;
     
@@ -43,7 +50,7 @@ public class Logger : MonoBehaviour
     private float _replicaRotationAngle = 0;
     private float _replicaScaleFactor = 0;
     
-    private IDictionary<float, ReplicaTransform> _replicaTransforms = new Dictionary<float, ReplicaTransform>();
+    private readonly IDictionary<float, ReplicaTransform> _replicaTransforms = new Dictionary<float, ReplicaTransform>();
     
     private float _timeSpentInBalloonSelection = 0;
     private float _balloonSelectionStartTime = 0;
@@ -54,6 +61,8 @@ public class Logger : MonoBehaviour
     
     private ulong _uniqueTouchCount = 0;
     private float _fingerMovement = 0;
+    
+    private readonly IDictionary<float, GestureType> _gestures = new Dictionary<float, GestureType>();
     
     private readonly IDictionary<Finger, Vector2> _lastFingerPositions = new Dictionary<Finger, Vector2>(new FingerEqualityComparer());
     private readonly IDictionary<float, IDictionary<int, Vector2>> _fingerPositions = new Dictionary<float, IDictionary<int, Vector2>>();
@@ -155,7 +164,53 @@ public class Logger : MonoBehaviour
         }
         playerTransformWriter.Close();
         
+        var replicaTransformWriter = new StreamWriter($"{outputTaskPath}replica_transforms.csv", true);
+        replicaTransformWriter.WriteLine("Time;PositionX;PositionY;PositionZ;RotationX;RotationY;RotationZ;RotationW;ScaleX;ScaleY;ScaleZ");
+        foreach (var replicaTransform in _replicaTransforms)
+        {
+            replicaTransformWriter.WriteLine($"{replicaTransform.Key};{replicaTransform.Value.Position.x};{replicaTransform.Value.Position.y};{replicaTransform.Value.Position.z};{replicaTransform.Value.Rotation.x};{replicaTransform.Value.Rotation.y};{replicaTransform.Value.Rotation.z};{replicaTransform.Value.Rotation.w};{replicaTransform.Value.Scale.x};{replicaTransform.Value.Scale.y};{replicaTransform.Value.Scale.z}");
+        }
+        replicaTransformWriter.Close();
+        
+        var gestureDetectionWriter = new StreamWriter($"{outputTaskPath}gesture_detection.csv", true);
+        gestureDetectionWriter.WriteLine("Time;DetectedGesture");
+        foreach (var gesture in _gestures)
+        {
+            gestureDetectionWriter.WriteLine($"{gesture.Key};{gesture.Value}");
+        }
+        gestureDetectionWriter.Close();
+        
         _taskId = 0;
+    }
+    
+    public void UpdateReplicaTransform(Vector3 position, Quaternion rotation, Vector3 scale)
+    {
+        if (_taskId == 0) return;
+        
+        var replicaTransform = new ReplicaTransform
+        {
+            Position = position,
+            Rotation = rotation,
+            Scale = scale
+        };
+        
+        if (_replicaTransforms.Count >= 1)
+        {
+            var previousReplicaTransform = _replicaTransforms.ElementAt(_replicaTransforms.Count - 1).Value;
+            _replicaTranslationDistance += (previousReplicaTransform.Position - position).magnitude;
+            _replicaRotationAngle += Quaternion.Angle(previousReplicaTransform.Rotation, rotation);
+            _replicaScaleFactor += (previousReplicaTransform.Scale - scale).magnitude;
+            Debug.Log($"Distance: {_replicaTranslationDistance}, Angle: {_replicaRotationAngle}, Scale: {_replicaScaleFactor}");
+            
+            if (previousReplicaTransform.Position != position || previousReplicaTransform.Rotation != rotation || previousReplicaTransform.Scale != scale)
+            {
+                _replicaTransforms.Add(Time.time - _taskStartTime, replicaTransform);
+            }
+        }
+        else
+        {
+            _replicaTransforms.Add(Time.time - _taskStartTime, replicaTransform);
+        }
     }
 
     private void Update()
@@ -222,7 +277,6 @@ public class Logger : MonoBehaviour
             var previousPlayerTransform = _playerTransforms.ElementAt(_playerTransforms.Count - 2).Value;
             _headRotation += Quaternion.Angle(previousPlayerTransform.Rotation, playerTransform.rotation);
             _headMovement += (previousPlayerTransform.Position - playerTransform.position).magnitude;
-            Debug.Log($"Head rotation: {_headRotation}, head movement: {_headMovement}");
         }
     }
 
