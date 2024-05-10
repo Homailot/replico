@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Player;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Utils;
@@ -16,13 +18,14 @@ public class Logger : MonoBehaviour
         public Vector3 Scale;
     }
 
-    private struct PlayerTransform
+    private struct PlayerTransformData
     {
         public Vector3 Position;
         public Quaternion Rotation;
     }
 
     [SerializeField] private string outputFilePath = "Assets/Resources/Logs/";
+    private Camera _camera;
     
     private ulong _taskId = 0;
     private ulong _playerId = 0;
@@ -57,7 +60,7 @@ public class Logger : MonoBehaviour
     
     private float _headRotation = 0;
     private float _headMovement = 0;
-    private readonly IDictionary<float, PlayerTransform> _playerTransforms = new Dictionary<float, PlayerTransform>();
+    private readonly IDictionary<float, PlayerTransformData> _playerTransforms = new Dictionary<float, PlayerTransformData>();
     
     private string _finalDirectoryPath;
 
@@ -68,12 +71,8 @@ public class Logger : MonoBehaviour
         
         var outputAveragePath = $"{_finalDirectoryPath}all.csv";
         var writer = new StreamWriter(outputAveragePath, true);
-        writer.WriteLine("TaskId;TaskDuration;TimeSpentInTransforms;TransformCount;TimeSpentInVerticalTransforms;VerticalTransformCount;ReplicaTranslationDistance;ReplicaRotationAngle;ReplicaScaleFactor;TimeSpentInBalloonSelection;BalloonSelectionCount;PointCreationCount;TeleportationCount;UniqueTouchCount;FingerMovement;HeadRotation;HeadMovement;PlayerId");
-    }
-    
-    public void SetPlayerId(ulong playerId)
-    {
-        _playerId = playerId;
+        writer.WriteLine("TaskId;TaskDuration;TaskSuccess;TimeSpentInTransforms;TransformCount;TimeSpentInVerticalTransforms;VerticalTransformCount;ReplicaTranslationDistance;ReplicaRotationAngle;ReplicaScaleFactor;TimeSpentInBalloonSelection;BalloonSelectionCount;PointCreationCount;TeleportationCount;UniqueTouchCount;FingerMovement;HeadRotation;HeadMovement;PlayerId");
+        writer.Close();
     }
     
     public void StartTask()
@@ -106,6 +105,10 @@ public class Logger : MonoBehaviour
         _fingerMovement = 0;
         
         _lastFingerPositions.Clear();
+        _camera = Camera.main;
+        
+        var playerNetwork = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
+        _playerId = playerNetwork.playerId;
         Debug.Log($"Task {_taskId} started.");
     }
     
@@ -125,7 +128,7 @@ public class Logger : MonoBehaviour
         System.IO.Directory.CreateDirectory(outputTaskPath);
         
         var writer = new StreamWriter(outputAveragePath, true);
-        writer.WriteLine($"{_taskId};{taskEndTime - _taskStartTime};{_timeSpentInTransforms};{_transformCount};{_timeSpentInVerticalTransforms};{_verticalTransformCount};{_replicaTranslationDistance};{_replicaRotationAngle};{_replicaScaleFactor};{_timeSpentInBalloonSelection};{_balloonSelectionCount};{_pointCreationCount};{_teleportationCount};{_uniqueTouchCount};{_fingerMovement};{_headRotation};{_headMovement};{_playerId}");
+        writer.WriteLine($"{_taskId};{taskEndTime - _taskStartTime};{success};{_timeSpentInTransforms};{_transformCount};{_timeSpentInVerticalTransforms};{_verticalTransformCount};{_replicaTranslationDistance};{_replicaRotationAngle};{_replicaScaleFactor};{_timeSpentInBalloonSelection};{_balloonSelectionCount};{_pointCreationCount};{_teleportationCount};{_uniqueTouchCount};{_fingerMovement};{_headRotation};{_headMovement};{_playerId}");
         writer.Close();
         
         var taskWriter = new StreamWriter($"{outputTaskPath}finger_movements.csv", true);
@@ -143,6 +146,14 @@ public class Logger : MonoBehaviour
             taskWriter.WriteLine();
         }
         taskWriter.Close();
+        
+        var playerTransformWriter = new StreamWriter($"{outputTaskPath}player_transforms.csv", true);
+        playerTransformWriter.WriteLine("Time;PositionX;PositionY;PositionZ;RotationX;RotationY;RotationZ;RotationW");
+        foreach (var playerTransform in _playerTransforms)
+        {
+            playerTransformWriter.WriteLine($"{playerTransform.Key};{playerTransform.Value.Position.x};{playerTransform.Value.Position.y};{playerTransform.Value.Position.z};{playerTransform.Value.Rotation.x};{playerTransform.Value.Rotation.y};{playerTransform.Value.Rotation.z};{playerTransform.Value.Rotation.w}");
+        }
+        playerTransformWriter.Close();
         
         _taskId = 0;
     }
@@ -192,6 +203,27 @@ public class Logger : MonoBehaviour
         {
             _lastFingerPositions.Add(finger, finger.screenPosition);
         } 
+    }
+
+    private void LateUpdate()
+    {
+        if (_taskId == 0) return;
+        
+        var playerTransform = _camera.transform;
+        var playerTransformData = new PlayerTransformData
+        {
+            Position = playerTransform.position,
+            Rotation = playerTransform.rotation
+        };
+        _playerTransforms.Add(Time.time - _taskStartTime, playerTransformData);
+        
+        if (_playerTransforms.Count > 1)
+        {
+            var previousPlayerTransform = _playerTransforms.ElementAt(_playerTransforms.Count - 2).Value;
+            _headRotation += Quaternion.Angle(previousPlayerTransform.Rotation, playerTransform.rotation);
+            _headMovement += (previousPlayerTransform.Position - playerTransform.position).magnitude;
+            Debug.Log($"Head rotation: {_headRotation}, head movement: {_headMovement}");
+        }
     }
 
     public bool startTask;
