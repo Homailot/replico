@@ -86,9 +86,11 @@ namespace Gestures.Balloon
                     }
                     else
                     {
+                        _gestureConfiguration.logger.PointCreation();
                         _gestureDetector.OnPointSelected();
                     }
                     
+                    _gestureConfiguration.logger.EndBalloonSelection();
                     _gestureDetector.ResetBalloonPlanePositionsAndHeight(); 
                     _gestureDetector.DisableBalloon();
                     _gestureDetector.SwitchState(new BalloonSelectedState(_gestureDetector, _gestureConfiguration));
@@ -97,6 +99,7 @@ namespace Gestures.Balloon
 
                 if (timeDifference < _gestureConfiguration.balloonTeleportTime)
                 {
+                    _gestureConfiguration.logger.EndBalloonSelection();
                     _gestureDetector.ResetBalloonPlanePositionsAndHeight();
                     _gestureDetector.DisableBalloon();
                     _gestureDetector.SwitchState(new BalloonSelectedState(_gestureDetector, _gestureConfiguration));
@@ -115,6 +118,8 @@ namespace Gestures.Balloon
 
         private void Teleport()
         {
+            _gestureConfiguration.logger.EndBalloonSelection();
+            _gestureConfiguration.logger.Teleportation();
             _gestureDetector.ResetBalloonPlanePositionsAndHeight();
             _gestureDetector.OnTeleportSelected();
             _gestureDetector.DisableBalloon();

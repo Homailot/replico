@@ -116,6 +116,7 @@ namespace Gestures.ReplicaTransform
 
             if (DetectVerticalGesture(_hands))
             {
+                _gestureConfiguration.logger.StartVerticalTransform();
                 _gestureDetector.OnGestureDetected();
                 _gestureDetector.SwitchState(new TransformReplicaVerticalState(_gestureDetector, _gestureConfiguration, _handDetector, _hands));
                 return;
@@ -123,6 +124,8 @@ namespace Gestures.ReplicaTransform
             
             if (DetectBalloonGesture(_hands))
             {
+                _gestureConfiguration.logger.EndTransform();
+                _gestureConfiguration.logger.StartBalloonSelection();
                 _gestureDetector.OnGestureDetected();
                 _gestureDetector.UpdateBalloonPosition(_hands.GetFirstHandCenter());
                 _gestureDetector.EnableBalloon();
@@ -136,7 +139,15 @@ namespace Gestures.ReplicaTransform
             
             if (_hands.IsEmpty() || _hands.firstHand.Count < 1 || _hands.secondHand.Count < 1)
             {
-                _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
+                if (_hands.IsEmpty())
+                {
+                    _gestureConfiguration.logger.EndTransform();
+                    _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
+                }
+                else
+                {
+                    _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _replicaTransformer, _gestureConfiguration));
+                }
             }
         }
     }

@@ -30,12 +30,14 @@ namespace Gestures.ReplicaTransform
         {
             if (Touch.activeFingers.Count == 0)
             {
+                _gestureConfiguration.logger.EndTransform();
                 _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
                 return;
             }
             
             if (Touch.activeFingers.Count == _gestureConfiguration.swipeFingers && _timeSinceLastTouch <= _gestureConfiguration.swipeGestureTimeDetection)
             {
+                _gestureConfiguration.logger.EndTransform();
                 _gestureConfiguration.replicaController.SetMovementTarget(null);
                 _gestureDetector.SwitchState(new SwipeDownReplicaGesture(_gestureDetector, _gestureConfiguration));
                 return;

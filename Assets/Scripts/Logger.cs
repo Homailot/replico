@@ -13,6 +13,7 @@ public class Logger : MonoBehaviour
 {
     private struct ReplicaTransform
     {
+        public float Time;
         public Vector3 Position;
         public Quaternion Rotation;
         public Vector3 Scale;
@@ -20,8 +21,16 @@ public class Logger : MonoBehaviour
 
     private struct PlayerTransformData
     {
+        public float Time;
         public Vector3 Position;
         public Quaternion Rotation;
+    }
+
+    private struct GestureData
+    {
+        public float Key;
+        public GestureType GestureType;
+        public GestureState GestureState;
     }
 
     private enum GestureType
@@ -31,52 +40,68 @@ public class Logger : MonoBehaviour
         BalloonSelection
     }
 
+    private enum GestureState
+    {
+        On,
+        Off
+    }
+
     [SerializeField] private string outputFilePath = "Assets/Resources/Logs/";
     private Camera _camera;
+
+    private ulong _taskId;
+    private ulong _currentTaskId;
+    private ulong _playerId;
+    private float _taskStartTime; 
     
-    private ulong _taskId = 0;
-    private ulong _playerId = 0;
-    private float _taskStartTime = 0; 
+    private float _timeSpentInTransforms;
+    private float _transformStartTime;
+    private ulong _transformCount;
     
-    private float _timeSpentInTransforms = 0;
-    private float _transformStartTime = 0;
-    private ulong _transformCount = 0;
+    private float _timeSpentInVerticalTransforms;
+    private float _verticalTransformStartTime;
+    private ulong _verticalTransformCount;
     
-    private float _timeSpentInVerticalTransforms = 0;
-    private float _verticalTransformStartTime = 0;
-    private ulong _verticalTransformCount = 0;
+    private float _replicaTranslationDistance;
+    private float _replicaRotationAngle;
+    private float _replicaScaleFactor;
     
-    private float _replicaTranslationDistance = 0;
-    private float _replicaRotationAngle = 0;
-    private float _replicaScaleFactor = 0;
+    private readonly IList<ReplicaTransform> _replicaTransforms = new List<ReplicaTransform>();
     
-    private readonly IDictionary<float, ReplicaTransform> _replicaTransforms = new Dictionary<float, ReplicaTransform>();
+    private float _timeSpentInBalloonSelection;
+    private float _balloonSelectionStartTime;
+    private ulong _balloonSelectionCount;
     
-    private float _timeSpentInBalloonSelection = 0;
-    private float _balloonSelectionStartTime = 0;
-    private ulong _balloonSelectionCount = 0;
+    private ulong _pointCreationCount;
+    private ulong _teleportationCount;
+    // TODO
+    private ulong _tableJoinCount; 
+    private ulong _pointDeletionCount = 0;
+    private ulong _pointAcknowledgementCount = 0; 
+        
+    private ulong _uniqueTouchCount;
+    private float _fingerMovement;
     
-    private ulong _pointCreationCount = 0;
-    private ulong _teleportationCount = 0;
-    
-    private ulong _uniqueTouchCount = 0;
-    private float _fingerMovement = 0;
-    
-    private readonly IDictionary<float, GestureType> _gestures = new Dictionary<float, GestureType>();
+    private readonly IList<GestureData> _gestures = new List<GestureData>();
     
     private readonly IDictionary<Finger, Vector2> _lastFingerPositions = new Dictionary<Finger, Vector2>(new FingerEqualityComparer());
     private readonly IDictionary<float, IDictionary<int, Vector2>> _fingerPositions = new Dictionary<float, IDictionary<int, Vector2>>();
     
-    private float _headRotation = 0;
-    private float _headMovement = 0;
-    private readonly IDictionary<float, PlayerTransformData> _playerTransforms = new Dictionary<float, PlayerTransformData>();
+    private float _headRotation;
+    private float _headMovement;
+    private readonly IList<PlayerTransformData> _playerTransforms = new List<PlayerTransformData>();
+    private PlayerTransformData _lastPlayerTransform;
     
     private string _finalDirectoryPath;
 
     public void Start()
     {
+        var customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
+        customCulture.NumberFormat.NumberDecimalSeparator = ".";
+        System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;
+        
         _finalDirectoryPath = $"{outputFilePath}{DateTime.Now:yyyy-MM-dd_HH-mm-ss}/";
-        System.IO.Directory.CreateDirectory(_finalDirectoryPath); 
+        Directory.CreateDirectory(_finalDirectoryPath); 
         
         var outputAveragePath = $"{_finalDirectoryPath}all.csv";
         var writer = new StreamWriter(outputAveragePath, true);
@@ -86,7 +111,7 @@ public class Logger : MonoBehaviour
     
     public void StartTask()
     {
-        _taskId++;
+        _currentTaskId = ++_taskId;
         _taskStartTime = Time.time;
         
         _timeSpentInTransforms = 0;
@@ -109,35 +134,47 @@ public class Logger : MonoBehaviour
         
         _pointCreationCount = 0;
         _teleportationCount = 0;
+        // TODO: Add table join count
+        _tableJoinCount = 0;
+        _pointDeletionCount = 0;
+        _pointAcknowledgementCount = 0;
         
         _uniqueTouchCount = 0;
         _fingerMovement = 0;
         
         _lastFingerPositions.Clear();
+        _fingerPositions.Clear();
         _camera = Camera.main;
+        
+        _gestures.Clear();
+        
+        _headRotation = 0;
+        _headMovement = 0;
+        _playerTransforms.Clear();
+        _lastPlayerTransform = new PlayerTransformData();
         
         var playerNetwork = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
         _playerId = playerNetwork.playerId;
-        Debug.Log($"Task {_taskId} started.");
+        Debug.Log($"Task {_currentTaskId} started.");
     }
     
     public void EndTask(bool success)
     {
-        if (_taskId == 0)
+        if (_currentTaskId == 0)
         {
             Debug.LogWarning("No task to end.");
             return;
         }
         
         var taskEndTime = Time.time;
-        Debug.Log($"Task {_taskId} {(success ? "completed" : "failed")} in {taskEndTime - _taskStartTime} seconds.");
+        Debug.Log($"Task {_currentTaskId} {(success ? "completed" : "failed")} in {taskEndTime - _taskStartTime} seconds.");
         
         var outputAveragePath = $"{_finalDirectoryPath}all.csv";
-        var outputTaskPath = $"{_finalDirectoryPath}Task_{_taskId}/";
-        System.IO.Directory.CreateDirectory(outputTaskPath);
+        var outputTaskPath = $"{_finalDirectoryPath}Task_{_currentTaskId}/";
+        Directory.CreateDirectory(outputTaskPath);
         
         var writer = new StreamWriter(outputAveragePath, true);
-        writer.WriteLine($"{_taskId};{taskEndTime - _taskStartTime};{success};{_timeSpentInTransforms};{_transformCount};{_timeSpentInVerticalTransforms};{_verticalTransformCount};{_replicaTranslationDistance};{_replicaRotationAngle};{_replicaScaleFactor};{_timeSpentInBalloonSelection};{_balloonSelectionCount};{_pointCreationCount};{_teleportationCount};{_uniqueTouchCount};{_fingerMovement};{_headRotation};{_headMovement};{_playerId}");
+        writer.WriteLine($"{_currentTaskId};{taskEndTime - _taskStartTime};{success};{_timeSpentInTransforms};{_transformCount};{_timeSpentInVerticalTransforms};{_verticalTransformCount};{_replicaTranslationDistance};{_replicaRotationAngle};{_replicaScaleFactor};{_timeSpentInBalloonSelection};{_balloonSelectionCount};{_pointCreationCount};{_teleportationCount};{_uniqueTouchCount};{_fingerMovement};{_headRotation};{_headMovement};{_playerId}");
         writer.Close();
         
         var taskWriter = new StreamWriter($"{outputTaskPath}finger_movements.csv", true);
@@ -160,7 +197,7 @@ public class Logger : MonoBehaviour
         playerTransformWriter.WriteLine("Time;PositionX;PositionY;PositionZ;RotationX;RotationY;RotationZ;RotationW");
         foreach (var playerTransform in _playerTransforms)
         {
-            playerTransformWriter.WriteLine($"{playerTransform.Key};{playerTransform.Value.Position.x};{playerTransform.Value.Position.y};{playerTransform.Value.Position.z};{playerTransform.Value.Rotation.x};{playerTransform.Value.Rotation.y};{playerTransform.Value.Rotation.z};{playerTransform.Value.Rotation.w}");
+            playerTransformWriter.WriteLine($"{playerTransform.Time};{playerTransform.Position.x};{playerTransform.Position.y};{playerTransform.Position.z};{playerTransform.Rotation.x};{playerTransform.Rotation.y};{playerTransform.Rotation.z};{playerTransform.Rotation.w}");
         }
         playerTransformWriter.Close();
         
@@ -168,27 +205,101 @@ public class Logger : MonoBehaviour
         replicaTransformWriter.WriteLine("Time;PositionX;PositionY;PositionZ;RotationX;RotationY;RotationZ;RotationW;ScaleX;ScaleY;ScaleZ");
         foreach (var replicaTransform in _replicaTransforms)
         {
-            replicaTransformWriter.WriteLine($"{replicaTransform.Key};{replicaTransform.Value.Position.x};{replicaTransform.Value.Position.y};{replicaTransform.Value.Position.z};{replicaTransform.Value.Rotation.x};{replicaTransform.Value.Rotation.y};{replicaTransform.Value.Rotation.z};{replicaTransform.Value.Rotation.w};{replicaTransform.Value.Scale.x};{replicaTransform.Value.Scale.y};{replicaTransform.Value.Scale.z}");
+            replicaTransformWriter.WriteLine($"{replicaTransform.Time};{replicaTransform.Position.x};{replicaTransform.Position.y};{replicaTransform.Position.z};{replicaTransform.Rotation.x};{replicaTransform.Rotation.y};{replicaTransform.Rotation.z};{replicaTransform.Rotation.w};{replicaTransform.Scale.x};{replicaTransform.Scale.y};{replicaTransform.Scale.z}");
         }
         replicaTransformWriter.Close();
         
         var gestureDetectionWriter = new StreamWriter($"{outputTaskPath}gesture_detection.csv", true);
-        gestureDetectionWriter.WriteLine("Time;DetectedGesture");
+        gestureDetectionWriter.WriteLine("Time;DetectedGesture;GestureState");
         foreach (var gesture in _gestures)
         {
-            gestureDetectionWriter.WriteLine($"{gesture.Key};{gesture.Value}");
+            gestureDetectionWriter.WriteLine($"{gesture.Key};{gesture.GestureType};{gesture.GestureState}");
         }
         gestureDetectionWriter.Close();
         
-        _taskId = 0;
+        _currentTaskId = 0;
+    }
+    
+    public void StartTransform()
+    {
+        if (_currentTaskId == 0) return;
+        
+        _transformStartTime = Time.time;
+        _transformCount++;
+        _gestures.Add( new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.Transform, GestureState = GestureState.On });
+        Debug.Log("Transform started.");
+    }
+    
+    public void EndTransform()
+    {
+        if (_currentTaskId == 0) return;
+        
+        _timeSpentInTransforms += Time.time - _transformStartTime;
+        _gestures.Add(new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.Transform, GestureState = GestureState.Off });
+        Debug.Log("Transform ended.");
+    }
+    
+    public void StartVerticalTransform()
+    {
+        if (_currentTaskId == 0) return;
+        
+        _verticalTransformStartTime = Time.time;
+        _verticalTransformCount++;
+        _gestures.Add(new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.VerticalTransform, GestureState = GestureState.On });
+        Debug.Log("Vertical transform started.");
+    }
+    
+    public void EndVerticalTransform()
+    {
+        if (_currentTaskId == 0) return;
+        
+        _timeSpentInVerticalTransforms += Time.time - _verticalTransformStartTime;
+        _gestures.Add(new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.VerticalTransform, GestureState = GestureState.Off });
+        Debug.Log("Vertical transform ended.");
+    }
+    
+    public void StartBalloonSelection()
+    {
+        if (_currentTaskId == 0) return;
+        
+        _balloonSelectionStartTime = Time.time;
+        _balloonSelectionCount++;
+        _gestures.Add(new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.BalloonSelection, GestureState = GestureState.On });
+        Debug.Log("Balloon selection started.");
+    }
+    
+    public void EndBalloonSelection()
+    {
+        if (_currentTaskId == 0) return;
+        
+        _timeSpentInBalloonSelection += Time.time - _balloonSelectionStartTime;
+        _gestures.Add(new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.BalloonSelection, GestureState = GestureState.Off });
+        Debug.Log("Balloon selection ended.");
+    }
+    
+    public void PointCreation()
+    {
+        if (_currentTaskId == 0) return;
+        
+        _pointCreationCount++;
+        Debug.Log("Point creation.");
+    }
+    
+    public void Teleportation()
+    {
+        if (_currentTaskId == 0) return;
+        
+        _teleportationCount++;
+        Debug.Log("Teleportation.");
     }
     
     public void UpdateReplicaTransform(Vector3 position, Quaternion rotation, Vector3 scale)
     {
-        if (_taskId == 0) return;
+        if (_currentTaskId == 0) return;
         
         var replicaTransform = new ReplicaTransform
         {
+            Time = Time.time - _taskStartTime,
             Position = position,
             Rotation = rotation,
             Scale = scale
@@ -196,26 +307,25 @@ public class Logger : MonoBehaviour
         
         if (_replicaTransforms.Count >= 1)
         {
-            var previousReplicaTransform = _replicaTransforms.ElementAt(_replicaTransforms.Count - 1).Value;
+            var previousReplicaTransform = _replicaTransforms.ElementAt(_replicaTransforms.Count - 1);
             _replicaTranslationDistance += (previousReplicaTransform.Position - position).magnitude;
             _replicaRotationAngle += Quaternion.Angle(previousReplicaTransform.Rotation, rotation);
             _replicaScaleFactor += (previousReplicaTransform.Scale - scale).magnitude;
-            Debug.Log($"Distance: {_replicaTranslationDistance}, Angle: {_replicaRotationAngle}, Scale: {_replicaScaleFactor}");
             
             if (previousReplicaTransform.Position != position || previousReplicaTransform.Rotation != rotation || previousReplicaTransform.Scale != scale)
             {
-                _replicaTransforms.Add(Time.time - _taskStartTime, replicaTransform);
+                _replicaTransforms.Add(replicaTransform);
             }
         }
         else
         {
-            _replicaTransforms.Add(Time.time - _taskStartTime, replicaTransform);
+            _replicaTransforms.Add(replicaTransform);
         }
     }
 
     private void Update()
     {
-        if (_taskId == 0) return;
+        if (_currentTaskId == 0) return;
         
         var touches = Touch.activeFingers;
         var touchesDictionary = touches.ToDictionary(finger => finger.index, finger => finger.screenPosition);
@@ -225,11 +335,9 @@ public class Logger : MonoBehaviour
             _lastFingerPositions.Clear();
             return;
         }
-        else
-        {
-            _fingerPositions.Add(Time.time - _taskStartTime, touchesDictionary);
-        }
-        
+
+        _fingerPositions.Add(Time.time - _taskStartTime, touchesDictionary);
+
         if (_lastFingerPositions.Count == 0)
         {
             foreach (var finger in touches)
@@ -262,22 +370,29 @@ public class Logger : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_taskId == 0) return;
+        if (_currentTaskId == 0) return;
         
         var playerTransform = _camera.transform;
         var playerTransformData = new PlayerTransformData
         {
+            Time = Time.time - _taskStartTime,
             Position = playerTransform.position,
             Rotation = playerTransform.rotation
         };
-        _playerTransforms.Add(Time.time - _taskStartTime, playerTransformData);
+        _playerTransforms.Add(playerTransformData);
         
-        if (_playerTransforms.Count > 1)
+        if (_lastPlayerTransform.Time != 0)
         {
-            var previousPlayerTransform = _playerTransforms.ElementAt(_playerTransforms.Count - 2).Value;
-            _headRotation += Quaternion.Angle(previousPlayerTransform.Rotation, playerTransform.rotation);
-            _headMovement += (previousPlayerTransform.Position - playerTransform.position).magnitude;
+            _headRotation += Quaternion.Angle(_lastPlayerTransform.Rotation, playerTransform.localRotation);
+            _headMovement += (_lastPlayerTransform.Position - playerTransform.localPosition).magnitude;
         }
+
+        _lastPlayerTransform = new PlayerTransformData
+        {
+            Time = Time.time - _taskStartTime,
+            Position = playerTransform.localPosition,
+            Rotation = playerTransform.localRotation
+        };
     }
 
     public bool startTask;

@@ -51,6 +51,7 @@ namespace Gestures.Balloon
                     return;
                 }
                 
+                _gestureConfiguration.logger.EndBalloonSelection();
                 _gestureDetector.OnGestureExit();
                 _gestureDetector.ResetBalloonPlanePositionsAndHeight();
                 _gestureDetector.DisableBalloon();

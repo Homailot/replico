@@ -18,6 +18,7 @@ namespace Gestures.ReplicaTransform
         {
             if (Touch.activeFingers.Count > 0)
             {
+                _gestureConfiguration.logger.StartTransform();
                 _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, new ReplicaTransformer(_gestureConfiguration), _gestureConfiguration));
             }
         }
