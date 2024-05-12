@@ -105,7 +105,7 @@ public class Logger : MonoBehaviour
         
         var outputAveragePath = $"{_finalDirectoryPath}all.csv";
         var writer = new StreamWriter(outputAveragePath, true);
-        writer.WriteLine("TaskId;TaskDuration;TaskSuccess;TimeSpentInTransforms;TransformCount;TimeSpentInVerticalTransforms;VerticalTransformCount;ReplicaTranslationDistance;ReplicaRotationAngle;ReplicaScaleFactor;TimeSpentInBalloonSelection;BalloonSelectionCount;PointCreationCount;TeleportationCount;UniqueTouchCount;FingerMovement;HeadRotation;HeadMovement;PlayerId");
+        writer.WriteLine("TaskId;TaskDuration;TaskSuccess;TimeSpentInTransforms;TransformCount;TimeSpentInVerticalTransforms;VerticalTransformCount;ReplicaTranslationDistance;ReplicaRotationAngle;ReplicaScaleFactor;TimeSpentInBalloonSelection;BalloonSelectionCount;PointCreationCount;TeleportationCount;TableJoinCount;PointDeletionCount;PointAcknowledgementCount;UniqueTouchCount;FingerMovement;HeadRotation;HeadMovement;PlayerId");
         writer.Close();
     }
     
@@ -174,7 +174,7 @@ public class Logger : MonoBehaviour
         Directory.CreateDirectory(outputTaskPath);
         
         var writer = new StreamWriter(outputAveragePath, true);
-        writer.WriteLine($"{_currentTaskId};{taskEndTime - _taskStartTime};{success};{_timeSpentInTransforms};{_transformCount};{_timeSpentInVerticalTransforms};{_verticalTransformCount};{_replicaTranslationDistance};{_replicaRotationAngle};{_replicaScaleFactor};{_timeSpentInBalloonSelection};{_balloonSelectionCount};{_pointCreationCount};{_teleportationCount};{_uniqueTouchCount};{_fingerMovement};{_headRotation};{_headMovement};{_playerId}");
+        writer.WriteLine($"{_currentTaskId};{taskEndTime - _taskStartTime};{success};{_timeSpentInTransforms};{_transformCount};{_timeSpentInVerticalTransforms};{_verticalTransformCount};{_replicaTranslationDistance};{_replicaRotationAngle};{_replicaScaleFactor};{_timeSpentInBalloonSelection};{_balloonSelectionCount};{_pointCreationCount};{_teleportationCount};{_tableJoinCount};{_pointDeletionCount};{_pointAcknowledgementCount};{_uniqueTouchCount};{_fingerMovement};{_headRotation};{_headMovement};{_playerId}");
         writer.Close();
         
         var taskWriter = new StreamWriter($"{outputTaskPath}finger_movements.csv", true);
@@ -227,7 +227,6 @@ public class Logger : MonoBehaviour
         _transformStartTime = Time.time;
         _transformCount++;
         _gestures.Add( new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.Transform, GestureState = GestureState.On });
-        Debug.Log("Transform started.");
     }
     
     public void EndTransform()
@@ -236,7 +235,6 @@ public class Logger : MonoBehaviour
         
         _timeSpentInTransforms += Time.time - _transformStartTime;
         _gestures.Add(new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.Transform, GestureState = GestureState.Off });
-        Debug.Log("Transform ended.");
     }
     
     public void StartVerticalTransform()
@@ -246,7 +244,6 @@ public class Logger : MonoBehaviour
         _verticalTransformStartTime = Time.time;
         _verticalTransformCount++;
         _gestures.Add(new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.VerticalTransform, GestureState = GestureState.On });
-        Debug.Log("Vertical transform started.");
     }
     
     public void EndVerticalTransform()
@@ -255,7 +252,6 @@ public class Logger : MonoBehaviour
         
         _timeSpentInVerticalTransforms += Time.time - _verticalTransformStartTime;
         _gestures.Add(new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.VerticalTransform, GestureState = GestureState.Off });
-        Debug.Log("Vertical transform ended.");
     }
     
     public void StartBalloonSelection()
@@ -265,7 +261,6 @@ public class Logger : MonoBehaviour
         _balloonSelectionStartTime = Time.time;
         _balloonSelectionCount++;
         _gestures.Add(new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.BalloonSelection, GestureState = GestureState.On });
-        Debug.Log("Balloon selection started.");
     }
     
     public void EndBalloonSelection()
@@ -274,7 +269,6 @@ public class Logger : MonoBehaviour
         
         _timeSpentInBalloonSelection += Time.time - _balloonSelectionStartTime;
         _gestures.Add(new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.BalloonSelection, GestureState = GestureState.Off });
-        Debug.Log("Balloon selection ended.");
     }
     
     public void PointCreation()
@@ -291,6 +285,30 @@ public class Logger : MonoBehaviour
         
         _teleportationCount++;
         Debug.Log("Teleportation.");
+    }
+    
+    public void TableJoin()
+    {
+        if (_currentTaskId == 0) return;
+        
+        _tableJoinCount++;
+        Debug.Log("Table join.");
+    }
+    
+    public void PointDeletion()
+    {
+        if (_currentTaskId == 0) return;
+        
+        _pointDeletionCount++;
+        Debug.Log("Point deletion.");
+    }
+    
+    public void PointAcknowledgement()
+    {
+        if (_currentTaskId == 0) return;
+        
+        _pointAcknowledgementCount++;
+        Debug.Log("Point acknowledgement.");
     }
     
     public void UpdateReplicaTransform(Vector3 position, Quaternion rotation, Vector3 scale)

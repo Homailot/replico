@@ -112,6 +112,7 @@ namespace Gestures
 
         public void OnTableSelected(ulong tableId)
         {
+            gestureConfiguration.logger.TableJoin();
             tableSelected.Invoke(tableId); 
         }
         
@@ -192,11 +193,15 @@ namespace Gestures
         {
             if (balloonPoint.playerId != _playerId)
             {
+                balloonPoint.selectable = false;
+                
                 var line = balloonPoint.GetIndicatorLine();
                 line.DisableLine();
                 line.DisablePinIndicator();
+                gestureConfiguration.logger.PointAcknowledgement();
                 return;
             }
+            gestureConfiguration.logger.PointDeletion();
             RemovePointOfInterest(balloonPoint.id, _playerId);
             pointRemoved.Invoke(new BalloonPointId(balloonPoint.playerId, balloonPoint.id));
         }
