@@ -74,10 +74,11 @@ public class Logger : MonoBehaviour
     
     private ulong _pointCreationCount;
     private ulong _teleportationCount;
-    // TODO
     private ulong _tableJoinCount; 
     private ulong _pointDeletionCount = 0;
     private ulong _pointAcknowledgementCount = 0; 
+    // TODO: task steps
+    private ulong _taskSteps;
         
     private ulong _uniqueTouchCount;
     private float _fingerMovement;
@@ -134,7 +135,6 @@ public class Logger : MonoBehaviour
         
         _pointCreationCount = 0;
         _teleportationCount = 0;
-        // TODO: Add table join count
         _tableJoinCount = 0;
         _pointDeletionCount = 0;
         _pointAcknowledgementCount = 0;

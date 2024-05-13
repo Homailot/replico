@@ -58,6 +58,7 @@ namespace Gestures
         {
             DisableBalloon();
             ResetBalloonPlanePositionsAndHeight();
+            _world = gestureConfiguration.replicaController.GetObjectToReplicate().GetComponent<World>();
         }
 
         public void LateUpdate()
@@ -328,6 +329,8 @@ namespace Gestures
 
         public void Init()
         {
+            gestureConfiguration.replicaController.SetObjectToReplicate(_world.gameObject);
+            gestureConfiguration.replicaController.ResetTransforms();
             gestureConfiguration.replicaController.CompleteAnimation(() =>
                            {
                                gestureConfiguration.replicaController.ResetTransforms();

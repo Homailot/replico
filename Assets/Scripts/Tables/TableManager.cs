@@ -43,11 +43,10 @@ namespace Tables
             _tables.Add(newTable);
 
             var tableTransform = newTable.GetComponent<TableTransform>();
-            tableTransform.SetPositionAndRotation(firstTableSpawnPosition.position, firstTableSpawnPosition.rotation.eulerAngles);
             newTable.AddToTable(playerId, 0);
-        
             newTable.networkObject.Spawn();
-        
+            
+            tableTransform.SetPositionAndRotation(firstTableSpawnPosition.position, firstTableSpawnPosition.rotation.eulerAngles);
             SendToClient(newTable, 0, clientId);
         }
     

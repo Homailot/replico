@@ -23,6 +23,11 @@ namespace Replica
             _replica = Instantiate(objectToReplicate, transform1.position, transform1.rotation);
             _replica.transform.parent = transform1;
         }
+        
+        public GameObject GetObjectToReplicate()
+        {
+            return objectToReplicate;
+        }
 
         public void EnableReplica()
         {

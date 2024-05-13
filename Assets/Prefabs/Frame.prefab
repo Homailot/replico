@@ -332,7 +332,7 @@ GameObject:
   - component: {fileID: 762086850128158217}
   m_Layer: 0
   m_Name: Frame
-  m_TagString: Untagged
+  m_TagString: Frame
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1410,6 +1410,7 @@ MonoBehaviour:
     swipeGestureTimeDetection: 0.1
     swipeFingers: 11
     replicaController: {fileID: 5015059179080984275}
+    logger: {fileID: 0}
     touchToPosition: {fileID: 6791617473146403138}
     frame: {fileID: 762086850128158217}
     translateSpeed: 0.0005

@@ -58,12 +58,16 @@ namespace Tables
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
+            _table = GetComponent<Table>();
             // TODO: on changed, move players as well
             _positionData.OnValueChanged += OnPositionDataChanged;
         }
         
         private void OnPositionDataChanged(TablePositionData oldData, TablePositionData newData)
         {
+            Debug.Log("Table position changed");
+            Debug.Log($"Old position: {oldData.position}");
+            Debug.Log($"New position: {newData.position}");
             transform.position = newData.position;
             transform.rotation = Quaternion.Euler(newData.rotation);
             foreach (var playerObject in FindObjectsByType<PlayerNetwork>(FindObjectsSortMode.None))

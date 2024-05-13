@@ -8,6 +8,8 @@ TagManager:
   - ToReplicate
   - Canvas
   - Logger
+  - MAST_Holder
+  - Frame
   layers:
   - Default
   - TransparentFX

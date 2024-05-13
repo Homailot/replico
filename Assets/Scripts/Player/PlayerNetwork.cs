@@ -111,6 +111,7 @@ namespace Player
         private void Awake()
         {
             _xrOrigin = GetComponent<XROrigin>();
+            
             playerTransform.xrOrigin = _xrOrigin;
             _pointsOfInterest = new NetworkList<PointOfInterestData>(writePerm: NetworkVariableWritePermission.Server);
         }
@@ -185,19 +186,14 @@ namespace Player
                 return;
             }
             
-            touchPlane = Instantiate(touchPlanePrefab, position, attachPoint.rotation);
-            
-            var objectToReplicate = GameObject.FindWithTag("ToReplicate");
-            var world = objectToReplicate.GetComponent<World>();
+            touchPlane = GameObject.FindWithTag("Frame");
+            touchPlane.transform.position = position;
+            touchPlane.transform.rotation = attachPoint.rotation;
             
             gestureDetector = touchPlane.GetComponentInChildren<GestureDetector>();
-            gestureDetector.SetWorld(world);
             gestureDetector.Init();
             gestureDetector.SetPlayerId(playerId);
 
-            var logger = GameObject.FindWithTag("Logger");
-            gestureDetector.SetLogger(logger.GetComponent<Logger>());
-            
             foreach (var playerObject in FindObjectsByType<PlayerNetwork>(FindObjectsSortMode.None))
             {
                 foreach (var point in playerObject._pointsOfInterest)
