@@ -13,6 +13,7 @@ namespace Gestures.Balloon
         private readonly GestureConfiguration _gestureConfiguration;
         private readonly HandDetector _handDetector;
         private readonly IReplicaPoint _replicaPoint;
+        private readonly ArrowTransformer _arrowTransformer;
         private readonly int _fingerId;
 
         private float _fingerCenter;
@@ -34,11 +35,13 @@ namespace Gestures.Balloon
             _lastFinger = hands.firstHand.First().screenPosition.y;
             _fingerCenter = hands.firstHand.First().screenPosition.y;
             _fingerId = hands.firstHand.First().index;
+            _arrowTransformer = new ArrowTransformer(gestureConfiguration, gestureDetector, gestureConfiguration.balloonRotationSpeed);
         }
         
         public void OnUpdate()
         {
             var hands = _handDetector.DetectHands(Touch.activeFingers, _hands);
+            _arrowTransformer.Update(Touch.activeFingers);
 
             foreach (var finger in hands.firstHand)
             {
@@ -57,10 +60,10 @@ namespace Gestures.Balloon
                     _holdTime = Time.time;
                 }
 
-                var distance = (finger.screenPosition.y - _lastFinger) / Screen.height;
-                var yRotation = distance * -_gestureConfiguration.balloonRotationSpeed;
-                _lastFinger = finger.screenPosition.y;
-                _gestureDetector.RotateBalloonArrow(yRotation);
+                //var distance = (finger.screenPosition.y - _lastFinger) / Screen.height;
+                //var yRotation = distance * -_gestureConfiguration.balloonRotationSpeed;
+                //_lastFinger = finger.screenPosition.y;
+                //_gestureDetector.RotateBalloonArrow(yRotation);
                 break;
             }
             

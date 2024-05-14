@@ -22,15 +22,16 @@ public class WorldBalloonHeightToCoordinates : MonoBehaviour
         ResetBalloonHeight();
     }
 
-    public void SetBalloonHeight(float height)
+    public float SetBalloonHeight(float height)
     {
-        if (_renderer == null) return;
+        if (_renderer == null) return 0;
         var bounds = _renderer.bounds;
         var min = bounds.min.y;
         var max = bounds.max.y;
         var remapped = Mathf.Clamp01(Mathf.InverseLerp(min, max, height));
         
         _renderer.material.SetVector(SecondHand, new Vector4(0.5f, remapped, 0, 0));
+        return remapped;
     }
     
     public void ResetBalloonHeight()

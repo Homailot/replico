@@ -1594,7 +1594,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  inactivityThreshold: 5
+  inactivityThreshold: 3
   transparencyDuration: 1
   opaqueCurve:
     serializedVersion: 2

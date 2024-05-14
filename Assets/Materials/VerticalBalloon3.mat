@@ -27,14 +27,14 @@ Material:
     m_Floats:
     - _Disable_Strength: 0.3
     - _Line_Gap: 0.55
-    - _Line_Length: 0.006
-    - _Line_Thickness: 0.0007
+    - _Line_Length: 0.002
+    - _Line_Thickness: 0.0002
     - _QueueControl: 1
     - _QueueOffset: 4
     m_Colors:
     - _First_Hand: {r: 0.5, g: 0, b: 0, a: 0}
     - _Line_Color: {r: 1, g: 1, b: 1, a: 0}
-    - _Second_Hand: {r: 0.5, g: 0.042, b: 0, a: 0}
+    - _Second_Hand: {r: 0.5, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1682725976496314041
 MonoBehaviour:
