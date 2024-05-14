@@ -376,6 +376,7 @@ namespace Gestures
             if (balloon == null) return;
             balloon.rotation = Quaternion.identity;
             balloonBillboard.gameObject.SetActive(true);
+            _world.EnableWorldBalloonSelection(_playerId);
         }
         
         public void DisableBalloon()
@@ -383,6 +384,11 @@ namespace Gestures
             if (balloon == null) return;
             balloonBillboard.gameObject.SetActive(false);
             balloon.position = new Vector3(0, 1000, 0);
+
+            if (_world != null)
+            {
+                _world.DisableWorldBalloonSelection();
+            }
         }
         
         public void UpdateBalloonPosition(Vector3 position)
@@ -395,6 +401,10 @@ namespace Gestures
             if (balloonHeightToCoordinates == null) return;
             balloonHeightToCoordinates.SetBalloonHeight(balloon.position.y);
             balloonBillboard.position = new Vector3(balloon.position.x, balloonBillboard.position.y, balloon.position.z);
+            
+            var transformedPosition = gestureConfiguration.replicaController.GetReplica().transform.InverseTransformPoint(balloon.position);
+            var transformedOrigin = gestureConfiguration.replicaController.GetReplica().transform.InverseTransformPoint(balloonBillboard.position);
+            _world.UpdateWorldBalloonSelection(transformedOrigin.y, transformedPosition);
         }
         
         public void ToggleBalloonPlaneLine(bool active)

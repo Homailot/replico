@@ -7,6 +7,11 @@ using Utils;
 
 public class World : MonoBehaviour
 {
+    [SerializeField] private GameObject worldBalloonSelection;
+    [SerializeField] private Transform worldBalloonTransformTarget;
+    [SerializeField] private TransformSmoothFollow worldBalloonLineFollow;
+    [SerializeField] private GameObject worldBalloonLine;
+    [SerializeField] private WorldBalloonHeightToCoordinates balloonHeightToCoordinates;
     [SerializeField] private GameObject balloonPrefab;
     [SerializeField] private BalloonMaterialUpdate balloonMaterialUpdate;
     [SerializeField] private Transform balloonParent;
@@ -60,6 +65,33 @@ public class World : MonoBehaviour
          
          _pointsOfInterest.Add(id, balloonPoint);
          balloonMaterialUpdate.UpdateBalloonWorld(balloon, id.playerId);       
+    }
+
+    public void EnableWorldBalloonSelection(ulong playerId)
+    {
+        balloonMaterialUpdate.UpdateBalloonWorld(worldBalloonSelection, playerId);
+        worldBalloonLine.SetActive(true);
+        worldBalloonSelection.SetActive(true);
+    }
+    
+    public void DisableWorldBalloonSelection()
+    {
+        worldBalloonLine.SetActive(false);
+        worldBalloonSelection.SetActive(false);
+        
+        balloonHeightToCoordinates.ResetBalloonHeight();
+        worldBalloonTransformTarget.localPosition = new Vector3(-1000, -1000, -1000);
+        worldBalloonSelection.transform.localPosition = new Vector3(-1000, -1000, -1000);
+        worldBalloonLineFollow.UpdateTarget(new Vector3(-1000, -1000, -1000));
+        worldBalloonLine.transform.localPosition = new Vector3(-1000, -1000, -1000);
+    }
+    
+    public void UpdateWorldBalloonSelection(float originHeight, Vector3 position)
+    {
+        worldBalloonTransformTarget.localPosition = position;
+        worldBalloonLineFollow.UpdateTarget(new Vector3(worldBalloonTransformTarget.position.x, originHeight, worldBalloonTransformTarget.position.z));
+
+        balloonHeightToCoordinates.SetBalloonHeight(worldBalloonSelection.transform.position.y);
     }
     
     public void UpdateBalloonId(ulong playerIdValue, Vector3 point, ulong id)
