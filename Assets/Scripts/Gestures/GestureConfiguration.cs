@@ -2,6 +2,7 @@ using System;
 using TouchPlane;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Logger = Tasks.Logger;
 
 namespace Gestures
 {

@@ -1,0 +1,54 @@
+{
+    "name": "Task Controls",
+    "maps": [
+        {
+            "name": "Task Actions",
+            "id": "f3a0314a-2645-42a7-a1bb-9eb10ff850b9",
+            "actions": [
+                {
+                    "name": "Player 1 Next",
+                    "type": "Button",
+                    "id": "4d775e92-48f8-4e66-add7-34eefe6e0532",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Player 2 Next",
+                    "type": "Button",
+                    "id": "0eb45a4f-0008-4036-8e7f-3d2403029785",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f695affb-e72a-4e5e-9ade-6227faf1f8b0",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Player 1 Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "69582784-58de-4af8-bf09-edd710fec28a",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Player 2 Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem.EnhancedTouch;
 using UnityEngine.Serialization;
 using Utils;
+using Logger = Tasks.Logger;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 
 namespace Gestures

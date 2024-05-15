@@ -17,11 +17,31 @@ namespace Player
         
         public void Start()
         {
-            _availablePlayerIds.Enqueue(0);
-            _availablePlayerIds.Enqueue(1);
-
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+
+            if (!NetworkManager.Singleton.IsServer)
+            {
+                return;
+            }
+
+            foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
+            {
+                var playerObject = client.PlayerObject.GetComponent<PlayerNetwork>();
+                OnClientConnected(client.ClientId, playerObject.playerId );
+            }
+        }
+        
+        public void ResetAvailablePlayerIds()
+        {
+            _availablePlayerIds.Clear();
+            _playerIdToClientId.Clear();
+            _clientIdToPlayerId.Clear();
+        }
+        
+        public void AddAvailablePlayerId(ulong playerId)
+        {
+            _availablePlayerIds.Enqueue(playerId);
         }
         
         public ulong GetClientId(ulong playerId)
@@ -49,7 +69,7 @@ namespace Player
             _currentBalloonId++;
             return _currentBalloonId;
         }
-
+        
         private void OnClientConnected(ulong clientId)
         {
             if (!NetworkManager.Singleton.IsServer) return;
@@ -57,13 +77,18 @@ namespace Player
             Debug.Log($"Client {clientId} connected");
 
             var playerId = _availablePlayerIds.Dequeue();
+            OnClientConnected(clientId, playerId);
+        }
+
+        private void OnClientConnected(ulong clientId, ulong playerId)
+        {
             var playerNetworkObject = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject;
             var playerNetwork = playerNetworkObject.GetComponent<PlayerNetwork>();
             playerNetwork.playerId = playerId;
             _playerIdToClientId[playerId] = clientId;
             _clientIdToPlayerId[clientId] = playerId;
-            
-            tableManager.AddToAvailableTable(playerId);
+
+            tableManager.AddToAvailableTable(playerId); 
         }
         
         private void OnClientDisconnected(ulong clientId)

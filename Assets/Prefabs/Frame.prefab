@@ -1423,7 +1423,7 @@ MonoBehaviour:
     balloonDistanceMultiplier: 1
     balloonMovementDetectionDistance: 0.02
     balloonTeleportTime: 1.2
-    balloonRotationSpeed: 500
+    balloonRotationSpeed: -2
     balloonShowArrowTime: 0.4
     balloonSelectionDistanceThreshold: 0.013
   effectRenderer: {fileID: 2337578508288037818}
@@ -1594,7 +1594,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  inactivityThreshold: 3
+  inactivityThreshold: 2
   transparencyDuration: 1
   opaqueCurve:
     serializedVersion: 2
