@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Gestures.Balloon;
 using Gestures.ReplicaTransform;
+using Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem.EnhancedTouch;
@@ -47,6 +48,8 @@ namespace Gestures
         [SerializeField] private TeleportSelected teleportSelected;
         [SerializeField] private PointRemoved pointRemoved;
         [SerializeField] private TableSelected tableSelected;
+
+        public TaskObjectPoint taskObjectPoint;
         
         private void Awake()
         {
@@ -84,6 +87,11 @@ namespace Gestures
 
         public IReplicaPoint GetReplicaPointFromBalloon()
         {
+            if (taskObjectPoint != null && taskObjectPoint.Intersects())
+            {
+                return taskObjectPoint;
+            }
+                        
             foreach (var balloonPoint in _pointsOfInterest.Values)
             {
                 if (balloonPoint.Intersects() && balloonPoint.selectable)
@@ -99,7 +107,7 @@ namespace Gestures
                     return tablePoint;
                 }
             }
-            
+           
             return null;
         }
 
@@ -333,6 +341,8 @@ namespace Gestures
         public void Init()
         {
             gestureConfiguration.replicaController.SetObjectToReplicate(_world.gameObject);
+            taskObjectPoint = gestureConfiguration.replicaController.GetReplica().GetComponent<TaskObjects>().taskObjectPoints[0];
+            taskObjectPoint.PrepareTaskObject();
             gestureConfiguration.replicaController.ResetTransforms();
             gestureConfiguration.replicaController.CompleteAnimation(() =>
                            {
