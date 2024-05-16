@@ -142,12 +142,28 @@ namespace Player
                 characterController.enabled = true;
                 characterControllerDriver.enabled = true;
                 xrInputModalityManager.enabled = true;
+                
+                NetworkManager.SceneManager.OnSceneEvent += OnSceneEvent;
             }
             else
             {
                 playerModel.SetActive(true);
                 _playerId.OnValueChanged += OnPlayerIdChanged;
                 OnPlayerIdChanged(0, playerId);
+            }
+        }
+
+        private void OnSceneEvent(SceneEvent sceneevent)
+        {
+            if (sceneevent.SceneEventType == SceneEventType.Load)
+            {
+                _initialized = false;
+                _touchPlane = null;
+                _pointsOfInterest.Clear();
+            }
+            else if (sceneevent.SceneEventType == SceneEventType.LoadEventCompleted)
+            {
+                playerManager = FindObjectOfType<PlayerManager>();
             }
         }
 

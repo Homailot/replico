@@ -15,7 +15,14 @@ namespace Tables
         [SerializeField] private PlayerManager playerManager;
     
         private readonly List<Table> _tables = new List<Table>();
-    
+
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+            Debug.Log("TableManager spawned");
+            Debug.Log(_tables.Count);
+        }
+
         public void AddToAvailableTable(ulong playerId)
         {
             Debug.Log($"Adding player {playerId} to available table");
@@ -44,7 +51,7 @@ namespace Tables
 
             var tableTransform = newTable.GetComponent<TableTransform>();
             newTable.AddToTable(playerId, 0);
-            newTable.networkObject.Spawn();
+            newTable.networkObject.Spawn(true);
             
             tableTransform.SetPositionAndRotation(firstTableSpawnPosition.position, firstTableSpawnPosition.rotation.eulerAngles);
             SendToClient(newTable, 0, clientId);
@@ -175,7 +182,7 @@ namespace Tables
             _tables.Add(newTable);
             newTable.AddToTable(playerId, seat);
         
-            newTable.networkObject.Spawn();
+            newTable.networkObject.Spawn(true);
         
             SendToClient(newTable, seat, clientId);
         } 

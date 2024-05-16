@@ -60,6 +60,8 @@ namespace Gestures
             DisableBalloon();
             ResetBalloonPlanePositionsAndHeight();
             _world = gestureConfiguration.replicaController.GetObjectToReplicate().GetComponent<World>();
+            var logger = GameObject.Find("Logger").GetComponent<Logger>();
+            gestureConfiguration.logger = logger;
         }
 
         public void LateUpdate()
