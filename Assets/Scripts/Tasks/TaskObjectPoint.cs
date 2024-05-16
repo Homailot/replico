@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Tasks
 {
-    [RequireComponent(typeof(Outline), typeof(OutlinePulse))]
+    [RequireComponent(typeof(Outline), typeof(OutlinePulse), typeof(Rigidbody))]
     public class TaskObjectPoint : MonoBehaviour, IReplicaPoint
     {
         [SerializeField] private float highlightWidth = 4f;
@@ -47,11 +47,6 @@ namespace Tasks
             }
         }
         
-        public void Start()
-        {
-
-        }
-         
         public void Highlight()
         {
             if (_isHighlighted) return;
@@ -100,7 +95,7 @@ namespace Tasks
         public bool selectable { get; set; }
         public void OnSelect(GestureDetector gestureDetector)
         {
-            throw new System.NotImplementedException();
+            gestureDetector.OnTaskObjectSelected(this);
         }
 
         private void OnTriggerEnter(Collider other)

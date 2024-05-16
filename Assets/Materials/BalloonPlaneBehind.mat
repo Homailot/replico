@@ -47,7 +47,7 @@ Material:
     - _QueueControl: 1
     - _QueueOffset: -3
     m_Colors:
-    - _First_Hand: {r: 0.45654297, g: 0.41049933, b: 0, a: 0}
+    - _First_Hand: {r: -1, g: -1, b: 0, a: 0}
     - _Line_Color: {r: 0.795, g: 0.795, b: 0.795, a: 0}
-    - _Second_Hand: {r: 0.6386719, g: 0.4519784, b: 0, a: 0}
+    - _Second_Hand: {r: -1, g: -1, b: 0, a: 0}
   m_BuildTextureStacks: []

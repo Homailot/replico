@@ -34,6 +34,7 @@ namespace Gestures
         private readonly IDictionary<BalloonPointId, BalloonPoint> _pointsOfInterest = new Dictionary<BalloonPointId, BalloonPoint>(new BalloonEqualityComparer());
         private readonly IDictionary<BalloonPointTempId, BalloonPoint> _tempPoints = new Dictionary<BalloonPointTempId, BalloonPoint>(new BalloonTempEqualityComparer());
         private readonly IDictionary<ulong, TablePoint> _tablePoints = new Dictionary<ulong, TablePoint>();
+        private readonly List<TaskObjectPoint> taskObjectPoints = new List<TaskObjectPoint>();
         private World _world;
         private ulong _playerId = 0;
         
@@ -48,9 +49,8 @@ namespace Gestures
         [SerializeField] private TeleportSelected teleportSelected;
         [SerializeField] private PointRemoved pointRemoved;
         [SerializeField] private TableSelected tableSelected;
+        [SerializeField] private TaskObjectSelected taskObjectSelected;
 
-        public TaskObjectPoint taskObjectPoint;
-        
         private void Awake()
         {
             EnhancedTouchSupport.Enable();
@@ -87,9 +87,12 @@ namespace Gestures
 
         public IReplicaPoint GetReplicaPointFromBalloon()
         {
-            if (taskObjectPoint != null && taskObjectPoint.Intersects())
+            foreach (var taskObjectPoint in taskObjectPoints)
             {
-                return taskObjectPoint;
+                if (taskObjectPoint.Intersects() && taskObjectPoint.selectable)
+                {
+                    return taskObjectPoint;
+                }
             }
                         
             foreach (var balloonPoint in _pointsOfInterest.Values)
@@ -141,6 +144,16 @@ namespace Gestures
             var localPoint = gestureConfiguration.replicaController.GetReplica().transform.InverseTransformPoint(balloon.position);
             AddPointOfInterest(localPoint, _playerId);
             pointSelected.Invoke(localPoint);
+        }
+        
+        public void AddTaskPoints(IEnumerable<TaskObjectPoint> points)
+        {
+            taskObjectPoints.AddRange(points);
+        }
+        
+        public void ClearTaskPoints()
+        {
+            taskObjectPoints.Clear();
         }
         
         public void AddPointOfInterest(Vector3 position, ulong playerId)
@@ -326,6 +339,21 @@ namespace Gestures
         {
             tableSelected.AddListener(action);
         }
+        
+        public void AddTaskObjectSelectedListener(UnityAction<TaskObjectPoint> action)
+        {
+            taskObjectSelected.AddListener(action);
+        }
+        
+        public void ClearTaskObjectSelectedListeners()
+        {
+            taskObjectSelected.RemoveAllListeners();
+        }
+        
+        public void OnTaskObjectSelected(TaskObjectPoint taskObjectPoint)
+        {
+            taskObjectSelected.Invoke(taskObjectPoint);
+        }
 
         public void SetBalloonProgress(float progress)
         {
@@ -341,8 +369,6 @@ namespace Gestures
         public void Init()
         {
             gestureConfiguration.replicaController.SetObjectToReplicate(_world.gameObject);
-            taskObjectPoint = gestureConfiguration.replicaController.GetReplica().GetComponent<TaskObjects>().taskObjectPoints[0];
-            taskObjectPoint.PrepareTaskObject();
             gestureConfiguration.replicaController.ResetTransforms();
             gestureConfiguration.replicaController.CompleteAnimation(() =>
                            {
@@ -480,6 +506,7 @@ namespace Gestures
         [Serializable]
         public class TableSelected : UnityEvent<ulong> {}
 
-
+        [Serializable]
+        public class TaskObjectSelected : UnityEvent<TaskObjectPoint> { }
     }
 }

@@ -34,7 +34,7 @@ Material:
     m_Colors:
     - _First_Hand: {r: 0, g: 0.5, b: 0, a: 0}
     - _Line_Color: {r: 0.795, g: 0.795, b: 0.795, a: 0}
-    - _Second_Hand: {r: 0.09452758, g: 0.5, b: 0, a: 0}
+    - _Second_Hand: {r: 0, g: 0.5, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1682725976496314041
 MonoBehaviour:
