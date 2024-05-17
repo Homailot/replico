@@ -10,14 +10,14 @@ Material:
   m_Name: clock Variant
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 1358659479680502452, guid: a8afad51228c49d4489448792280f1c2, type: 3}
-  m_ModifiedSerializedProperties: 0
+  m_ModifiedSerializedProperties: 16
   m_ValidKeywords:
   - _SPECULARHIGHLIGHTS_OFF
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 1996
   stringTagMap:
     RenderType: Opaque
   disabledShaderPasses: []
@@ -27,11 +27,16 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
+    - _DstBlend: 0
+    - _DstBlendAlpha: 0
+    - _QueueOffset: -4
     - _Smoothness: 0
     - _SpecularHighlights: 0
+    - _Surface: 0
+    - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.239, g: 0.239, b: 0.239, a: 1}
-    - _Color: {r: 0.23899996, g: 0.23899996, b: 0.23899996, a: 1}
+    - _BaseColor: {r: 0.23899996, g: 0.23899996, b: 0.23899996, a: 1}
+    - _Color: {r: 0.23899993, g: 0.23899993, b: 0.23899993, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5554742724083785763
 MonoBehaviour:

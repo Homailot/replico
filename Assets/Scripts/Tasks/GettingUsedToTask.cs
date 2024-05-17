@@ -7,9 +7,14 @@ namespace Tasks
             // start clock
         }
 
-        public override void CleanTask(bool success)
+        protected override void EndTaskInternal(bool success)
         {
-            // stop clock
+            throw new System.NotImplementedException();
+        }
+
+        public override void CleanTask()
+        {
+            throw new System.NotImplementedException();
         }
 
         public override bool Next()

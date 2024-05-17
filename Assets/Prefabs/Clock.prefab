@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 8830495164943331289}
-  seconds: 10
+  seconds: 0
   timerEnd:
     m_PersistentCalls:
       m_Calls: []
@@ -312,8 +312,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283716692
-  m_fontColor: {r: 0.32799998, g: 0.32799998, b: 0.32799998, a: 1}
+    rgba: 2756990036
+  m_fontColor: {r: 0.32799998, g: 0.32799998, b: 0.32799998, a: 0.6431373}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

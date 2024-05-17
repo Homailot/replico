@@ -13,8 +13,8 @@ public class InactiveTransparency : MonoBehaviour
     [SerializeField] private AnimationCurve opaqueCurve = AnimationCurve.EaseInOut(0.0f, 0.15f, 1.0f, 1.0f);
     [SerializeField] private float opaqueDuration = 0.5f;
     
-    private Material _material;
-    private Color _color;
+    private Material[] _materials;
+    private Color[] _colors;
     private float _inactivityTimer;
     private float _activeTimer;
     private float _lastFingerTouch;
@@ -24,8 +24,8 @@ public class InactiveTransparency : MonoBehaviour
 
     private void Start()
     {
-        _material = GetComponent<Renderer>().material;
-        _color = _material.color;
+        _materials = GetComponent<Renderer>().materials;
+        _colors = _materials.Select(material => material.color).ToArray();
         _inactivityTimer = Time.time;
         _activeTimer = Time.time;
     }
@@ -55,7 +55,12 @@ public class InactiveTransparency : MonoBehaviour
             if (time < 0) return;
             
             var transparency = opaqueCurve.Evaluate(time);
-            _material.color = new Color(_color.r, _color.g, _color.b, transparency);
+            
+            for (var i = 0; i < _materials.Length; i++)
+            {
+                var color = _colors[i];
+                _materials[i].color = new Color(color.r, color.g, color.b, transparency);
+            }
         }
         else
         {
@@ -65,7 +70,12 @@ public class InactiveTransparency : MonoBehaviour
             if (time < 0) return;
             
             var transparency = transparencyCurve.Evaluate(time);
-            _material.color = new Color(_color.r, _color.g, _color.b, transparency);
+            
+            for (var i = 0; i < _materials.Length; i++)
+            {
+                var color = _colors[i];
+                _materials[i].color = new Color(color.r, color.g, color.b, transparency);
+            }
         }
     } 
 }

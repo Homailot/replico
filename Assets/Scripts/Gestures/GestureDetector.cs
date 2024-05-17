@@ -141,6 +141,7 @@ namespace Gestures
 
         public void OnPointSelected()
         {
+            gestureConfiguration.logger.PointCreation();
             var localPoint = gestureConfiguration.replicaController.GetReplica().transform.InverseTransformPoint(balloon.position);
             AddPointOfInterest(localPoint, _playerId);
             pointSelected.Invoke(localPoint);
@@ -338,6 +339,15 @@ namespace Gestures
         public void AddTableSelectedListener(UnityAction<ulong> action)
         {
             tableSelected.AddListener(action);
+        }
+        
+        public void ClearPointsOfInterest()
+        {
+            foreach (var balloonPoint in _pointsOfInterest.Values.ToList())
+            {
+                RemovePointOfInterest(balloonPoint.id, _playerId);
+                pointRemoved.Invoke(new BalloonPointId(balloonPoint.playerId, balloonPoint.id));
+            }
         }
         
         public void AddTaskObjectSelectedListener(UnityAction<TaskObjectPoint> action)

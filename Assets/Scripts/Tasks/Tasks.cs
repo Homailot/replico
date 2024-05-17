@@ -8,11 +8,17 @@ namespace Tasks
     public class Tasks : MonoBehaviour
     {
         [SerializeField] private List<Task> tasks;
+        [SerializeField] private Clock clock;
         
         private Logger _logger;
-        private int _currentTaskIndex = 0;
+        private int _currentTaskIndex = -1;
         private bool _inTask;
-        
+
+        public void Start()
+        {
+            clock.AddTimeEndListener(() => SkipTask());
+        }
+
         public void SetLogger(Logger logger)
         {
             _logger = logger;
@@ -29,8 +35,14 @@ namespace Tasks
             _currentTaskIndex++;
             if (_currentTaskIndex < tasks.Count)
             {
-                tasks[_currentTaskIndex].SetOnTaskFinishedListener((_) => _inTask = false);
+                tasks[_currentTaskIndex].SetOnTaskFinishedListener((_) =>
+                {
+                    _inTask = false;
+                    clock.ClearTime();
+                    tasks[_currentTaskIndex].CleanTask();
+                });
                 tasks[_currentTaskIndex].StartTask(_logger);
+                clock.SetTime(tasks[_currentTaskIndex].GetTaskTime());
                 _inTask = true;
             }
         }
@@ -41,9 +53,8 @@ namespace Tasks
             {
                 tasks[_currentTaskIndex].EndTask(false);
                 _inTask = false;
+                clock.ClearTime();
             }
         }
-        
-
     }
 }

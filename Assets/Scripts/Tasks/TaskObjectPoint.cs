@@ -95,6 +95,7 @@ namespace Tasks
         public bool selectable { get; set; }
         public void OnSelect(GestureDetector gestureDetector)
         {
+            gestureDetector.OnPointSelected();
             gestureDetector.OnTaskObjectSelected(this);
         }
 

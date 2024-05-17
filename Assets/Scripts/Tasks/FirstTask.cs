@@ -27,7 +27,13 @@ namespace Tasks
             _logger.StartTask();
         }
 
-        public override void CleanTask(bool success)
+        protected override void EndTaskInternal(bool success)
+        {
+            CleanTask();
+            _logger.EndTask(success); 
+        }
+
+        public override void CleanTask()
         {
             foreach (var taskObject in _taskObjectsScript.taskObjectPoints)
             {
@@ -35,7 +41,8 @@ namespace Tasks
             }
             
             gestureDetector.ClearTaskPoints();
-            _logger.EndTask(success);
+            gestureDetector.ClearPointsOfInterest();
+            gestureDetector.ClearTaskObjectSelectedListeners();
         }
 
         private void PointSelected(TaskObjectPoint _)

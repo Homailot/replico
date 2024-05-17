@@ -89,7 +89,6 @@ namespace Gestures.Balloon
                     }
                     else
                     {
-                        _gestureConfiguration.logger.PointCreation();
                         _gestureDetector.OnPointSelected();
                     }
                     

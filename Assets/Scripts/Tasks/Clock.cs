@@ -10,10 +10,19 @@ namespace Tasks
         [SerializeField] private TextMeshProUGUI text;
         [SerializeField] private float seconds = 0;
         [SerializeField] private TimerEnd timerEnd;
+        
+        private bool _running;
     
         public void SetTime(float time)
         {
             seconds = time;
+            _running = true;
+        }
+        
+        public void ClearTime()
+        {
+            seconds = 0;
+            _running = false;
         }
     
         public void AddTimeEndListener(UnityAction action)
@@ -27,7 +36,11 @@ namespace Tasks
         
             if (seconds <= 0)
             {
-                timerEnd.Invoke();
+                if (_running)
+                {
+                    timerEnd.Invoke();
+                    _running = false;
+                }
                 seconds = 0;
             }
         
