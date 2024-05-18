@@ -279,10 +279,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -567.2000122070313,
-            "y": 137.6000213623047,
-            "width": 275.20001220703127,
-            "height": 374.4000244140625
+            "x": -593.60009765625,
+            "y": 195.20001220703126,
+            "width": 256.8000183105469,
+            "height": 374.39996337890627
         }
     },
     "m_Slots": [
@@ -639,6 +639,31 @@
 }
 
 {
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "4784d8942502456b8ff4e1a885f53925",
+    "m_Id": -135056979,
+    "m_DisplayName": "Blend Color",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Blend_Color",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 1.0,
+        "y": 1.0,
+        "z": 1.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
     "m_SGVersion": 3,
     "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
     "m_ObjectId": "4905528ad2254dd09b73dcdc681b4c7b",
@@ -847,6 +872,21 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "7027d7d9e2a842d197b6a9085a4905cb",
+    "m_Id": -123907344,
+    "m_DisplayName": "Speed",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Speed",
+    "m_StageCapability": 3,
+    "m_Value": 1.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.TangentMaterialSlot",
     "m_ObjectId": "72ce514b1fa74531a08334609f36e236",
     "m_Id": 0,
@@ -946,6 +986,20 @@
     "m_Value": 1.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.BooleanMaterialSlot",
+    "m_ObjectId": "843a14d4902646c080d1eaef7419fa59",
+    "m_Id": 1252946801,
+    "m_DisplayName": "Glow",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Glow",
+    "m_StageCapability": 3,
+    "m_Value": true,
+    "m_DefaultValue": false
 }
 
 {
@@ -1316,6 +1370,15 @@
             "m_Id": "14247ce63a5945199b44d3be16d9cfbb"
         },
         {
+            "m_Id": "4784d8942502456b8ff4e1a885f53925"
+        },
+        {
+            "m_Id": "7027d7d9e2a842d197b6a9085a4905cb"
+        },
+        {
+            "m_Id": "843a14d4902646c080d1eaef7419fa59"
+        },
+        {
             "m_Id": "e62d29f052a745cc8b1946b75e03cf95"
         }
     ],
@@ -1330,11 +1393,17 @@
     "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"9135d58651d6f8243ac44f44ae697b50\",\n        \"type\": 3\n    }\n}",
     "m_PropertyGuids": [
         "9a4769f9-783c-4401-abbd-ed63c920eab2",
-        "62754105-7934-4b5b-966a-0c7541289ff9"
+        "62754105-7934-4b5b-966a-0c7541289ff9",
+        "0ce5d420-8f63-40f4-b8cf-076e56a5e5d5",
+        "58538db0-ab03-4316-93aa-a03fd0de78dc",
+        "5d234da0-ce07-4dcc-82be-cbe5544e8abf"
     ],
     "m_PropertyIds": [
         255954087,
-        -1514308890
+        -1514308890,
+        -135056979,
+        -123907344,
+        1252946801
     ],
     "m_Dropdowns": [],
     "m_DropdownSelectedEntries": []

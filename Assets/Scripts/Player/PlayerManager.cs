@@ -110,5 +110,11 @@ namespace Player
             if (!NetworkManager.Singleton.IsServer) return;
             _currentBalloonId = 0;
         }
+        
+        public void SetBalloonId(ulong balloonId)
+        {
+            if (!NetworkManager.Singleton.IsServer) return;
+            _currentBalloonId = balloonId;
+        }
     }
 }

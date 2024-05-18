@@ -51,6 +51,7 @@ namespace Gestures
         [SerializeField] private TableSelected tableSelected;
         [SerializeField] private TaskObjectSelected taskObjectSelected;
         [SerializeField] private PointCountReset pointCountReset;
+        [SerializeField] private PointAcknowledged pointAcknowledged;
 
         private void Awake()
         {
@@ -166,14 +167,14 @@ namespace Gestures
             
             var indicatorLine = balloonPoint.GetIndicatorLine();
             // TODO: uncomment
-            //indicatorLine.DisableLine();
-            //indicatorLine.DisablePinIndicator();
+            indicatorLine.DisableLine();
+            indicatorLine.DisablePinIndicator();
             
             _tempPoints.Add(new BalloonPointTempId(balloonPoint.playerId, balloonPoint.localPosition), balloonPoint);
             _world.AddPointOfInterest(new BalloonPointTempId(playerId, position));
         }
 
-        public void AddPointOfInterest(Vector3 position, ulong playerId, ulong id)
+        public BalloonPoint AddPointOfInterest(Vector3 position, ulong playerId, ulong id)
         {
             var balloonPoint = CreateBalloonPoint(position, playerId);
             balloonPoint.id = id;
@@ -184,6 +185,8 @@ namespace Gestures
             
             _pointsOfInterest.Add(new BalloonPointId(playerId, id), balloonPoint);
             _world.AddPointOfInterest(new BalloonPointId(playerId, id), position);
+            
+            return balloonPoint;
         }
         
         private BalloonPoint CreateBalloonPoint(Vector3 position, ulong playerId)
@@ -226,6 +229,7 @@ namespace Gestures
                 line.DisableLine();
                 line.DisablePinIndicator();
                 gestureConfiguration.logger.PointAcknowledgement();
+                pointAcknowledged.Invoke(balloonPoint.id);
                 return;
             }
             gestureConfiguration.logger.PointDeletion();
@@ -351,7 +355,7 @@ namespace Gestures
         {
             foreach (var balloonPoint in _pointsOfInterest.Values.ToList())
             {
-                RemovePointOfInterest(balloonPoint.id, _playerId);
+                RemovePointOfInterest(balloonPoint.id, balloonPoint.playerId);
                 pointRemoved.Invoke(new BalloonPointId(balloonPoint.playerId, balloonPoint.id));
             }
             pointCountReset.Invoke();
@@ -365,6 +369,16 @@ namespace Gestures
         public void ClearTaskObjectSelectedListeners()
         {
             taskObjectSelected.RemoveAllListeners();
+        }
+        
+        public void AddPointAcknowledgedListener(UnityAction<ulong> action)
+        {
+            pointAcknowledged.AddListener(action);
+        }
+        
+        public void ClearPointAcknowledgedListeners()
+        {
+            pointAcknowledged.RemoveAllListeners();
         }
         
         public void OnTaskObjectSelected(TaskObjectPoint taskObjectPoint)
@@ -381,6 +395,11 @@ namespace Gestures
         {
             _playerId = playerId;
             balloonMaterialUpdate.UpdateBalloonNone(balloon.gameObject, playerId);
+        }
+        
+        public ulong GetPlayerId()
+        {
+            return _playerId;
         }
 
         public void Init()
@@ -528,5 +547,8 @@ namespace Gestures
 
         [Serializable]
         public class TaskObjectSelected : UnityEvent<TaskObjectPoint> { }
+        
+        [Serializable]
+        public class PointAcknowledged : UnityEvent<ulong> { }
     }
 }

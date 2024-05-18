@@ -20,6 +20,7 @@ namespace Tasks
             _taskObjectsScript = replicaController.GetReplica().GetComponent<TaskObjects>();
             _taskObjectsScript.taskObjectPoints[_currentTaskObjectIndex].PrepareTaskObject();
             
+            gestureDetector.ClearPointsOfInterest();
             gestureDetector.AddTaskPoints(_taskObjectsScript.taskObjectPoints);
             gestureDetector.AddTaskObjectSelectedListener(PointSelected);
             
