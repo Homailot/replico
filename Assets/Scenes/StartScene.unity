@@ -524,13 +524,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1City: {fileID: 1316916840389940226, guid: 1d847331ad93b8e49a989f733852ca71, type: 3}
   player2City: {fileID: -3740778874227915310, guid: 1d847331ad93b8e49a989f733852ca71, type: 3}
+  player1Rover: {fileID: 3917092423428315354, guid: 1d847331ad93b8e49a989f733852ca71, type: 3}
+  player2Rover: {fileID: -924337164842828992, guid: 1d847331ad93b8e49a989f733852ca71, type: 3}
   player1Dungeon: {fileID: -2561247353619662487, guid: 1d847331ad93b8e49a989f733852ca71, type: 3}
   player2Dungeon: {fileID: 6593707877301572237, guid: 1d847331ad93b8e49a989f733852ca71, type: 3}
   nextTask: {fileID: 5027074537907019113, guid: 1d847331ad93b8e49a989f733852ca71, type: 3}
   networkManager: {fileID: 220569453}
   logger: {fileID: 277725842}
   cityScene: {fileID: 102900000, guid: 4e9fef26e6adb88479ad1b9834a32d94, type: 3}
-  dungeonScene: {fileID: 102900000, guid: eeea8ffe4db99b146b5ff6a5ccfe0042, type: 3}
+  roverScene: {fileID: 102900000, guid: f861d416c22c05a40b51ac098fa8502e, type: 3}
+  dungeonScene: {fileID: 102900000, guid: 346d3b072659dc04e88e3762a0c8d9d1, type: 3}
 --- !u!1 &3127728406398351885
 GameObject:
   m_ObjectHideFlags: 0

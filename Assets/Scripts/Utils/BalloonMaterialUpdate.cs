@@ -50,8 +50,9 @@ namespace Utils
             };
         }
         
-        public void UpdateBalloonLayer(GameObject balloonGameObject, ulong playerId)
+        public void UpdateBalloonLayer(BalloonPoint balloonPoint, ulong playerId)
         {
+            var balloonGameObject = balloonPoint.GetModel();
             balloonGameObject.layer = playerId switch
             {
                 0 => LayerMask.NameToLayer("Balloon"),
@@ -70,14 +71,12 @@ namespace Utils
                 _ => meshFilter.mesh
             };
             
-            var balloonPoint = balloonGameObject.GetComponent<BalloonPoint>();
-            if (balloonPoint == null) return;
-            
             balloonPoint.SetHighlight(playerId == 0 ? balloon1Highlight : balloon2Highlight);
         }
 
-        public void UpdateBalloonWorld(GameObject balloonGameObject, ulong playerId)
+        public void UpdateBalloonWorld(BalloonPoint balloonPoint, ulong playerId)
         {
+            var balloonGameObject = balloonPoint.GetModel();
             balloonGameObject.layer = LayerMask.NameToLayer("Default");
             balloonGameObject.GetComponent<Renderer>().material = playerId switch
             {
@@ -97,8 +96,6 @@ namespace Utils
                 _ => meshFilter.mesh
             };
             
-            var balloonPoint = balloonGameObject.GetComponent<BalloonPoint>();
-            if (balloonPoint == null) return;
             var canvas = balloonPoint.GetCanvas();
             if (canvas == null) return;
 

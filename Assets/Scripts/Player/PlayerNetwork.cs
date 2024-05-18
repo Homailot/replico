@@ -229,6 +229,7 @@ namespace Player
             gestureDetector.AddPointRemovedListener(OnPointRemoved);
             gestureDetector.AddTeleportSelectedListener(OnTeleportSelected);
             gestureDetector.AddTableSelectedListener(OnTableSelected);
+            gestureDetector.AddPointCountResetListener(OnPointCountReset);
             _touchPlane = touchPlane;
             _initialized = true;
         }
@@ -265,6 +266,18 @@ namespace Player
                 playerId = playerId, 
                 id = id
             });
+        }
+        
+        private void OnPointCountReset()
+        {
+            if (!IsOwner) return;
+            ResetPointOfInterestCounterRpc();
+        }
+        
+        [Rpc(SendTo.Server)]
+        private void ResetPointOfInterestCounterRpc()
+        {
+            playerManager.ResetBalloonId();
         }
         
         private void OnPointRemoved(BalloonPointId point)

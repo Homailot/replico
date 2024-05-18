@@ -49,6 +49,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Player 1 Rover",
+                    "type": "Button",
+                    "id": "593a516b-20f9-435f-95e4-9f937b03321f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Player 2 Rover",
+                    "type": "Button",
+                    "id": "c7351493-a211-425c-a032-cad792b7cfcd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -77,7 +95,7 @@
                 {
                     "name": "",
                     "id": "0088b3a2-346a-4a17-9bd4-d2d09f02d969",
-                    "path": "<Keyboard>/3",
+                    "path": "<Keyboard>/5",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -88,7 +106,7 @@
                 {
                     "name": "",
                     "id": "239ea18a-75ba-47e3-b86d-6cb4e9e54a2d",
-                    "path": "<Keyboard>/4",
+                    "path": "<Keyboard>/6",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -104,6 +122,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5947900f-3964-4efa-883f-b1f30e133972",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Player 1 Rover",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e14d9329-8b17-43db-8b06-3278a0d94246",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Player 2 Rover",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

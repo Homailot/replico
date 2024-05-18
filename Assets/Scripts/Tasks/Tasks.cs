@@ -13,10 +13,14 @@ namespace Tasks
         private Logger _logger;
         private int _currentTaskIndex = -1;
         private bool _inTask;
+        private bool _failedTask;
 
         public void Start()
         {
-            clock.AddTimeEndListener(() => SkipTask());
+            clock.AddTimeEndListener(() =>
+            {
+                _failedTask = true;
+            });
         }
 
         public void SetLogger(Logger logger)
@@ -35,6 +39,7 @@ namespace Tasks
             _currentTaskIndex++;
             if (_currentTaskIndex < tasks.Count)
             {
+                _failedTask = false;
                 tasks[_currentTaskIndex].SetOnTaskFinishedListener((_) =>
                 {
                     _inTask = false;

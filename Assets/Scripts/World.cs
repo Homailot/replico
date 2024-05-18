@@ -40,7 +40,7 @@ public class World : MonoBehaviour
         indicatorLine.DisablePinIndicator();
         
         _tempPointsOfInterest.Add(balloonPointId, balloonPoint);
-        balloonMaterialUpdate.UpdateBalloonWorld(balloon, balloonPointId.playerId);
+        balloonMaterialUpdate.UpdateBalloonWorld(balloonPoint, balloonPointId.playerId);
     }
 
     public void AddPointOfInterest(BalloonPointId id, Vector3 position)
@@ -64,12 +64,13 @@ public class World : MonoBehaviour
          indicatorLine.SetBalloonId(id.id.ToString());
          
          _pointsOfInterest.Add(id, balloonPoint);
-         balloonMaterialUpdate.UpdateBalloonWorld(balloon, id.playerId);       
+         balloonMaterialUpdate.UpdateBalloonWorld(balloonPoint, id.playerId);       
     }
 
     public void EnableWorldBalloonSelection(ulong playerId)
     {
-        balloonMaterialUpdate.UpdateBalloonWorld(worldBalloonSelection, playerId);
+        var balloonPoint = worldBalloonSelection.GetComponent<BalloonPoint>();
+        balloonMaterialUpdate.UpdateBalloonWorld(balloonPoint, playerId);
         worldBalloonLine.SetActive(true);
         worldBalloonSelection.SetActive(true);
     }

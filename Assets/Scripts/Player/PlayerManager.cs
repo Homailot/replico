@@ -104,5 +104,11 @@ namespace Player
             
             tableManager.RemoveFromTable(playerId);
         }
+
+        public void ResetBalloonId()
+        {
+            if (!NetworkManager.Singleton.IsServer) return;
+            _currentBalloonId = 0;
+        }
     }
 }

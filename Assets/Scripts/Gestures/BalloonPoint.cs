@@ -7,6 +7,8 @@ namespace Gestures
         [SerializeField] private GameObject highlightPrefab;
         [SerializeField] private BalloonIndicatorLine indicatorLine;
         [SerializeField] private Canvas canvas;
+        [SerializeField] private GameObject model;
+        
         private bool _isHighlighted;
         private GameObject _instantiatedHighlight; 
         private bool _isIntersected;
@@ -27,6 +29,11 @@ namespace Gestures
         {
             highlightPrefab = highlight;
         }
+        
+        public GameObject GetModel()
+        {
+            return model;
+        }   
 
         public void Highlight()
         {

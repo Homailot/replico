@@ -44,5 +44,6 @@ Material:
     - _QueueOffset: -1
     - _Surface: 0
     - _ZWrite: 1
-    m_Colors: []
+    m_Colors:
+    - _Color: {r: 0.71564215, g: 0.77646714, b: 0.8046652, a: 1}
   m_BuildTextureStacks: []

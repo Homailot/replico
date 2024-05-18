@@ -50,6 +50,7 @@ namespace Gestures
         [SerializeField] private PointRemoved pointRemoved;
         [SerializeField] private TableSelected tableSelected;
         [SerializeField] private TaskObjectSelected taskObjectSelected;
+        [SerializeField] private PointCountReset pointCountReset;
 
         private void Awake()
         {
@@ -165,8 +166,8 @@ namespace Gestures
             
             var indicatorLine = balloonPoint.GetIndicatorLine();
             // TODO: uncomment
-            indicatorLine.DisableLine();
-            indicatorLine.DisablePinIndicator();
+            //indicatorLine.DisableLine();
+            //indicatorLine.DisablePinIndicator();
             
             _tempPoints.Add(new BalloonPointTempId(balloonPoint.playerId, balloonPoint.localPosition), balloonPoint);
             _world.AddPointOfInterest(new BalloonPointTempId(playerId, position));
@@ -190,7 +191,7 @@ namespace Gestures
             var balloonPointObject = Instantiate(balloonPointPrefab, balloon.position, Quaternion.identity);
             var balloonPoint = balloonPointObject.GetComponent<BalloonPoint>();
             balloonPointObject.GetComponent<BalloonScale>().enabled = false;
-            balloonMaterialUpdate.UpdateBalloonLayer(balloonPointObject, playerId);
+            balloonMaterialUpdate.UpdateBalloonLayer(balloonPoint, playerId);
             balloonPoint.playerId = playerId;
             balloonPoint.localPosition = position;
             balloonPoint.UpdatePosition(gestureConfiguration.replicaController.GetReplica().transform);
@@ -341,6 +342,11 @@ namespace Gestures
             tableSelected.AddListener(action);
         }
         
+        public void AddPointCountResetListener(UnityAction action)
+        {
+            pointCountReset.AddListener(action);
+        }
+        
         public void ClearPointsOfInterest()
         {
             foreach (var balloonPoint in _pointsOfInterest.Values.ToList())
@@ -348,6 +354,7 @@ namespace Gestures
                 RemovePointOfInterest(balloonPoint.id, _playerId);
                 pointRemoved.Invoke(new BalloonPointId(balloonPoint.playerId, balloonPoint.id));
             }
+            pointCountReset.Invoke();
         }
         
         public void AddTaskObjectSelectedListener(UnityAction<TaskObjectPoint> action)
@@ -515,6 +522,9 @@ namespace Gestures
         
         [Serializable]
         public class TableSelected : UnityEvent<ulong> {}
+        
+        [Serializable]
+        public class PointCountReset : UnityEvent { }
 
         [Serializable]
         public class TaskObjectSelected : UnityEvent<TaskObjectPoint> { }

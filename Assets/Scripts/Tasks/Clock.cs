@@ -48,7 +48,7 @@ namespace Tasks
             const string empty = " ";
             const string colon = ":";
             var colonOrEmpty = (seconds % 1f > 0.5) ? colon : empty;
-            text.text = $"{minutes % 60:D2}{colonOrEmpty}{(int) seconds % 60:D2}";
+            //text.text = $"{minutes % 60:D2}{colonOrEmpty}{(int) seconds % 60:D2}";
         }
     
         [Serializable]

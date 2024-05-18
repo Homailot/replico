@@ -12,14 +12,20 @@ namespace Tasks
     {
         [SerializeField] private InputActionReference player1City;
         [SerializeField] private InputActionReference player2City;
+        
+        [SerializeField] private InputActionReference player1Rover;
+        [SerializeField] private InputActionReference player2Rover;
+        
         [SerializeField] private InputActionReference player1Dungeon;
         [SerializeField] private InputActionReference player2Dungeon;
+        
         [SerializeField] private InputActionReference nextTask;
         [SerializeField] private NetworkManager networkManager;
        // [SerializeField] private PlayerManager playerManager;
         [SerializeField] private Logger logger;
         
         [SerializeField] private SceneAsset cityScene;
+        [SerializeField] private SceneAsset roverScene;
         [SerializeField] private SceneAsset dungeonScene;
 
         private Tasks _tasks;
@@ -31,6 +37,9 @@ namespace Tasks
             
             player1City.action.performed += ctx => LoadCity(0);
             player2City.action.performed += ctx => LoadCity(1);
+            
+            player1Rover.action.performed += ctx => LoadRover(0);
+            player2Rover.action.performed += ctx => LoadRover(1);
             
             player1Dungeon.action.performed += ctx => LoadDungeon(0);
             player2Dungeon.action.performed += ctx => LoadDungeon(1);
@@ -61,7 +70,7 @@ namespace Tasks
             {
                 _tasks.SkipTask();
                 networkManager.Shutdown();
-                networkManager.OnClientStopped += _ => LoadCity(playerId);
+                //networkManager.OnClientStopped += _ => LoadCity(playerId);
                 _loaded = false;
                 return;
             }
@@ -77,11 +86,40 @@ namespace Tasks
             networkManager.SceneManager.LoadScene(cityScene.name, LoadSceneMode.Single);
         }
         
+        private void LoadRover(ulong playerId)
+        {
+            if (_loaded)
+            {
+                _tasks.SkipTask();
+                networkManager.Shutdown();
+                //networkManager.OnClientStopped += _ => LoadCity(playerId);
+                _loaded = false;
+                return;
+            }
+            _loaded = false;
+            logger.EnableLogger("rover");
+            networkManager.StartHost();
+            networkManager.SceneManager.OnSceneEvent += OnSceneEvent;
+            
+            var player = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
+            player.playerId = playerId;
+            
+            networkManager.SceneManager.LoadScene(roverScene.name, LoadSceneMode.Single);
+        }
+        
         private void LoadDungeon(ulong playerId)
         {
+            if (_loaded)
+            {
+                _tasks.SkipTask();
+                networkManager.Shutdown();
+                //networkManager.OnClientStopped += _ => LoadCity(playerId);
+                _loaded = false;
+                return;
+            }
             _loaded = false;
-            logger.EnableLogger("dungeon");
             networkManager.StartHost();
+            networkManager.SceneManager.OnSceneEvent += OnSceneEvent;
             
             var player = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
             player.playerId = playerId;
