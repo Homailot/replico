@@ -8,11 +8,17 @@ namespace Tasks
     {
         [SerializeField] private TaskFinishedEvent taskFinishedEvent;
         [SerializeField] private float taskTime;
+
+        private bool _failed;
         
         public abstract void StartTask(Logger logger);
 
         public void EndTask(bool success = false)
         {
+            if (_failed)
+            {
+                success = false;
+            }
             EndTaskInternal(success);
             taskFinishedEvent.Invoke(success); 
         }
@@ -24,7 +30,12 @@ namespace Tasks
         
         protected abstract void EndTaskInternal(bool success);
         public abstract void CleanTask();
-        public abstract bool Next(); 
+        public abstract bool Next();
+
+        public void SetFailed()
+        {
+            _failed = true;
+        }
         
         public void SetOnTaskFinishedListener(UnityAction<bool> action)
         {

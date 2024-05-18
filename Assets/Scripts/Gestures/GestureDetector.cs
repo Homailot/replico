@@ -489,7 +489,7 @@ namespace Gestures
             renderBehindPlaneMaterial.SetVector(FirstHand, new Vector2(-1f, -1f));
             renderBehindPlaneMaterial.SetVector(SecondHand, new Vector2(-1f, -1f));
             balloonHeightToCoordinates.ResetBalloonHeight();
-            balloonMaterialUpdate.SetBalloonProgress(0);
+            balloonMaterialUpdate.SetBalloonProgress(-0.1f);
             balloonArrow.gameObject.SetActive(false);
         }
 
