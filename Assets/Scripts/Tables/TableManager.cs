@@ -186,6 +186,16 @@ namespace Tables
         
             SendToClient(newTable, seat, clientId);
         } 
+        
+        public void CreateNewTableWithPlayer(ulong playerId, Vector3 position, Quaternion rotation)
+        {
+            var newTableGameObject = Instantiate(tablePrefab, position, rotation);
+            var newTable = newTableGameObject.GetComponent<Table>();
+            _tables.Add(newTable);
+            newTable.AddToTable(playerId, 0);
+        
+            newTable.networkObject.Spawn(true);
+        }
 
         [ClientRpc]
         private void MovePlayerToTableClientRpc(NetworkObjectReference tableReference, int seat, ClientRpcParams clientRpcParams = default)

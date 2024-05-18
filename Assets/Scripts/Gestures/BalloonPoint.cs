@@ -8,6 +8,7 @@ namespace Gestures
         [SerializeField] private BalloonIndicatorLine indicatorLine;
         [SerializeField] private Canvas canvas;
         [SerializeField] private GameObject model;
+        [SerializeField] private BalloonScale balloonScale;
         
         private bool _isHighlighted;
         private GameObject _instantiatedHighlight; 
@@ -80,6 +81,11 @@ namespace Gestures
         public Canvas GetCanvas()
         {
             return canvas;
+        }
+        
+        public BalloonScale GetBalloonScale()
+        {
+            return balloonScale;
         }
         
         private void OnTriggerEnter(Collider other)

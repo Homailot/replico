@@ -587,6 +587,7 @@ MonoBehaviour:
   indicatorLine: {fileID: 2399670293578396531}
   canvas: {fileID: 7865717938411756285}
   model: {fileID: 8394350737278072104}
+  balloonScale: {fileID: 7818810496639377632}
   playerId: 0
   id: 0
   localPosition: {x: 0, y: 0, z: 0}

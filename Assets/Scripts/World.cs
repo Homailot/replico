@@ -15,6 +15,8 @@ public class World : MonoBehaviour
     [SerializeField] private GameObject balloonPrefab;
     [SerializeField] private BalloonMaterialUpdate balloonMaterialUpdate;
     [SerializeField] private Transform balloonParent;
+
+    [SerializeField] private float balloonScaleMultiplier = 0.045f; 
     
     private readonly IDictionary<BalloonPointId, BalloonPoint> _pointsOfInterest =
         new Dictionary<BalloonPointId, BalloonPoint>(new BalloonEqualityComparer());
@@ -38,33 +40,40 @@ public class World : MonoBehaviour
         var indicatorLine = balloonPoint.GetIndicatorLine();
         indicatorLine.DisableLine();
         indicatorLine.DisablePinIndicator();
+
+        var balloonScale = balloonPoint.GetBalloonScale();
+        balloonScale.scaleMultiplier = balloonScaleMultiplier;
         
         _tempPointsOfInterest.Add(balloonPointId, balloonPoint);
         balloonMaterialUpdate.UpdateBalloonWorld(balloonPoint, balloonPointId.playerId);
     }
 
     public void AddPointOfInterest(BalloonPointId id, Vector3 position)
-    {
-         if (_pointsOfInterest.ContainsKey(id))
-         {
-             return;
-         }
-         
-         var balloon = Instantiate(balloonPrefab, balloonParent);
-         var balloonPoint = balloon.GetComponent<BalloonPoint>();
-         balloonPoint.playerId = id.playerId;
-         balloonPoint.localPosition = position;
-         balloonPoint.id = id.id;
-         balloonPoint.transform.SetParent(balloonParent);
-         balloonPoint.transform.localPosition = position;
- 
-         var indicatorLine = balloonPoint.GetIndicatorLine();
-         indicatorLine.DisableLine();
-         indicatorLine.DisablePinIndicator();
-         indicatorLine.SetBalloonId(id.id.ToString());
-         
-         _pointsOfInterest.Add(id, balloonPoint);
-         balloonMaterialUpdate.UpdateBalloonWorld(balloonPoint, id.playerId);       
+    { 
+        if (_pointsOfInterest.ContainsKey(id))
+        { 
+            return;
+        }
+
+        var balloon = Instantiate(balloonPrefab, balloonParent);
+        var balloonPoint = balloon.GetComponent<BalloonPoint>();
+        balloonPoint.playerId = id.playerId;
+        balloonPoint.localPosition = position;
+        balloonPoint.id = id.id;
+        balloonPoint.transform.SetParent(balloonParent);
+        balloonPoint.transform.localPosition = position;
+
+        var indicatorLine = balloonPoint.GetIndicatorLine();
+        indicatorLine.DisableLine();
+        indicatorLine.DisablePinIndicator();
+        indicatorLine.SetBalloonId(id.id.ToString());
+
+        var balloonScale = balloonPoint.GetBalloonScale();
+        balloonScale.scaleMultiplier = balloonScaleMultiplier;
+
+
+        _pointsOfInterest.Add(id, balloonPoint);
+        balloonMaterialUpdate.UpdateBalloonWorld(balloonPoint, id.playerId);       
     }
 
     public void EnableWorldBalloonSelection(ulong playerId)
