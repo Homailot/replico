@@ -66,7 +66,15 @@ namespace Gestures.Balloon
                 //_gestureDetector.RotateBalloonArrow(yRotation);
                 break;
             }
-            
+
+            if (_replicaPoint != null && _replicaPoint.Intersects())
+            {
+                _replicaPoint.Highlight();
+            } 
+            else
+            {
+                _replicaPoint?.Unhighlight();
+            }
             
             var timeDifference = Time.time - _holdTime;
             
@@ -83,6 +91,8 @@ namespace Gestures.Balloon
                 // Do selection
                 if (!_enableArrow)
                 {
+                    _replicaPoint?.Unhighlight();
+
                     if (_replicaPoint is { selectable: true })
                     {
                         _replicaPoint.OnSelect(_gestureDetector);
@@ -101,6 +111,8 @@ namespace Gestures.Balloon
 
                 if (timeDifference < _gestureConfiguration.balloonTeleportTime)
                 {
+                    _replicaPoint?.Unhighlight();
+
                     _gestureConfiguration.logger.EndBalloonSelection();
                     _gestureDetector.ResetBalloonPlanePositionsAndHeight();
                     _gestureDetector.DisableBalloon();
@@ -120,6 +132,8 @@ namespace Gestures.Balloon
 
         private void Teleport()
         {
+            _replicaPoint?.Unhighlight();
+            
             _gestureConfiguration.logger.EndBalloonSelection();
             _gestureConfiguration.logger.Teleportation();
             _gestureDetector.ResetBalloonPlanePositionsAndHeight();

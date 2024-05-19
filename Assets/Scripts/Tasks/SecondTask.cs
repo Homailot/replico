@@ -49,6 +49,7 @@ namespace Tasks
         public override void CleanTask()
         {
             gestureDetector.ClearPointsOfInterest();
+            gestureDetector.RemovePointAcknowledgedListener(PointSelected);
         }
 
         private void PointSelected(ulong id)

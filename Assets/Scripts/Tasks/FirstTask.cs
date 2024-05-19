@@ -46,7 +46,7 @@ namespace Tasks
             gestureDetector.ClearTaskObjectSelectedListeners();
         }
 
-        private void PointSelected(TaskObjectPoint _)
+        private void PointSelected()
         {
             var finished = Next();
             if (finished)

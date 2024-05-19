@@ -34,7 +34,8 @@ namespace Gestures
         private readonly IDictionary<BalloonPointId, BalloonPoint> _pointsOfInterest = new Dictionary<BalloonPointId, BalloonPoint>(new BalloonEqualityComparer());
         private readonly IDictionary<BalloonPointTempId, BalloonPoint> _tempPoints = new Dictionary<BalloonPointTempId, BalloonPoint>(new BalloonTempEqualityComparer());
         private readonly IDictionary<ulong, TablePoint> _tablePoints = new Dictionary<ulong, TablePoint>();
-        private readonly List<TaskObjectPoint> taskObjectPoints = new List<TaskObjectPoint>();
+        private readonly List<TaskObjectPoint> _taskObjectPoints = new List<TaskObjectPoint>();
+        private readonly List<TaskTeleportPoint> _taskTeleportPoints = new List<TaskTeleportPoint>();
         private World _world;
         private ulong _playerId = 0;
         
@@ -89,11 +90,19 @@ namespace Gestures
 
         public IReplicaPoint GetReplicaPointFromBalloon()
         {
-            foreach (var taskObjectPoint in taskObjectPoints)
+            foreach (var taskObjectPoint in _taskObjectPoints)
             {
                 if (taskObjectPoint.Intersects() && taskObjectPoint.selectable)
                 {
                     return taskObjectPoint;
+                }
+            }
+
+            foreach (var taskTeleportPoint in _taskTeleportPoints)
+            {
+                if (taskTeleportPoint.InsideZone() && taskTeleportPoint.selectable)
+                {
+                    return taskTeleportPoint;
                 }
             }
                         
@@ -140,6 +149,22 @@ namespace Gestures
             var rotation = Quaternion.LookRotation(localRotation, Vector3.up);
             teleportSelected.Invoke(localPoint, rotation);
         }
+        
+        public bool ArrowEnabled()
+        {
+            return balloonArrow.gameObject.activeSelf;
+        }
+        
+        public Vector3 GetBalloonPosition()
+        {
+            return gestureConfiguration.replicaController.GetReplica().transform.InverseTransformPoint(balloon.position);
+        }
+        
+        public Quaternion GetBalloonRotation()
+        {
+            var localRotation = gestureConfiguration.replicaController.GetReplica().transform.InverseTransformDirection(balloonArrow.forward);
+            return Quaternion.LookRotation(localRotation, Vector3.up);
+        }
 
         public void OnPointSelected()
         {
@@ -151,12 +176,22 @@ namespace Gestures
         
         public void AddTaskPoints(IEnumerable<TaskObjectPoint> points)
         {
-            taskObjectPoints.AddRange(points);
+            _taskObjectPoints.AddRange(points);
         }
         
         public void ClearTaskPoints()
         {
-            taskObjectPoints.Clear();
+            _taskObjectPoints.Clear();
+        }
+        
+        public void AddTaskTeleportPoints(IEnumerable<TaskTeleportPoint> points)
+        {
+            _taskTeleportPoints.AddRange(points);
+        }
+        
+        public void ClearTaskTeleportPoints()
+        {
+            _taskTeleportPoints.Clear();
         }
         
         public void AddPointOfInterest(Vector3 position, ulong playerId)
@@ -341,6 +376,11 @@ namespace Gestures
             teleportSelected.AddListener(action);
         }
         
+        public void RemoveTeleportSelectedListener(UnityAction<Vector3, Quaternion> action)
+        {
+            teleportSelected.RemoveListener(action);
+        }
+        
         public void AddTableSelectedListener(UnityAction<ulong> action)
         {
             tableSelected.AddListener(action);
@@ -361,7 +401,7 @@ namespace Gestures
             pointCountReset.Invoke();
         }
         
-        public void AddTaskObjectSelectedListener(UnityAction<TaskObjectPoint> action)
+        public void AddTaskObjectSelectedListener(UnityAction action)
         {
             taskObjectSelected.AddListener(action);
         }
@@ -376,14 +416,19 @@ namespace Gestures
             pointAcknowledged.AddListener(action);
         }
         
+        public void RemovePointAcknowledgedListener(UnityAction<ulong> action)
+        {
+            pointAcknowledged.RemoveListener(action);
+        }
+        
         public void ClearPointAcknowledgedListeners()
         {
             pointAcknowledged.RemoveAllListeners();
         }
         
-        public void OnTaskObjectSelected(TaskObjectPoint taskObjectPoint)
+        public void OnTaskObjectSelected()
         {
-            taskObjectSelected.Invoke(taskObjectPoint);
+            taskObjectSelected.Invoke();
         }
 
         public void SetBalloonProgress(float progress)
@@ -546,7 +591,7 @@ namespace Gestures
         public class PointCountReset : UnityEvent { }
 
         [Serializable]
-        public class TaskObjectSelected : UnityEvent<TaskObjectPoint> { }
+        public class TaskObjectSelected : UnityEvent { }
         
         [Serializable]
         public class PointAcknowledged : UnityEvent<ulong> { }

@@ -96,7 +96,7 @@ namespace Tasks
         public void OnSelect(GestureDetector gestureDetector)
         {
             gestureDetector.OnPointSelected();
-            gestureDetector.OnTaskObjectSelected(this);
+            gestureDetector.OnTaskObjectSelected();
         }
 
         private void OnTriggerEnter(Collider other)

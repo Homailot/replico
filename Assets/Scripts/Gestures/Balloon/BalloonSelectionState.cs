@@ -55,6 +55,8 @@ namespace Gestures.Balloon
                 _gestureDetector.OnGestureExit();
                 _gestureDetector.ResetBalloonPlanePositionsAndHeight();
                 _gestureDetector.DisableBalloon();
+
+                _lastReplicaPoint?.Unhighlight();
                 _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
                 return;
             }
@@ -106,14 +108,6 @@ namespace Gestures.Balloon
             _lastEmpty = hands.secondHand.Count < 1;
             _lastDirection = secondHandPosition - _hands.firstHand.First().screenPosition;
             _lastDistance = distance;
-        }
-
-        public void OnExit()
-        {
-            if (_lastReplicaPoint != null)
-            {
-                _lastReplicaPoint.Unhighlight();
-            }
         }
     }
 }
