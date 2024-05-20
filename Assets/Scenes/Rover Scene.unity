@@ -276,6 +276,38 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e6cf21cddc5c8f84284930e847032e53, type: 3}
   m_PrefabInstance: {fileID: 177391230}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &252192176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 252192177}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &252192177
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252192176}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6898185784141765312}
+  m_Father: {fileID: 1956000272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &270261488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,8 +1675,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tasks:
-  - {fileID: 1547575723}
   - {fileID: 1547575722}
+  - {fileID: 1547575723}
   clock: {fileID: 583835749}
 --- !u!4 &1547575721
 Transform:
@@ -1678,7 +1710,7 @@ MonoBehaviour:
       m_Calls: []
   taskTime: 150
   gestureDetector: {fileID: 583835751}
-  playerManager: {fileID: 0}
+  playerManager: {fileID: 790068334}
   replicaController: {fileID: 583835750}
 --- !u!114 &1547575723
 MonoBehaviour:
@@ -1712,6 +1744,7 @@ MonoBehaviour:
   - {x: 0.371, y: 1.28, z: -0.448}
   unacknowledgedPoints: 0000000001000000050000000600000009000000
   playerManager: {fileID: 790068334}
+  replicaController: {fileID: 583835750}
 --- !u!1 &1729960005
 GameObject:
   m_ObjectHideFlags: 0
@@ -2129,7 +2162,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1951970116}
-  - {fileID: 6898185784141765312}
+  - {fileID: 252192177}
   m_Father: {fileID: 7506188444490899761}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1956000273
@@ -7291,7 +7324,7 @@ Transform:
   - {fileID: 9054426645414823946}
   - {fileID: 7063199053420906550}
   - {fileID: 4739895752034578891}
-  m_Father: {fileID: 1956000272}
+  m_Father: {fileID: 252192177}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6898248722887503081
 MeshFilter:

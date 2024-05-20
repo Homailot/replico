@@ -18,7 +18,7 @@ namespace Tasks
         
         private TaskObjects _taskObjectsScript;
         private int _currentTaskObjectIndex;
-        private Logger _logger;
+        public Logger _logger;
 
         public override void StartTask(Logger logger)
         {
@@ -26,6 +26,7 @@ namespace Tasks
 
            // _taskObjectsScript = replicaController.GetReplica().GetComponent<TaskObjects>();
            // _taskObjectsScript.taskObjectPoints[_currentTaskObjectIndex].PrepareTaskObject();
+           _logger = logger;
             
             gestureDetector.ClearPointsOfInterest();
             

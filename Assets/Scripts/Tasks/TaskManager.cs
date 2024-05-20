@@ -56,6 +56,7 @@ namespace Tasks
 
         private void OnSceneEvent(SceneEvent sceneEvent)
         {
+            Debug.Log("Scene event: " + sceneEvent.SceneEventType);
             if (sceneEvent.SceneEventType == SceneEventType.LoadEventCompleted)
             {
                 _tasks = GameObject.FindWithTag("TaskHolder").GetComponent<Tasks>();

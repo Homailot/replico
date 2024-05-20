@@ -11,7 +11,7 @@ namespace Player
         [SerializeField] private TableManager tableManager;
         
         private ulong _currentBalloonId = 0;
-        private readonly Queue<ulong> _availablePlayerIds = new Queue<ulong>();
+        private readonly IList<ulong> _availablePlayerIds = new List<ulong>() { 0, 1 };
         private readonly Dictionary<ulong, ulong> _playerIdToClientId = new Dictionary<ulong, ulong>();
         private readonly Dictionary<ulong, ulong> _clientIdToPlayerId = new Dictionary<ulong, ulong>();
         
@@ -30,18 +30,6 @@ namespace Player
                 var playerObject = client.PlayerObject.GetComponent<PlayerNetwork>();
                 OnClientConnected(client.ClientId, playerObject.playerId );
             }
-        }
-        
-        public void ResetAvailablePlayerIds()
-        {
-            _availablePlayerIds.Clear();
-            _playerIdToClientId.Clear();
-            _clientIdToPlayerId.Clear();
-        }
-        
-        public void AddAvailablePlayerId(ulong playerId)
-        {
-            _availablePlayerIds.Enqueue(playerId);
         }
         
         public ulong GetClientId(ulong playerId)
@@ -83,12 +71,14 @@ namespace Player
             if (_availablePlayerIds.Count == 0) return;
             Debug.Log($"Client {clientId} connected");
 
-            var playerId = _availablePlayerIds.Dequeue();
+            var playerId = _availablePlayerIds[0];
             OnClientConnected(clientId, playerId);
         }
 
         private void OnClientConnected(ulong clientId, ulong playerId)
         {
+            _availablePlayerIds.Remove(playerId);
+            
             var playerNetworkObject = NetworkManager.Singleton.ConnectedClients[clientId].PlayerObject;
             var playerNetwork = playerNetworkObject.GetComponent<PlayerNetwork>();
             playerNetwork.playerId = playerId;
@@ -105,7 +95,7 @@ namespace Player
              
             if (playerId == ulong.MaxValue) return;
             
-            _availablePlayerIds.Enqueue(playerId);
+            _availablePlayerIds.Add(playerId);
             _playerIdToClientId.Remove(playerId);
             _clientIdToPlayerId.Remove(clientId);
             
