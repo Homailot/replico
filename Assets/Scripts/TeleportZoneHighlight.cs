@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody), typeof(SphereCollider))]
+[RequireComponent(typeof(Rigidbody))]
 public class TeleportZoneHighlight : MonoBehaviour
 {
     [SerializeField] private Material unhighlightedMaterial;

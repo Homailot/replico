@@ -55,6 +55,13 @@ namespace Player
             var clientId = GetClientId(playerId);
             tableManager.MovePlayerTableToPosition(playerId, clientId, position, rotation);
         }
+        
+        [ServerRpc(RequireOwnership = false)]
+        public void MovePlayerFromTableToStartPositionServerRpc(ulong playerId)
+        {
+            var clientId = GetClientId(playerId);
+            tableManager.MovePlayerTableToStartPosition(playerId, clientId);
+        }
 
         [ServerRpc(RequireOwnership = false)]
         public void MovePlayerToTableServerRpc(ulong playerId, ulong tableId)

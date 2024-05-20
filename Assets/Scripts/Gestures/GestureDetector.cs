@@ -565,7 +565,7 @@ namespace Gestures
             renderBehindPlaneMaterial.SetVector(FirstHand, new Vector2(-1f, -1f));
             renderBehindPlaneMaterial.SetVector(SecondHand, new Vector2(-1f, -1f));
         }
-
+        
         public void SwitchState(IGestureState newState)
         {
             _currentState.OnExit();

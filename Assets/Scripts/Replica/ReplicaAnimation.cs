@@ -52,6 +52,11 @@ namespace Replica
             _endScale = end.localScale;
             _endRotation = end.rotation;
         }
+        
+        public Transform GetEndTransform()
+        {
+            return endTransform;
+        }
     
         public void ResetTransforms()
         {

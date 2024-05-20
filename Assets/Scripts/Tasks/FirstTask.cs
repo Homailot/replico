@@ -1,4 +1,5 @@
 using Gestures;
+using Player;
 using Replica;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace Tasks
     public class FirstTask : Task
     {
         [SerializeField] private GestureDetector gestureDetector;
+        [SerializeField] private PlayerManager playerManager;
         [SerializeField] private ReplicaController replicaController;
         
         private TaskObjects _taskObjectsScript;
@@ -23,6 +25,10 @@ namespace Tasks
             gestureDetector.ClearPointsOfInterest();
             gestureDetector.AddTaskPoints(_taskObjectsScript.taskObjectPoints);
             gestureDetector.AddTaskObjectSelectedListener(PointSelected);
+            var endTransform = replicaController.GetEndTransform();
+            replicaController.SetTarget(endTransform);
+            
+            playerManager.MovePlayerFromTableToStartPositionServerRpc(gestureDetector.GetPlayerId());
             
             _logger = logger;
             _logger.StartTask();

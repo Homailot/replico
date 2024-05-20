@@ -12,6 +12,7 @@ namespace Tasks
         [SerializeField] private List<Vector3> taskPoints;
         [SerializeField] private List<int> unacknowledgedPoints;
         [SerializeField] private PlayerManager playerManager;
+        [SerializeField] private ReplicaController replicaController;
         
         private Logger _logger;
 
@@ -35,7 +36,11 @@ namespace Tasks
             playerManager.SetBalloonId((ulong)taskPoints.Count);
 
             gestureDetector.AddPointAcknowledgedListener(PointSelected);
+            var endTransform = replicaController.GetEndTransform();
+            replicaController.SetTarget(endTransform);
             
+            playerManager.MovePlayerFromTableToStartPositionServerRpc(gestureDetector.GetPlayerId());
+                        
             _logger = logger;
             _logger.StartTask();
         }

@@ -207,5 +207,20 @@ namespace Tables
             var table = tableObject.GetComponent<Table>();
             player.MovePlayerToTable(table, seat);
         }
+
+        public void MovePlayerTableToStartPosition(ulong playerId, ulong clientId)
+        {
+            var table = GetTableWithPlayer(playerId);
+            if (table == null) return;
+            
+            if (table.firstSeat.Value == playerId)
+            {
+                MoveTableAndPlayer(table, playerId, clientId, 0, firstTableSpawnPosition.position, firstTableSpawnPosition.rotation);
+            }
+            else if (table.secondSeat.Value == playerId)
+            {
+                MoveTableAndPlayer(table, playerId, clientId, 1, firstTableSpawnPosition.position, firstTableSpawnPosition.rotation);
+            }
+        }
     }
 }

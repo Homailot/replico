@@ -63,6 +63,20 @@ namespace Replica
         {
             _replicaAnimation.CompleteAnimation(onComplete);
         }
+        
+        public Transform GetEndTransform()
+        {
+            return _replicaAnimation.GetEndTransform();
+        }
+        
+        public void SetTarget(Transform target)
+        {
+            var smoothTarget = _smoothFollow.GetTarget();
+            
+            smoothTarget.position = target.position;
+            smoothTarget.localScale = target.localScale;
+            smoothTarget.rotation = target.rotation;
+        }
     
         public void AnimateTo(float t)
         {
