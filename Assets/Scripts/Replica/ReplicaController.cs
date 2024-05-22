@@ -9,7 +9,7 @@ namespace Replica
         private GameObject _replica;
         private ReplicaAnimation _replicaAnimation;
         private SmoothFollow _smoothFollow;
-    
+        
         private void Awake()
         {
             _replicaAnimation = GetComponent<ReplicaAnimation>(); 
@@ -73,6 +73,8 @@ namespace Replica
         {
             var smoothTarget = _smoothFollow.GetTarget();
             
+            Debug.Log("smoothTarget: " + smoothTarget);
+            Debug.Log("target: " + target);
             smoothTarget.position = target.position;
             smoothTarget.localScale = target.localScale;
             smoothTarget.rotation = target.rotation;

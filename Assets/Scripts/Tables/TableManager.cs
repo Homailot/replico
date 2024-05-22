@@ -196,6 +196,19 @@ namespace Tables
         
             newTable.networkObject.Spawn(true);
         }
+        
+        public void MoveBothPlayersToNewTable(ulong playerId1, ulong clientId1, ulong playerId2, ulong clientId2)
+        {
+            var table1 = GetTableWithPlayer(playerId1);
+            if (table1 == null) return;
+            
+            MovePlayerTableToStartPosition(playerId1, clientId1);
+            
+            var table2 = GetTableWithPlayer(playerId2);
+            if (table2 == null) return;
+            
+            MovePlayerToTable(playerId2, clientId2, table1.networkObject.NetworkObjectId);
+        }
 
         [ClientRpc]
         private void MovePlayerToTableClientRpc(NetworkObjectReference tableReference, int seat, ClientRpcParams clientRpcParams = default)

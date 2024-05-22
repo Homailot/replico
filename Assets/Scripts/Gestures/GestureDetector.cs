@@ -39,6 +39,8 @@ namespace Gestures
         private World _world;
         private ulong _playerId = 0;
         
+        private bool _initialized = false;
+        
         private static readonly int ActivationTime = Shader.PropertyToID("_ActivationTime");
         private static readonly int FirstHand = Shader.PropertyToID("_First_Hand");
         private static readonly int SecondHand = Shader.PropertyToID("_Second_Hand");
@@ -449,14 +451,31 @@ namespace Gestures
 
         public void Init()
         {
-            gestureConfiguration.replicaController.SetObjectToReplicate(_world.gameObject);
-            gestureConfiguration.replicaController.ResetTransforms();
-            gestureConfiguration.replicaController.CompleteAnimation(() =>
-                           {
-                               gestureConfiguration.replicaController.ResetTransforms();
-                               SwitchState(new TransformReplicaInitialState(this, gestureConfiguration));
-                           }
-                       ); 
+            if (_initialized)
+            {
+                var endTransform = gestureConfiguration.replicaController.GetEndTransform();
+                gestureConfiguration.replicaController.SetTarget(endTransform);
+                
+                ClearPointsOfInterest();
+                foreach (var tablePoint in _tablePoints.Values)
+                {
+                    Destroy(tablePoint.gameObject);
+                }
+                _tablePoints.Clear();
+            } 
+            else 
+            {
+                 gestureConfiguration.replicaController.SetObjectToReplicate(_world.gameObject);
+                 gestureConfiguration.replicaController.ResetTransforms();
+                 gestureConfiguration.replicaController.CompleteAnimation(() =>
+                                {
+                                    gestureConfiguration.replicaController.ResetTransforms();
+                                    SwitchState(new TransformReplicaInitialState(this, gestureConfiguration));
+                                }
+                            );                
+                 
+                _initialized = true;
+            }
         }
 
         private void Update()

@@ -61,8 +61,8 @@ namespace Tasks
                 EndTask(true);
             }
         }
-        
-        public override bool Next()
+
+        private bool Next()
         {
             _taskObjectsScript.taskTeleportPoints[_currentTaskTeleportIndex].ResetTaskTeleport(gestureDetector);
             _currentTaskTeleportIndex++;

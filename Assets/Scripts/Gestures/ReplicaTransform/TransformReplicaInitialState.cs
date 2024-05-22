@@ -22,5 +22,15 @@ namespace Gestures.ReplicaTransform
                 _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, new ReplicaTransformer(_gestureConfiguration), _gestureConfiguration));
             }
         }
+        
+        public void OnEnter()
+        {
+            var replicaTransform = _gestureConfiguration.replicaController.GetReplica().transform;
+            
+            _gestureConfiguration.movementTarget.position = replicaTransform.position;
+            _gestureConfiguration.movementTarget.rotation = replicaTransform.rotation;
+            _gestureConfiguration.movementTarget.localScale = replicaTransform.localScale;
+            _gestureConfiguration.replicaController.SetMovementTarget(_gestureConfiguration.movementTarget);
+        }
     }
 }

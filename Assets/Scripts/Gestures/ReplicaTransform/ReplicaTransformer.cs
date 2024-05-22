@@ -17,14 +17,21 @@ namespace Gestures.ReplicaTransform
         
         public override void OnUpdate(int touchCount, Vector2 touchCenter, float touchDistance, float touchRotation) 
         {
+            var touchPlaneFingerPosition = _gestureConfiguration.touchToPosition.GetTouchPosition(touchCenter);
             if (touchCount > 1 && !_vertical)
             {
                 var scale = touchDistance / _lastDistance;
                 scale = Mathf.Pow(scale, _gestureConfiguration.scaleSpeed);
+                
+                // Scale around the pivot point
+                var worldSpacePivot = new Vector3(touchPlaneFingerPosition.x, _gestureConfiguration.movementTarget.position.y, touchPlaneFingerPosition.z);
+                var localPivot = _gestureConfiguration.movementTarget.InverseTransformPoint(worldSpacePivot);
                 _gestureConfiguration.movementTarget.localScale *= scale;
+                var worldSpacePivotAfter = _gestureConfiguration.movementTarget.TransformPoint(localPivot);
+                var scaleDisplacement = worldSpacePivot - worldSpacePivotAfter;
+                _gestureConfiguration.movementTarget.position += scaleDisplacement;
             }
 
-            var touchPlaneFingerPosition = _gestureConfiguration.touchToPosition.GetTouchPosition(touchCenter);
             if (!_vertical)
             {
                 _gestureConfiguration.movementTarget.RotateAround(touchPlaneFingerPosition, Vector3.up, -touchRotation);

@@ -105,6 +105,7 @@ namespace Tasks
 
         public void EnableLogger(string suffix)
         {
+            _taskId = 0;
             var customCulture = (System.Globalization.CultureInfo)System.Threading.Thread.CurrentThread.CurrentCulture.Clone();
             customCulture.NumberFormat.NumberDecimalSeparator = ".";
             System.Threading.Thread.CurrentThread.CurrentCulture = customCulture;

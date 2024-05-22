@@ -67,8 +67,8 @@ namespace Tasks
                 EndTask(true);
             }
         }
-        
-        public override bool Next()
+
+        private bool Next()
         {
             _logger.TaskStep();
             return unacknowledgedPoints.Count == 0;

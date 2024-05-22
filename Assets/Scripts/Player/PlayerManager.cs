@@ -50,6 +50,15 @@ namespace Player
             var clientId = GetClientId(playerId);
             tableManager.MovePlayerTableToStartPosition(playerId, clientId);
         }
+        
+        [ServerRpc(RequireOwnership = false)]
+        public void MoveBothPlayersToNewTableServerRpc()
+        {
+            var clientId1 = GetClientId(0);
+            var clientId2 = GetClientId(1);
+            
+            tableManager.MoveBothPlayersToNewTable(0, clientId1, 1, clientId2);
+        }
 
         [ServerRpc(RequireOwnership = false)]
         public void MovePlayerToTableServerRpc(ulong playerId, ulong tableId)

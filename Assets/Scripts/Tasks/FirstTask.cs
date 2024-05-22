@@ -60,8 +60,8 @@ namespace Tasks
                 EndTask(true);
             }
         }
-        
-        public override bool Next()
+
+        private bool Next()
         {
             _taskObjectsScript.taskObjectPoints[_currentTaskObjectIndex].ResetTaskObject();
             _currentTaskObjectIndex++;

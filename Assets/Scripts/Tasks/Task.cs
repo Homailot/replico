@@ -30,7 +30,6 @@ namespace Tasks
         
         protected abstract void EndTaskInternal(bool success);
         public abstract void CleanTask();
-        public abstract bool Next();
 
         public void SetFailed()
         {

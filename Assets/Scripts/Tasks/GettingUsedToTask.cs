@@ -53,10 +53,5 @@ namespace Tasks
         public override void CleanTask()
         {
         }
-
-        public override bool Next()
-        {
-            return false;
-        }
     }
 }
