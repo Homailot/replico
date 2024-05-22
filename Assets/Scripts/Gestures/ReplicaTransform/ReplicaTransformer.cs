@@ -36,7 +36,6 @@ namespace Gestures.ReplicaTransform
             {
                 _gestureConfiguration.movementTarget.RotateAround(touchPlaneFingerPosition, Vector3.up, -touchRotation);
             }
-            Debug.Log(touchCenter);
             var movement = new Vector3(
                 (touchCenter.x - _lastCenter.x) * _gestureConfiguration.translateSpeed, 
                 _vertical ? (touchCenter.y - _lastCenter.y) * _gestureConfiguration.translateSpeed : 0,
