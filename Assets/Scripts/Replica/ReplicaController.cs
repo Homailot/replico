@@ -89,6 +89,11 @@ namespace Replica
         {
             _smoothFollow.SetTarget(target);
         }
+        
+        public Transform GetMovementTarget()
+        {
+            return _smoothFollow.GetTarget();
+        }
     
         public GameObject GetReplica()
         {

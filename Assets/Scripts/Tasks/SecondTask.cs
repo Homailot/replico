@@ -16,7 +16,7 @@ namespace Tasks
         
         private Logger _logger;
 
-        public override void StartTask(Logger logger)
+        public override void StartTask(Tasks _, Logger logger)
         {
             var playerId = gestureDetector.GetPlayerId();
             var otherPlayerId = playerId == 0 ? 1ul : 0ul;

@@ -15,7 +15,7 @@ namespace Tasks
         private int _currentTaskObjectIndex;
         private Logger _logger;
 
-        public override void StartTask(Logger logger)
+        public override void StartTask(Tasks _, Logger logger)
         {
             _currentTaskObjectIndex = 0;
 

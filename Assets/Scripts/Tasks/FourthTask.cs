@@ -21,15 +21,14 @@ namespace Tasks
         
         [SerializeField] private CollaborativeTaskNetwork collaborativeTaskNetwork;
         
-        [SerializeField] private string ip;
-        [SerializeField] private ushort port;
-        
         private TaskGroupObjects _taskObjectsScript;
         private Logger _logger;
+        private Tasks _tasks;
 
-        public override void StartTask(Logger logger)
+        public override void StartTask(Tasks tasks, Logger logger)
         {
             _logger = logger;
+            _tasks = tasks;
             
             gestureDetector.ClearPointsOfInterest();
             
@@ -53,8 +52,8 @@ namespace Tasks
 
                 successAction.action.performed += OnSuccess;
                 failureAction.action.performed += OnFailure;
-                
-                collaborativeTaskNetwork.StartNextTaskRpc();
+
+                collaborativeTaskNetwork.StartNextTask();
             }
         }
         
@@ -62,12 +61,14 @@ namespace Tasks
         {
             collaborativeTaskNetwork.EndFourthTaskRpc(true);
             successAction.action.performed -= OnSuccess;
+            failureAction.action.performed -= OnFailure;
         }
         
         private void OnFailure(InputAction.CallbackContext context)
         {
             collaborativeTaskNetwork.EndFourthTaskRpc(false);
             failureAction.action.performed -= OnFailure;
+            successAction.action.performed -= OnSuccess;
         }
         
         private void OnClientConnected(ulong clientId)
@@ -95,7 +96,7 @@ namespace Tasks
             yield return new WaitForSeconds(2);
             
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(
-                ip, port
+                _tasks.serverIp, _tasks.serverPort
                 );
 
             NetworkManager.Singleton.OnConnectionEvent += OnServerConnected;

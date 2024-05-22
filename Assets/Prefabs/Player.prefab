@@ -2759,7 +2759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2794079161
+  GlobalObjectIdHash: 2157828526
   InScenePlacedSourceGlobalObjectIdHash: 627057686
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 0
@@ -3860,7 +3860,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2542725945661479710
 Transform:
   m_ObjectHideFlags: 0

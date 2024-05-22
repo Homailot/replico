@@ -11,7 +11,7 @@ namespace Tasks
 
         private bool _failed;
         
-        public abstract void StartTask(Logger logger);
+        public abstract void StartTask(Tasks tasks, Logger logger);
 
         public void EndTask(bool success = false)
         {

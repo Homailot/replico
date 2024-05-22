@@ -1,10 +1,12 @@
 using System;
 using Player;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 namespace Tasks
 {
@@ -27,7 +29,20 @@ namespace Tasks
         [SerializeField] private SceneAsset cityScene;
         [SerializeField] private SceneAsset roverScene;
         [SerializeField] private SceneAsset dungeonScene;
-
+        
+        [SerializeField] private Camera initialCamera;
+        [SerializeField] private UIDocument uiDocument;
+        
+        private TextField _serverIpInput;
+        private TextField _serverPortInput;
+        private TextField _clientPortInput;
+        
+        private string _serverIp;
+        private ushort _serverPort;
+        private ushort _clientPort;
+        
+        private bool _ipSet;
+       
         private Tasks _tasks;
         private bool _loaded;
         
@@ -51,9 +66,32 @@ namespace Tasks
                     _tasks.StartOrSkipTask();
                 }
             };
-            
         }
+        private void Start()
+        {
+            var root = uiDocument.rootVisualElement;
+            _serverIpInput = root.Q<TextField>("server-ip-input");
+            _serverPortInput = root.Q<TextField>("server-port-input");
+            _clientPortInput = root.Q<TextField>("local-port-input");
+            var setIpButton = root.Q<UnityEngine.UIElements.Button>("set-ip-button");
 
+            setIpButton.RegisterCallback<ClickEvent>(ev =>
+            {
+                _serverIp = _serverIpInput.value;
+                _serverPort = ushort.Parse(_serverPortInput.value);
+                _clientPort = ushort.Parse(_clientPortInput.value);
+                
+                _ipSet = true;
+                
+                Debug.Log("Server IP: " + _serverIp);
+                Debug.Log("Server port: " + _serverPort);
+                Debug.Log("Client port: " + _clientPort);
+
+                networkManager.GetComponent<UnityTransport>().SetConnectionData(
+                    "127.0.0.1", _clientPort     
+                );
+            });
+        }
         private void OnSceneEvent(SceneEvent sceneEvent)
         {
             Debug.Log("Scene event: " + sceneEvent.SceneEventType);
@@ -61,12 +99,20 @@ namespace Tasks
             {
                 _tasks = GameObject.FindWithTag("TaskHolder").GetComponent<Tasks>();
                 _tasks.SetLogger(logger); 
+                _tasks.serverIp = _serverIp;
+                _tasks.serverPort = _serverPort;
+                _tasks.clientPort = _clientPort;
                 _loaded = true;
             }
         }
 
         private void LoadCity(ulong playerId)
         {
+            if (!_ipSet)
+            {
+                return;
+            }
+            
             if (_loaded)
             {
                 _tasks.SkipTask();
@@ -74,6 +120,11 @@ namespace Tasks
                 //networkManager.OnClientStopped += _ => LoadCity(playerId);
                 _loaded = false;
                 return;
+            } 
+            
+            if (initialCamera != null)
+            {
+                initialCamera.gameObject.SetActive(false);
             }
             
             _loaded = false;
@@ -89,6 +140,11 @@ namespace Tasks
         
         private void LoadRover(ulong playerId)
         {
+            if (!_ipSet)
+            {
+                return;
+            }
+            
             if (_loaded)
             {
                 _tasks.SkipTask();
@@ -97,6 +153,12 @@ namespace Tasks
                 _loaded = false;
                 return;
             }
+            
+            if (initialCamera != null)
+            {
+                initialCamera.gameObject.SetActive(false);
+            }
+            
             _loaded = false;
             logger.EnableLogger("rover");
             networkManager.StartHost();
@@ -110,6 +172,11 @@ namespace Tasks
         
         private void LoadDungeon(ulong playerId)
         {
+            if (!_ipSet)
+            {
+                return;
+            }
+            
             if (_loaded)
             {
                 _tasks.SkipTask();
@@ -118,6 +185,12 @@ namespace Tasks
                 _loaded = false;
                 return;
             }
+            
+            if (initialCamera != null)
+            {
+                initialCamera.gameObject.SetActive(false);
+            }
+            
             _loaded = false;
             networkManager.StartHost();
             networkManager.SceneManager.OnSceneEvent += OnSceneEvent;

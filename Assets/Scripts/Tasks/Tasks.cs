@@ -14,6 +14,10 @@ namespace Tasks
         private int _currentTaskIndex = -1;
         private bool _inTask;
 
+        public string serverIp { get; set; }
+        public ushort serverPort { get; set; }
+        public ushort clientPort { get; set; }
+
         public void Start()
         {
             clock.AddTimeEndListener(() =>
@@ -47,7 +51,7 @@ namespace Tasks
                     clock.ClearTime();
                     tasks[_currentTaskIndex].CleanTask();
                 });
-                tasks[_currentTaskIndex].StartTask(_logger);
+                tasks[_currentTaskIndex].StartTask(this, _logger);
                 clock.SetTime(tasks[_currentTaskIndex].GetTaskTime());
                 _inTask = true;
             }

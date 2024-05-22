@@ -21,11 +21,15 @@ namespace Tasks
         {
             fifthTask.EndTask(success);
         }
-        
-        [Rpc(SendTo.NotMe)]
-        public void StartNextTaskRpc()
+
+        public void StartNextTask()
         {
-            Debug.Log("StartNextTaskRpc");
+            StartNextTaskRpc(RpcTarget.Not(NetworkManager.Singleton.LocalClientId, RpcTargetUse.Temp));
+        }
+        
+        [Rpc(SendTo.SpecifiedInParams)]
+        public void StartNextTaskRpc(RpcParams rpcParams)
+        {
             tasks.StartOrSkipTask();
         }
     }

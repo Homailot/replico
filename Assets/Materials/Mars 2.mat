@@ -127,7 +127,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Height_Amplitude: 2.5
+    - _Height_Amplitude: 81.5
     - _Height_Steps: 5
     - _Metallic: 0
     - _OcclusionStrength: 1

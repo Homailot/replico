@@ -15,7 +15,7 @@ namespace Tasks
         private int _currentTaskTeleportIndex;
         private Logger _logger;
 
-        public override void StartTask(Logger logger)
+        public override void StartTask(Tasks _, Logger logger)
         {
             _currentTaskTeleportIndex = 0;
 

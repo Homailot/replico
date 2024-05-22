@@ -25,7 +25,7 @@ namespace Tasks
         private TaskGroupObjects _taskObjectsScript;
         private Logger _logger;
 
-        public override void StartTask(Logger logger)
+        public override void StartTask(Tasks _, Logger logger)
         {
             _logger = logger; 
             gestureDetector.ClearPointsOfInterest();
@@ -41,7 +41,7 @@ namespace Tasks
                 successAction.action.performed += OnSuccess;
                 failureAction.action.performed += OnFailure;
                 playerManager.MoveBothPlayersToNewTableServerRpc();
-                collaborativeTaskNetwork.StartNextTaskRpc();
+                collaborativeTaskNetwork.StartNextTask();
             }
             else
             {
@@ -53,12 +53,14 @@ namespace Tasks
         {
             collaborativeTaskNetwork.EndFifthTaskRpc(true);
             successAction.action.performed -= OnSuccess;
+            failureAction.action.performed -= OnFailure;
         }
         
         private void OnFailure(InputAction.CallbackContext context)
         {
             collaborativeTaskNetwork.EndFifthTaskRpc(false);
             failureAction.action.performed -= OnFailure;
+            successAction.action.performed -= OnSuccess;
         }
         
         protected override void EndTaskInternal(bool success)
