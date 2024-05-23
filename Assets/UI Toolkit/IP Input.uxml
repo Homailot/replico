@@ -5,7 +5,7 @@
             <ui:TextField picking-mode="Ignore" label="Local Port" max-length="-1" name="local-port-input" value="7777" style="margin-bottom: 20px;" />
             <ui:TextField picking-mode="Ignore" label="Server IP" max-length="-1" name="server-ip-input" value="127.0.0.1" style="margin-bottom: 20px;" />
             <ui:TextField picking-mode="Ignore" label="Server Port" max-length="-1" name="server-port-input" value="7777" style="margin-bottom: 20px;" />
-            <ui:Button text="Set IP" parse-escape-sequences="true" display-tooltip-when-elided="true" name="set-ip-button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; background-color: rgb(255, 255, 255); -unity-font-style: bold; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; font-size: 18px;" />
+            <ui:Button text="Set IP" parse-escape-sequences="true" display-tooltip-when-elided="true" name="set-ip-button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; background-color: rgb(255, 255, 255); -unity-font-style: bold; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; font-size: 18px; -unity-font-definition: url(&quot;project://database/Assets/Font/Teachers-VariableFont_wght%20SDF%201.asset?fileID=11400000&amp;guid=2551b47bf179a784c8b8de8dee9f02db&amp;type=2#Teachers-VariableFont_wght SDF 1&quot;);" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

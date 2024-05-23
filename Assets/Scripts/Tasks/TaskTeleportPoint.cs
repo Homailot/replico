@@ -32,10 +32,14 @@ namespace Tasks
             
             _outline.enabled = false;
             _outlinePulse.enabled = false;
-            teleportZoneHighlight.gameObject.SetActive(false);
             selectable = false;
         }
-        
+
+        public void Start()
+        {
+            teleportZoneHighlight.gameObject.SetActive(false);
+        }
+
         public void Highlight()
         {
             if (_isHighlighted) return;

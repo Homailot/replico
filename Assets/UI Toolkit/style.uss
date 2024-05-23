@@ -26,6 +26,7 @@ TextField {
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
     font-size: 18px;
+    -unity-font-definition: url("project://database/Assets/Font/Teachers-VariableFont_wght%20SDF%201.asset?fileID=11400000&guid=2551b47bf179a784c8b8de8dee9f02db&type=2#Teachers-VariableFont_wght SDF 1");
 }
 
 #unity-text-input:focus {
