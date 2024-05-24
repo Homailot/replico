@@ -18,6 +18,7 @@ namespace Gestures.Balloon
         private float _lastDistance;
         
         private bool _lastEmpty = false;
+        private float _lastEmptyTime = 0;
         
         private IReplicaPoint _lastReplicaPoint;
         
@@ -42,27 +43,32 @@ namespace Gestures.Balloon
         public void OnUpdate()
         {
             var hands = _handDetector.DetectHands(Touch.activeFingers, _hands);
-            if (hands.IsEmpty() || hands.firstHand.Count < 1 || hands.secondHand.Count > 1)
+            if (hands.secondHand.Count > 1)
             {
-                if (hands.secondHand.Count > 1)
-                {
-                    _gestureDetector.ResetBalloonPlanePositions();
-                    _gestureDetector.SwitchState(new BalloonHoldState(_gestureDetector, _gestureConfiguration, _handDetector, _hands, _lastReplicaPoint));
-                    return;
-                }
-                
-                _gestureConfiguration.logger.EndBalloonSelection();
-                _gestureDetector.OnGestureExit();
-                _gestureDetector.ResetBalloonPlanePositionsAndHeight();
-                _gestureDetector.DisableBalloon();
-
-                _lastReplicaPoint?.Unhighlight();
-                _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
+                _gestureDetector.ResetBalloonPlanePositions();
+                _gestureDetector.SwitchState(new BalloonHoldState(_gestureDetector, _gestureConfiguration, _handDetector, hands, _lastReplicaPoint));
                 return;
             }
-
-            _hands = hands;
-
+            
+            if (hands.IsEmpty())
+            {
+                Debug.Log($"Empty hands: {_lastEmptyTime}");
+                if (_lastEmptyTime == 0)
+                {
+                    _lastEmptyTime = Time.time;
+                }
+                else if (Time.time - _lastEmptyTime > _gestureConfiguration.balloonSelectionTimeEmptyThreshold)
+                {
+                    Cancel();
+                    return;
+                }
+            }
+            else
+            {
+                _lastEmptyTime = 0;
+                _hands = hands;
+            }
+            
             var secondHandPosition = _hands.firstHand.First().screenPosition + _lastDirection;
             var distance = _lastDistance;
             if (_hands.secondHand.Count >= 1)
@@ -105,9 +111,20 @@ namespace Gestures.Balloon
                 _lastReplicaPoint = null;
             }
             
-            _lastEmpty = hands.secondHand.Count < 1;
+            _lastEmpty = _hands.secondHand.Count < 1;
             _lastDirection = secondHandPosition - _hands.firstHand.First().screenPosition;
             _lastDistance = distance;
+        }
+
+        private void Cancel()
+        {
+            _gestureConfiguration.logger.EndBalloonSelection();
+            _gestureDetector.OnGestureExit();
+            _gestureDetector.ResetBalloonPlanePositionsAndHeight();
+            _gestureDetector.DisableBalloon();
+
+            _lastReplicaPoint?.Unhighlight();
+            _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
         }
     }
 }

@@ -33,5 +33,6 @@ namespace Gestures
         public float balloonRotationSpeed;
         public float balloonShowArrowTime;
         public float balloonSelectionDistanceThreshold;
+        public float balloonSelectionTimeEmptyThreshold = 0.1f;
     }
 }
