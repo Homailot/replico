@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="38.591225mm"
+   height="5.5900011mm"
+   viewBox="0 0 38.591225 5.5900012"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="arrow.svg"
+   inkscape:export-filename="arrow.png"
+   inkscape:export-xdpi="200"
+   inkscape:export-ydpi="200"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="11.459653"
+     inkscape:cx="71.293607"
+     inkscape:cy="18.107005"
+     inkscape:window-width="2560"
+     inkscape:window-height="1351"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="path8" />
+  <defs
+     id="defs1">
+    <rect
+       x="278.90222"
+       y="200.41469"
+       width="256.19513"
+       height="107.1182"
+       id="rect4" />
+    <rect
+       x="160.9241"
+       y="315.92462"
+       width="44.426899"
+       height="27.643406"
+       id="rect2" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-44.26142,-118.42767)">
+    <g
+       id="path8"
+       transform="translate(0.20044237,-9.6551437e-5)">
+      <path
+         id="path32"
+         style="color:#000000;fill:#f6f9ee;fill-opacity:1;fill-rule:evenodd;stroke:#50160e;stroke-width:0.895;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         d="m 78.263524,119.20325 v 1.56787 H 44.508478 v 0.9033 h 33.755046 v 1.56786 l 3.49436,-2.01951 z" />
+      <g
+         id="g29">
+        <g
+           id="path29" />
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1078,6 +1078,7 @@ MonoBehaviour:
   indicatorLine: {fileID: 0}
   canvas: {fileID: 0}
   model: {fileID: 0}
+  balloonScale: {fileID: 0}
   playerId: 0
   id: 0
   localPosition: {x: 0, y: 0, z: 0}
@@ -1380,7 +1381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fingerDecay: 4.04
   fingerQuadraticDecay: 3.32
-  fingerRadius: 25.4
+  fingerRadius: 35
   decayFingerHistory: {fileID: 7200000, guid: 7a9cd1e388b6b7b48843d6d5a1a82e83, type: 3}
 --- !u!114 &8476578028868529971
 MonoBehaviour:
@@ -1458,6 +1459,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   pointCountReset:
+    m_PersistentCalls:
+      m_Calls: []
+  pointAcknowledged:
     m_PersistentCalls:
       m_Calls: []
 --- !u!33 &799011391277623803

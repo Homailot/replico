@@ -8984,6 +8984,7 @@ GameObject:
   - component: {fileID: 790068333}
   - component: {fileID: 790068331}
   - component: {fileID: 790068334}
+  - component: {fileID: 790068335}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -9055,6 +9056,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tableManager: {fileID: 790068331}
+--- !u!114 &790068335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790068330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb038d2127c043b585edadc67d76dbd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cursorAction: {fileID: 8629272324669885034, guid: 1d847331ad93b8e49a989f733852ca71, type: 3}
 --- !u!1001 &795231659
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23017,6 +23031,7 @@ MonoBehaviour:
   balloonPrefab: {fileID: 4404460346696739353, guid: e2ed673f59fc1cb4ea956f35ec77f82d, type: 3}
   balloonMaterialUpdate: {fileID: 1956000274}
   balloonParent: {fileID: 6468836}
+  balloonScaleMultiplier: 0.045
 --- !u!114 &1956000274
 MonoBehaviour:
   m_ObjectHideFlags: 0
