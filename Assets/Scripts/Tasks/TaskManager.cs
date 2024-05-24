@@ -26,10 +26,6 @@ namespace Tasks
        // [SerializeField] private PlayerManager playerManager;
         [SerializeField] private Logger logger;
         
-        [SerializeField] private SceneAsset cityScene;
-        [SerializeField] private SceneAsset roverScene;
-        [SerializeField] private SceneAsset dungeonScene;
-        
         [SerializeField] private Camera initialCamera;
         [SerializeField] private UIDocument uiDocument;
         
@@ -135,7 +131,7 @@ namespace Tasks
             var player = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
             player.playerId = playerId;
             
-            networkManager.SceneManager.LoadScene(cityScene.name, LoadSceneMode.Single);
+            networkManager.SceneManager.LoadScene("CityScene", LoadSceneMode.Single);
         }
         
         private void LoadRover(ulong playerId)
@@ -167,7 +163,7 @@ namespace Tasks
             var player = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
             player.playerId = playerId;
             
-            networkManager.SceneManager.LoadScene(roverScene.name, LoadSceneMode.Single);
+            networkManager.SceneManager.LoadScene("Rover Scene", LoadSceneMode.Single);
         }
         
         private void LoadDungeon(ulong playerId)
@@ -198,7 +194,7 @@ namespace Tasks
             var player = NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<PlayerNetwork>();
             player.playerId = playerId;
             
-            networkManager.SceneManager.LoadScene(dungeonScene.name, LoadSceneMode.Single);
+            networkManager.SceneManager.LoadScene("Dungeon Scene", LoadSceneMode.Single);
         }
     }
 }
