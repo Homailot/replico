@@ -1423,6 +1423,7 @@ MonoBehaviour:
     handMovementDetectionDistance: 0.01
     handMovementDetectionTime: 0.35
     verticalGestureHandEmptyAllowance: 0.55
+    balloonInitialHeight: 0.1
     balloonDistanceMultiplier: 1
     balloonMovementDetectionDistance: 0.02
     balloonTeleportTime: 1.2

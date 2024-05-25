@@ -27,6 +27,7 @@ namespace Gestures
         public float handMovementDetectionTime;
         public float verticalGestureHandEmptyAllowance;
         
+        public float balloonInitialHeight;
         public float balloonDistanceMultiplier;
         public float balloonMovementDetectionDistance;
         public float balloonTeleportTime;

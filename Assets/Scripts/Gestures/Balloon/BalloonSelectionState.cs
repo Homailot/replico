@@ -32,7 +32,7 @@ namespace Gestures.Balloon
             var screenMax = Mathf.Max(Screen.width, Screen.height);
             _initialDistance = Vector2.Distance(hands.firstHand.First().screenPosition / screenMax, hands.secondHand.First().screenPosition / screenMax);
             _lastDistance = _initialDistance;
-            _startingValue = 0;
+            _startingValue = _gestureDetector.lastBalloonHeight;
         }
 
         private float GetValueFromDistance(float distance)
@@ -100,6 +100,7 @@ namespace Gestures.Balloon
                 secondHandPosition);
             var balloonScreenPosition = _hands.firstHand.First().screenPosition;
             _gestureDetector.UpdateBalloonPosition(new Vector3(balloonScreenPosition.x, GetValueFromDistance(distance), balloonScreenPosition.y));
+            _gestureDetector.lastBalloonHeight = GetValueFromDistance(distance);
 
             var replicaPoint = _gestureDetector.GetReplicaPointFromBalloon();
             if (replicaPoint != null)

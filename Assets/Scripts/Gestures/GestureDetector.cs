@@ -56,11 +56,14 @@ namespace Gestures
         [SerializeField] private PointCountReset pointCountReset;
         [SerializeField] private PointAcknowledged pointAcknowledged;
 
+        public float lastBalloonHeight { get; set; }
+
         private void Awake()
         {
             EnhancedTouchSupport.Enable();
             _currentState = new InitialGesture(this, gestureConfiguration);
             _currentState.OnEnter();
+            lastBalloonHeight = gestureConfiguration.balloonInitialHeight;
         }
 
         private void Start()
