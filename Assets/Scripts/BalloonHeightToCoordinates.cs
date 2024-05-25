@@ -38,7 +38,7 @@ public class BalloonHeightToCoordinates : MonoBehaviour
     public void ResetBalloonHeight()
     {
         if (_renderer == null) return;
-        _renderer.material.SetVector(SecondHand, new Vector4(0, 0.5f, 0, 0));
-        renderBehindVerticalMaterial.SetVector(SecondHand, new Vector4(0, 0.5f, 0, 0));
+        _renderer.material.SetVector(SecondHand, new Vector4(-1f, 0.5f, 0, 0));
+        renderBehindVerticalMaterial.SetVector(SecondHand, new Vector4(-1f, 0.5f, 0, 0));
     }
 }

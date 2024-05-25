@@ -444,7 +444,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6598815579406187026, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6598815579406187026, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
       propertyPath: m_ManipulateHeadAction
@@ -720,9 +720,6 @@ MonoBehaviour:
   nextTask: {fileID: 5027074537907019113, guid: 1d847331ad93b8e49a989f733852ca71, type: 3}
   networkManager: {fileID: 220569453}
   logger: {fileID: 277725842}
-  cityScene: {fileID: 102900000, guid: 4e9fef26e6adb88479ad1b9834a32d94, type: 3}
-  roverScene: {fileID: 102900000, guid: f861d416c22c05a40b51ac098fa8502e, type: 3}
-  dungeonScene: {fileID: 102900000, guid: 346d3b072659dc04e88e3762a0c8d9d1, type: 3}
   initialCamera: {fileID: 1473430191}
   uiDocument: {fileID: 242501711}
 --- !u!1 &3127728406398351885

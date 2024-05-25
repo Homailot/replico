@@ -52,7 +52,6 @@ namespace Gestures.Balloon
             
             if (hands.IsEmpty())
             {
-                Debug.Log($"Empty hands: {_lastEmptyTime}");
                 if (_lastEmptyTime == 0)
                 {
                     _lastEmptyTime = Time.time;
@@ -67,6 +66,12 @@ namespace Gestures.Balloon
             {
                 _lastEmptyTime = 0;
                 _hands = hands;
+            }
+
+            if (_hands.firstHand.Count < 1)
+            {
+                _lastEmpty = _hands.secondHand.Count < 1;
+                return;
             }
             
             var secondHandPosition = _hands.firstHand.First().screenPosition + _lastDirection;
