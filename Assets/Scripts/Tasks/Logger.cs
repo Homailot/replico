@@ -55,7 +55,8 @@ namespace Tasks
         private ulong _taskId;
         private ulong _currentTaskId;
         private ulong _playerId;
-        private float _taskStartTime; 
+        private float _taskStartTime;
+        private float _taskTime;
     
         private float _timeSpentInTransforms;
         private float _transformStartTime;
@@ -123,6 +124,7 @@ namespace Tasks
         {
             _currentTaskId = ++_taskId;
             _taskStartTime = Time.time;
+            _taskTime = 0;
             _taskSteps = 0;
         
             _timeSpentInTransforms = 0;
@@ -167,6 +169,31 @@ namespace Tasks
             _playerId = playerNetwork.playerId;
             Debug.Log($"Task {_currentTaskId} started.");
         }
+        
+        public void PauseTask()
+        {
+            if (_currentTaskId == 0)
+            {
+                Debug.LogWarning("No task to pause.");
+                return;
+            }
+        
+            _taskTime += Time.time - _taskStartTime;
+            Debug.Log($"Task {_currentTaskId} paused.");
+            Debug.Log($"Task Time: {_taskTime}");
+        }
+        
+        public void ResumeTask()
+        {
+            if (_currentTaskId == 0)
+            {
+                Debug.LogWarning("No task to resume.");
+                return;
+            }
+        
+            _taskStartTime = Time.time;
+            Debug.Log($"Task {_currentTaskId} resumed.");
+        }
     
         public void EndTask(bool success)
         {
@@ -177,14 +204,15 @@ namespace Tasks
             }
         
             var taskEndTime = Time.time;
-            Debug.Log($"Task {_currentTaskId} {(success ? "completed" : "failed")} in {taskEndTime - _taskStartTime} seconds.");
+            _taskTime += taskEndTime - _taskStartTime;
+            Debug.Log($"Task {_currentTaskId} {(success ? "completed" : "failed")} in {_taskTime} seconds.");
         
             var outputAveragePath = $"{_finalDirectoryPath}all.csv";
             var outputTaskPath = $"{_finalDirectoryPath}Task_{_currentTaskId}/";
             Directory.CreateDirectory(outputTaskPath);
         
             var writer = new StreamWriter(outputAveragePath, true);
-            writer.WriteLine($"{_currentTaskId};{taskEndTime - _taskStartTime};{_taskSteps};{success};{_timeSpentInTransforms};{_transformCount};{_timeSpentInVerticalTransforms};{_verticalTransformCount};{_replicaTranslationDistance};{_replicaRotationAngle};{_replicaScaleFactor};{_timeSpentInBalloonSelection};{_balloonSelectionCount};{_pointCreationCount};{_teleportationCount};{_tableJoinCount};{_pointDeletionCount};{_pointAcknowledgementCount};{_uniqueTouchCount};{_fingerMovement};{_headRotation};{_headMovement};{_playerId}");
+            writer.WriteLine($"{_currentTaskId};{_taskTime};{_taskSteps};{success};{_timeSpentInTransforms};{_transformCount};{_timeSpentInVerticalTransforms};{_verticalTransformCount};{_replicaTranslationDistance};{_replicaRotationAngle};{_replicaScaleFactor};{_timeSpentInBalloonSelection};{_balloonSelectionCount};{_pointCreationCount};{_teleportationCount};{_tableJoinCount};{_pointDeletionCount};{_pointAcknowledgementCount};{_uniqueTouchCount};{_fingerMovement};{_headRotation};{_headMovement};{_playerId}");
             writer.Close();
         
             var taskWriter = new StreamWriter($"{outputTaskPath}finger_movements.csv", true);

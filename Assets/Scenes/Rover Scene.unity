@@ -2508,6 +2508,7 @@ MonoBehaviour:
   gestureDetector: {fileID: 583835751}
   replicaController: {fileID: 583835750}
   playerManager: {fileID: 790068334}
+  nextObject: {fileID: 7930577009333503698, guid: 1d847331ad93b8e49a989f733852ca71, type: 3}
 --- !u!1 &1729960005
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using Gestures;
 using Player;
 using Replica;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Tasks
 {
@@ -10,10 +11,13 @@ namespace Tasks
         [SerializeField] private GestureDetector gestureDetector;
         [SerializeField] private ReplicaController replicaController;
         [SerializeField] private PlayerManager playerManager;
+        [SerializeField] private InputActionReference nextObject;
         
         private TaskTeleports _taskObjectsScript;
         private int _currentTaskTeleportIndex;
         private Logger _logger;
+
+        private bool _paused;
 
         public override void StartTask(Tasks _, Logger logger)
         {
@@ -29,7 +33,7 @@ namespace Tasks
             replicaController.SetTarget(endTransform);
             
             playerManager.MovePlayerFromTableToStartPositionServerRpc(gestureDetector.GetPlayerId());
-            
+            nextObject.action.performed += Continue;
             
             _logger = logger;
             _logger.StartTask();
@@ -48,6 +52,7 @@ namespace Tasks
                 taskObject.ResetTaskTeleport(gestureDetector);
             }
             
+            nextObject.action.performed -= Continue; 
             gestureDetector.ClearTaskTeleportPoints();
             gestureDetector.ClearPointsOfInterest();
             gestureDetector.ClearTaskObjectSelectedListeners();
@@ -69,7 +74,9 @@ namespace Tasks
             _logger.TaskStep();
             if (_currentTaskTeleportIndex < _taskObjectsScript.taskTeleportPoints.Length)
             {
-                _taskObjectsScript.taskTeleportPoints[_currentTaskTeleportIndex].PrepareTaskTeleport(gestureDetector);
+                //_taskObjectsScript.taskTeleportPoints[_currentTaskTeleportIndex].PrepareTaskTeleport(gestureDetector);
+                _logger.PauseTask();
+                _paused = true;
             }
             else
             {
@@ -77,6 +84,14 @@ namespace Tasks
             }
             
             return false;
-        } 
+        }
+
+        private void Continue(InputAction.CallbackContext _)
+        {
+            if (!_paused) return;
+            _taskObjectsScript.taskTeleportPoints[_currentTaskTeleportIndex].PrepareTaskTeleport(gestureDetector);
+            _logger.ResumeTask();
+            _paused = false;
+        }
     }
 }
