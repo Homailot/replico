@@ -84,7 +84,7 @@ namespace Tasks
                 Debug.Log("Client port: " + _clientPort);
 
                 networkManager.GetComponent<UnityTransport>().SetConnectionData(
-                    "127.0.0.1", _clientPort     
+                    "127.0.0.1", _clientPort, "0.0.0.0" 
                 );
             });
         }
