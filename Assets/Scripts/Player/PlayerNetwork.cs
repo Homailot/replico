@@ -192,7 +192,7 @@ namespace Player
         { 
             var attachPoint = seat == 0 ? table.firstAttach : table.secondAttach; 
             var position = attachPoint.position;
-            playerTransform.SetTransform(playerCamera.transform, attachPoint, tracker);
+            playerTransform.SetTransform(this.transform, playerCamera.transform, attachPoint, tracker);
 
             GameObject touchPlane;
             if (_touchPlane != null)

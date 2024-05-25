@@ -13,28 +13,39 @@ namespace Player
         
         private static bool _initialized;
         private static Vector3 _trackerLocal;
+        private static Quaternion _trackerRotation;
 
-        public void SetTransform(Transform playerCamera, Transform attachPoint, Transform tracker)
+        public void SetTransform(Transform player, Transform playerCamera, Transform attachPoint, Transform tracker)
         {
-            var trackerInverseRotation = tracker.rotation * Quaternion.Euler(0, 180, 0);
+            Vector3 trackerPosition;
+            Quaternion trackerRotation;
+            if (!_initialized)
+            {
+                 _trackerRotation = tracker.rotation * Quaternion.Inverse(player.rotation);
+                 trackerRotation = tracker.rotation;
+            }
+            else
+            {
+                trackerRotation = player.rotation * _trackerRotation;
+            }
+            
+            var trackerInverseRotation = trackerRotation * Quaternion.Euler(0, 180, 0);
             var deltaAngle = Quaternion.Inverse(trackerInverseRotation) * attachPoint.rotation;
             var deltaAngleY = Quaternion.Euler(0, deltaAngle.eulerAngles.y, 0);
             var playerRotationY = Quaternion.Euler(0, playerCamera.rotation.eulerAngles.y, 0);
             var targetRotation = playerRotationY * deltaAngleY;
             var targetForward = targetRotation * Vector3.forward;
             xrOrigin.MatchOriginUpCameraForward(attachPoint.up, targetForward);
-
-            Vector3 trackerPosition;
+            
             if (!_initialized)
             {
-                _trackerLocal = tracker.localPosition;
+                _trackerLocal = player.InverseTransformPoint(tracker.position);
                 trackerPosition = tracker.position;
                 _initialized = true;
             }
             else
             {
-                Debug.Log("Using tracker local position.");
-                trackerPosition = tracker.parent.TransformPoint(_trackerLocal);
+                trackerPosition = player.TransformPoint(_trackerLocal); 
             }
             
             var trackerToOrigin = playerCamera.position - trackerPosition;
