@@ -174,6 +174,7 @@ namespace Player
 
         public void MovePlayerToTable(Table table, int seat)
         {
+            Debug.Log("MovePlayerToTable");
             if (!IsOwner) return;
 
             if (_initialized)

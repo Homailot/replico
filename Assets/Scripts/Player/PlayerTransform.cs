@@ -10,6 +10,9 @@ namespace Player
     public class PlayerTransform : NetworkTransform
     {
         public XROrigin xrOrigin;
+        
+        private static bool _initialized;
+        private static Vector3 _trackerLocal;
 
         public void SetTransform(Transform playerCamera, Transform attachPoint, Transform tracker)
         {
@@ -20,8 +23,21 @@ namespace Player
             var targetRotation = playerRotationY * deltaAngleY;
             var targetForward = targetRotation * Vector3.forward;
             xrOrigin.MatchOriginUpCameraForward(attachPoint.up, targetForward);
+
+            Vector3 trackerPosition;
+            if (!_initialized)
+            {
+                _trackerLocal = tracker.localPosition;
+                trackerPosition = tracker.position;
+                _initialized = true;
+            }
+            else
+            {
+                Debug.Log("Using tracker local position.");
+                trackerPosition = tracker.parent.TransformPoint(_trackerLocal);
+            }
             
-            var trackerToOrigin = playerCamera.position - tracker.position;
+            var trackerToOrigin = playerCamera.position - trackerPosition;
             var position = attachPoint.position;
             xrOrigin.MoveCameraToWorldLocation(position + trackerToOrigin);
         }

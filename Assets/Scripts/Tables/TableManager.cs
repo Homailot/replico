@@ -51,9 +51,10 @@ namespace Tables
 
             var tableTransform = newTable.GetComponent<TableTransform>();
             newTable.AddToTable(playerId, 0);
-            newTable.networkObject.Spawn(true);
             
+            newTable.networkObject.Spawn(true);
             tableTransform.SetPositionAndRotation(firstTableSpawnPosition.position, firstTableSpawnPosition.rotation.eulerAngles);
+            
             SendToClient(newTable, 0, clientId);
         }
     
