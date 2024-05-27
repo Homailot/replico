@@ -125,6 +125,9 @@ namespace Tasks
             
             _loaded = false;
             logger.EnableLogger("city");
+            networkManager.GetComponent<UnityTransport>().SetConnectionData(
+                "0.0.0.0", _clientPort, "0.0.0.0" 
+            );
             networkManager.StartHost();
             networkManager.SceneManager.OnSceneEvent += OnSceneEvent;
             
@@ -157,6 +160,9 @@ namespace Tasks
             
             _loaded = false;
             logger.EnableLogger("rover");
+            networkManager.GetComponent<UnityTransport>().SetConnectionData(
+                "0.0.0.0", _clientPort, "0.0.0.0" 
+            );
             networkManager.StartHost();
             networkManager.SceneManager.OnSceneEvent += OnSceneEvent;
             
@@ -188,6 +194,9 @@ namespace Tasks
             }
             
             _loaded = false;
+            networkManager.GetComponent<UnityTransport>().SetConnectionData(
+                "0.0.0.0", _clientPort, "0.0.0.0" 
+            );
             networkManager.StartHost();
             networkManager.SceneManager.OnSceneEvent += OnSceneEvent;
             
