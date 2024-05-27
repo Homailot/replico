@@ -21,6 +21,14 @@ namespace Tables
             base.OnNetworkSpawn();
             Debug.Log("TableManager spawned");
             Debug.Log(_tables.Count);
+            
+            if (!NetworkManager.Singleton.IsServer) return;
+            NetworkManager.Singleton.OnServerStopped += OnShutdown;
+        }
+
+        private void OnShutdown(bool a)
+        {
+            _tables.Clear();
         }
 
         public void AddToAvailableTable(ulong playerId)

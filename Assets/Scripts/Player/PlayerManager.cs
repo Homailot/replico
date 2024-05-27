@@ -24,12 +24,24 @@ namespace Player
             {
                 return;
             }
+            NetworkManager.Singleton.OnServerStopped += OnShutdown;
 
             foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
             {
                 var playerObject = client.PlayerObject.GetComponent<PlayerNetwork>();
                 OnClientConnected(client.ClientId, playerObject.playerId );
             }
+        }
+
+        private void OnShutdown(bool a)
+        {
+            if (!NetworkManager.Singleton.IsServer) return;
+            
+            _playerIdToClientId.Clear();
+            _clientIdToPlayerId.Clear();
+            _availablePlayerIds.Clear();
+            _availablePlayerIds.Add(0);
+            _availablePlayerIds.Add(1);
         }
         
         public ulong GetClientId(ulong playerId)
