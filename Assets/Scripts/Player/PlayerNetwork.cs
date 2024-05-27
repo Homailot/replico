@@ -174,7 +174,6 @@ namespace Player
 
         public void MovePlayerToTable(Table table, int seat)
         {
-            Debug.Log("MovePlayerToTable");
             if (!IsOwner) return;
 
             if (_initialized)
@@ -190,6 +189,7 @@ namespace Player
 
         private void ChangeSeat(Table table, int seat)
         { 
+            Debug.Log("MovePlayerToTable" + table.NetworkObjectId);
             var attachPoint = seat == 0 ? table.firstAttach : table.secondAttach; 
             var position = attachPoint.position;
             playerTransform.SetTransform(this.transform, playerCamera.transform, attachPoint, tracker);

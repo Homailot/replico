@@ -28,6 +28,7 @@ namespace Tables
 
         private void OnShutdown(bool a)
         {
+            Debug.Log("TableManager shutdown");
             _tables.Clear();
         }
 
@@ -39,6 +40,8 @@ namespace Tables
             var clientId = playerManager.GetClientId(playerId);
             foreach (var table in _tables)
             {
+                Debug.Log($"Checking table {table.networkObject.NetworkObjectId}");
+                Debug.Log($"Table first {table.firstSeat.Value} second {table.secondSeat.Value}");
                 if (table.isFirstSeatAvailable)
                 {
                     AddToTable(table, 0, clientId, playerId);
@@ -117,6 +120,8 @@ namespace Tables
                     TargetClientIds = new[] {clientId} 
                 } 
             };
+            Debug.Log(_tables.Count);
+            Debug.Log(table.NetworkObjectId);
             MovePlayerToTableClientRpc(table.networkObject, seat, clientRpcParams); 
         }
 
