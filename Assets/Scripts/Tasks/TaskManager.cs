@@ -123,6 +123,7 @@ namespace Tasks
                 initialCamera.gameObject.SetActive(false);
             }
             
+            // TODO: load city, then create player
             _loaded = false;
             logger.EnableLogger("city");
             networkManager.GetComponent<UnityTransport>().SetConnectionData(
