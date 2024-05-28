@@ -30,6 +30,8 @@ namespace Tables
         {
             Debug.Log("TableManager shutdown");
             _tables.Clear();
+            
+            NetworkManager.Singleton.OnServerStopped -= OnShutdown;
         }
 
         public void AddToAvailableTable(ulong playerId)

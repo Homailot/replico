@@ -42,6 +42,10 @@ namespace Player
             _availablePlayerIds.Clear();
             _availablePlayerIds.Add(0);
             _availablePlayerIds.Add(1);
+            
+            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
+            NetworkManager.Singleton.OnServerStopped -= OnShutdown;
         }
         
         public ulong GetClientId(ulong playerId)
