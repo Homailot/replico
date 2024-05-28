@@ -102,6 +102,11 @@ namespace Tables
             {
                 Debug.Log($"Destroying table {table.networkObject.NetworkObjectId}");
                 _tables.Remove(table);
+                if (table.networkObject == null) return;
+                if (NetworkManager == null) return;
+                if (NetworkManager.Singleton == null) return;
+                if (NetworkManager.SpawnManager == null) return;
+                
                 table.networkObject.Despawn();
                 Destroy(table.gameObject);
             } 

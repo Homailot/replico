@@ -10,13 +10,13 @@ namespace Tasks
         [SerializeField] private FifthTask fifthTask;
         [SerializeField] private Tasks tasks;
         
-        [Rpc(SendTo.Everyone)] 
+        [Rpc(SendTo.NotMe)] 
         public void EndFourthTaskRpc(bool success)
         {
             fourthTask.EndTask(success);
         }
         
-        [Rpc(SendTo.Everyone)]
+        [Rpc(SendTo.NotMe)]
         public void EndFifthTaskRpc(bool success)
         {
             fifthTask.EndTask(success);

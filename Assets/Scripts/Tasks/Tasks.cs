@@ -51,7 +51,7 @@ namespace Tasks
                     clock.ClearTime();
                     tasks[_currentTaskIndex].CleanTask();
                 });
-                tasks[_currentTaskIndex].StartTask(this, _logger);
+                tasks[_currentTaskIndex].BeginTask(this, _logger);
                 clock.SetTime(tasks[_currentTaskIndex].GetTaskTime());
                 _inTask = true;
             }

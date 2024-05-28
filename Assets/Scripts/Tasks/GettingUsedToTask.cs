@@ -19,7 +19,7 @@ namespace Tasks
 
         private ulong _otherPlayerId;
 
-        public override void StartTask(Tasks _, Logger logger)
+        protected override void StartTask(Tasks _, Logger logger)
         {
             var playerId = gestureDetector.GetPlayerId();
             _otherPlayerId = playerId == 0 ? 1ul : 0ul;

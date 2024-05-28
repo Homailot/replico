@@ -55,15 +55,18 @@ namespace Tasks
         private ulong _taskId;
         private ulong _currentTaskId;
         private ulong _playerId;
+        private float _taskBeginTime;
         private float _taskStartTime;
         private float _taskTime;
     
         private float _timeSpentInTransforms;
         private float _transformStartTime;
+        private bool _transforming;
         private ulong _transformCount;
     
         private float _timeSpentInVerticalTransforms;
         private float _verticalTransformStartTime;
+        private bool _verticalTransforming;
         private ulong _verticalTransformCount;
     
         private float _replicaTranslationDistance;
@@ -74,6 +77,7 @@ namespace Tasks
     
         private float _timeSpentInBalloonSelection;
         private float _balloonSelectionStartTime;
+        private bool _balloonSelecting;
         private ulong _balloonSelectionCount;
     
         private ulong _pointCreationCount;
@@ -83,6 +87,7 @@ namespace Tasks
         private ulong _pointAcknowledgementCount = 0; 
         // TODO: task steps
         private ulong _taskSteps;
+        private bool _paused;
         
         private ulong _uniqueTouchCount;
         private float _fingerMovement;
@@ -124,26 +129,41 @@ namespace Tasks
         {
             _currentTaskId = ++_taskId;
             _taskStartTime = Time.time;
+            _taskBeginTime = Time.time;
             _taskTime = 0;
+            _paused = false;
             _taskSteps = 0;
         
-            _timeSpentInTransforms = 0;
+            _gestures.Clear();
             _transformStartTime = 0;
             _transformCount = 0;
+            _timeSpentInTransforms = 0;
+            if (_transforming)
+            {
+                StartTransform();
+            }
         
-            _timeSpentInVerticalTransforms = 0;
             _verticalTransformStartTime = 0;
             _verticalTransformCount = 0;
-        
+            _timeSpentInVerticalTransforms = 0;
+            if (_verticalTransforming)
+            {
+                StartVerticalTransform();
+            }
+            
             _replicaTranslationDistance = 0;
             _replicaRotationAngle = 0;
             _replicaScaleFactor = 0;
         
             _replicaTransforms.Clear();
         
-            _timeSpentInBalloonSelection = 0;
             _balloonSelectionStartTime = 0;
             _balloonSelectionCount = 0;
+            _timeSpentInBalloonSelection = 0;
+            if (_balloonSelecting)
+            {
+                StartBalloonSelection();
+            }
         
             _pointCreationCount = 0;
             _teleportationCount = 0;
@@ -158,8 +178,6 @@ namespace Tasks
             _fingerPositions.Clear();
             _camera = Camera.main;
         
-            _gestures.Clear();
-        
             _headRotation = 0;
             _headMovement = 0;
             _playerTransforms.Clear();
@@ -172,26 +190,61 @@ namespace Tasks
         
         public void PauseTask()
         {
-            if (_currentTaskId == 0)
+            if (_currentTaskId == 0 || _paused)
             {
                 Debug.LogWarning("No task to pause.");
                 return;
             }
-        
+            
+            if (_transforming)
+            {
+                EndTransform();
+                _transforming = true;
+            }
+            
+            if (_verticalTransforming)
+            {
+                EndVerticalTransform();
+                _verticalTransforming = true;
+            }
+            
+            if (_balloonSelecting)
+            {
+                EndBalloonSelection();
+                _balloonSelecting = true;
+            }
+                
             _taskTime += Time.time - _taskStartTime;
+            _paused = true;
             Debug.Log($"Task {_currentTaskId} paused.");
             Debug.Log($"Task Time: {_taskTime}");
         }
         
         public void ResumeTask()
         {
-            if (_currentTaskId == 0)
+            if (_currentTaskId == 0 || !_paused)
             {
                 Debug.LogWarning("No task to resume.");
                 return;
             }
-        
-            _taskStartTime = Time.time;
+            _paused = false;
+            
+            if (_transforming)
+            {
+                StartTransform();
+            }
+            
+            if (_verticalTransforming)
+            {
+                StartVerticalTransform();
+            }
+            
+            if (_balloonSelecting)
+            {
+                StartBalloonSelection();
+            }
+
+            _taskStartTime = Time.time - Time.deltaTime;
             Debug.Log($"Task {_currentTaskId} resumed.");
         }
     
@@ -202,11 +255,30 @@ namespace Tasks
                 Debug.LogWarning("No task to end.");
                 return;
             }
-        
+            
+            if (_transforming)
+            {
+                EndTransform();
+                _transforming = true;
+            }
+            
+            if (_verticalTransforming)
+            {
+                EndVerticalTransform();
+                _verticalTransforming = true;
+            }
+            
+            if (_balloonSelecting)
+            {
+                EndBalloonSelection();
+                _balloonSelecting = true;
+            }
+                    
             var taskEndTime = Time.time;
             _taskTime += taskEndTime - _taskStartTime;
             Debug.Log($"Task {_currentTaskId} {(success ? "completed" : "failed")} in {_taskTime} seconds.");
-        
+            
+            
             var outputAveragePath = $"{_finalDirectoryPath}all.csv";
             var outputTaskPath = $"{_finalDirectoryPath}Task_{_currentTaskId}/";
             Directory.CreateDirectory(outputTaskPath);
@@ -260,58 +332,64 @@ namespace Tasks
     
         public void StartTransform()
         {
-            if (_currentTaskId == 0) return;
+            _transforming = true;
+            if (_currentTaskId == 0 || _paused) return;
         
             _transformStartTime = Time.time;
             _transformCount++;
-            _gestures.Add( new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.Transform, GestureState = GestureState.On });
+            _gestures.Add( new GestureData {Key = Time.time - _taskStartTime + _taskTime, GestureType = GestureType.Transform, GestureState = GestureState.On });
         }
     
         public void EndTransform()
         {
-            if (_currentTaskId == 0) return;
+            _transforming = false;
+            if (_currentTaskId == 0 || _paused) return;
         
             _timeSpentInTransforms += Time.time - _transformStartTime;
-            _gestures.Add(new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.Transform, GestureState = GestureState.Off });
+            _gestures.Add(new GestureData {Key = Time.time - _taskStartTime + _taskTime, GestureType = GestureType.Transform, GestureState = GestureState.Off });
         }
     
         public void StartVerticalTransform()
         {
-            if (_currentTaskId == 0) return;
+            _verticalTransforming = true;
+            if (_currentTaskId == 0 || _paused) return;
         
             _verticalTransformStartTime = Time.time;
             _verticalTransformCount++;
-            _gestures.Add(new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.VerticalTransform, GestureState = GestureState.On });
+            _gestures.Add(new GestureData {Key = Time.time - _taskStartTime + _taskTime, GestureType = GestureType.VerticalTransform, GestureState = GestureState.On });
         }
     
         public void EndVerticalTransform()
         {
-            if (_currentTaskId == 0) return;
+            _verticalTransforming = false;
+            if (_currentTaskId == 0 || _paused) return;
         
             _timeSpentInVerticalTransforms += Time.time - _verticalTransformStartTime;
-            _gestures.Add(new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.VerticalTransform, GestureState = GestureState.Off });
+            _gestures.Add(new GestureData {Key = Time.time - _taskStartTime + _taskTime, GestureType = GestureType.VerticalTransform, GestureState = GestureState.Off });
         }
     
         public void StartBalloonSelection()
         {
-            if (_currentTaskId == 0) return;
+            _balloonSelecting = true;
+            if (_currentTaskId == 0 || _paused) return;
         
             _balloonSelectionStartTime = Time.time;
             _balloonSelectionCount++;
-            _gestures.Add(new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.BalloonSelection, GestureState = GestureState.On });
+            _gestures.Add(new GestureData {Key = Time.time - _taskStartTime + _taskTime, GestureType = GestureType.BalloonSelection, GestureState = GestureState.On });
         }
     
         public void EndBalloonSelection()
         {
-            if (_currentTaskId == 0) return;
+            _balloonSelecting = false;
+            if (_currentTaskId == 0 || _paused) return;
         
             _timeSpentInBalloonSelection += Time.time - _balloonSelectionStartTime;
-            _gestures.Add(new GestureData {Key = Time.time - _taskStartTime, GestureType = GestureType.BalloonSelection, GestureState = GestureState.Off });
+            _gestures.Add(new GestureData {Key = Time.time - _taskStartTime + _taskTime, GestureType = GestureType.BalloonSelection, GestureState = GestureState.Off });
         }
     
         public void PointCreation()
         {
-            if (_currentTaskId == 0) return;
+            if (_currentTaskId == 0 || _paused) return;
         
             _pointCreationCount++;
             Debug.Log("Point creation.");
@@ -319,7 +397,7 @@ namespace Tasks
     
         public void Teleportation()
         {
-            if (_currentTaskId == 0) return;
+            if (_currentTaskId == 0 || _paused) return;
         
             _teleportationCount++;
             Debug.Log("Teleportation.");
@@ -327,7 +405,7 @@ namespace Tasks
     
         public void TableJoin()
         {
-            if (_currentTaskId == 0) return;
+            if (_currentTaskId == 0 || _paused) return;
         
             _tableJoinCount++;
             Debug.Log("Table join.");
@@ -335,7 +413,7 @@ namespace Tasks
     
         public void PointDeletion()
         {
-            if (_currentTaskId == 0) return;
+            if (_currentTaskId == 0 || _paused) return;
         
             _pointDeletionCount++;
             Debug.Log("Point deletion.");
@@ -343,7 +421,7 @@ namespace Tasks
     
         public void PointAcknowledgement()
         {
-            if (_currentTaskId == 0) return;
+            if (_currentTaskId == 0 || _paused) return;
         
             _pointAcknowledgementCount++;
             Debug.Log("Point acknowledgement.");
@@ -351,18 +429,18 @@ namespace Tasks
     
         public void TaskStep()
         {
-            if (_currentTaskId == 0) return;
+            if (_currentTaskId == 0 || _paused) return;
         
             _taskSteps++;
         }
     
         public void UpdateReplicaTransform(Vector3 position, Quaternion rotation, Vector3 scale)
         {
-            if (_currentTaskId == 0) return;
+            if (_currentTaskId == 0 || _paused) return;
         
             var replicaTransform = new ReplicaTransform
             {
-                Time = Time.time - _taskStartTime,
+                Time = Time.time - _taskStartTime + _taskTime,
                 Position = position,
                 Rotation = rotation,
                 Scale = scale
@@ -388,7 +466,7 @@ namespace Tasks
 
         private void Update()
         {
-            if (_currentTaskId == 0) return;
+            if (_currentTaskId == 0 || _paused) return;
         
             var touches = Touch.activeFingers;
             var touchesDictionary = touches.ToDictionary(finger => finger.index, finger => finger.screenPosition);
@@ -399,7 +477,7 @@ namespace Tasks
                 return;
             }
 
-            _fingerPositions.Add(Time.time - _taskStartTime, touchesDictionary);
+            _fingerPositions.Add(Time.time - _taskStartTime + _taskTime, touchesDictionary);
 
             if (_lastFingerPositions.Count == 0)
             {
@@ -433,12 +511,12 @@ namespace Tasks
 
         private void LateUpdate()
         {
-            if (_currentTaskId == 0) return;
+            if (_currentTaskId == 0 || _paused) return;
         
             var playerTransform = _camera.transform;
             var playerTransformData = new PlayerTransformData
             {
-                Time = Time.time - _taskStartTime,
+                Time = Time.time - _taskStartTime + _taskTime,
                 Position = playerTransform.position,
                 Rotation = playerTransform.rotation
             };
@@ -452,7 +530,7 @@ namespace Tasks
 
             _lastPlayerTransform = new PlayerTransformData
             {
-                Time = Time.time - _taskStartTime,
+                Time = Time.time - _taskStartTime + _taskTime,
                 Position = playerTransform.localPosition,
                 Rotation = playerTransform.localRotation
             };

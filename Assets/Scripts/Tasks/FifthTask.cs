@@ -25,7 +25,7 @@ namespace Tasks
         private TaskGroupObjects _taskObjectsScript;
         private Logger _logger;
 
-        public override void StartTask(Tasks _, Logger logger)
+        protected override void StartTask(Tasks _, Logger logger)
         {
             _logger = logger; 
             gestureDetector.ClearPointsOfInterest();
@@ -51,14 +51,14 @@ namespace Tasks
 
         private void OnSuccess(InputAction.CallbackContext context)
         {
-            collaborativeTaskNetwork.EndFifthTaskRpc(true);
+            EndTask(true);
             successAction.action.performed -= OnSuccess;
             failureAction.action.performed -= OnFailure;
         }
         
         private void OnFailure(InputAction.CallbackContext context)
         {
-            collaborativeTaskNetwork.EndFifthTaskRpc(false);
+            EndTask();
             failureAction.action.performed -= OnFailure;
             successAction.action.performed -= OnSuccess;
         }
@@ -66,6 +66,7 @@ namespace Tasks
         protected override void EndTaskInternal(bool success)
         {
             CleanTask();
+            collaborativeTaskNetwork.EndFifthTaskRpc(success);
             _logger.EndTask(success); 
         }
 
@@ -78,8 +79,8 @@ namespace Tasks
              
             gestureDetector.ClearPointsOfInterest();
             
-            successAction.action.performed -= _ => collaborativeTaskNetwork.EndFifthTaskRpc(true);
-            failureAction.action.performed -= _ => collaborativeTaskNetwork.EndFifthTaskRpc(false);
+            successAction.action.performed -= OnSuccess;
+            failureAction.action.performed -= OnFailure;
         }
     }
 }

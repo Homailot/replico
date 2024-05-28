@@ -10,11 +10,25 @@ namespace Tasks
         [SerializeField] private float taskTime;
 
         private bool _failed;
+        private bool _started;
         
-        public abstract void StartTask(Tasks tasks, Logger logger);
+        public void BeginTask(Tasks tasks, Logger logger)
+        {
+            _failed = false;
+            _started = true;
+            StartTask(tasks, logger);
+        }
+
+        protected abstract void StartTask(Tasks tasks, Logger logger);
 
         public void EndTask(bool success = false)
         {
+            if (!_started)
+            {
+                return;
+            }
+            _started = false;
+            
             if (_failed)
             {
                 success = false;

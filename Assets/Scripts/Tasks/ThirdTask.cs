@@ -19,7 +19,7 @@ namespace Tasks
 
         private bool _paused;
 
-        public override void StartTask(Tasks _, Logger logger)
+        protected override void StartTask(Tasks _, Logger logger)
         {
             _currentTaskTeleportIndex = 0;
 

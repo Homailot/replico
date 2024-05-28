@@ -25,7 +25,7 @@ namespace Tasks
         private Logger _logger;
         private Tasks _tasks;
 
-        public override void StartTask(Tasks tasks, Logger logger)
+        protected override void StartTask(Tasks tasks, Logger logger)
         {
             _logger = logger;
             _tasks = tasks;
@@ -59,14 +59,14 @@ namespace Tasks
         
         private void OnSuccess(InputAction.CallbackContext context)
         {
-            collaborativeTaskNetwork.EndFourthTaskRpc(true);
+            EndTask(true);
             successAction.action.performed -= OnSuccess;
             failureAction.action.performed -= OnFailure;
         }
         
         private void OnFailure(InputAction.CallbackContext context)
         {
-            collaborativeTaskNetwork.EndFourthTaskRpc(false);
+            EndTask(false);
             failureAction.action.performed -= OnFailure;
             successAction.action.performed -= OnSuccess;
         }
@@ -106,6 +106,7 @@ namespace Tasks
         protected override void EndTaskInternal(bool success)
         {
             CleanTask();
+            collaborativeTaskNetwork.EndFourthTaskRpc(success);
             _logger.EndTask(success); 
         }
 

@@ -778,6 +778,10 @@ PrefabInstance:
       propertyPath: gestureConfiguration.logger
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7771987537043612676, guid: 5b5f020a55da4d644b2725951b538b40, type: 3}
+      propertyPath: gestureConfiguration.translateSpeed
+      value: 0.0015
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
