@@ -90,7 +90,7 @@ namespace Tasks
             // check if balloon rotation is toward the object in the y axis
             var balloonRotationQuat = _gestureDetector.GetBalloonRotation();
             var balloonRotation = balloonRotationQuat.eulerAngles;
-            var objectPosition = transform.localPosition;
+            var objectPosition = _gestureDetector.ToLocalPosition(transform.position);
             var objectPosition2D = new Vector2(objectPosition.x, objectPosition.z);
             
             var balloonPosition = _gestureDetector.GetBalloonPosition();
@@ -127,7 +127,7 @@ namespace Tasks
             }
              // check if balloon rotation is toward the object in the y axis
             var balloonRotation = rotation.eulerAngles;
-            var objectPosition = transform.localPosition;
+            var objectPosition = _gestureDetector.ToLocalPosition(transform.position);
             var objectPosition2D = new Vector2(objectPosition.x, objectPosition.z);
             
             var balloonPosition2D = new Vector2(position.x, position.z);

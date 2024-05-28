@@ -135,6 +135,11 @@ namespace Gestures
             _world = world;
             gestureConfiguration.replicaController.SetObjectToReplicate(world.gameObject);
         }
+        
+        public Vector3 ToLocalPosition(Vector3 position)
+        {
+            return gestureConfiguration.replicaController.GetReplica().transform.InverseTransformPoint(position);
+        }
 
         public void SetLogger(Logger logger)
         {
