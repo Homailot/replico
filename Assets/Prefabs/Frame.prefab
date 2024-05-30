@@ -1421,7 +1421,7 @@ MonoBehaviour:
     movementTarget: {fileID: 6065435516907134566}
     handDistanceThreshold: 0.18
     handMovementDetectionDistance: 0.01
-    handMovementDetectionTime: 0.35
+    handMovementDetectionTime: 0.2
     verticalGestureHandEmptyAllowance: 0.55
     balloonInitialHeight: 0.1
     balloonDistanceMultiplier: 1

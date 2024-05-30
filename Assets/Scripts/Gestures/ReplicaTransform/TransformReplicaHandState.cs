@@ -21,6 +21,7 @@ namespace Gestures.ReplicaTransform
         
         private Hands _hands;
         private float _timeSinceHandsDetected;
+        private float _timeSinceHandsDetectedBalloon;
         private readonly ISet<Finger> _movedFingers = new HashSet<Finger>(new FingerEqualityComparer());
 
         public TransformReplicaHandState(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration, HandDetector handDetector, ReplicaTransformer replicaTransform, Hands hands)
@@ -77,7 +78,6 @@ namespace Gestures.ReplicaTransform
                 _movedFingers.UnionWith(movedFingers);
                 return false;
             }
-            _timeSinceHandsDetected += Time.deltaTime;
 
             return _timeSinceHandsDetected > _gestureConfiguration.handMovementDetectionTime && hands.secondHand.Count >= 2;
         }
@@ -91,14 +91,13 @@ namespace Gestures.ReplicaTransform
             
             if (movedFingers.Count > 0 || movedFingersSecondHand.Count > 0)
             {
-                _timeSinceHandsDetected = 0;
+                _timeSinceHandsDetectedBalloon = 0;
                 _movedFingers.UnionWith(movedFingers);
                 _movedFingers.UnionWith(movedFingersSecondHand);
                 return false;
             }
-            _timeSinceHandsDetected += Time.deltaTime;
             
-            return _timeSinceHandsDetected > _gestureConfiguration.handMovementDetectionTime && hands.firstHand.Count == 1 && hands.secondHand.Count == 1;
+            return _timeSinceHandsDetectedBalloon > _gestureConfiguration.handMovementDetectionTime && hands.firstHand.Count == 1 && hands.secondHand.Count == 1;
         }
          
         public void OnUpdate()
@@ -121,6 +120,7 @@ namespace Gestures.ReplicaTransform
                 _gestureDetector.SwitchState(new TransformReplicaVerticalState(_gestureDetector, _gestureConfiguration, _handDetector, _hands));
                 return;
             }
+            _timeSinceHandsDetected += Time.deltaTime;
             
             if (DetectBalloonGesture(_hands))
             {
@@ -132,6 +132,7 @@ namespace Gestures.ReplicaTransform
                 _gestureDetector.SwitchState(new BalloonSelectionInitialState(_gestureDetector, _gestureConfiguration, _handDetector, _hands));
                 return;
             }
+            _timeSinceHandsDetectedBalloon += Time.deltaTime;
 
             var secondHandMoved = _hands.secondHand.Any(finger => _movedFingers.Contains(finger));
 
