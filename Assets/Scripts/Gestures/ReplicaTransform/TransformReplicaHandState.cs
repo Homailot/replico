@@ -147,7 +147,7 @@ namespace Gestures.ReplicaTransform
                 }
                 else
                 {
-                    _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _replicaTransformer, _gestureConfiguration));
+                    _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, _replicaTransformer, _gestureConfiguration, _handDetector));
                 }
             }
         }

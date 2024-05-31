@@ -18,11 +18,11 @@ namespace Gestures.ReplicaTransform
         
         private float _timeSinceLastTouch;
        
-        public TransformReplicaState(GestureDetector gestureDetector, ReplicaTransformer replicaTransformer, GestureConfiguration gestureConfiguration)
+        public TransformReplicaState(GestureDetector gestureDetector, ReplicaTransformer replicaTransformer, GestureConfiguration gestureConfiguration, HandDetector handDetector = null)
         {
             _gestureDetector = gestureDetector;
             _gestureConfiguration = gestureConfiguration;
-            _handDetector = new HandDetector(2, _gestureConfiguration.handDistanceThreshold);
+            _handDetector = handDetector ?? new HandDetector(2, _gestureConfiguration.handDistanceThreshold);
             _replicaTransformer = replicaTransformer;
         }
 

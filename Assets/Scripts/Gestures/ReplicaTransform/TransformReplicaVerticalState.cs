@@ -57,7 +57,7 @@ namespace Gestures.ReplicaTransform
                 else
                 {
                     _gestureConfiguration.logger.EndVerticalTransform();
-                    _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, new ReplicaTransformer(_gestureConfiguration), _gestureConfiguration));
+                    _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, new ReplicaTransformer(_gestureConfiguration), _gestureConfiguration, _handDetector));
                 }
                 return;
             }
