@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="124.00276mm"
+   height="43.015923mm"
+   viewBox="0 0 124.00277 43.015921"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="drawing42.svg"
+   inkscape:export-filename="drawing41.png"
+   inkscape:export-xdpi="400"
+   inkscape:export-ydpi="400"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.4324566"
+     inkscape:cx="177.31776"
+     inkscape:cy="98.781352"
+     inkscape:window-width="2560"
+     inkscape:window-height="1351"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <rect
+       x="278.90222"
+       y="200.41469"
+       width="256.19513"
+       height="107.1182"
+       id="rect4" />
+    <rect
+       x="160.9241"
+       y="315.92462"
+       width="44.426899"
+       height="27.643406"
+       id="rect2" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-36.498476,-64.896776)">
+    <rect
+       style="fill:#f6f9ee;fill-opacity:1;stroke:#50160e;stroke-width:1.3;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect1"
+       width="122.70276"
+       height="41.715923"
+       x="37.148476"
+       y="65.546776"
+       ry="1.8"
+       rx="1.8" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:7.05556px;font-family:Teachers;-inkscape-font-specification:'Teachers Medium';white-space:pre;inline-size:102.026;display:inline;fill:#141407;fill-opacity:1;stroke:#50160e;stroke-width:0.1;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+       x="41.010555"
+       y="89.857521"
+       id="text3"
+       transform="translate(7.4355728,-10.508349)"><tspan
+         x="41.010555"
+         y="89.857521"
+         id="tspan1">Para confirmar o teletransporte, </tspan><tspan
+         x="41.010555"
+         y="98.676974"
+         id="tspan3">pressiona novamente com o </tspan><tspan
+         x="41.010555"
+         y="107.49642"
+         id="tspan4">segundo dedo da mão auxiliar</tspan></text>
+  </g>
+</svg>

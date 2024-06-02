@@ -9,18 +9,24 @@ namespace Replica
         private GameObject _replica;
         private ReplicaAnimation _replicaAnimation;
         private SmoothFollow _smoothFollow;
-    
+        
         private void Awake()
         {
+            _replicaAnimation = GetComponent<ReplicaAnimation>(); 
+            _smoothFollow = GetComponent<SmoothFollow>();
+        }
+        
+        public void SetObjectToReplicate(GameObject obj)
+        {
+            objectToReplicate = obj;
             var transform1 = transform;
             _replica = Instantiate(objectToReplicate, transform1.position, transform1.rotation);
             _replica.transform.parent = transform1;
         }
-
-        private void Start()
+        
+        public GameObject GetObjectToReplicate()
         {
-            _replicaAnimation = GetComponent<ReplicaAnimation>(); 
-            _smoothFollow = GetComponent<SmoothFollow>();
+            return objectToReplicate;
         }
 
         public void EnableReplica()
@@ -57,6 +63,22 @@ namespace Replica
         {
             _replicaAnimation.CompleteAnimation(onComplete);
         }
+        
+        public Transform GetEndTransform()
+        {
+            return _replicaAnimation.GetEndTransform();
+        }
+        
+        public void SetTarget(Transform target)
+        {
+            var smoothTarget = _smoothFollow.GetTarget();
+            
+            Debug.Log("smoothTarget: " + smoothTarget);
+            Debug.Log("target: " + target);
+            smoothTarget.position = target.position;
+            smoothTarget.localScale = target.localScale;
+            smoothTarget.rotation = target.rotation;
+        }
     
         public void AnimateTo(float t)
         {
@@ -66,6 +88,11 @@ namespace Replica
         public void SetMovementTarget(Transform target)
         {
             _smoothFollow.SetTarget(target);
+        }
+        
+        public Transform GetMovementTarget()
+        {
+            return _smoothFollow.GetTarget();
         }
     
         public GameObject GetReplica()

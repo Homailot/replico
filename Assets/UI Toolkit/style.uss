@@ -1,0 +1,42 @@
+#unity-text-input {
+    background-color: rgba(243, 231, 231, 0);
+    -unity-background-image-tint-color: rgb(255, 0, 0);
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    border-left-color: rgb(254, 254, 254);
+    border-right-color: rgb(254, 254, 254);
+    border-top-color: rgb(254, 254, 254);
+    border-bottom-color: rgb(254, 254, 254);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    width: 200px;
+}
+
+#unity-text-input TextElement {
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(255, 255, 255);
+    -unity-font-style: normal;
+}
+
+TextField {
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    font-size: 18px;
+    -unity-font-definition: url("project://database/Assets/Font/Teachers-VariableFont_wght%20SDF%201.asset?fileID=11400000&guid=2551b47bf179a784c8b8de8dee9f02db&type=2#Teachers-VariableFont_wght SDF 1");
+}
+
+#unity-text-input:focus {
+    color: rgb(255, 255, 255);
+}
+
+TextField:focus {
+    color: rgb(255, 255, 255);
+}
+
+Label:focus {
+    color: rgb(255, 255, 255);
+}

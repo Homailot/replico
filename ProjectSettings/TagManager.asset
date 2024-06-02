@@ -5,26 +5,32 @@ TagManager:
   serializedVersion: 2
   tags:
   - Table
+  - ToReplicate
+  - Canvas
+  - Logger
+  - MAST_Holder
+  - Frame
+  - TaskHolder
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Balloon
+  - BalloonPlane
+  - BalloonVertical
+  - Balloon2
+  - BalloonNone
+  - Fog
+  - ReplicaTable
+  - Player1Replica
+  - Player2Replica
+  - Arrow
+  - IndicatorLine
+  - Atmosphere
+  - TaskObject
   - 
   - 
   - 

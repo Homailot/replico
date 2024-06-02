@@ -26,7 +26,6 @@ namespace Gestures.ReplicaTransform
             _replicaTransformer = new ReplicaTransformer(_gestureConfiguration);
             _replicaTransformerVertical = new ReplicaTransformer(_gestureConfiguration, true);
             _hands = hands;
-            Debug.Log("in vertical");
         }
 
         public void OnUpdate()
@@ -41,7 +40,6 @@ namespace Gestures.ReplicaTransform
             if (hands.secondHand.Count == 0)
             {
                 _timeSinceSecondHandEmpty += Time.deltaTime;
-                Debug.Log(_timeSinceSecondHandEmpty);
             }
             else
             {
@@ -50,7 +48,17 @@ namespace Gestures.ReplicaTransform
             
             if (_timeSinceSecondHandEmpty > _gestureConfiguration.verticalGestureHandEmptyAllowance || hands.IsEmpty())
             {
-                _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
+                if (hands.IsEmpty())
+                {
+                    _gestureConfiguration.logger.EndVerticalTransform();
+                    _gestureConfiguration.logger.EndTransform();
+                    _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
+                }
+                else
+                {
+                    _gestureConfiguration.logger.EndVerticalTransform();
+                    _gestureDetector.SwitchState(new TransformReplicaState(_gestureDetector, new ReplicaTransformer(_gestureConfiguration), _gestureConfiguration, _handDetector));
+                }
                 return;
             }
             

@@ -5,12 +5,21 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 55daccc09a3b69647bbab145b54a3ab3
+  - enabled: 1
+    path: Assets/Scenes/StartScene.unity
+    guid: f7c864d0bd1a5384b928deb89b200954
   - enabled: 1
     path: Assets/Scenes/CityScene.unity
-    guid: fcc60b67da5e44e47a2e166d0e28bfc0
+    guid: 4e9fef26e6adb88479ad1b9834a32d94
+  - enabled: 1
+    path: Assets/Scenes/Dungeon Scene 2.unity
+    guid: eeea8ffe4db99b146b5ff6a5ccfe0042
+  - enabled: 1
+    path: Assets/Scenes/Dungeon Scene.unity
+    guid: 346d3b072659dc04e88e3762a0c8d9d1
+  - enabled: 1
+    path: Assets/Scenes/Rover Scene.unity
+    guid: f861d416c22c05a40b51ac098fa8502e
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260, type: 2}
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: dc5a169419fa04987b057f65238cf3ba, type: 2}

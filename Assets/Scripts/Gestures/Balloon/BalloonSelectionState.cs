@@ -18,6 +18,9 @@ namespace Gestures.Balloon
         private float _lastDistance;
         
         private bool _lastEmpty = false;
+        private float _lastEmptyTime = 0;
+        
+        private IReplicaPoint _lastReplicaPoint;
         
         public BalloonSelectionInitialState(GestureDetector gestureDetector, GestureConfiguration gestureConfiguration, HandDetector handDetector, Hands hands)
         {
@@ -29,10 +32,10 @@ namespace Gestures.Balloon
             var screenMax = Mathf.Max(Screen.width, Screen.height);
             _initialDistance = Vector2.Distance(hands.firstHand.First().screenPosition / screenMax, hands.secondHand.First().screenPosition / screenMax);
             _lastDistance = _initialDistance;
-            _startingValue = 0;
+            _startingValue = _gestureDetector.lastBalloonHeight;
         }
-        
-        public float GetValueFromDistance(float distance)
+
+        private float GetValueFromDistance(float distance)
         {
             return Mathf.Max(_initialDistance - distance + _startingValue, 0) * _gestureConfiguration.balloonDistanceMultiplier;
         }
@@ -40,17 +43,37 @@ namespace Gestures.Balloon
         public void OnUpdate()
         {
             var hands = _handDetector.DetectHands(Touch.activeFingers, _hands);
-            if (hands.IsEmpty() || hands.firstHand.Count < 1)
+            if (hands.secondHand.Count > 1)
             {
-                _gestureDetector.OnGestureExit();
                 _gestureDetector.ResetBalloonPlanePositions();
-                _gestureDetector.DisableBalloon();
-                _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
+                _gestureDetector.SwitchState(new BalloonHoldState(_gestureDetector, _gestureConfiguration, _handDetector, hands, _lastReplicaPoint));
                 return;
             }
+            
+            if (hands.IsEmpty())
+            {
+                if (_lastEmptyTime == 0)
+                {
+                    _lastEmptyTime = Time.time;
+                }
+                else if (Time.time - _lastEmptyTime > _gestureConfiguration.balloonSelectionTimeEmptyThreshold)
+                {
+                    Cancel();
+                    return;
+                }
+            }
+            else
+            {
+                _lastEmptyTime = 0;
+                _hands = hands;
+            }
 
-            _hands = hands;
-
+            if (_hands.firstHand.Count < 1)
+            {
+                _lastEmpty = _hands.secondHand.Count < 1;
+                return;
+            }
+            
             var secondHandPosition = _hands.firstHand.First().screenPosition + _lastDirection;
             var distance = _lastDistance;
             if (_hands.secondHand.Count >= 1)
@@ -77,10 +100,37 @@ namespace Gestures.Balloon
                 secondHandPosition);
             var balloonScreenPosition = _hands.firstHand.First().screenPosition;
             _gestureDetector.UpdateBalloonPosition(new Vector3(balloonScreenPosition.x, GetValueFromDistance(distance), balloonScreenPosition.y));
+            _gestureDetector.lastBalloonHeight = GetValueFromDistance(distance);
+
+            var replicaPoint = _gestureDetector.GetReplicaPointFromBalloon();
+            if (replicaPoint != null)
+            {
+                if (_lastReplicaPoint != null && _lastReplicaPoint != replicaPoint)
+                {
+                    _lastReplicaPoint.Unhighlight();
+                }
+                replicaPoint.Highlight();
+                _lastReplicaPoint = replicaPoint;
+            } else if (_lastReplicaPoint != null)
+            {
+                _lastReplicaPoint.Unhighlight();
+                _lastReplicaPoint = null;
+            }
             
-            _lastEmpty = hands.secondHand.Count < 1;
+            _lastEmpty = _hands.secondHand.Count < 1;
             _lastDirection = secondHandPosition - _hands.firstHand.First().screenPosition;
             _lastDistance = distance;
+        }
+
+        private void Cancel()
+        {
+            _gestureConfiguration.logger.EndBalloonSelection();
+            _gestureDetector.OnGestureExit();
+            _gestureDetector.ResetBalloonPlanePositionsAndHeight();
+            _gestureDetector.DisableBalloon();
+
+            _lastReplicaPoint?.Unhighlight();
+            _gestureDetector.SwitchState(new TransformReplicaInitialState(_gestureDetector, _gestureConfiguration));
         }
     }
 }

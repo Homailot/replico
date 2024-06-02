@@ -31,7 +31,7 @@ namespace Clustering
         {
             _k = k;
             _distanceFunction = distanceFunction;
-            _mlContext = new MLContext();
+            _mlContext = new MLContext(seed: 0);
         }
         
         private static IEnumerable<Point> ConvertToPoints(IEnumerable<Vector2> points)

@@ -1,0 +1,77 @@
+using System.Collections.Generic;
+using Gestures;
+using Player;
+using Replica;
+using UnityEngine;
+
+namespace Tasks
+{
+    public class SecondTask : Task
+    {
+        [SerializeField] private GestureDetector gestureDetector;
+        [SerializeField] private List<Vector3> taskPoints;
+        [SerializeField] private List<int> unacknowledgedPoints;
+        [SerializeField] private PlayerManager playerManager;
+        [SerializeField] private ReplicaController replicaController;
+        
+        private Logger _logger;
+
+        protected override void StartTask(Tasks _, Logger logger)
+        {
+            var playerId = gestureDetector.GetPlayerId();
+            var otherPlayerId = playerId == 0 ? 1ul : 0ul;
+            gestureDetector.ClearPointsOfInterest();
+            
+            for (var i = 0; i < taskPoints.Count; i++)
+            {
+                var balloonPoint = gestureDetector.AddPointOfInterest(taskPoints[i], otherPlayerId, (ulong) i + 1ul);
+
+                if (unacknowledgedPoints.Contains(i)) continue;
+                balloonPoint.selectable = false;
+                                    
+                var line = balloonPoint.GetIndicatorLine();
+                line.DisableLine();
+                line.DisablePinIndicator();
+            }
+            playerManager.SetBalloonId((ulong)taskPoints.Count);
+
+            gestureDetector.AddPointAcknowledgedListener(PointSelected);
+            var endTransform = replicaController.GetEndTransform();
+            replicaController.SetTarget(endTransform);
+            
+            playerManager.MovePlayerFromTableToStartPositionServerRpc(gestureDetector.GetPlayerId());
+                        
+            _logger = logger;
+            _logger.StartTask();
+        }
+
+        protected override void EndTaskInternal(bool success)
+        {
+            CleanTask();
+            _logger.EndTask(success); 
+        }
+
+        public override void CleanTask()
+        {
+            gestureDetector.ClearPointsOfInterest();
+            gestureDetector.RemovePointAcknowledgedListener(PointSelected);
+        }
+
+        private void PointSelected(ulong id)
+        {
+            unacknowledgedPoints.Remove((int)id - 1);
+            
+            var finished = Next();
+            if (finished)
+            {
+                EndTask(true);
+            }
+        }
+
+        private bool Next()
+        {
+            _logger.TaskStep();
+            return unacknowledgedPoints.Count == 0;
+        } 
+    }
+}
