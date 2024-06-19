@@ -8,7 +8,7 @@ This chapter describes the implementation of the prototype created to test the v
     
     Unity's OpenXR plugin\footnote{\url{https://docs.unity3d.com/Packages/com.unity.xr.openxr@1.11/manual/index.html}} controls VR hardware communication, handling input and rendering with minimal effort, and managing all API calls automatically. OpenXR\footnote{\url{https://registry.khronos.org/OpenXR/specs/1.1/html/xrspec.html}} is an API standard developed by Khronos for XR applications, including VR, and is widely adopted across many XR devices with conformant runtimes. Due to its ubiquity and recency, it was chosen over alternatives such as using SteamVR directly.
 
-    Since Unity's OpenXR plugin interfaces with Unity's Input System, the Unity Enhanced Touch API\footnote{\url{https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.EnhancedTouch.html}} was used instead of the standard Unity Touch API to maintain a consistent input management system. The Enhanced Touch API provides automatic finger tracking and maintains a history of touch interactions.
+    Since Unity's OpenXR plugin interfaces with Unity's Input System, the Unity Enhanced Touch API\footnote{\url{https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.EnhancedTouch.html}} was used instead of the standard Unity Touch API to maintain a consistent input management system. The Enhanced Touch API provides automatic finger tracking and keeps a history of touch interactions.
 
     The first-party Unity Netcode for GameObjects\footnote{\url{https://docs-multiplayer.unity3d.com/netcode/current/about/}} library was used for networking. This library offers a straightforward abstraction of networking logic and is easy to use and set up for client-server or distributed authority topologies. Its simplicity is well-suited for a small number of clients, making it ideal for this prototype.
 
@@ -16,11 +16,11 @@ This chapter describes the implementation of the prototype created to test the v
     \begin{figure}[h]
         \centering
         \includegraphics[width=.97\linewidth]{figures/architecture.png}
-        \caption{System architecture. Modules in blue represent Unity libraries, while modules in green are implemented by the prototype.}
+        \caption{System architecture. Modules in blue represent Unity libraries, while the prototype implements modules in green.}
         \label{fig:architecture}
     \end{figure}
-
-    The system architecture diagram in Figure \ref{fig:architecture} demonstrates the integration of various software and hardware components, describing both local and networked elements. OpenXR manages communication with the VR headset and the table tracker, rendering images to the headset, updating the virtual camera's position, and interfacing inputs to Unity's Input System. Touches sensed by the touch surface are processed by Unity's Enhanced Touch API from the Input System. The Replico Controller and User Controller manage interaction logic and user actions, communicating with the Input System and OpenXR. Networking is handled by Unity Netcode, which synchronizes user and table data across the network via the User Network and Table Network, using a client-server topology. The server-side User Manager and Table Manager manage data for users and tables. The User Manager tracks users in the system and communicates with the User Network objects through remote procedure calls (RPCs). The Table Manager handles table creation, deletion, and management logic, communicating with Table Network objects using RPCs.
+    
+    The system architecture diagram in Figure \ref{fig:architecture} demonstrates the integration of various software and hardware components, describing both local and networked elements. OpenXR manages communication with the VR headset and the table tracker, rendering images to the headset, updating the virtual camera's position, and interfacing inputs to Unity's Input System. Unity's Enhanced Touch API processes touches sensed by the touch surface from the Input System. The Replico Controller and User Controller manage interaction logic and user actions, communicating with the Input System and OpenXR. Networking is handled by Unity Netcode, which synchronizes user and table data across the network via the User Network and Table Network, using a client-server topology. The server-side User Manager and Table Manager manage data for users and tables. The User Manager tracks users in the system and communicates with the User Network objects through remote procedure calls (RPCs). The Table Manager handles table creation, deletion, and management logic, communicating with Table Network objects using RPCs.
 
 
 %\section{Additional Software and Tools}
@@ -36,7 +36,7 @@ This chapter describes the implementation of the prototype created to test the v
 
 \section{State Machine}
 
-    The interpretation of touch surface input varies depending on the gestures employed. To address this, a state machine was created. A state machine consists of defined states with distinct transitions, where each state processes the input differently. Implementation was achieved through the state design pattern, wherein each step is represented as a class that alters the behavior of the Replico controller. A diagram illustrating the implemented state machine is provided in Figure \ref{fig:states}.
+    The interpretation of touch surface input varies depending on the gestures employed. To address this, a state machine was created. A state machine consists of defined states with distinct transitions, where each state processes the input differently. Implementation was achieved through the state design pattern, wherein each step is represented as a class that alters the behavior of the Replico controller. Figure \ref{fig:states} provides a diagram illustrating the implemented state machine.
 
     \begin{figure}[h]
         \centering
@@ -45,11 +45,11 @@ This chapter describes the implementation of the prototype created to test the v
         \label{fig:states}
     \end{figure}
 
-    The \lstinline{TransformReplicaInitialState} is the starting, state where no fingers are detected, and therefore no controls are active. In this state, finger touches are checked every frame using the Enhanced Touch API, which updates every frame because the Input System update mode is set to Dynamic. When at least one finger is detected, the system transitions to \lstinline{TransformReplicaState}. All states revert to this initial state whenever no fingers are detected.
+    The \lstinline{TransformReplicaInitialState} is the starting state where no fingers are detected, and therefore no controls are active. In this state, finger touches are checked every frame using the Enhanced Touch API, which updates every frame because the Input System update mode is set to Dynamic. When at least one finger is detected, the system transitions to \lstinline{TransformReplicaState}. All states revert to this initial state whenever no fingers are detected.
     
-    The \lstinline{TransformReplicaState} is entered when fingers are detected, but no hands are recognized yet. In this state, the user can move the replica using the gestures described in Section \ref{sec:transform} and implemented in Section \ref{sec:transformation}. Every frame, it checks for hands using the method described in Section \ref{sec:hand}. When both hands are detected, it transitions to \lstinline{TransformReplicaHandState}.
+    The \lstinline{TransformReplicaState} is entered when fingers are detected, but no hands are recognized yet. In this state, the user can move the replica using the gestures described in Section \ref{sec:transform} and implemented in Section \ref{sec:transformation}. Every frame it checks for hands using the method described in Section \ref{sec:hand}. When both hands are detected, it transitions to \lstinline{TransformReplicaHandState}.
     
-    In \lstinline{TransformReplicaHandState}, users can move the replica as in \lstinline{TransformReplicaState}. This state detects the user's gestures every frame using the method described in Section \ref{sec:vertical_balloon}. It transitions to \lstinline{TransformReplicaVerticalState} if the vertical transform gesture is detected, or to \lstinline{BalloonSelectionInitialState} if the balloon selection gesture is detected. If any hand is removed, it transitions back to \lstinline{TransformReplicaState}.
+    In \lstinline{TransformReplicaHandState}, users can move the replica as in \lstinline{TransformReplicaState}. This state detects the user's gestures in every frame using the method described in Section \ref{sec:vertical_balloon}. It transitions to \lstinline{TransformReplicaVerticalState} if the vertical transform gesture is detected, or to \lstinline{BalloonSelectionInitialState} if the balloon selection gesture is detected. If any hand is removed, it transitions back to \lstinline{TransformReplicaState}.
 
     In \lstinline{TransformReplicaVerticalState}, the user can move the replica as in \lstinline{TransformReplicaState} using their primary hand, while the secondary hand performs translation on the XY plane. To allow users to temporarily remove the secondary hand to reposition their fingers without terminating the gesture, the secondary hand may be removed for up to $0.55$ seconds before the controller transitions back to \lstinline{TransformReplicaState}.
 
@@ -132,7 +132,7 @@ This chapter describes the implementation of the prototype created to test the v
         The vertical transform and balloon selection gestures, described in Sections \ref{sec:transform} and \ref{sec:balloon} respectively, can be easily confused with the pinch gesture required for scaling the replica. To aid in this distinction:
     
         \begin{itemize}
-            \item \textbf{Vertical Transform:} At least one finger on the primary hand, and at least two fingers on the secondary hand. The secondary hand must remain stationary for $0.2$ seconds.
+            \item \textbf{Vertical Transform:} At least one finger on the primary hand and at least two fingers on the secondary hand. The secondary hand must remain stationary for $0.2$ seconds.
             \item \textbf{Balloon Selection:} Exactly one finger on the primary hand and exactly one finger on the secondary hand. Both hands must remain stationary for $0.2$ seconds.
         \end{itemize}
     
@@ -167,7 +167,7 @@ This chapter describes the implementation of the prototype created to test the v
 
     Because the controller may fall accidentally while the user is interacting with the touch surface and cannot see it when using the VR headset, it is only used to track the table when the user first joins a table. To achieve this, the tracker's rotation relative to the user is calculated using $\mathbf{q}_{\mathrm{local}} = \mathbf{q}_{\mathrm{tracker}} \cdot \mathbf{q}_{\mathrm{user}}^{-1}$ and stored. Additionally, the tracker's local position relative to the user is calculated using the user's \lstinline{InverseTransformPoint} function and stored.
 
-    To convert the local rotation back to world rotation, the calculation  $\mathbf{q}_{\mathrm{tracker}} = \mathbf{q}_{\mathrm{user}} \cdot \mathbf{q}_{\mathrm{local}}$ is used. Similarly, the local position is converted back to world position using the user's \lstinline{TransformPoint} function. These world coordinates and rotations are then used in the previously described calculations.
+    To convert the local rotation back to world rotation, the calculation  $\mathbf{q}_{\mathrm{tracker}} = \mathbf{q}_{\mathrm{user}} \cdot \mathbf{q}_{\mathrm{local}}$ is used. Similarly, the local position is converted back to world position utilizing the user's \lstinline{TransformPoint} function. These world coordinates and rotations are then used in the previously described calculations.
 
 \section{Visual Feedback}
 
@@ -184,9 +184,9 @@ This chapter describes the implementation of the prototype created to test the v
             \label{fig:touch_indicators}
         \end{figure}
 
-        This is implemented using a compute shader and a shader built with Unity's Shader Graph. A compute shader is a program that runs on the GPU outside of the normal rendering pipeline\footnote{\url{https://docs.unity3d.com/Manual/class-ComputeShader.html}}. It is most useful for executing highly parallel algorithms. In this case, the compute shader processes finger positions, performs calculations, and stores results in render textures. These textures are then used by the Shader Graph shader to render finger trail indicators in every frame.
+        This is implemented using a compute shader and a shader built with Unity's Shader Graph. A compute shader is a program that runs on the GPU outside of the normal rendering pipeline\footnote{\url{https://docs.unity3d.com/Manual/class-ComputeShader.html}}. It is most useful for executing highly parallel algorithms. In this case, the compute shader processes finger positions, performs calculations, and stores results in render textures. The Shader Graph shader then uses these textures to render finger trail indicators in every frame.
 
-        Each render texture stores data for two fingers using two channels per finger per pixel. This results in five textures, each with dimensions matching the greatest nearest power of two between the screen width and height. One channel stores the reverse distance from the pixel to the center of the finger trail, ranging from 1 (closest to the center) to 0 (outside the trail radius), similar to a signed distance function. The other channel records the decay of the pixel, where 1 indicates the most recent position, and 0 indicates full decay. These channels are depicted in Figure \ref{fig:touch_progress}, with red representing the distance to the trail's center and blue representing the decay.
+        Each render texture stores data for two fingers using two channels per finger per pixel. This results in five textures, each with dimensions matching the greatest nearest power of two between the screen width and height. One channel stores the reverse distance from the pixel to the center of the finger trail, ranging from 1 (closest to the center) to 0 (outside the trail radius), similar to a signed distance function. The other channel records the decay of the pixel, where 1 indicates the most recent position, and 0 indicates total decay. These channels are depicted in Figure \ref{fig:touch_progress}, with red representing the distance to the trail's center and blue representing the decay.
         
         \begin{figure}[h!]
             \centering
@@ -252,7 +252,7 @@ This chapter describes the implementation of the prototype created to test the v
             \label{fig:frame_limits}
         \end{figure}
     
-        The illumination effect is achieved using a shader applied to a transparent rectangular prism extending from the touch frame's base. The shader's main function is to gradually diminish the illumination effect as the distance from the prism increases. This is accomplished using a modified version of a shader originally designed for a stylized water effect\footnote{\url{https://ameye.dev/notes/stylized-water-shader/}}, created using Unity's Shader Graph.
+        The illumination effect is achieved using a shader applied to a transparent rectangular prism extending from the touch frame's base. The shader's primary function is to gradually diminish the illumination effect as the distance from the prism increases. This is accomplished using a modified version of a shader initially designed for a stylized water effect\footnote{\url{https://ameye.dev/notes/stylized-water-shader/}}, created using Unity's Shader Graph.
         
         To calculate the distance \( d \), a vector \(\vec{CA}\) is obtained from the camera to the fragment's position on the prism using the View Vector node. This vector is then normalized to \(\hat{v}\). The depth texture is sampled to obtain the distance from the camera to the point occluded by the prism, \(|CB|\). The normalized vector is multiplied by this distance, resulting in \(\vec{CB} = \hat{v} \cdot |CB|\). Adding this vector to the camera's position gives the position of the occluded point, \( B = C + \vec{CB} \). The distance vector \(\vec{BA}\) is obtained by subtracting the occluded point's position from the fragment's position on the prism's surface, \(\vec{BA} = A - B\). Finally, the length of this vector is calculated to obtain the distance, \( d = \|\vec{BA}\| \).
         
@@ -294,7 +294,7 @@ This chapter describes the implementation of the prototype created to test the v
 
     \subsection{Virtual Table} \label{sec:virtual_table}
 
-        As shown in the literature \cite{zielaskoMenusDeskSystem2019, sousaVRRRRoomVirtualReality2017, zielaskoNonStationaryOfficeDesk2019}, the presence of a virtual table can be useful for presenting information. This prototype uses the virtual touch frame described in Section \ref{sec:touch_frame} to represent that information. While the table is useful for displaying information, it can obscure much of the to-scale model, especially if the user wants to look down. To make it less obtrusive, the table begins to fade and becomes invisible after 2 seconds of the touch surface not detecting any fingers, as shown in Figure \ref{fig:table_visibility}.
+        As shown in the literature \cite{zielaskoMenusDeskSystem2019, sousaVRRRRoomVirtualReality2017, zielaskoNonStationaryOfficeDesk2019}, the presence of a virtual table can be helpful in presenting information. This prototype uses the virtual touch frame described in Section \ref{sec:touch_frame} to represent that information. While the table is useful for displaying information, it can obscure much of the to-scale model, especially if the user wants to look down. To make it less intrusive, the table begins to fade and becomes invisible after 2 seconds of the touch surface not detecting any fingers, as shown in Figure \ref{fig:table_visibility}.
 
         \begin{figure}[h!]
             \centering
@@ -305,24 +305,21 @@ This chapter describes the implementation of the prototype created to test the v
 
         This effect is achieved using a shader that takes the pixel's world space position and applies a simplex 3D noise function\footnote{\url{https://github.com/JimmyCushnie/Noisy-Nodes}} to determine the pixel's alpha clip threshold. After 2 seconds of inactivity, the table's alpha value is reduced using a smooth animation curve. The alpha clip threshold then determines whether a pixel is visible or invisible. Alpha blending was not used because it caused visual artifacts, making the table visible from behind itself.
 
-        % visible in replica:
-            % seen behind objects
-                % depth perception in vr helps understand
-            % outline with glow
-            % does not scale with replica
-            % who is on table
+        User tables are also visible in the replica as miniatures, as shown in Figure \ref{fig:table_behind} and described in Section \ref{sec:awareness}. These miniatures feature an outline effect to help them stand out from the surrounding environment, using a free Unity package\footnote{\url{https://assetstore.unity.com/packages/tools/particles-effects/quick-outline-115488}}. They also glow intermittently to draw attention, increasing the lightness of the table's color through an animation using a quadratic easing in-out function\footnote{\url{https://assetstore.unity.com/packages/vfx/shaders/shader-graph-easing-193427}}. The miniatures display who is at the table by showing a user seated at it, as seen in image c) of Figure \ref{fig:table_behind}. These miniatures do not scale with the replica, keeping their size constant, similar to markers on a map.
+
+        They remain visible behind objects in the replica to help users quickly identify their and others' tables. This is achieved by rendering the table miniature in an additional render pass using the depth buffer to determine the appropriate material. If the table is behind an object, it appears slightly transparent and in a single color; otherwise, it uses the normal material\footnote{\url{https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@10.4/manual/renderer-features/how-to-custom-effect-render-objects.html}}.
 
         \begin{figure}[h!]
             \centering
             \includegraphics[width=1\textwidth]{figures/table_behind.png}
-            \captionof{figure}{The transition of the virtual table from: a) fully visible; b) half-visible; c) fully invisible.}
-            \label{fig:table_visibility}
+            \captionof{figure}{The table miniature visible in the replica. Image (a) shows the table behind an object, image (b) shows the table within the replica, and image (c) shows two users at the table.}
+            \label{fig:table_behind}
         \end{figure}
 
 
     \subsection{Points of Interest} \label{sec:visual_poi}
 
-        This section describes the various visual effects and techniques used to highlight the points of interest within the virtual environment, so that they are easily identifiable.
+        This section describes the various visual effects and techniques used to highlight the points of interest within the virtual environment so that they are easily identifiable.
 
         As mentioned in Section \ref{sec:awareness}, the points of interest share the appearance of their creators.
 
@@ -330,22 +327,22 @@ This chapter describes the implementation of the prototype created to test the v
         \begin{figure}[h!]
             \centering
             \includegraphics[width=.8\textwidth]{figures/poi_appearance.png}
-            \captionof{figure}{The transition of the virtual table from: a) fully visible; b) half-visible; c) fully invisible.}
-            \label{fig:table_visibility}
+            \captionof{figure}{Point of interest appearance based on the creator's appearance. Image (a) shows points of interest from the first user, and image (b) shows points of interest from the second user.}
+            \label{fig:poi_appearance}
         \end{figure}
 
        \begin{figure}[h!]
             \centering
             \includegraphics[width=.8\textwidth]{figures/poi_visibility.png}
-            \captionof{figure}{The transition of the virtual table from: a) fully visible; b) half-visible; c) fully invisible.}
-            \label{fig:table_visibility}
+            \captionof{figure}{Points of interest visibility. Image (a) shows a point of interest in the replica that is visible behind the building. Image (b) shows that the same point of interest is not visible in the 3D model behind the building.}
+            \label{fig:poi_visibility}
         \end{figure}
 
        \begin{figure}[h!]
             \centering
             \includegraphics[width=1\textwidth]{figures/poi_marker.png}
-            \captionof{figure}{The transition of the virtual table from: a) fully visible; b) half-visible; c) fully invisible.}
-            \label{fig:table_visibility}
+            \captionof{figure}{Point of interest markers. Image (a) shows markers for the first user, and image (b) shows markers for the second user. Image (c) demonstrates the scaling of the markers with distance. Image (d) displays the markers flipped upside down to ensure they are always visible.}
+            \label{fig:poi_marker}
         \end{figure}
         
         
@@ -368,16 +365,16 @@ This chapter describes the implementation of the prototype created to test the v
        \begin{figure}[h!]
             \centering
             \includegraphics[width=1\textwidth]{figures/balloon_selection_intersection.png}
-            \captionof{figure}{The transition of the virtual table from: a) fully visible; b) half-visible; c) fully invisible.}
-            \label{fig:table_visibility}
+            \captionof{figure}{Balloon selection intersection with a point of interest in image a) and a table in image b).}
+            \label{fig:balloon_selection_intersection}
         \end{figure}
 
 
        \begin{figure}[h!]
             \centering
             \includegraphics[width=1\textwidth]{figures/balloon_poi.png}
-            \captionof{figure}{The transition of the virtual table from: a) fully visible; b) half-visible; c) fully invisible.}
-            \label{fig:table_visibility}
+            \captionof{figure}{Balloon selection helper lines. Image (a) shows the balloon for the first user, and image (b) shows the balloon for the second user with the secondary hand removed.}
+            \label{fig:balloon_poi}
         \end{figure}
         
         % balloon selection intersection with table and pois
