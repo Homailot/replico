@@ -81,7 +81,7 @@ This chapter describes the implementation of the prototype created to test the v
 
     Here, \(\mathbf{F}_i\) represents the positions of the \(n\) fingers in the \(i\)-th frame, \(\mathbf{minF}_i\) and \(\mathbf{maxF}_i\) are the minimum and maximum x and y coordinates from the set of finger positions. Essentially, \(C_i\) is the geometric centroid of the smallest rectangle that can enclose all the touch points. This distance is then multiplied by a factor \(t\), which can be adjusted for each 3D model, resulting in \(\vec{T} = t \cdot \vec{D}\). This yields a 2D vector that is added to the replica's position in the \(XZ\) plane.
 
-    Scaling is achieved by first calculating $s = {{(\bar{d_i} / \bar{d_{i-1}})}^{c}}$, where \(\bar{d_i}\) and \(\bar{d_{i-1}}\) are the average distances of the active touches to the center of those touches from the current frame and the previous frame, respectively, and \(c\) is a constant used to modulate the scaling effect. The calculation for the average distance is shown in Equation \ref{eq:distance}.
+    Scaling is achieved by first calculating $s = {{\left(\bar{d_i} / \bar{d_{i-1}}\right)}^{c}}$, where \(\bar{d_i}\) and \(\bar{d_{i-1}}\) are the average distances of the active touches to the center of those touches from the current frame and the previous frame, respectively, and \(c\) is a constant used to modulate the scaling effect. The calculation for the average distance is shown in Equation \ref{eq:distance}.
     
     \begin{figure}[h]
     \begin{equation}
@@ -157,7 +157,7 @@ This chapter describes the implementation of the prototype created to test the v
     \begin{equation}
     \begin{split} \label{eq:tracker}
         \Delta\theta&=\mathbf{q}_{\mathrm{tracker}}^{-1}\cdot \mathbf{q}_{\mathrm{attach}} \\
-        \Delta\theta_Y &= \mathrm{Quat}(0, \mathrm{yaw}(\Delta\theta), 0) \\
+        \Delta\theta_Y &= \mathrm{Quat}\left(0, \mathrm{yaw}(\Delta\theta), 0\right) \\
         \mathbf{q}_{\mathrm{user}_Y} &= \mathrm{Quat}(0, \mathrm{yaw}(\mathbf{q}_{\mathrm{user}}), 0) \\
         \mathbf{q}_{\mathrm{target}} &= \mathbf{q}_{\mathrm{user}_Y} \cdot \Delta\theta_Y \\
         \vec{v}_{\mathrm{forward}} &= \mathbf{q}_{\mathrm{target}} \cdot (0,0,1)
@@ -206,9 +206,9 @@ This chapter describes the implementation of the prototype created to test the v
         \begin{split} \label{eq:distance_line}
             \vec{AB} &= B - A \\
             \vec{AP} &= P - A \\
-            h &= \mathrm{clamp} ( \frac{\vec{AP} \cdot \vec{AB}}{\vec{AB} \cdot \vec{AB}} , 0, 1)  \\
+            h &= \mathrm{clamp} \left( \frac{\vec{AP} \cdot \vec{AB}}{\vec{AB} \cdot \vec{AB}} , 0, 1\right)  \\
             d &= \frac{\| \vec{AP} - h \cdot \vec{AB} \|}{r} \\
-            d_{\mathrm{rev}} &= \mathrm{clamp} ( 1 - d , 0 , 1)
+            d_{\mathrm{rev}} &= \mathrm{clamp} \left( 1 - d , 0 , 1\right)
         \end{split}
         \end{equation}
         \end{figure}
@@ -218,7 +218,7 @@ This chapter describes the implementation of the prototype created to test the v
         %Next, it checks whether the previously stored distance is still valid by checking whether $\lambda_i$ is less than $$~
 
 
-        Based on how much the pixel is in front of the line segment, considering the average inclination of the finger trail, the algorithm linearly interpolates between \(\max(d_{\text{rev}}, d_{\text{rev}_{i-1}})\) and \(d_{\text{rev}}\) to calculate the value to store in the render texture. This approach allows the finger trail to overlap at the front and smoothly blend behind. The final decay value stored in the texture is \(\lambda_i\), with an additional 1 added if \(d \leq 1\), clamped between 0 and 1.
+        Based on how much the pixel is in front of the line segment, considering the average inclination of the finger trail, the algorithm linearly interpolates between \(\max\left(d_{\text{rev}}, d_{\text{rev}_{i-1}}\right)\) and \(d_{\text{rev}}\) to calculate the value to store in the render texture. This approach allows the finger trail to overlap at the front and smoothly blend behind. The final decay value stored in the texture is \(\lambda_i\), with an additional 1 added if \(d \leq 1\), clamped between 0 and 1.
 
         Finally, the fragment shader samples each render texture. It subtracts the decay value from the distance to create a shrinking effect, applies a border by comparing the resulting value with a threshold, and assigns a color based on the finger's order.
 
@@ -229,7 +229,7 @@ This chapter describes the implementation of the prototype created to test the v
             \label{fig:frame_glow}
         \end{figure}
 
-        The virtual touch frame illuminates with a glowing effect whenever the system detects vertical transform or balloon selection gestures, signaling the user that their gesture has been recognized. This glow effect, demonstrated in Figure \ref{fig:frame_glow}, is achieved using a shader that uses a rounded box signed distance function\footnote{\url{https://www.shadertoy.com/view/Nlc3zf}}. The strength of the glow is animated using the function \(-(2 \sqrt{t} - 1)^2 + 1\), where \(t\) represents the elapsed time since the animation began. Initially, this function rises quickly until the result reaches 1 at $t = 0.25$, after which it gradually diminishes. The animation halts at \(t = 0.8\) and resumes from that point when the gesture concludes.
+        The virtual touch frame illuminates with a glowing effect whenever the system detects vertical transform or balloon selection gestures, signaling the user that their gesture has been recognized. This glow effect, demonstrated in Figure \ref{fig:frame_glow}, is achieved using a shader that uses a rounded box signed distance function\footnote{\url{https://www.shadertoy.com/view/Nlc3zf}}. The strength of the glow is animated using the function $-\left(2 \sqrt{t} - 1\right)^2 + 1$, where \(t\) represents the elapsed time since the animation began. Initially, this function rises quickly until the result reaches 1 at $t = 0.25$, after which it gradually diminishes. The animation halts at \(t = 0.8\) and resumes from that point when the gesture concludes.
                     
 
 
@@ -265,7 +265,7 @@ This chapter describes the implementation of the prototype created to test the v
     
         To achieve the gradual effect, the function \( x = e^{-\frac{d}{0.05}} \) is applied. This ensures that when \( d = 0 \), the effect is at full power, declines rapidly, and then tapers off. This behavior is shown in graph a) of Figure \ref{fig:limit_func}. To soften the effect at the borders, the function described in Equation \ref{eq:limit_calc} and depicted in graph b) of Figure \ref{fig:limit_func} is applied to \( x \). This adjustment causes the effect to start at 0.2 power at the border, rise smoothly to 0.8 power, and then taper off as the distance increases. This progression is illustrated in graph c) of Figure \ref{fig:limit_func}.
 
-        The function \( -37.5 x^3 + 82.5 x^2 - 60 x + 15.2 \) was derived from a cubic polynomial for creating a smooth curve between two points: \((c, m)\) and \((k, m + b)\)\footnote{\url{https://math.stackexchange.com/a/2209953}}, shown in Equation \ref{eq:limit_poly}. In this case, the parameters are \( c = 0.8 \), \( m = 0.8 \), \( k = 1 \), \( b = -0.6 \), \( p = 0 \), and \( q = -1.5 \).
+        The function \( -37.5 x^3 + 82.5 x^2 - 60 x + 15.2 \) was derived from a cubic polynomial for creating a smooth curve between two points: \((c, m)\) and \((k, m + b)\), shown in Equation \ref{eq:limit_poly}\footnote{\url{https://math.stackexchange.com/a/2209953}}. In this case, the parameters are \( c = 0.8 \), \( m = 0.8 \), \( k = 1 \), \( b = -0.6 \), \( p = 0 \), and \( q = -1.5 \).
 
         \begin{figure}[h]
         \begin{equation} \label{eq:limit_calc}
@@ -327,7 +327,7 @@ This chapter describes the implementation of the prototype created to test the v
             \label{fig:poi_appearance}
         \end{figure}
 
-        Similar to the miniature tables, points of interest are visible behind objects in the replica and do not scale with the replica. This is shown in image (a) of Figure \ref{fig:poi_visibility}, where a point of interest is visible behind a building in the replica with a muted color and slight transparency. However, in the 3D model, the point of interest is not visible behind the building, as shown in image (b). This ensures that the points of interest do not distract or confuse users when they are looking at the replica. Points of interest in the 3D model scale with distance so users can see them from afar but do not become too large when close, preserving important details.
+        Similar to the miniature tables, points of interest are visible behind objects in the replica and do not scale with the replica. This is shown in image (a) of Figure \ref{fig:poi_visibility}, where a point of interest is visible behind a building in the replica with a muted color and slight transparency. However, in the 3D model, the point of interest is not visible behind the building, as shown in image (b). This ensures that the points of interest do not distract or confuse users when looking at the replica. Points of interest in the 3D model scale with distance so users can see them from afar but do not become too large when close, preserving essential details.
 
        \begin{figure}[h!]
             \centering
@@ -346,7 +346,27 @@ This chapter describes the implementation of the prototype created to test the v
         \end{figure}
         
     \subsection{Balloon Selection} \label{sec:visual_balloon}
-    
+        The balloon selection gesture is indicated by a set of dashed helper lines: one on the touch frame connecting the primary and secondary hands, and another vertical line from the primary hand to the balloon, using a vertical billboard effect, as shown in Figure \ref{fig:balloon_poi}. The balloon follows the appearance of the creator's points of interest. The helper lines and the balloon are visible behind objects in the replica with reduced opacity. When the secondary hand is inactive, the helper line on the touch frame loses its opacity, as shown in image (b) of Figure \ref{fig:balloon_poi}. If a segment of that line is behind an object and the secondary hand is inactive, that segment becomes invisible.
+
+        The dashed lines are created using a shader that takes the positions of the hands, calculates the start and end positions of the dash segments using the percentages for each dash and gap, then draws the dash segments based on the calculations described in Equation \ref{eq:distance_line}. The dash segments at the ends are masked with a line from the start to the end position to ensure they have rounded ends.
+
+        \begin{figure}[h!]
+            \centering
+            \includegraphics[width=1\textwidth]{figures/balloon_poi.png}
+            \captionof{figure}{Balloon selection helper lines. Image (a) shows the balloon for the first user, and image (b) shows the balloon for the second user with the secondary hand removed.}
+            \label{fig:balloon_poi}
+        \end{figure}
+
+        The balloon and the vertical helper line are also visible in the 3D model, as shown in Figure \ref{fig:balloon_world}, helping users understand the balloon's position in the real world. Both are not visible behind objects in the 3D model. The balloon scales with distance so users can see it from afar.
+
+       \begin{figure}[h!]
+            \centering
+            \includegraphics[width=.8\textwidth]{figures/balloon_world.png}
+            \captionof{figure}{Balloon selection visible both in the replica and in the 3D model.}
+            \label{fig:balloon_world}
+        \end{figure}
+        
+        When the balloon intersects a point of interest, the point of interest becomes outlined, indicating it is selected, as shown in image (a) of Figure \ref{fig:balloon_selection_intersection}. When the balloon intersects a table, the table grows in size, as shown in image (b) of Figure \ref{fig:balloon_selection_intersection}.
 
        \begin{figure}[h!]
             \centering
@@ -354,28 +374,6 @@ This chapter describes the implementation of the prototype created to test the v
             \captionof{figure}{Balloon selection intersection with a point of interest in image a) and a table in image b).}
             \label{fig:balloon_selection_intersection}
         \end{figure}
-
-
-       \begin{figure}[h!]
-            \centering
-            \includegraphics[width=1\textwidth]{figures/balloon_poi.png}
-            \captionof{figure}{Balloon selection helper lines. Image (a) shows the balloon for the first user, and image (b) shows the balloon for the second user with the secondary hand removed.}
-            \label{fig:balloon_poi}
-        \end{figure}
-        
-       \begin{figure}[h!]
-            \centering
-            \includegraphics[width=.8\textwidth]{figures/balloon_world.png}
-            \captionof{figure}{Balloon selection visible both in the replica and in the 3D model.}
-            \label{fig:balloon_poi}
-        \end{figure}
-        
-
-        % balloon selection intersection with table and pois
-        % balloon selection lines in frame and in world
-            %billboard
-            % when second finger inactive and behind object it becomes invisible
-        % ballon selection's balloon matches the point of interest of the user
     
 \section{Networking}
 
