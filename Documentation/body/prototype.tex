@@ -318,11 +318,7 @@ This chapter describes the implementation of the prototype created to test the v
 
 
     \subsection{Points of Interest} \label{sec:visual_poi}
-
-        This section describes the various visual effects and techniques used to highlight the points of interest within the virtual environment so that they are easily identifiable.
-
-        As mentioned in Section \ref{sec:awareness}, the points of interest share the appearance of their creators.
-
+        As mentioned in Section \ref{sec:awareness}, the points of interest reflect the appearance of their creators. Figure \ref{fig:poi_appearance} demonstrates this: the first user's points of interest are green-striped spheres, while the second user's are purple checkerboard cubes. Each point of interest is marked with a number that rotates to face the camera and glows intermittently to draw attention, achieved using a Fresnel effect with a sine curve animation.
 
         \begin{figure}[h!]
             \centering
@@ -331,12 +327,16 @@ This chapter describes the implementation of the prototype created to test the v
             \label{fig:poi_appearance}
         \end{figure}
 
+        Similar to the miniature tables, points of interest are visible behind objects in the replica and do not scale with the replica. This is shown in image (a) of Figure \ref{fig:poi_visibility}, where a point of interest is visible behind a building in the replica with a muted color and slight transparency. However, in the 3D model, the point of interest is not visible behind the building, as shown in image (b). This ensures that the points of interest do not distract or confuse users when they are looking at the replica. Points of interest in the 3D model scale with distance so users can see them from afar but do not become too large when close, preserving important details.
+
        \begin{figure}[h!]
             \centering
             \includegraphics[width=.8\textwidth]{figures/poi_visibility.png}
             \captionof{figure}{Points of interest visibility. Image (a) shows a point of interest in the replica that is visible behind the building. Image (b) shows that the same point of interest is not visible in the 3D model behind the building.}
             \label{fig:poi_visibility}
         \end{figure}
+
+        Points of interest created by another user that are not yet acknowledged are marked with a vertical line, as shown in Figure \ref{fig:poi_marker}. This line is capped with a symbol displaying the point of interest's identification number, resembling the point of interest's appearance to help users quickly identify unacknowledged points. The line and symbol always face the user using a vertical billboard effect. The line is also visible behind objects in the replica and scales with distance, as seen in image (c) of Figure \ref{fig:poi_marker}, ensuring it can be seen from any angle. If the marker does not fit within the user's field of view, it flips upside down to remain visible, as shown in image (d) of Figure \ref{fig:poi_marker}.
 
        \begin{figure}[h!]
             \centering
@@ -345,20 +345,6 @@ This chapter describes the implementation of the prototype created to test the v
             \label{fig:poi_marker}
         \end{figure}
         
-        
-        % point of interest appearance
-        %the number identification
-            % follow camera rotation
-        % poi glow effect,
-            %fresnel effect
-       % point of interest in replica visible behind, in world not visible behind so it is not distracting
-           
-        % point of interest seen behind
-        % the point of interest marker icons and how the marker tries to stay visible and scales with distance
-            % billboard
-        % world scaling points
-  
-    
     \subsection{Balloon Selection} \label{sec:visual_balloon}
     
 
@@ -377,6 +363,14 @@ This chapter describes the implementation of the prototype created to test the v
             \label{fig:balloon_poi}
         \end{figure}
         
+       \begin{figure}[h!]
+            \centering
+            \includegraphics[width=.8\textwidth]{figures/balloon_world.png}
+            \captionof{figure}{Balloon selection visible both in the replica and in the 3D model.}
+            \label{fig:balloon_poi}
+        \end{figure}
+        
+
         % balloon selection intersection with table and pois
         % balloon selection lines in frame and in world
             %billboard
