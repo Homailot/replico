@@ -23,16 +23,9 @@ This chapter describes the implementation of the prototype created to test the v
     The system architecture diagram in Figure \ref{fig:architecture} demonstrates the integration of various software and hardware components, describing both local and networked elements. OpenXR manages communication with the VR headset and the table tracker, rendering images to the headset, updating the virtual camera's position, and interfacing inputs to Unity's Input System. Unity's Enhanced Touch API processes touches sensed by the touch surface from the Input System. The Replico Controller and User Controller manage interaction logic and user actions, communicating with the Input System and OpenXR. Networking is handled by Unity Netcode, which synchronizes user and table data across the network via the User Network and Table Network, using a client-server topology. The server-side User Manager and Table Manager manage data for users and tables. The User Manager tracks users in the system and communicates with the User Network objects through remote procedure calls (RPCs). The Table Manager handles table creation, deletion, and management logic, communicating with Table Network objects using RPCs.
 
 
-%\section{Additional Software and Tools}
-%  ML.NET\footnote{\url{https://github.com/dotnet/machinelearning}} is a machine learning framework for .NET. Th
-        % Unity netcode
-    % Assets used
         % city
         % rover and ground textures
         % dungeon assets and the modular asset builder tool (https://fertile-soil-productions.itch.io/mast)
-        % quick outline
-        % some 3d noise
-    % MLNet's cluster detection
 
 \section{State Machine}
 
@@ -138,7 +131,7 @@ This chapter describes the implementation of the prototype created to test the v
     
         The vertical transform only checks if the second hand has moved, allowing the user to add the secondary hand while transforming with the first. The criterion for determining if a hand hasn't moved is that none of its fingers have moved past a threshold $\delta$ from the position where they were first placed. This threshold is measured relative to a min-max normalized value of the screen dimensions in pixels, with testing indicating $0.01$ as an appropriate value. Once a finger has moved, it will be considered moved until it is removed.
 
-\section{Table Tracking}
+\section{Table Tracking} \label{sec:table_tracking}
 
     The user's table is tracked to a real-world table using a VR controller, as shown in Figure \ref{fig:table_tracking}. The controller is positioned pointing toward the user instead of forward from the table so that the tracked controller position matches the table's corner. If it pointed the other way, a translation based on the controller's length toward the table corner would be necessary, which is not feasible for all controller types.
 
@@ -340,7 +333,7 @@ This chapter describes the implementation of the prototype created to test the v
 
        \begin{figure}[h!]
             \centering
-            \includegraphics[width=1\textwidth]{figures/poi_marker.png}
+            \includegraphics[width=1\textwidth, height=1\textheight, keepaspectratio]{figures/poi_marker.png}
             \captionof{figure}{Point of interest markers. Image (a) shows markers for the first user, and image (b) shows markers for the second user. Image (c) demonstrates the scaling of the markers with distance. Image (d) displays the markers flipped upside down to ensure they are always visible.}
             \label{fig:poi_marker}
         \end{figure}
@@ -361,7 +354,7 @@ This chapter describes the implementation of the prototype created to test the v
 
        \begin{figure}[h!]
             \centering
-            \includegraphics[width=.8\textwidth]{figures/balloon_world.png}
+            \includegraphics[width=1\textwidth]{figures/balloon_world.png}
             \captionof{figure}{Balloon selection visible both in the replica and in the 3D model.}
             \label{fig:balloon_world}
         \end{figure}
@@ -377,33 +370,35 @@ This chapter describes the implementation of the prototype created to test the v
     
 \section{Networking}
 
-bla bla bla
-
-bla bla bla
-
-    % using unity netcode 
-        % explain why
-    % show architecture diagram
+    The prototype utilizes Unity's Netcode for GameObjects library to handle networking, enabling synchronization of GameObjects and Scenes across clients. This simplifies the management of the prototype's networking components. The networking architecture follows a client-server topology, illustrated in Figure \ref{fig:topology}. Specifically, it uses a client-hosted server name a host, where one client is also the server. This architecture was chosen for its simplicity in setup and management, and because it meets the prototype's requirements.
 
     \begin{figure}[h]
         \centering
-        \includegraphics[width=1\linewidth]{figures/topology.png}
+        \includegraphics[width=.9\linewidth]{figures/topology.png}
         \caption{Networking architecture, using a client-server topology.}
         \label{fig:topology}
     \end{figure}
 
-    bla bla
+    Each client has a user network object for each connected user and a table network object for each table in the scene. A NetworkObject is a GameObject that interacts with Netcode. Before an instantiated NetworkObject is synchronized across clients, it must be spawned. In the client-server architecture, only the server has the authority to spawn and despawn NetworkObjects. By default, NetworkObjects are owned by the server and tied to its lifecycle. However, user network objects are an exception. These player NetworkObjects are automatically spawned by the server whenever a client connects, assigned to the client with ownership, and despawned when the client disconnects\footnote{\url{https://docs-multiplayer.unity3d.com/netcode/current/basics/networkobject/}}.
 
-    bla bla
+    NetworkObjects share data through network variables, synchronized with new clients when they join the server and with existing clients when the data changes. Network variables can have different permissions for reading and writing data. In a client-server architecture, the default setting is that the server has read-write permissions, while clients have read-only permissions\footnote{\url{https://docs-multiplayer.unity3d.com/netcode/current/basics/networkvariable/}}. Section \ref{sec:user_network} describes the user network variables, and Section \ref{sec:table_network} describes the table network variables.
 
-    
-    % data that is shared through network variables and objects between clients
-        % Per player object:
-            % player IDs - identify the player and their appearance, managed by server
-            % points of interest - id, position, and player id; managed by server
-            % player transform data; managed by client: easier to do because of the controller tracking and changing the XR origin
-            % on player spawn:
-                % moves to an available table, if there is no table, create a new one at a predefined spot
+    The server manages the user and table network objects through the User Manager and Table Manager, respectively. These managers store data about connected users and tables, such as the association of user IDs to Netcode client IDs, the current point of interest ID, and the connected user IDs. They also handle the creation and destruction of network objects. Detailed functions of these managers are described in Section \ref{sec:user_table_manager}.
+
+    The managers communicate with network objects through updates on network variables and remote procedure calls (RPCs). An RPC allows methods to be called on objects in another executable. In Netcode, RPCs execute methods on NetworkObjects across clients. A client can call an RPC on the server, and the server can call an RPC on a client. Clients can also call RPCs on other clients, though this passes through the server as a proxy\footnote{\url{https://docs-multiplayer.unity3d.com/netcode/current/advanced-topics/message-system/rpc/}}. Section \ref{sec:sequence_events} describes the sequence of events during the prototype's execution, including the RPCs used and other network-related events.
+
+    \subsection{User Network Variables} \label{sec:user_network}
+
+        User network objects use network variables to store and synchronize data about the users. They have three network variables: user ID, a list of points of interest, and user transform data. The user ID identifies the user and determines their appearance. The list of points of interest contains the ID, position, and user ID of each point created by the user. The user transform data includes the user's position and rotation.
+
+        The user ID and points of interest can only be modified by the server, while the user transform data is updated by the client. This design choice simplifies the synchronization of the table tracking algorithm described in Section \ref{sec:table_tracking}. When a user joins, the server assigns the user ID and updates the points of interest list as the user creates or removes points. The client updates the user transform data whenever the user moves.
+        
+        When a user network object receives an update to the user ID or when the user spawns, it updates the user's appearance. If the user owns the user network object, it also updates the balloon's appearance of the balloon selection.
+
+        When a user creates a point of interest, a temporary point of interest is first created on the client, without an identification number, in both the replica and the 3D model. The temporary point of interest's position and user ID are sent to the user manager through an RPC. The user manager assigns an identification number to the point of interest and updates the user network object's points of interest list. Whenever this list is updated, the user network object determines the type of update. If the user is the owner and a point has been added, the temporary point of interest is updated with the identification number. If the user is not the owner, the replica controller is updated with the new point of interest. If a point of interest is removed, the user network object removes the point of interest from the replica controller. When the user network object spawns, the local client creates the user's points of interest in the replica and the 3D model.
+
+    \subsection{Table Network Variables} \label{sec:table_network}
+
         % Per table object:
             % position and rotation: managed by server
                 % when position and rotation change, the players receive an event to move themselves to the table using previous tracker data
@@ -413,25 +408,55 @@ bla bla bla
             % who is at seat 0 and seat 1:
                 % when updated, the table replica is also updated on the clients.
 
+    \subsection{User Manager and Table Manager} \label{sec:user_table_manager}
+
     % data stored on the server:
         % association of player id to netcode client id
         % current point of interest id
         % connected player ids
+
+    \subsection{Sequence of Events} \label{sec:sequence_events}
 
     % when joining: collects data from the network objects and updates replica
 
     % Messages (RPCS)
         % maybe some diagrams would be cool
         % client -> server:
-            % move player in table to position
+            % move player in table to position, used when teleporting
                 % checks if needs to create new table or move table
                     % moving table changes its position, which in turn when that update is received on the client, it will update
                     % creating a new table sends a rpc back (MovePlayerToTableClientRpc)
                 % used when teleporting
-            % move player to table
+            % move player to table, used when joining a table
                 % used when joining the table
                     % will destroy the origin table network object if it has no players
+            % create point of interest
+                % increment and get point of interest id
+                % used when creating a point of interest
+            % remove point of interest
+                % used when removing a point of interest
+        % server -> client:
+            % move player to table client rpc
+                % used when moving a player to a table
+                % asks the client to move its player to the table, updatin the posititon
 
+    % Events
+        % when a player joins (user manager)
+            % move player to available table
+            % assign player id
+        % when a player leaves (user manager)
+            % remove player from table
+            % free player id
+
+        % when a table's position and rotation is updated (table network, received by all)
+            % if client is in table, move to new position in seat
+            % update replico controller
+        % when table is spawned (table network)
+            % create table replica
+        % when table despawns (table network)
+            % destroy table replica
+        % when table seat is updated (table network, received by all)
+            % update table replica
 
 \section{Summary}
 
