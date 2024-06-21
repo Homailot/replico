@@ -6,7 +6,7 @@ skinparam sequenceMessageAlign direction
 skinparam lifelineStrategy dashed
 
 box Client
-    participant "User Network\n1" as User1
+    participant "User Network\n2" as User1
     participant "Table Network\n1" as Table1
     participant "Table Network\n2" as Table2
 end box
@@ -18,15 +18,15 @@ end box
 
 User1->>UserM ++:<back:#FFFFFF>MoveUserToTableRpc(uId, tId)
 UserM->TableM ++:<back:#FFFFFF>MoveUserToTable(uId, tId)
-TableM->>Table2 ++:<back:#FFFFFF>RemoveFromTable(uId)
-Table2->>User1 --:<back:#ffffff>DettachUserTableReplica()
-opt Table 2 is empty
-    TableM-->>Table2 ++:<back:#FFFFFF>Despawn()
-    Table2-->>User1:<back:#ffffff>RemoveTableReplica()
-    destroy Table2
+TableM->>Table1 ++:<back:#FFFFFF>RemoveFromTable(uId)
+Table1->>User1 --:<back:#ffffff>DettachUserTableReplica()
+opt Table 1 is empty
+    TableM-->>Table1 ++:<back:#FFFFFF>Despawn()
+    Table1-->>User1:<back:#ffffff>RemoveTableReplica()
+    destroy Table1
 end
-TableM->>Table1 ++:<back:#FFFFFF>AddToTable(uId)
-Table1->>User1 --:<back:#ffffff>AttachUserTableReplica()
+TableM->>Table2 ++:<back:#FFFFFF>AddToTable(uId)
+Table2->>User1 --:<back:#ffffff>AttachUserTableReplica()
 TableM-->>UserM --:<back:#ffffff>(tId, seat)
 UserM->>User1 --:<back:#ffffff>MoveUserToTableClientRpc(tId, seat)
 @enduml

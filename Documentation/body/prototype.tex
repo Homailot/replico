@@ -424,60 +424,66 @@ This chapter describes the implementation of the prototype created to test the v
 
     \subsection{Sequence of Events} \label{sec:sequence_events}
 
+        This section outlines a typical scenario that demonstrates the key interactions between users, tables, and the network. The diagrams illustrated only show the interaction between one client and the server at a time, from the perspective of the owner of the depicted user network object. Whenever a network variable is updated, the change is synchronized across all clients.
+
+        The scenario begins with a user creating a server, thereby becoming its host. In this case, RPCs are local and executed instantly since the server also functions as a client. The client then connects to the server, as shown in Figure \ref{fig:connect_and_create}. The user manager assigns the user the ID 0 by updating the user's network variable and the list of connected user IDs. Upon updating this ID, the user's model is updated to the correct appearance. The user manager then requests the table manager to assign the user to an available table. Since no other users are connected, the table manager creates a new table, Table Network 1, and assigns the user to the first seat. When the table is spawned, it requests the local client to create the table replica on the WIM. The user manager then sends an RPC to the user network object, moving the user to the table.
+
         \begin{figure}[h]
             \centering
-            \includegraphics[width=.9\linewidth]{diagrams/out/connect_and_create_table.eps}
+            \includegraphics[width=.85\linewidth]{diagrams/out/connect_and_create_table.eps}
             \caption{Sequence diagram of a user connecting and creating a table.}
             \label{fig:connect_and_create}
         \end{figure}
 
+        Next, the user creates a point of interest. Initially, a temporary point of interest is created on the client, followed by sending a \lstinline{CreatePointOfInterestRpc} to the user manager. The user manager increments the current point of interest ID and updates the user network's points of interest list. When the user network object receives this update, it assigns the identification number to the temporary point of interest, as it is owned by the client.
+
+        The user then teleports to a new position. The user network object sends a \lstinline{MoveUserToPositionRpc} to the user manager, which instructs the table manager to move the user to the new location. Since the user is alone at the table, the table is moved to the new position, updating its network variables accordingly. The table network object, upon receiving these updates, adjusts the table replica on the client, and moves the user to the new position.
+
         \begin{figure}[h]
             \centering
-            \includegraphics[width=.9\linewidth]{diagrams/out/teleport.eps}
+            \includegraphics[width=.85\linewidth]{diagrams/out/teleport.eps}
             \caption{Sequence diagram of a user teleporting.}
             \label{fig:teleport}
         \end{figure}
 
+        Later, another user connects to the server, as illustrated in Figure \ref{fig:connect_and_join}. The user manager assigns this user the ID 1 and updates the list of connected user IDs. Consequently, the user network object is updated with the new user ID and the corresponding appearance. The table manager assigns the new user to the second seat of Table Network 1, updating its seat network variables. The table network object then updates the table replica on each client, displaying the new user in the second seat. Following this, the user manager sends an RPC to the user network object to position the user at the table.
+
+        Upon joining, the second user gathers information about the first user's points of interest by loading the point of interest data from the first user's network object, marking them as unacknowledged. Since acknowledgment data is local, no network communication is required. The second user would also load table data from other table network objects if any additional tables existed.
+
         \begin{figure}[h]
             \centering
-            \includegraphics[width=.9\linewidth]{diagrams/out/connect_and_join_existing_table.eps}
+            \includegraphics[width=.85\linewidth]{diagrams/out/connect_and_join_existing_table.eps}
             \caption{Sequence diagram of a user connecting and joining an existing table.}
             \label{fig:connect_and_join}
         \end{figure}
 
+        Next, the first user moves to a new position, as depicted in Figure \ref{fig:teleport}. The user network object sends a \lstinline{MoveUserToPositionRpc} to the user manager, which instructs the table manager to relocate the user. Because the user is not alone at the table this time, the table manager removes the user from Table Network 1 and spawns a new table, Table Network 2, assigning the user to the first seat. The new table network object updates the table replica on each client to reflect the user's new position, while the old table network object removes the user from the replica. Finally, the user manager sends an RPC to the user network object, moving the user to the new table.
+
+        Following this, the second user joins the second table, as shown in Figure \ref{fig:table_join}. Their network object sends a \lstinline{MoveUserToTableRpc} to the user manager, which instructs the table manager to move the user to the second table. The table manager removes the user from Table Network 1 and assigns them to the second seat of Table Network 2. Since Table Network 1 is now empty, it is despawned. The table network objects update the table replicas on each client accordingly. The user manager then sends an RPC to the user network object, positioning the user at the new table.
+        
         \begin{figure}[h]
             \centering
-            \includegraphics[width=.9\linewidth]{diagrams/out/table_join.eps}
+            \includegraphics[width=.85\linewidth]{diagrams/out/table_join.eps}
             \caption{Sequence diagram of a user joining a table.}
             \label{fig:table_join}
         \end{figure}
 
-        \begin{figure}[h]
+        Finally, the first user disconnects, as depicted in Figure \ref{fig:disconnect}. The user manager removes the user ID from the list of connected user IDs and returns it to the list of available user IDs. It then instructs the table manager to remove the user from their table. The table manager removes the user from Table Network 2, and since the table is now empty, it is despawned. The table network object updates the table replica on each client to reflect the user's removal. The user network object is automatically despawned by Netcode.
+
+         \begin{figure}[h]
             \centering
-            \includegraphics[width=.9\linewidth]{diagrams/out/disconnect.eps}
+            \includegraphics[width=.85\linewidth]{diagrams/out/disconnect.eps}
             \caption{Sequence diagram of a user disconnecting.}
             \label{fig:disconnect}
         \end{figure}
 
-
-        % when joining: collects data from the network objects and updates replica
-        % make a storyboard of the sequence of events
-
-        % user 1 joins -> table created
-        % create point of interest -> stuff
-        % teleport -> move table same figure as user moves later on, use the alt fragment sequence
-        % another user 2 joins -> joins table
-            % loads up the point of interest
-        % user 1 moves -> new table created
-        % user 2 joins other table
-        % user 1 disconnects
-        % user 2 disconnects
-
-        % explain some omissions in the diagrams, like the other user being notified of a table being deleted or updated for simplicity
-        % maybe acknowledge (lol) that acknowledgements are local only
-
 \section{Summary}
+    This chapter details the implementation of a prototype for Replico. It starts with an overview of the system architecture and the hardware and software environment utilized, including Unity, Netcode for GameObjects, OpenXR, two HTC Vive Pro 2 headsets, and two multi-touch surfaces.
 
-% how easy to learn
-% intuitive
+    The chapter continues by describing the state machine used to manage the prototype's states. These states range from the initial state, to \lstinline{TransformReplicaState} where users can manipulate the replica, and \lstinline{BalloonSelectionInitialState} where users can create, delete, and acknowledge points of interest, teleport, and join tables.
 
+    Furthermore, the chapter details the calculations required to use the multi-touch input to transform the replica. Then, it details the gesture detection mechanisms used, including the utilization of the K-means clustering algorithm implemented via the ML.NET library for hand detection. Additionally, it outlines the use of VR controllers to track the user's interactions with virtual tables.
+
+    The chapter describes the visual indicators implemented in the prototype. These include visual cues such as finger trails on the virtual touch frame, glow effects signaling gesture detection, illumination effects marking the touch frame's boundaries on the replica, and the visual representation of tables, table replicas, points of interest, and their corresponding visual appearances.
+
+    The networking implementation is explained, describing the architecture, user and table network objects, user and table managers, network variables, and Remote Procedure Calls (RPCs). The section ends with an outline of a typical sequence of events that unfold during the prototype's operation.
