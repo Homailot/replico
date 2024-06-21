@@ -1,0 +1,33 @@
+@startuml teleport
+hide footbox
+!theme plain
+skinparam sequenceMessageAlign direction
+skinparam lifelineStrategy dashed
+
+box Client
+    participant "User Network\n1" as User1
+    participant "Table Network\n1" as Table1
+    participant "Table Network\n2" as Table2
+end box
+
+Box Server
+    participant "User Manager" as UserM
+    participant "Table Manager" as TableM
+end box
+
+User1->>UserM ++:<back:#ffffff>MoveUserToPositionRpc(uId, pos, rot)
+UserM->TableM ++:<back:#ffffff>MoveUserTableToPosition(uId, pos, rot)
+alt alone in table
+    TableM->>Table1 ++:<back:#ffffff>SetPositionAndRotation(pos,rot)
+    Table1->>User1:UpdateTableReplicaPos()
+    Table1->>User1 --:MoveUserToTable()
+else with another user
+    TableM->>Table1 ++:<back:#ffffff>RemoveFromTable(userId)
+    Table1->>User1 --:DettachUserTableReplica()
+    TableM-->>Table2 **:Spawn()
+    Table2->>User1:<back:#ffffff>CreateTableReplica()
+    TableM-->>UserM --:<back:#ffffff>(tId, seat)
+    UserM->>User1 --:<back:#ffffff>MoveUserToTableClientRpc(tId, seat)
+end
+
+@enduml

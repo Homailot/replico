@@ -1,0 +1,32 @@
+@startuml connect_and_join_existing_table
+hide footbox
+!theme plain
+box "Client"
+    participant "User Network\n2" as User1
+    participant "Table Network\n1" as Table1
+end box
+
+box "Server"
+    participant "User Manager"
+    participant "Table Manager"
+end box
+
+skinparam sequenceMessageAlign direction
+skinparam lifelineStrategy dashed
+
+User1->>"User Manager":<back:#FFFFFF>OnClientConnected()</back>
+activate "User Manager"
+"User Manager"->>User1:<back:#FFFFFF>SetUserId(1)
+"User Manager"->"Table Manager":<back:#FFFFFF>AddToAvailableTable(userId)
+
+activate "Table Manager"
+
+
+"Table Manager"->>Table1 ++:AddToTable(uId, seat)
+Table1->>User1 --:AttachUserTableReplica()
+"Table Manager"-->>"User Manager":(tId, seat)
+deactivate "Table Manager"
+"User Manager"->>User1:<back:#FFFFFF>MoveUserToTableClientRpc(tId, seat)
+
+deactivate "User Manager"
+@enduml

@@ -1,0 +1,32 @@
+@startuml disconnect
+hide footbox
+!theme plain
+!pragma teoz true
+skinparam sequenceMessageAlign direction
+skinparam lifelineStrategy dashed
+
+box Client
+    participant "User Network\n1" as User1
+    participant "Table Network\n1" as Table1
+end box
+
+Box Server
+    participant "User Manager" as UserM
+    participant "Table Manager" as TableM
+end box
+
+User1 ->> UserM:<back:#FFFFFF>OnClientDisconnected()
+activate UserM
+UserM ->> TableM : RemoveFromTable(uId)
+deactivate UserM
+activate TableM
+TableM ->> Table1 ++: RemoveFromTable(uId)
+Table1 ->> User1 --: DettachUserTableReplica()
+opt Table 1 is empty
+    TableM ->> Table1: Despawn()
+    activate Table1
+    deactivate TableM
+    Table1 ->> User1: RemoveTableReplica()
+    destroy Table1
+end
+@enduml
