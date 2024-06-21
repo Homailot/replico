@@ -177,7 +177,7 @@ This chapter describes the implementation of the prototype created to test the v
             \label{fig:touch_indicators}
         \end{figure}
 
-        This is implemented using a compute shader and a shader built with Unity's Shader Graph. A compute shader is a program that runs on the GPU outside of the normal rendering pipeline\footnote{\url{https://docs.unity3d.com/Manual/class-ComputeShader.html}}. It is most useful for executing highly parallel algorithms. In this case, the compute shader processes finger positions, performs calculations, and stores results in render textures. The Shader Graph shader then uses these textures to render finger trail indicators in every frame.
+        This is implemented using a compute shader and a shader built with Unity's Shader Graph. A compute shader is a program that runs on the GPU outside of the normal rendering pipeline.\footnote{\url{https://docs.unity3d.com/Manual/class-ComputeShader.html}} It is most useful for executing highly parallel algorithms. In this case, the compute shader processes finger positions, performs calculations, and stores results in render textures. The Shader Graph shader then uses these textures to render finger trail indicators in every frame.
 
         Each render texture stores data for two fingers using two channels per finger per pixel. This results in five textures, each with dimensions matching the greatest nearest power of two between the screen width and height. One channel stores the reverse distance from the pixel to the center of the finger trail, ranging from 1 (closest to the center) to 0 (outside the trail radius), similar to a signed distance function. The other channel records the decay of the pixel, where 1 indicates the most recent position, and 0 indicates total decay. These channels are depicted in Figure \ref{fig:touch_progress}, with red representing the distance to the trail's center and blue representing the decay.
         
@@ -222,7 +222,7 @@ This chapter describes the implementation of the prototype created to test the v
             \label{fig:frame_glow}
         \end{figure}
 
-        The virtual touch frame illuminates with a glowing effect whenever the system detects vertical transform or balloon selection gestures, signaling the user that their gesture has been recognized. This glow effect, demonstrated in Figure \ref{fig:frame_glow}, is achieved using a shader that uses a rounded box signed distance function\footnote{\url{https://www.shadertoy.com/view/Nlc3zf}}. The strength of the glow is animated using the function $-\left(2 \sqrt{t} - 1\right)^2 + 1$, where \(t\) represents the elapsed time since the animation began. Initially, this function rises quickly until the result reaches 1 at $t = 0.25$, after which it gradually diminishes. The animation halts at \(t = 0.8\) and resumes from that point when the gesture concludes.
+        The virtual touch frame illuminates with a glowing effect whenever the system detects vertical transform or balloon selection gestures, signaling the user that their gesture has been recognized. This glow effect, demonstrated in Figure \ref{fig:frame_glow}, is achieved using a shader that uses a rounded box signed distance function.\footnote{\url{https://www.shadertoy.com/view/Nlc3zf}} The strength of the glow is animated using the function $-\left(2 \sqrt{t} - 1\right)^2 + 1$, where \(t\) represents the elapsed time since the animation began. Initially, this function rises quickly until the result reaches 1 at $t = 0.25$, after which it gradually diminishes. The animation halts at \(t = 0.8\) and resumes from that point when the gesture concludes.
                     
 
 
@@ -258,7 +258,7 @@ This chapter describes the implementation of the prototype created to test the v
     
         To achieve the gradual effect, the function \( x = e^{-\frac{d}{0.05}} \) is applied. This ensures that when \( d = 0 \), the effect is at full power, declines rapidly, and then tapers off. This behavior is shown in graph a) of Figure \ref{fig:limit_func}. To soften the effect at the borders, the function described in Equation \ref{eq:limit_calc} and depicted in graph b) of Figure \ref{fig:limit_func} is applied to \( x \). This adjustment causes the effect to start at 0.2 power at the border, rise smoothly to 0.8 power, and then taper off as the distance increases. This progression is illustrated in graph c) of Figure \ref{fig:limit_func}.
 
-        The function \( -37.5 x^3 + 82.5 x^2 - 60 x + 15.2 \) was derived from a cubic polynomial for creating a smooth curve between two points: \((c, m)\) and \((k, m + b)\), shown in Equation \ref{eq:limit_poly}\footnote{\url{https://math.stackexchange.com/a/2209953}}. In this case, the parameters are \( c = 0.8 \), \( m = 0.8 \), \( k = 1 \), \( b = -0.6 \), \( p = 0 \), and \( q = -1.5 \).
+        The function \( -37.5 x^3 + 82.5 x^2 - 60 x + 15.2 \) was derived from a cubic polynomial for creating a smooth curve between two points: \((c, m)\) and \((k, m + b)\), shown in Equation \ref{eq:limit_poly}.\footnote{\url{https://math.stackexchange.com/a/2209953}} In this case, the parameters are \( c = 0.8 \), \( m = 0.8 \), \( k = 1 \), \( b = -0.6 \), \( p = 0 \), and \( q = -1.5 \).
 
         \begin{figure}[h]
         \begin{equation} \label{eq:limit_calc}
@@ -298,9 +298,9 @@ This chapter describes the implementation of the prototype created to test the v
 
         This effect is achieved using a shader that takes the pixel's world space position and applies a simplex 3D noise function\footnote{\url{https://github.com/JimmyCushnie/Noisy-Nodes}} to determine the pixel's alpha clip threshold. After 2 seconds of inactivity, the table's alpha value is reduced using a smooth animation curve. The alpha clip threshold then determines whether a pixel is visible or invisible. Alpha blending was not used because it caused visual artifacts, making the table visible from behind itself.
 
-        User tables are also visible in the replica as miniatures, as shown in Figure \ref{fig:table_behind} and described in Section \ref{sec:awareness}. These miniatures feature an outline effect to help them stand out from the surrounding environment, using a free Unity package\footnote{\url{https://assetstore.unity.com/packages/tools/particles-effects/quick-outline-115488}}. They also glow intermittently to draw attention, increasing the lightness of the table's color through an animation using a quadratic easing in-out function\footnote{\url{https://assetstore.unity.com/packages/vfx/shaders/shader-graph-easing-193427}}. The miniatures display who is at the table by showing a user seated at it, as seen in image c) of Figure \ref{fig:table_behind}. These miniatures do not scale with the replica, keeping their size constant, similar to markers on a map.
+        User tables are also visible in the replica as miniatures, as shown in Figure \ref{fig:table_behind} and described in Section \ref{sec:awareness}. These miniatures feature an outline effect to help them stand out from the surrounding environment, using a free Unity package.\footnote{\url{https://assetstore.unity.com/packages/tools/particles-effects/quick-outline-115488}} They also glow intermittently to draw attention, increasing the lightness of the table's color through an animation using a quadratic easing in-out function.\footnote{\url{https://assetstore.unity.com/packages/vfx/shaders/shader-graph-easing-193427}} The miniatures display who is at the table by showing a user seated at it, as seen in image c) of Figure \ref{fig:table_behind}. These miniatures do not scale with the replica, keeping their size constant, similar to markers on a map.
 
-        They remain visible behind objects in the replica to help users quickly identify their and others' tables. This is achieved by rendering the table miniature in an additional render pass using the depth buffer to determine the appropriate material. If the table is behind an object, it appears slightly transparent and in a single color; otherwise, it uses the normal material\footnote{\url{https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@10.4/manual/renderer-features/how-to-custom-effect-render-objects.html}}.
+        They remain visible behind objects in the replica to help users quickly identify their and others' tables. This is achieved by rendering the table miniature in an additional render pass using the depth buffer to determine the appropriate material. If the table is behind an object, it appears slightly transparent and in a single color; otherwise, it uses the normal material.\footnote{\url{https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@10.4/manual/renderer-features/how-to-custom-effect-render-objects.html}}
 
         \begin{figure}[h!]
             \centering
@@ -379,13 +379,13 @@ This chapter describes the implementation of the prototype created to test the v
         \label{fig:topology}
     \end{figure}
 
-    Each client has a user network object for each connected user and a table network object for each table in the scene. A NetworkObject is a GameObject that interacts with Netcode. Before an instantiated NetworkObject is synchronized across clients, it must be spawned. In the client-server architecture, only the server has the authority to spawn and despawn NetworkObjects. By default, NetworkObjects are owned by the server and tied to its lifecycle. However, user network objects are an exception. These player NetworkObjects are automatically spawned by the server whenever a client connects, assigned to the client with ownership, and despawned when the client disconnects\footnote{\url{https://docs-multiplayer.unity3d.com/netcode/current/basics/networkobject/}}.
+    Each client has a user network object for each connected user and a table network object for each table in the scene. A NetworkObject is a GameObject that interacts with Netcode. Before an instantiated NetworkObject is synchronized across clients, it must be spawned. In the client-server architecture, only the server has the authority to spawn and despawn NetworkObjects. By default, NetworkObjects are owned by the server and tied to its lifecycle. However, user network objects are an exception. These player NetworkObjects are automatically spawned by the server whenever a client connects, assigned to the client with ownership, and despawned when the client disconnects.\footnote{\url{https://docs-multiplayer.unity3d.com/netcode/current/basics/networkobject/}}
 
-    NetworkObjects share data through network variables, synchronized with new clients when they join the server and with existing clients when the data changes. Network variables can have different permissions for reading and writing data. In a client-server architecture, the default setting is that the server has read-write permissions, while clients have read-only permissions\footnote{\url{https://docs-multiplayer.unity3d.com/netcode/current/basics/networkvariable/}}. Section \ref{sec:user_network} describes the user network variables, and Section \ref{sec:table_network} describes the table network variables.
+    NetworkObjects share data through network variables, synchronized with new clients when they join the server and with existing clients when the data changes. Network variables can have different permissions for reading and writing data. In a client-server architecture, the default setting is that the server has read-write permissions, while clients have read-only permissions.\footnote{\url{https://docs-multiplayer.unity3d.com/netcode/current/basics/networkvariable/}} Sections \ref{sec:user_network} and \ref{sec:table_network} describe the user and table network objects in detail. 
 
-    The server manages the user and table network objects through the User Manager and Table Manager, respectively. These managers store data about connected users and tables, such as the association of user IDs to Netcode client IDs, the current point of interest ID, and the connected user IDs. They also handle the creation and destruction of network objects. Detailed functions of these managers are described in Section \ref{sec:user_table_manager}.
+    The server manages the user and table network objects through the User Manager and Table Manager, respectively. These managers store data about connected users and tables, such as the association of user IDs to Netcode client IDs, the current point of interest ID, and the connected user IDs. They also handle the creation and destruction of network objects. Detailed functions of these managers are described in Sections \ref{sec:user_manager} and \ref{sec:table_manager}.
 
-    The managers communicate with network objects through updates on network variables and remote procedure calls (RPCs). An RPC allows methods to be called on objects in another executable. In Netcode, RPCs execute methods on NetworkObjects across clients. A client can call an RPC on the server, and the server can call an RPC on a client. Clients can also call RPCs on other clients, though this passes through the server as a proxy\footnote{\url{https://docs-multiplayer.unity3d.com/netcode/current/advanced-topics/message-system/rpc/}}. Section \ref{sec:sequence_events} describes the sequence of events during the prototype's execution, including the RPCs used and other network-related events.
+    The managers communicate with network objects through updates on network variables and remote procedure calls (RPCs). An RPC allows methods to be called on objects in another executable. In Netcode, RPCs execute methods on NetworkObjects across clients. A client can call an RPC on the server, and the server can call an RPC on a client. Clients can also call RPCs on other clients, though this passes through the server as a proxy.\footnote{\url{https://docs-multiplayer.unity3d.com/netcode/current/advanced-topics/message-system/rpc/}} Section \ref{sec:sequence_events} describes the sequence of events during the prototype's execution, including the RPCs used and other network-related events.
 
     \subsection{User Network Object} \label{sec:user_network}
 
@@ -405,71 +405,73 @@ This chapter describes the implementation of the prototype created to test the v
 
     \subsection{User Manager} \label{sec:user_manager}
     
-        The user manager is responsible for keeping track of connected users. It stores the association of user IDs to Netcode client IDs, the current point of interest ID, and the connected user IDs. When a user connects, the user manager assigns a user ID and updates the connected user IDs. For this prototype, only two users can connect at a time. Therefore, the user manager has a list of available user IDs that it assigns to new users, 0 and 1. After updating the user's ID network variable, it requests the table manager to add the player to an available table, as described in Section \ref{sec:table_manager}. When a user disconnects, the user manager removes the user ID from the connected user IDs and adds it back to the available user IDs. Then, it requests the table manager to remove the player from their table.
+        The user manager is responsible for tracking and communicating with connected users. It maintains the association of user IDs to Netcode client IDs, the current point of interest ID, and the list of connected user IDs. When a user connects, Netcode triggers the \lstinline{OnClientConnected} event on the user manager. The user manager assigns a user ID and updates the list of connected user IDs. For this prototype, only two users can be connected, so the user manager has a list of available user IDs, 0 and 1, which it assigns to new users. After updating the user's ID network variable, it requests the table manager to add the player to an available table, as described in Section \ref{sec:table_manager}. Once a table is assigned, the user manager sends an RPC \lstinline{MoveUserToTableClientRpc} to the user network object to move the user to the table, as shown in Figures \ref{fig:connect_and_create} and \ref{fig:connect_and_join}. When a user disconnects, the user manager removes the user ID from the list of connected user IDs and adds it back to the list of available user IDs. It then requests the table manager to remove the player from their table, as depicted in Figure \ref{fig:disconnect}. The spawning and despawning of user network objects are handled automatically by Netcode.
 
-
+        When a user creates a point of interest, the user's network object sends an RPC \lstinline{CreatePointOfInterestRpc} to the user manager. The user manager increments the current point of interest ID and updates the user network's points of interest list. Because this list is a network variable, it is synchronized across all clients, and the user network object handles the update accordingly, as described in Section \ref{sec:user_network}. When a user removes a point of interest, the user network object sends an RPC \lstinline{RemovePointOfInterestRpc} to the user manager. The user manager then removes the point of interest from the network object's list.
+        
+        When a user teleports or joins a table, the user network object sends an RPC \lstinline{MoveUserToPositionRpc} or \lstinline{MoveUserToTableRpc} to the user manager. The user manager then instructs the table manager to move the user to the new position or table, as outlined in Section \ref{sec:table_manager}. Afterward, the user manager sends an RPC \lstinline{MoveUserToTableClientRpc} to update the user network object's position, as illustrated in Figures \ref{fig:teleport} and \ref{fig:table_join}.
 
     \subsection{Table Manager} \label{sec:table_manager}
 
-    
+        The table manager oversees the table network objects and assigns users to tables. Its primary functions include assigning newly connected users to available tables, managing user teleportation, handling users joining tables, and removing users from tables upon disconnection.
 
-    % data stored on the server:
-        % association of player id to netcode client id
-        % current point of interest id
-        % connected player ids
+        When assigning a user to a table, the table manager first checks for available seats at existing tables. If a seat is available, the user is assigned to it. If no seats are available, the table manager creates a new table and assigns the user to the first seat. These scenarios are depicted in Figures \ref{fig:connect_and_create} and \ref{fig:connect_and_join}. When a user disconnects, the table manager removes them from their table. If the table becomes empty, it is despawned. This process is illustrated in Figure \ref{fig:disconnect}.
 
+        When handling user teleportation, the table manager first checks if the user is alone at their current table. If they are, it moves the table to the new position. If the user is not alone, a new table is created at the new position, and the user is assigned to the first seat. These scenarios are depicted in Figure \ref{fig:teleport}.
 
-        % Events
-            % when a player joins (user manager)
-                % move player to available table
-                % assign player id
-            % when a player leaves (user manager)
-                % remove player from table
-                % free player id
-
-
-        % Messages (RPCS)
-            % maybe some diagrams would be cool
-            % client -> server:
-                % move player in table to position, used when teleporting
-                    % checks if needs to create new table or move table
-                        % moving table changes its position, which in turn when that update is received on the client, it will update
-                        % creating a new table sends a rpc back (MovePlayerToTableClientRpc)
-                    % used when teleporting
-                % move player to table, used when joining a table
-                    % used when joining the table
-                        % will destroy the origin table network object if it has no players
-                % create point of interest
-                    % increment and get point of interest id
-                    % used when creating a point of interest
-                % remove point of interest
-                    % used when removing a point of interest
-            % server -> client:
-                % move player to table client rpc
-                    % used when moving a player to a table
-                    % asks the client to move its player to the table, updatin the posititon
-
+        When a user joins a table, the table manager removes them from their original table. If the original table becomes empty, it is despawned. The user is then assigned to the first available seat on the new table. This process is shown in Figure \ref{fig:table_join}.
 
 
     \subsection{Sequence of Events} \label{sec:sequence_events}
 
         \begin{figure}[h]
             \centering
+            \includegraphics[width=.9\linewidth]{diagrams/out/connect_and_create_table.eps}
+            \caption{Sequence diagram of a user connecting and creating a table.}
+            \label{fig:connect_and_create}
+        \end{figure}
+
+        \begin{figure}[h]
+            \centering
             \includegraphics[width=.9\linewidth]{diagrams/out/teleport.eps}
-            \caption{Networking architecture, using a client-server topology.}
-            \label{fig:topology}
+            \caption{Sequence diagram of a user teleporting.}
+            \label{fig:teleport}
+        \end{figure}
+
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=.9\linewidth]{diagrams/out/connect_and_join_existing_table.eps}
+            \caption{Sequence diagram of a user connecting and joining an existing table.}
+            \label{fig:connect_and_join}
+        \end{figure}
+
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=.9\linewidth]{diagrams/out/table_join.eps}
+            \caption{Sequence diagram of a user joining a table.}
+            \label{fig:table_join}
+        \end{figure}
+
+        \begin{figure}[h]
+            \centering
+            \includegraphics[width=.9\linewidth]{diagrams/out/disconnect.eps}
+            \caption{Sequence diagram of a user disconnecting.}
+            \label{fig:disconnect}
         \end{figure}
 
 
         % when joining: collects data from the network objects and updates replica
         % make a storyboard of the sequence of events
 
-        % user joins -> table created
+        % user 1 joins -> table created
         % create point of interest -> stuff
         % teleport -> move table same figure as user moves later on, use the alt fragment sequence
-        % another user joins -> joins table
+        % another user 2 joins -> joins table
             % loads up the point of interest
-        % user moves -> new table created
+        % user 1 moves -> new table created
+        % user 2 joins other table
+        % user 1 disconnects
+        % user 2 disconnects
 
         % explain some omissions in the diagrams, like the other user being notified of a table being deleted or updated for simplicity
         % maybe acknowledge (lol) that acknowledgements are local only
