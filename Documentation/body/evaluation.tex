@@ -101,8 +101,35 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
 
     \subsection{Metrics} \label{sec:evaluation_metrics}
 
-        During each task, several metrics were collected to evaluate the efficiency and effectiveness of Replico's features. 
+        During each task, several metrics were collected to evaluate the efficiency and effectiveness of Replico's features. These metrics, recorded automatically by the system, included the time in seconds taken to complete the task, the number of successful task steps, time spent transforming the replica, time spent in vertical transformation, and time spent in balloon selection. Additionally, the system tracked the number of times the transform gesture was detected (on entering \lstinline{TransformReplicaState}), the number of times vertical transform was detected (on entering \lstinline{TransformReplicaVerticalState}), and the number of times the balloon selection gesture was detected (on entering \lstinline{BalloonSelectionInitialState}). It also recorded the number of points of interest created, deleted, and acknowledged, the number of teleportations, the number of table joins, the number of touches on the touch surface, the cumulative sum of finger movement in pixels, the cumulative sum of head rotation in angles, cumulative head translation in meters, cumulative sum of replica rotation in angles, cumulative sum of replica translation in meters, and cumulative sum of replica scaling in meters.
 
+        The time taken to complete each task was measured from the start to the end of the task. In Task 3, while the participant waited for the moderator to advance to the next zone, all metrics were paused. The number of successful task steps was the number of steps completed correctly by the user. For example, in Task 1, a successful step was creating a point of interest on a predefined object. In Task 2, a successful step was acknowledging a point of interest. In Task 3, a successful step was teleporting to a zone and orienting oneself to face a specific object. In Tasks 4 and 5, it referred to the number of guesses until the correct object was identified.
+
+        Additionally, for each frame that showed a change, data was collected and timestamped. This included finger data, replica transform data, and head transform data
+    
     \subsection{Qualitative Data} \label{sec:qualitative_data}
+
+        After each test scenario, participants completed a questionnaire to provide qualitative feedback on their experience. The questionnaire included six questions from the NASA Task Load Index (NASA-TLX) \cite{hart1988development} for each task, along with three additional questions at the end of the questionnaire, each rated on a 5-point Likert scale. The NASA-TLX questions were:
+
+        \begin{itemize}
+            \item How mentally demanding was the task?
+            \item How physically demanding was the task?
+            \item How hurried or rushed was the pace of the task?
+            \item How successful were you in accomplishing what you were asked to do?
+            \item How hard did you have to work to accomplish your level of performance?
+            \item How insecure, discouraged, irritated, stressed, and annoyed were you?
+        \end{itemize}
+
+        The final three questions were:
+
+        \begin{itemize}
+            \item How nauseous did you feel during the task?
+            \item How useful was the world-in-miniature metaphor for communicating points of interest?
+            \item How useful was the representation of user locations on the replica for understanding intent?
+        \end{itemize}
+
+        Participants were also encouraged to provide additional comments or suggestions for improvement. The aim was to gather feedback on the user experience and identify areas for improvement in the system.
+
+\section{Results}
 
 % do speak about how the frame being too sensitive to resting arms impacted the results
