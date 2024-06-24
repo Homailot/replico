@@ -130,6 +130,159 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
 
         Participants were also encouraged to provide additional comments or suggestions for improvement. The aim was to gather feedback on the user experience and identify areas for improvement in the system.
 
+\section{Participants}
+
+    A total of 20 participants, forming 10 pairs, took part in the study. Among them, eleven were male, and 9 were female. Most participants, 19, were aged between 21 and 30 years old, with one participant aged between 31 and 40. 19 participants were right-handed, and one was left-handed. 17 participants were students, of whom six also worked, while three were exclusively workers. 15 participants had completed a bachelor's degree, two had a master's degree, and three had a high school diploma. Regarding VR experience, 11 had used VR once before, three had used it in the past year, one used it frequently, and five had never used VR before.
+
 \section{Results}
+
+    The results of the user study are presented in this section. Two samples were collected for each task metric, one for each test scenario. For each metric, appropriate statistical tests were performed to determine the significance of the results. The significance level was set to the conventional alpha-value of 5\%.
+
+
+    \subsection{Metrics}
+
+        % todo: what metrics are we going to show?
+        
+        Using descriptive data analysis, outliers were identified and removed from the dataset. The data was then analysed with the Shapiro-Wilk \cite{shapiroAnalysisVarianceTest1965} test to determine if it followed a normal distribution. Because the analysis is testing two related samples, either the paired t-test or the Wilcoxon signed-rank test \cite{wilcoxonIndividualComparisonsRanking1945} was used to determine if the differences between the samples were statistically significant. The paired t-test was used when the data followed a normal distribution, while the Wilcoxon signed-rank test was used when the data did not follow a normal distribution.
+
+        \subsubsection{Task Completion Time}
+
+            % task1city follows a normal distribution (p = .128)
+            % task2city follows a normal distribution (p = .268)
+            % task3city does not follow a normal distribution (p=.004) --!
+            % task4city does not follow a normal distribution (p=.005)
+            % task5city does not follow a normal distribution (p=.002)
+            % task1rover follows a normal distribution (p = .064)
+            % task2rover follows a normal distribution (p = .735)
+            % task3rover follows a normal distribution (p = .580) -- !
+            % task4rover does not follow a normal distribution (p=.026)
+            % task5rover does not follow a normal distribution (p=.012)
+
+            \begin{figure}[h]
+                \centering
+                \includegraphics[width=1\linewidth]{figures/task_time_graph.pdf}
+                \caption{Box-plot of the time taken to complete each task for each scenario.}
+                \label{fig:task_time}
+            \end{figure}
+
+            % task1 using paired t-test
+                % t(15) = 1.440, p =.172
+                % no significant difference between the time taken to complete Task 1 in the city and rover scenarios
+            % task2 using paired t-test
+                % t(11) = .134, p =.896
+                % no significant difference between the time taken to complete Task 2 in the city and rover scenarios
+            % task3 using Wilcoxon signed-rank test
+                % Z = -3.248, p=.001
+                % significant difference between the time taken to complete Task 3 in the city and rover scenarios: participants took longer to complete the task in the city scenario
+                % why? i think its because it was harder to find the objects in the city scenario, also the zones were more spread out, and smaller. People had a hard time zooming in on the objects, and instead tried teleporting with a small zoom, which was not effective
+            % task 4 using Wilcoxon signed-rank test
+                % Z = -1,415, p=.157
+                % no significant difference between the time taken to complete Task 4 in the city and rover scenarios
+                % good, this means that the difficulty of the objects was similar in both scenarios
+            % task 5 using Wilcoxon signed-rank test
+                % Z = -3.154, p=.002
+                % significant difference between the time taken to complete Task 5 in the city and rover scenarios: participants took longer to complete the task in the city scenario
+                % task 5 in the city had a really small object, in the midst of a lot of other objects, which made it harder to find. The rover objects sometimes people would find them by accident, which made it easier to complete the task. Also, the points of interest would obscure the objects, making it harder to find them, because participants didnt teleport to the objects, they would just zoom in on them, which was not effective. Some participants had issues with depth perception, so it was hard for them to place the points of interest.
+
+        \subsubsection{Active Time}
+
+            % task1city p = .042: does not follow a normal distribution
+            % task2city p = .572: follows a normal distribution
+            % task3city p=.005: does not follow a normal distribution
+            % task4seekcity p=.285: follows a normal distribution
+            % task4showcity p=.252: follows a normal distribution
+            % task5seekcity p=.079: follows a normal distribution
+            % task5showcity p=.177: follows a normal distribution
+            % task1rover p = .068: follows a normal distribution
+            % task2rover p = .802: follows a normal distribution
+            % task3rover p = .209: follows a normal distribution
+            % task4seekrover p =.241: follows a normal distribution
+            % task4showrover p =.611: follows a normal distribution
+            % task5seekrover p =.153: follows a normal distribution
+            % task5showrover p =.024: does not follow a normal distribution
+
+            \begin{figure}[h]
+                \centering
+                \includegraphics[width=1\linewidth]{figures/active_time_graph.pdf}
+                \caption{Box-plot of the active time for each task for each scenario.}
+                \label{fig:active_time}
+            \end{figure}
+
+            % task1 using Wilcoxon signed-rank test
+                % Z = -1.913, p =.056
+                % no significant difference between the active time in Task 1 in the city and rover scenarios
+            % task2 using paired t-test
+                % t(13) = -1.431, p = .178
+                % no significant difference between the active time in Task 2 in the city and rover scenarios
+            % task3 using Wilcoxon signed-rank test
+                % Z = -3.051, p=.002
+                % significant difference between the active time in Task 3 in the city and rover scenarios: participants spent more time active in the city scenario
+            % task4seek using paired t-test
+                % t(9) = -.305, p =.767
+                % no significant difference between the active time in Task 4 in the city and rover scenarios
+            % task4show using paired t-test
+                % t(7) = .434, p =.677
+                % no significant difference between the active time in Task 4 in the city and rover scenarios
+            % task5seek using paired t-test
+                % t(9) = 2.929, p =.017
+                % significant difference between the active time in Task 5 in the city and rover scenarios: participants spent more time active in the city scenario
+                % why? after the other person made a point of interest, the other person would spend a lot of time looking for the object, which would increase the active time
+            % task5show using Wilcoxon signed-rank test
+                % Z = -2.521, p=.012
+                % significant difference between the active time in Task 5 in the city and rover scenarios: participants spent more time active in the city scenario
+
+
+        \subsubsection{Finger Movement}
+
+            % task1city p = .455: follows a normal distribution
+            % task2city p = .2: follows a normal distribution
+            % task3city p =.045: does not follow a normal distribution
+            % task4seekCity p =.409: follows a normal distribution
+            % task4showCity p =.479: follows a normal distribution
+            % task5seekCity p =.621: follows a normal distribution
+            % task5showCity p =.018: does not follow a normal distribution
+            % task1rover p = .323: follows a normal distribution
+            % task2rover p = .801: follows a normal distribution
+            % task3rover p = .255: follows a normal distribution
+            % task4seekRover p = .358: follows a normal distribution
+            % task4showRover p = .582: follows a normal distribution
+            % task5seekRover p = .177: follows a normal distribution
+            % task5showRover p = .921: follows a normal distribution
+
+            \begin{figure}[h]
+                \centering
+                \includegraphics[width=1\linewidth]{figures/finger_movement_graph.pdf}
+                \caption{Box-plot of the cumulative sum of finger movement in meters for each task for each scenario.}
+                \label{fig:finger_movement}
+            \end{figure}
+
+            % task1 using paired t-test
+                % t(15) = 2.976, p =.010
+                % significant difference between the cumulative sum of finger movement in Task 1 in the city and rover scenarios: participants moved their fingers more in the city scenario
+                % why? objects more spread out, harder to find, more zooming in and out, interesting metric to explore: zooming amount?
+            % task2 using paired t-test
+                % t(16) = 1.030, p =.320
+                % no significant difference between the cumulative sum of finger movement in Task 2 in the city and rover scenarios
+            % task3 using Wilcoxon signed-rank test
+                % Z = -3.285, p=.001
+                % significant difference between the cumulative sum of finger movement in Task 3 in the city and rover scenarios: participants moved their fingers more in the city scenario
+            % task4seek using paired t-test
+                % t(8) = 1.765, p =.121
+                % no significant difference between the cumulative sum of finger movement in Task 4 in the city and rover scenarios
+            % task4show using paired t-test
+                % t(8) = 2.059, p =.078
+                % no significant difference between the cumulative sum of finger movement in Task 4 in the city and rover scenarios
+            % task5seek using paired t-test
+                % t(8) = 3.221, p =.015
+                % significant difference between the cumulative sum of finger movement in Task 5 in the city and rover scenarios: participants moved their fingers more in the city scenario
+            % task5show using Wilcoxon signed-rank test
+                % Z = -2.380, p=.017
+                % significant difference between the cumulative sum of finger movement in Task 5 in the city and rover scenarios: participants moved their fingers more in the city scenario
+
+
+
+    \subsection{Qualitative Data}
+
+        % q1
 
 % do speak about how the frame being too sensitive to resting arms impacted the results
