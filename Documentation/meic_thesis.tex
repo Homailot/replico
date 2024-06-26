@@ -49,6 +49,10 @@
 \usepackage{amsthm}
 \usepackage{amsmath}
 \usepackage{esvect}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{tabularx}
+\usepackage{xltabular}
 
 % Listings
 \definecolor{cloudwhite}{cmyk}{0,0,0,0.025}  % color
@@ -165,7 +169,8 @@
 % remove unnecessary \include{} commands
 \begin{Prolog}
   \include{preliminary/abstract} % the abstract
-  \include{preliminary/acknows}  % the acknowledgments
+  % TODO: PLEASE DO NOT FORGET TO INCLUDE THE ACKNOWLEDGMENTS
+  %\include{preliminary/acknows}  % the acknowledgments
   \include{preliminary/quote}    % initial quotation if desired
   \cleardoublepage
   \pdfbookmark[0]{Table of Contents}{contents}
