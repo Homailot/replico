@@ -136,14 +136,15 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
 
 \section{Results}
 
-    The results of the user study are presented in this section. Two samples were collected for each task metric, one for each test scenario. For each metric, appropriate statistical tests were performed to determine the significance of the results. The significance level was set to the conventional alpha-value of 5\%.
-
+    The results of the user study are presented in this section. Two samples were collected for each task metric, one for each test scenario. Appropriate statistical tests were performed to determine the significance of the results, with the significance level set at the conventional alpha value of 5\%.
 
     \subsection{Metrics}
 
-        % todo: what metrics are we going to show?
-        
-        Using descriptive data analysis, outliers were identified and removed from the dataset. The data was then analysed with the Shapiro-Wilk \cite{shapiroAnalysisVarianceTest1965} test to determine if it followed a normal distribution. Because the analysis is testing two related samples, either the paired t-test or the Wilcoxon signed-rank test \cite{wilcoxonIndividualComparisonsRanking1945} was used to determine if the differences between the samples were statistically significant. The paired t-test was used when the data followed a normal distribution, while the Wilcoxon signed-rank test was used when the data did not follow a normal distribution. In the case of task 4 and task 5 metrics, with the exception of task completion time, which is the same for both participants, they were split into two separate tasks, one for the seeker and one for the shower, TaskSeek and TaskShow, respectively. To analyse the data, a two-way repeated measures ANOVA was used to determine if there were significant differences between two factors: the object (task 4 or task 5), and the scenario (city or rover).
+        Using descriptive data analysis, outliers were identified and removed from the dataset. The Shapiro-Wilk test \cite{shapiroAnalysisVarianceTest1965} was used to determine if the data followed a normal distribution. Since the analysis involved testing two related samples, either the paired t-test or the Wilcoxon signed-rank test \cite{wilcoxonIndividualComparisonsRanking1945}was used to determine if the differences between the samples were statistically significant. The paired t-test was used for normally distributed data, while the Wilcoxon signed-rank test was used for non-normally distributed data.
+
+        For task 4 and task 5 metrics, with the exception of task completion time (which was the same for both participants), the metrics were split into two separate tasks: one for the seeker (TaskSeek) and one for the shower (TaskShow). A two-way repeated measures ANOVA with Bonferroni correction was used to determine if there were significant differences between two factors: the object (task 4 or task 5) and the scenario (city or rover). If the sphericity assumption was violated, through Mauchly's test of sphericity, the Greenhouse-Geisser correction was applied. If the interaction effect was significant, simple main effects analysis was performed to determine where the differences lay. The studentized residuals were checked for outliers, and the data was checked for normality, to determine if the assumptions of the ANOVA were met.
+
+        Five metrics were selected for analysis: task completion time, active time, finger movement, replica translation, and head translation. The results for each metric are presented in the following sections.
 
         \subsubsection{Task Completion Time}
 
@@ -158,80 +159,42 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
             % task4rover does not follow a normal distribution (p=.026)
             % task5rover does not follow a normal distribution (p=.012)
 
-            \begin{figure}[h]
+            \begin{figure}[h!]
                 \centering
                 \includegraphics[width=1\linewidth]{figures/task_time_graph.pdf}
-                \caption{Box-plot of the time taken to complete each task for each scenario.}
+                \caption{Box-plot of the time taken to complete each task for each scenario. The symbol $\ast$ indicates a significant difference between the city and rover scenarios.}
                 \label{fig:task_time}
             \end{figure}
 
-            % task1 using paired t-test
-                % t(15) = 1.440, p =.172
-                % no significant difference between the time taken to complete Task 1 in the city and rover scenarios
-            % task2 using paired t-test
-                % t(11) = .134, p =.896
-                % no significant difference between the time taken to complete Task 2 in the city and rover scenarios
-            % task3 using Wilcoxon signed-rank test
-                % Z = -3.248, p=.001
-                % significant difference between the time taken to complete Task 3 in the city and rover scenarios: participants took longer to complete the task in the city scenario
-                % why? i think its because it was harder to find the objects in the city scenario, also the zones were more spread out, and smaller. People had a hard time zooming in on the objects, and instead tried teleporting with a small zoom, which was not effective
-            % task 4 using Wilcoxon signed-rank test
-                % Z = -1,415, p=.157
-                % no significant difference between the time taken to complete Task 4 in the city and rover scenarios
-                % good, this means that the difficulty of the objects was similar in both scenarios
-            % task 5 using Wilcoxon signed-rank test
-                % Z = -3.154, p=.002
-                % significant difference between the time taken to complete Task 5 in the city and rover scenarios: participants took longer to complete the task in the city scenario
-                % task 5 in the city had a really small object, in the midst of a lot of other objects, which made it harder to find. The rover objects sometimes people would find them by accident, which made it easier to complete the task. Also, the points of interest would obscure the objects, making it harder to find them, because participants didnt teleport to the objects, they would just zoom in on them, which was not effective. Some participants had issues with depth perception, so it was hard for them to place the points of interest.
+            Task completion time, recorded in seconds, measures how long it took participants to complete each task. The results for each task are shown in Figure \ref{fig:task_time}. For the first task, there was no significant difference in completion time between the city and rover scenarios ($t(14) = 1.440,\ p = 0.172$). Similarly, the second task showed no significant difference in completion time between the two scenarios ($t(10) = 0.134,\ p = 0.896$). However, for the third task, there was a significant difference in completion time between the two scenarios ($Z = -3.248,\ p = 0.001$), with participants taking longer in the city scenario. The fourth task also showed no significant difference in completion time between the two scenarios ($Z = -1.415,\ p = 0.157$). The fifth task had a significant difference in completion time between the two scenarios ($Z = -3.154,\ p = 0.002$), with participants taking longer in the city scenario.
+
+            Overall, task completion times were mostly similar between the city and rover scenarios, except for tasks 3 and 5. Task 3 took longer in the city scenario, likely due to the difficulty in locating the zones. These zones were more spread out and smaller, making balloon selection harder. Although participants could zoom in to aid in selection, they generally did not. Unlike teleport points in task 3, points of interest do not scale with the replica, making it easier to acknowledge them without scaling. Task 5 also took longer in the city scenario because the shower's object was small and hidden among other objects, making it harder for the seeker to find. In the rover scenario, the objects were easier to locate, with some participants finding them by accident. Points of interest in the WIM obscured the objects, further complicating the search. Instead of teleporting to the objects, participants preferred to zoom in, but the points of interest made this more challenging.
+
+            % TODO: note, there is a reason why users do not teleport: teleporting was hard for many users!
 
         \subsubsection{Active Time}
 
             % task1city p = .042: does not follow a normal distribution
             % task2city p = .572: follows a normal distribution
             % task3city p=.005: does not follow a normal distribution
-            % task4seekcity p=.285: follows a normal distribution
-            % task4showcity p=.252: follows a normal distribution
-            % task5seekcity p=.079: follows a normal distribution
-            % task5showcity p=.177: follows a normal distribution
             % task1rover p = .068: follows a normal distribution
             % task2rover p = .802: follows a normal distribution
             % task3rover p = .209: follows a normal distribution
-            % task4seekrover p =.241: follows a normal distribution
-            % task4showrover p =.611: follows a normal distribution
-            % task5seekrover p =.153: follows a normal distribution
-            % task5showrover p =.024: does not follow a normal distribution
-
-            \begin{figure}[h]
+   
+            \begin{figure}[h!]
                 \centering
                 \includegraphics[width=1\linewidth]{figures/active_time_graph.pdf}
-                \caption{Box-plot of the active time for each task for each scenario.}
+                \caption{Box plot showing the active time for each task in both scenarios. The asterisk ($\ast$) indicates a significant difference between the city and rover scenarios. The dagger ($\dag$)  shows significant differences between objects in TaskSeek and TaskShow.}
                 \label{fig:active_time}
             \end{figure}
 
-            % task1 using Wilcoxon signed-rank test
-                % Z = -1.913, p =.056
-                % no significant difference between the active time in Task 1 in the city and rover scenarios
-            % task2 using paired t-test
-                % t(13) = -1.431, p = .178
-                % no significant difference between the active time in Task 2 in the city and rover scenarios
-            % task3 using Wilcoxon signed-rank test
-                % Z = -3.051, p=.002
-                % significant difference between the active time in Task 3 in the city and rover scenarios: participants spent more time active in the city scenario
-            % task4seek using paired t-test
-                % t(9) = -.305, p =.767
-                % no significant difference between the active time in Task 4 in the city and rover scenarios
-            % task4show using paired t-test
-                % t(7) = .434, p =.677
-                % no significant difference between the active time in Task 4 in the city and rover scenarios
-            % task5seek using paired t-test
-                % t(9) = 2.929, p =.017
-                % significant difference between the active time in Task 5 in the city and rover scenarios: participants spent more time active in the city scenario
-                % why? after the other person made a point of interest, the other person would spend a lot of time looking for the object, which would increase the active time
-            % task5show using Wilcoxon signed-rank test
-                % Z = -2.521, p=.012
-                % significant difference between the active time in Task 5 in the city and rover scenarios: participants spent more time active in the city scenario
+            Active time, measured in seconds, represents the duration participants spent actively touching the touch surface. The results for each task are shown in Figure \ref{fig:active_time}. In the first task, there was no significant difference in active time between the city and rover scenarios ($t(12) = -1.913,\ p = 0.056$). The second task also showed no significant difference in active time between the two scenarios ($t(12) = -1.431,\ p = 0.178$). However, for the third task, participants spent significantly more active time in the city scenario ($Z = -3.051,\ p=0.002$).
 
+            A repeated measures ANOVA with Greenhouse-Geisser correction revealed no significant difference in active time between the different scenarios in TaskSeek ($F(1, 9) = 4.680,\ p = 0.059$), and no significant difference between the different objects ($F(1, 9) = 2.468,\ p = 0.151$). However, there was a significant interaction effect between the scenarios and objects ($F(1, 9) = 12.630,\ p = 0.006$). Simple main effects analysis showed that, in the city scenario, there was a significant difference in active time between the different objects ($p=0.035$), with the second object having a significantly higher active time. In the rover scenario, there was no significant difference in active time between the different objects ($p=0.075$). For the first object, there was no significant difference in active time between the city and rover scenarios ($p=0.767$). However, for the second object, there was a significant difference in active time between the city and rover scenarios ($p=0.017$).
 
+            A repeated measures ANOVA with Greenhouse-Geisser correction also determined no significant difference in active time between the different scenarios in TaskShow ($F(1, 6) = 4.472,\ p = 0.079$), and no significant difference between the different objects ($F(1, 6) = 3.217,\ p = 0.123$). However, there was a significant interaction effect between the scenarios and objects ($F(1, 6) = 16.370,\ p = 0.007$). Simple main effects analysis revealed that, in the city scenario, there was a significant difference in active time between the different objects ($p=0.032$), with the second object having a significantly higher active time. In the rover scenario, there was no significant difference in active time between the different objects ($p=0.429$). For the first object, there was no significant difference in active time between the city and rover scenarios ($p=0.935$). However, for the second object, there was a significant difference in active time between the city and rover scenarios ($p=0.025$).
+
+            Overall, similar to task completion time, active time was mostly comparable between the city and rover scenarios, except for task 3, TaskSeek, and TaskShow, where participants spent more active time in the city scenario.
         \subsubsection{Finger Movement}
 
             % task1city p = .455: follows a normal distribution
@@ -249,43 +212,97 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
             % task5seekRover p = .177: follows a normal distribution
             % task5showRover p = .921: follows a normal distribution
 
-            \begin{figure}[h]
+            \begin{figure}[h!]
                 \centering
                 \includegraphics[width=1\linewidth]{figures/finger_movement_graph.pdf}
-                \caption{Box-plot of the cumulative sum of finger movement in meters for each task for each scenario.}
+                \caption{Box plot showing the cumulative sum of finger movement in meters for each task in both scenarios. The asterisk ($\ast$) indicates a significant difference between the city and rover scenarios.}
                 \label{fig:finger_movement}
             \end{figure}
 
-            % task1 using paired t-test
-                % t(15) = 2.976, p =.010
-                % significant difference between the cumulative sum of finger movement in Task 1 in the city and rover scenarios: participants moved their fingers more in the city scenario
-                % why? objects more spread out, harder to find, more zooming in and out, interesting metric to explore: zooming amount?
-            % task2 using paired t-test
-                % t(16) = 1.030, p =.320
-                % no significant difference between the cumulative sum of finger movement in Task 2 in the city and rover scenarios
-            % task3 using Wilcoxon signed-rank test
-                % Z = -3.285, p=.001
-                % significant difference between the cumulative sum of finger movement in Task 3 in the city and rover scenarios: participants moved their fingers more in the city scenario
-            % task4seek using paired t-test
-                % t(8) = 1.765, p =.121
-                % no significant difference between the cumulative sum of finger movement in Task 4 in the city and rover scenarios
-            % task4show using paired t-test
-                % t(8) = 2.059, p =.078
-                % no significant difference between the cumulative sum of finger movement in Task 4 in the city and rover scenarios
-            % task5seek using paired t-test
-                % t(8) = 3.221, p =.015
-                % significant difference between the cumulative sum of finger movement in Task 5 in the city and rover scenarios: participants moved their fingers more in the city scenario
-            % task5show using Wilcoxon signed-rank test
-                % Z = -2.380, p=.017
-                % significant difference between the cumulative sum of finger movement in Task 5 in the city and rover scenarios: participants moved their fingers more in the city scenario
+            Finger movement, measured in meters, represents the cumulative distance traveled by participants' fingers on the touch surface. To convert pixel data to meters, each touch surface's pixels per inch (PPI) was calculated using its dimensions and screen resolution. The pixel finger movement data was then divided by the PPI to convert it to inches, and this value was subsequently converted to meters. The results for each task are shown in Figure \ref{fig:finger_movement}. 
 
-        \subsubsection{Point of Interest Creation}
+            In the first task, there was a significant difference in finger movement between the city and rover scenarios ($t(14) = 2.976,\ p = 0.010$), with participants moving their fingers more in the city scenario. The second task showed no significant difference in finger movement between the two scenarios ($t(15) = 1.030,\ p = 0.320$). However, for the third task, there was a significant difference in finger movement between the city and rover scenarios ($Z = -3.285,\ p = 0.001$), with participants again moving their fingers more in the city scenario.
 
-            % analysing because i noticed people were creating a lot of points of interest on accident
+            A repeated measures ANOVA with Greenhouse-Geisser correction revealed a significant difference in finger movement between the different scenarios in TaskSeek ($F(1, 5) = 9.907,\ p = 0.025$), with participants moving their fingers more in the city scenario. There was no significant difference in finger movement between the different objects ($F(1, 5) = 2.048,\ p = 0.212$), and no significant interaction effect between the scenarios and objects ($F(1, 9) = 0.976,\ p = 0.368$). For TaskShow, there was a significant difference in finger movement between the different scenarios ($F(1, 6) = 6.409,\ p = 0.045$), with participants moving their fingers more in the city scenario. There was no significant difference in finger movement between the different objects ($F(1, 6) = 4.822,\ p = 0.070$), and no significant interaction effect between the scenarios and objects ($F(1, 6) = 5.897,\ p = 0.050$).
+
+            Overall, participants moved their fingers more in the city scenario than in the rover scenario, except for Task 2. This difference is likely due to the city scenario's larger, more complex environment, with objects of interest more spread out, requiring more exploration and finger movement for transform gestures. The lack of difference in Task 2 may be because points of interest do not scale with the replica, making them easier to acknowledge without scaling as they remain the same size.
 
         \subsubsection{Replica Translation}
 
-        \subsubsection{Replica Scale}
+            % task1city p = .003: does not follow a normal distribution
+            % task2city p = .066: follows a normal distribution
+            % task3city p = .095: follows a normal distribution
+            % task1rover p = .354: follows a normal distribution
+            % task2rover p = .185: follows a normal distribution
+            % task3rover p = .234: follows a normal distribution
+            
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=1\linewidth]{figures/replica_translation_graph.pdf}
+                \caption{Box-plot of the cumulative sum of replica translation in meters for each task for each scenario.}
+                \label{fig:task_time}
+            \end{figure}
+
+
+            % task1 using Wilcoxon signed-rank test
+                % Z = -3.058, p =.002
+                % significant difference between the cumulative sum of replica translation in Task 1 in the city and rover scenarios: participants moved the replica more in the city scenario
+            % task2 using paired t-test
+                % t(16) = 3.594,p = .002
+                % significant difference between the cumulative sum of replica translation in Task 2 in the city and rover scenarios: participants moved the replica more in the city scenario
+            % task3 using Wilcoxon signed-rank test
+                % t(16) = 6.724, p < .001
+                % significant difference between the cumulative sum of replica translation in Task 3 in the city and rover scenarios: participants moved the replica more in the city scenario
+            % taskseek using repeated measures ANOVA, with two factors: object and scenario
+                % studentized residuals have no significant outliers, are normally distributed
+                % sphericity assumption is violated, Greenhouse-Geisser correction applied
+                % within-subjects effect of scenario: F(1, 4) = 34.498, p = .004, significant difference between the cumulative sum of replica translation in the city and rover scenarios
+                % within-subjects effect of object: F(1, 4) = 4.246, p = 0.108, no significant difference between the cumulative sum of replica translation in the different objects
+                % within-subjects interaction effect: F(1, 4) = 3.742, p = 0.125, no significant difference between the cumulative sum of replica translation in the city and rover scenarios for the different objects
+            % taskshow using repeated measures ANOVA, with two factors: object and scenario
+                % studentized residuals have no significant outliers, are normally distributed. Except for object 1 in the rover scenario, which is close to the threshold. Proceeding with the analysis, shouldn't reduce the power of the test by much
+                % sphericity assumption is violated, Greenhouse-Geisser correction applied
+                % within-subjects effect of scenario: F(1, 7) = 21.834, p = .002, significant difference between the cumulative sum of replica translation in the city and rover scenarios 
+                % within-subjects effect of object: F(1, 7) = 3.039, p = 0.125, no significant difference between the cumulative sum of replica translation in the different objects
+                % within-subjects interaction effect: F(1, 7) = 4.955, p = 0.065, no significant difference between the cumulative sum of replica translation in the city and rover scenarios for the different objects 
+
+        \subsubsection{Head Translation}
+
+            % task1city p = 0.902: follows a normal distribution
+            % task2city p = 0.157: follows a normal distribution
+            % task3city p = 0.013: does not follow a normal distribution
+            % task1rover p = 0.425: follows a normal distribution
+            % task2rover p = 0.007: does not follow a normal distribution
+            % task3rover p = 0.443: follows a normal distribution    
+
+            \begin{figure}[h!]
+                \centering
+                \includegraphics[width=1\linewidth]{figures/head_graph.pdf}
+                \caption{Box-plot of the cumulative head translation in meters for each task for each scenario.}
+                \label{fig:task_time}
+            \end{figure}
+
+            % task1 using paired t-test
+                % t(9) = 0.550, p =.298
+                % no significant difference between the cumulative head translation in Task 1 in the city and rover scenarios
+            % task2 using wilcoxon signed-rank test
+                % Z = -1.870, p =.062
+                % no significant difference between the cumulative head translation in Task 2 in the city and rover scenarios
+            % task3 using Wilcoxon signed-rank test
+                % Z = -2.427, p=.015
+                % significant difference between the cumulative head translation in Task 3 in the city and rover scenarios: participants moved their head more in the city scenario
+            % taskseek using repeated measures ANOVA, with two factors: object and scenario
+                % studentized residuals have no significant outliers, are normally distributed
+                % sphericity assumption is violated, Greenhouse-Geisser correction applied
+                % within-subjects effect of scenario: F(1, 5) = 7.679, p = .039, significant difference between the cumulative head translation in the city and rover scenarios
+                % within-subjects effect of object: F(1, 5) = 4.505, p = 0.087, no significant difference between the cumulative head translation in the different objects
+                % within-subjects interaction effect: F(1, 5) = 7.237, p = 0.043, significant difference between the cumulative head translation in the city and rover scenarios for the different objects
+                    % simple main effects analysis
+                        % for the city scenario, there is no significant difference between the cumulative head translation in the different objects: p = 0.064 
+                        % for the rover scenario, there is no significant difference between the cumulative head translation in the different objects: p = 0.799
+                        % for the first object, there is no significant difference between the cumulative head translation in the city and rover scenarios: p = 0.106
+                        % for the second object, there is a significant difference between the cumulative head translation in the city and rover scenarios: p = 0.040 
+       
 
     \subsection{Qualitative Data}
 
