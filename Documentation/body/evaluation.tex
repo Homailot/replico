@@ -142,7 +142,7 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
 
         Using descriptive data analysis, outliers were identified and removed from the dataset. The Shapiro-Wilk test \cite{shapiroAnalysisVarianceTest1965} was used to determine if the data followed a normal distribution. Since the analysis involved testing two related samples, either the paired t-test or the Wilcoxon signed-rank test \cite{wilcoxonIndividualComparisonsRanking1945}was used to determine if the differences between the samples were statistically significant. The paired t-test was used for normally distributed data, while the Wilcoxon signed-rank test was used for non-normally distributed data.
 
-        For task 4 and task 5 metrics, with the exception of task completion time (which was the same for both participants), the metrics were split into two separate tasks: one for the seeker (TaskSeek) and one for the shower (TaskShow). A two-way repeated measures ANOVA with Bonferroni correction was used to determine if there were significant differences between two factors: the object (task 4 or task 5) and the scenario (city or rover). If the sphericity assumption was violated, through Mauchly's test of sphericity, the Greenhouse-Geisser correction was applied. If the interaction effect was significant, simple main effects analysis was performed to determine where the differences lay. The studentized residuals were checked for outliers, and the data was checked for normality, to determine if the assumptions of the ANOVA were met.
+        For the metrics of task 4 and task 5, except for task completion time (which was the same for both participants), the metrics were split into two separate tasks: one for the seeker (TaskSeek) and one for the shower (TaskShow). A two-way repeated measures ANOVA with Bonferroni correction was used to determine if there were significant differences between two factors: the object (task 4 or task 5) and the scenario (city or rover). If the sphericity assumption was violated according to Mauchly's test of sphericity, the Greenhouse-Geisser correction was applied. If the interaction effect was significant, a simple main effects analysis was performed to identify the specific differences. The studentized residuals were checked for outliers, and the data was checked for normality to ensure the assumptions of the ANOVA were met.
 
         Five metrics were selected for analysis: task completion time, active time, finger movement, replica translation, and head translation. The results for each metric are presented in the following sections.
 
@@ -168,9 +168,7 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
 
             Task completion time, recorded in seconds, measures how long it took participants to complete each task. The results for each task are shown in Figure \ref{fig:task_time}. For the first task, there was no significant difference in completion time between the city and rover scenarios ($t(14) = 1.440,\ p = 0.172$). Similarly, the second task showed no significant difference in completion time between the two scenarios ($t(10) = 0.134,\ p = 0.896$). However, for the third task, there was a significant difference in completion time between the two scenarios ($Z = -3.248,\ p = 0.001$), with participants taking longer in the city scenario. The fourth task also showed no significant difference in completion time between the two scenarios ($Z = -1.415,\ p = 0.157$). The fifth task had a significant difference in completion time between the two scenarios ($Z = -3.154,\ p = 0.002$), with participants taking longer in the city scenario.
 
-            Overall, task completion times were mostly similar between the city and rover scenarios, except for tasks 3 and 5. Task 3 took longer in the city scenario, likely due to the difficulty in locating the zones. These zones were more spread out and smaller, making balloon selection harder. Although participants could zoom in to aid in selection, they generally did not. Unlike teleport points in task 3, points of interest do not scale with the replica, making it easier to acknowledge them without scaling. Task 5 also took longer in the city scenario because the shower's object was small and hidden among other objects, making it harder for the seeker to find. In the rover scenario, the objects were easier to locate, with some participants finding them by accident. Points of interest in the WIM obscured the objects, further complicating the search. Instead of teleporting to the objects, participants preferred to zoom in, but the points of interest made this more challenging.
-
-            % TODO: note, there is a reason why users do not teleport: teleporting was hard for many users!
+            Overall, task completion times were similar between the city and rover scenarios, except for tasks 3 and 5. Task 3 took longer in the city scenario, likely due to the difficulty of locating the teleportation zones. These zones were more spread out and smaller, making balloon selection harder and requiring participants to be more precise. Although participants could scale the replica to aid in selection, they generally did not. Task 5 also took longer in the city scenario because the shower object was small and hidden among other objects, making it harder for the seeker to find. In contrast, in the rover scenario, the objects were easier to locate, with some participants finding them by accident during previous tasks. Additionally, points of interest in the WIM are visible behind objects, which can completely obscure small objects. Teleportation would help in this case, as points of interest in the to-scale model aren't visible behind objects and become smaller as the user gets closer to them. However, participants generally did not use it.
 
         \subsubsection{Active Time}
 
@@ -194,7 +192,8 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
 
             A repeated measures ANOVA with Greenhouse-Geisser correction also determined no significant difference in active time between the different scenarios in TaskShow ($F(1, 6) = 4.472,\ p = 0.079$), and no significant difference between the different objects ($F(1, 6) = 3.217,\ p = 0.123$). However, there was a significant interaction effect between the scenarios and objects ($F(1, 6) = 16.370,\ p = 0.007$). Simple main effects analysis revealed that, in the city scenario, there was a significant difference in active time between the different objects ($p=0.032$), with the second object having a significantly higher active time. In the rover scenario, there was no significant difference in active time between the different objects ($p=0.429$). For the first object, there was no significant difference in active time between the city and rover scenarios ($p=0.935$). However, for the second object, there was a significant difference in active time between the city and rover scenarios ($p=0.025$).
 
-            Overall, similar to task completion time, active time was mostly comparable between the city and rover scenarios, except for task 3, TaskSeek, and TaskShow, where participants spent more active time in the city scenario.
+            Overall, similar to task completion time, active time was mostly comparable between the city and rover scenarios, except for task 3, Task5Seek, and Task5Show, where participants spent more active time in the city scenario. This analysis highlights the increased difficulty of the second object compared to the first object in the collaborative tasks for the city scenario. In the rover scenario, both objects were equally difficult to find, with participants spending similar active time on both.
+
         \subsubsection{Finger Movement}
 
             % task1city p = .455: follows a normal distribution
@@ -225,7 +224,7 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
 
             A repeated measures ANOVA with Greenhouse-Geisser correction revealed a significant difference in finger movement between the different scenarios in TaskSeek ($F(1, 5) = 9.907,\ p = 0.025$), with participants moving their fingers more in the city scenario. There was no significant difference in finger movement between the different objects ($F(1, 5) = 2.048,\ p = 0.212$), and no significant interaction effect between the scenarios and objects ($F(1, 9) = 0.976,\ p = 0.368$). For TaskShow, there was a significant difference in finger movement between the different scenarios ($F(1, 6) = 6.409,\ p = 0.045$), with participants moving their fingers more in the city scenario. There was no significant difference in finger movement between the different objects ($F(1, 6) = 4.822,\ p = 0.070$), and no significant interaction effect between the scenarios and objects ($F(1, 6) = 5.897,\ p = 0.050$).
 
-            Overall, participants moved their fingers more in the city scenario than in the rover scenario, except for Task 2. This difference is likely due to the city scenario's larger, more complex environment, with objects of interest more spread out, requiring more exploration and finger movement for transform gestures. The lack of difference in Task 2 may be because points of interest do not scale with the replica, making them easier to acknowledge without scaling as they remain the same size.
+            Overall, participants moved their fingers more in the city scenario compared to the rover scenario, except for Task 2. This increased movement is likely due to the city's larger and more complex environment, where objects of interest are more spread out, necessitating more exploration and finger movement for transform gestures. The minimal difference in finger movement in Task 2 might be attributed to the fact that points of interest do not scale with the replica, making them easier to recognize without scaling, as they remain the same size.
 
         \subsubsection{Replica Translation}
 
@@ -239,32 +238,15 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
             \begin{figure}[h!]
                 \centering
                 \includegraphics[width=1\linewidth]{figures/replica_translation_graph.pdf}
-                \caption{Box-plot of the cumulative sum of replica translation in meters for each task for each scenario.}
+                \caption{Box-plot of the cumulative sum of replica translation in meters for each task for each scenario. The asterisk ($\ast$) indicates a significant difference between the city and rover scenarios.}
                 \label{fig:task_time}
             \end{figure}
 
+            Replica translation, measured in meters, represents the cumulative distance the replica was moved by participants. The results for each task are shown in Figure \ref{fig:task_time}. All tasks showed a significant difference in replica translation between the city and rover scenarios, with participants moving the replica more in the city scenario (Task 1: $Z = -3.058,\ p = 0.002$; Task 2: $t(16) = 3.594,\ p = 0.002$; Task 3: $t(16) = 6.724,\ p < 0.001$).
 
-            % task1 using Wilcoxon signed-rank test
-                % Z = -3.058, p =.002
-                % significant difference between the cumulative sum of replica translation in Task 1 in the city and rover scenarios: participants moved the replica more in the city scenario
-            % task2 using paired t-test
-                % t(16) = 3.594,p = .002
-                % significant difference between the cumulative sum of replica translation in Task 2 in the city and rover scenarios: participants moved the replica more in the city scenario
-            % task3 using Wilcoxon signed-rank test
-                % t(16) = 6.724, p < .001
-                % significant difference between the cumulative sum of replica translation in Task 3 in the city and rover scenarios: participants moved the replica more in the city scenario
-            % taskseek using repeated measures ANOVA, with two factors: object and scenario
-                % studentized residuals have no significant outliers, are normally distributed
-                % sphericity assumption is violated, Greenhouse-Geisser correction applied
-                % within-subjects effect of scenario: F(1, 4) = 34.498, p = .004, significant difference between the cumulative sum of replica translation in the city and rover scenarios
-                % within-subjects effect of object: F(1, 4) = 4.246, p = 0.108, no significant difference between the cumulative sum of replica translation in the different objects
-                % within-subjects interaction effect: F(1, 4) = 3.742, p = 0.125, no significant difference between the cumulative sum of replica translation in the city and rover scenarios for the different objects
-            % taskshow using repeated measures ANOVA, with two factors: object and scenario
-                % studentized residuals have no significant outliers, are normally distributed. Except for object 1 in the rover scenario, which is close to the threshold. Proceeding with the analysis, shouldn't reduce the power of the test by much
-                % sphericity assumption is violated, Greenhouse-Geisser correction applied
-                % within-subjects effect of scenario: F(1, 7) = 21.834, p = .002, significant difference between the cumulative sum of replica translation in the city and rover scenarios 
-                % within-subjects effect of object: F(1, 7) = 3.039, p = 0.125, no significant difference between the cumulative sum of replica translation in the different objects
-                % within-subjects interaction effect: F(1, 7) = 4.955, p = 0.065, no significant difference between the cumulative sum of replica translation in the city and rover scenarios for the different objects 
+            A repeated measures ANOVA with Greenhouse-Geisser correction revealed a significant difference in replica translation between the different scenarios in TaskSeek ($F(1, 4) = 34.498,\ p = 0.004$), with participants moving the replica more in the city scenario. There was no significant difference in replica translation between the different objects ($F(1, 4) = 4.246,\ p = 0.108$) and no significant interaction effect between the scenarios and objects ($F(1, 4) = 3.742,\ p = 0.125$). For TaskShow, there was a significant difference in replica translation between the different scenarios ($F(1, 7) = 21.834,\ p = 0.002$), with participants moving the replica more in the city scenario. There was no significant difference in replica translation between the different objects ($F(1, 7) = 3.039,\ p = 0.125$) and no significant interaction effect between the scenarios and objects ($F(1, 7) = 4.955,\ p = 0.065$).
+
+            Similar to finger movement, participants moved the replica more in the city scenario than in the rover scenario. However, unlike finger movement, this difference was evident across all tasks, including Task 2. This discrepancy may be due to the primary interaction in Task 2 being the acknowledgment of points of interest, which requires the use of two fingers for balloon selection. In contrast, replica translation can be done with one finger, meaning that replica translation may not have impacted finger movement as much as acknowledging points of interest did.
 
         \subsubsection{Head Translation}
 
@@ -282,33 +264,19 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
                 \label{fig:task_time}
             \end{figure}
 
-            % task1 using paired t-test
-                % t(9) = 0.550, p =.298
-                % no significant difference between the cumulative head translation in Task 1 in the city and rover scenarios
-            % task2 using wilcoxon signed-rank test
-                % Z = -1.870, p =.062
-                % no significant difference between the cumulative head translation in Task 2 in the city and rover scenarios
-            % task3 using Wilcoxon signed-rank test
-                % Z = -2.427, p=.015
-                % significant difference between the cumulative head translation in Task 3 in the city and rover scenarios: participants moved their head more in the city scenario
-            % taskseek using repeated measures ANOVA, with two factors: object and scenario
-                % studentized residuals have no significant outliers, are normally distributed
-                % sphericity assumption is violated, Greenhouse-Geisser correction applied
-                % within-subjects effect of scenario: F(1, 5) = 7.679, p = .039, significant difference between the cumulative head translation in the city and rover scenarios
-                % within-subjects effect of object: F(1, 5) = 4.505, p = 0.087, no significant difference between the cumulative head translation in the different objects
-                % within-subjects interaction effect: F(1, 5) = 7.237, p = 0.043, significant difference between the cumulative head translation in the city and rover scenarios for the different objects
-                    % simple main effects analysis
-                        % for the city scenario, there is no significant difference between the cumulative head translation in the different objects: p = 0.064 
-                        % for the rover scenario, there is no significant difference between the cumulative head translation in the different objects: p = 0.799
-                        % for the first object, there is no significant difference between the cumulative head translation in the city and rover scenarios: p = 0.106
-                        % for the second object, there is a significant difference between the cumulative head translation in the city and rover scenarios: p = 0.040 
-       
+            Head translation, measured in meters, indicates the total distance participants moved their heads. Figure \ref{fig:task_time} displays the results for each task. In the first task, there was no significant difference in head translation between the city and rover scenarios ($t(9) = 0.550,\ p = 0.298$). Similarly, the second task showed no significant difference ($Z = -1.870,\ p = 0.062$). However, in the third task, participants moved their heads significantly more in the city scenario compared to the rover scenario ($Z = -2.427,\ p = 0.015$).
+
+            A repeated measures ANOVA with Greenhouse-Geisser correction identified a significant difference in head translation across scenarios in TaskSeek ($F(1, 5) = 7.679,\ p = 0.039$), with greater head movement observed in the city scenario. There was no significant difference in head translation between different objects ($F(1, 5) = 4.505,\ p = 0.087$), but an interaction effect between scenarios and objects was significant ($F(1, 5) = 7.237,\ p = 0.043$). To interpret this interaction, simple main effects analyses were conducted: head translation did not significantly differ across objects in the city scenario ($p = 0.064$) or the rover scenario ($p = 0.799$). Specifically, head movement did not significantly differ between the city and rover scenarios for the first object ($p = 0.106$), but did for the second object ($p = 0.040$).
+
+            In TaskShow, a repeated measures ANOVA indicated a significant difference in head translation between scenarios ($F(1, 5) = 10.181,\ p = 0.025$), with more head movement observed in the city scenario. There was no significant difference in head translation across different objects ($F(1, 5) = 4.445,\ p = 0.089$), nor was there a significant interaction effect between scenarios and objects ($F(1, 5) = 6.043,\ p = 0.057$).
+
+            Overall, participants generally moved their heads more in the city scenario compared to the rover scenario, except for tasks 1 and 2, and Task4Seek.
 
     \subsection{Qualitative Data}
 
-        The results obtained from the questionnaires are discrete, ordinal data, as opposed to the continuous data obtained from the metrics. As such, the Wilcoxon signed-rank test was used to determine if there were significant differences between the responses for each question in each scenario.
+        The results obtained from the questionnaires are discrete, ordinal data, as opposed to the continuous data obtained from the metrics. As such, the Wilcoxon signed-rank test was used to determine if there were significant differences between the responses for each question across scenarios.
 
-        For the first task, Table \ref{tab:analysis_qualitative_1} shows the results. There were no significant differences between the city and rover scenarios for any of the questions. This suggests that the task load was similar in both scenarios. Participants didn't find the tasks mentally or physically demanding, nor did they feel rushed or insecure. They also felt successful in accomplishing what they were asked to do and felt lower-to-moderate effort was required to achieve their level of performance.
+        Table \ref{tab:analysis_qualitative_1} displays the results for the first task. No significant differences were found between the city and rover scenarios for any of the questions. This suggests a similar task load in both scenarios. Participants in general did not report feeling mentally or physically strained, rushed, or insecure. They also felt successful in accomplishing their tasks and believed their performance required a lower-to-moderate level of effort.
        
         \begin{table}[h!]
             \caption{Median (IQR), and Wilcoxon Signed Ranks test results for each of the NASA-TLX questions for the first task in each scenario.}
@@ -329,10 +297,10 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
             \label{tab:analysis_qualitative_1}
         \end{table}
  
-        For the second task, Table \ref{tab:analysis_qualitative_2} shows the results. The city scenario was found to be statistically significantly more physically demanding than the rover scenario
+        For the second task, Table \ref{tab:analysis_qualitative_2} presents the results. The city scenario was found to be statistically significantly more demanding than the rover scenario in terms of the effort required to achieve the performance level ($Z = -2.055,\ p = 0.040$). No other significant differences were observed between the two scenarios. Participants did not indicate feeling mentally or physically strained, rushed, or insecure in either scenario. They reported feeling successful in completing their tasks and perceived a moderate level of effort required for the city scenario, and a low level of effort for the rover scenario.
 
         \begin{table}[h!]
-            \caption{Median (IQR), and Wilcoxon Signed Ranks test results for each of the NASA-TLX questions for the second task in each scenario.}
+            \caption{Median (IQR), and Wilcoxon Signed Ranks test results for each of the NASA-TLX questions for the second task in each scenario. The asterisk ($\ast$) indicates a significant difference between the city and rover scenarios.}
             \begin{tabularx}{1\textwidth}{X l l l}
                 \hline
                 \multirow{2}{*}{Question} & \multicolumn{2}{c}{Median (IQR)} & \multirow{2}{*}{Wilcoxon Signed Ranks} \\
@@ -347,9 +315,10 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
                 How hard did you have to work to accomplish your level of performance? $\ast$ & 2 (1.75) & 1.5 (1) & $Z = -2.055,\ p = 0.040$ \\
                 How insecure, discouraged, irritated, stressed, and annoyed were you? & 1 (1) & 1 (0) & $Z = -0.921,\ p = 0.357$ \\
             \end{tabularx}
-
             \label{tab:analysis_qualitative_2}
         \end{table} 
+
+        For the third task, Table \ref{tab:analysis_qualitative_3} presents the results. Interestingly, no significant differences were found between the city and rover scenarios for any of the questions, despite metrics indicating significant differences in completion time and active time. Participants reported experiencing a moderate level of mental and physical strain in both scenarios, with a moderate level of effort required to achieve their performance. They did not feel rushed or insecure in either scenario but felt moderately successful in completing their tasks.
 
         \begin{table}[h!]
             \caption{Median (IQR), and Wilcoxon Signed Ranks test results for each of the NASA-TLX questions for the third task in each scenario.}
@@ -371,8 +340,10 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
             \label{tab:analysis_qualitative_3}
         \end{table} 
 
+        For the fourth task, Table \ref{tab:analysis_qualitative_4} presents the results. Participants reported that the city scenario was significantly more mentally demanding ($Z = -2.365,\ p = 0.018$) and physically demanding ($Z = -2.310,\ p = 0.021$) compared to the rover scenario. They also felt significantly more successful in accomplishing their tasks in the rover scenario ($Z = -2.581,\ p = 0.010$). However, no significant differences were found between the two scenarios for the other questions. Participants did not feel insecure in either scenario and reported a low level of effort required to achieve their performance, as well as a low level of feeling rushed.
+
         \begin{table}[h!]
-            \caption{Median (IQR), and Wilcoxon Signed Ranks test results for each of the NASA-TLX questions for the fourth task in each scenario.}
+            \caption{Median (IQR), and Wilcoxon Signed Ranks test results for each of the NASA-TLX questions for the fourth task in each scenario. The asterisk ($\ast$) indicates a significant difference between the city and rover scenarios.}
             \begin{tabularx}{1\textwidth}{X l l l}
                 \hline
                 \multirow{2}{*}{Question} & \multicolumn{2}{c}{Median (IQR)} & \multirow{2}{*}{Wilcoxon Signed Ranks} \\
@@ -387,9 +358,10 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
                 How hard did you have to work to accomplish your level of performance? & 2 (1) & 1 (1.75) & $Z = -1.787,\ p = 0.074$ \\
                 How insecure, discouraged, irritated, stressed, and annoyed were you? & 1 (1) & 1 (0) & $Z = -1.150,\ p = 0.250$ \\
             \end{tabularx}
-
             \label{tab:analysis_qualitative_4}
-        \end{table} 
+        \end{table}
+
+        For the general questions, Table \ref{tab:analysis_qualitative_g} presents the results. No significant differences were found between the city and rover scenarios for any of the questions. Participants generally did not feel nauseous during the tasks, found the WIM metaphor useful for communicating points of interest, and found the representation of user locations on the replica useful for understanding intent. Notably, two participants reported nausea levels above 2 in the city scenario, while none did in the rover scenario.
 
         \begin{table}[h!]
             \caption{Median (IQR), and Wilcoxon Signed Ranks test results for each of the general evaluation questions in each scenario.}
@@ -407,33 +379,35 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
             \label{tab:analysis_qualitative_g}
         \end{table}
 
+        Overall, the qualitative data analysis revealed that participants generally found the city scenario comparable to the rover scenario, except in the second and fourth tasks, where the city scenario had a higher task load. Participants reported that the tasks were mentally and physically undemanding, requiring a low to moderate level of effort to achieve their performance. They generally did not feel rushed or insecure and felt successful in completing their tasks. However, the third and fourth tasks were noted to be more challenging in terms of mental and physical demand and effort required.
+
+        There were discrepancies between the qualitative data and the collected metrics. For instance, in the third task, participants reported similar task loads in both scenarios, despite metrics indicating significant differences in completion time, active time, finger movement, replica translation, and head translation. This discrepancy may be due to participants' subjective perceptions, which may not always align with objective metrics. Additionally, participants answered the questions after completing each scenario, potentially basing their responses on their general feeling of the task rather than their actual experience.
+
     \subsection{Observations}
 
-% do speak about how the frame being too sensitive to resting arms impacted the results
-    % infrared table: because it does not track fingers on touch, but instead using infrared, it would pick up extra fingers if the user didn't lift their hands high enough, or fingers came too close together. This led to many points of interest created on accident
-        % it also had a relatively low resolution, which made it hard to select small objects. This could be mitigated by scaling the replica, but it was not intuitive for some users to do so.
-    % displax table: had some issue with losing fingers when moving them, which would sometimes cancel gestures. It also required fingers to be more spread out or else it would consider them as one finger. Adittionaly, because the table was so light-reflective, if the user approached the table, the headset tracking would start jittering.
-        % even with the mitigation of not terminating the gesture for some time after the finger was lost, it was still an issue as it would sometimes switch fingers from on hand to the other, changing the balloon's position.
-% teleport destination did not match the user's head, but instead the bottom of the table, which was confusing for some users.
-% vertical transform rarely used
-% depth perception issues
-    % the limits of the table were not clear to some users because of this. This is also because the limit effect is not perfect, it has the same direction as the user's view point, instead of outwards or inwards from the limits of the table.
-    % it was very discouraging for some users.
-% headset tracking issues
-% people forgetting how to teleport
-% teleporting hard to understand
-    % especially in regards to long press, and the rotation of the balloon
-% many points of interest created by accident
-% points of interest obscuring objects
-% no easy way to know your color
-% task 3 was confusing for some people because they didn't know what they were supposed to do. They either thought you only had to teleport to the zones, or they didn't know they had to orient themselves to face the object.
-    % another issue was that if you created a point of interest by accident near a zone, it would obscure the zone. Because the system prioritizes the zones over the points of interest, users usually had a hard time deleting those points of interest, and so they couldnt see the zone and if they were inside the zone correctly (see it change to green)
-% usually the second scenario would always be better than the first, because people would get used to the system.
-% would be cool to see exactly where someone is looking at, like a raycast from the eyes
-% -- positives --
-% users liked that they could see each other.
-% users found balloon selection easy to use, and intuitive
+        During each test session, participants were observed to identify any issues or challenges they encountered while performing the tasks. They were encouraged to think aloud and provide general feedback on the usability of the approach.
+
+        One common issue across all tasks was the hardware quirks of the different touch surfaces. The infrared touch frame functions differently from what people expect: it does not track fingers directly on the table, but rather uses infrared sensors positioned slightly above the table. This can lead to many accidental touches, as users need to lift their hands higher than expected, which is tiring. Inevitably, users would forget, lower their hands, or rest their arms on the touch frame. This resulted in many accidental points of interest and premature teleportation with incorrect orientation. A significant portion of the time spent on tasks, especially task 3, involved users accidentally creating points of interest and then trying to delete them. Additionally, the touch frame's relatively low resolution made it difficult to select small objects or teleport to small zones, an issue that could be mitigated by scaling the replica, but this was not intuitive for some users. The testing table with the infrared touch frame, shown in image b) of Figure \ref{fig:eval_setup} was placed near the limits of the tracking area, which caused the headset to lose tracking when users approached the table. 
+
+        The Displax touch table also presented challenges, particularly with losing finger tracking when moving fingers due to high friction, making it hard to slide fingers across the surface. This would sometimes cancel gestures or switch finger recognition from one hand to the other. Fingers also needed to be more spread out; otherwise, the table would consider them as one finger. Furthermore, the table's highly reflective surface caused the headset tracking to jitter when users approached the table.
+
+        Many participants found the teleporting gesture challenging to understand. The long press was particularly difficult, leading to numerous accidental points of interest. The rotation gesture for orienting the balloon was also confusing. Some participants did not grasp the rotation motion correctly; they either rotated their finger around itself or used their wrist to rotate their hand. Some even rotated the balloon counter-clockwise when a clockwise rotation required less effort, indicating a lack of understanding of the gesture. Another issue was that the balloon's position did not match the user's head but was instead aligned with the bottom of the table. This was confusing for some users, as they expected to be positioned with their head at the teleport destination. In retrospect, this was a design flaw, as the teleport destination should have been aligned with the user's head. Due to the challenges with understanding teleportation, many participants chose not to use it, even when it would have been beneficial in the collaborative tasks.
+        
+        One reason for the difficulty in understanding the teleportation gesture was the tutorial video. The video was long and not interactive, making it hard for users to remember all the steps. Additionally, the video was shown at the beginning of the test session, and participants did not have the opportunity to rewatch it. During the training session, ensuring that users understood the teleportation gesture was challenging, especially since it was difficult to explain it to two people simultaneously.
+
+        Task 3 was particularly challenging for participants, as some didn't understand that they had to orient themselves to face the object or that the zones changed color when they were inside them. Additionally, users did not instinctively scale the replica to aid in teleportation, causing the balloon to be too large for them to see if they were inside the teleportation zones. This issue was further aggravated by a slight oversight in the design of the teleportation zones. When using balloon selection, the system checks which interactable object the balloon is intersecting and gives higher priority to the teleportation zones over points of interest. At first glance, this approach seemed correct. However, if a point of interest was accidentally created near a zone, which happened frequently, it could obscure the zone. When this happened, users had a hard time deleting the point of interest because the system would prioritize the zone over the point of interest, making it hard to see if they were correctly inside the zone.
+
+        Two participants experienced difficulty focusing on objects in the city scenario. They struggled to understand the depth of the objects, which was discouraging for them. This issue could be attributed to the imperfect implementation of the illumination effect at the touch surface's limits. The glow effect was always directed outwards from the user's viewpoint instead of outwards or inwards from the touch surface's edges. For users with less depth perception or VR experience, seeing a single line of the limits made it difficult to discern whether it represented the farther or closer edge of the table.
+
+        Some general observations: participants rarely used the vertical transform gesture, as they felt no need to. The second scenario during test sessions usually performed better than the first, as participants got used to the system.
+
+        Participants also offered some suggestions for improvement. They suggested adding a tutorial in the form of a step-by-step guide that they could follow along with, rather than a video. They also suggested adding a feature to show the user's gaze direction, as they found it hard to know where the other user was looking. Another suggestion was to allow the deletion/acknowledgment of multiple points of interest at once by increasing the size of the ballon. The balloon selection implementation described in \cite{benkoBalloonSelectionMultiFinger2007} actually allows increasing the size of the balloon so this could be implemented using the same technique. They also suggested a help feature that would show the user how to perform gestures. Participants also wanted a way to know their color and appearance, as they found it hard to differentiate between themselves and the other user.
+
+        As for positive feedback, participants liked that they could see each other, as it made the experience more social. They found balloon selection easy to use and intuitive. They also liked the general visual design and presentation of the system
 
     \subsection{Discussion}
+
+    % trending towards same efficiency in both scenarios, but more effort in city scenario
+    % also talk about how despite the second object in the city scenario being more difficult, results were still valuable.
 
     \section{Summary}
