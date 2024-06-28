@@ -5,15 +5,13 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
 \begin{itemize}
     \item \textbf{RQ1}: How efficiently can users create a point of interest on a given object?
     \item \textbf{RQ2}: How effectively does Replico notify users when a point of interest is created?
-    \item \textbf{RQ3}: How useful is the world-in-miniature metaphor for communicating points of interest? How useful is the representation of user locations on the replica for understanding intent? % 2nd part is inconclusive, users didn't use it :(
+    \item \textbf{RQ3}: How useful is the world-in-miniature metaphor for communicating points of interest? How useful is the representation of user locations on the replica for understanding intent? 
     \item \textbf{RQ4}: How user-friendly is Replico, and how much physical effort is required to use it? 
 \end{itemize}
 
 \section{Setup}
 
-    % TODO: get computer specs
-
-    The user study was conducted at FEUP, in the GIG laboratory in room I220. The setup included two VR-ready computers connected to a local network. Each computer had an HTC Vive Pro 2 headset and a VR controller for table tracking. Two touch surfaces -- a 32-inch infrared frame and a 47-inch capacitive Displax Skin Ultra touchscreen -- were placed on opposite tables within the central VR play space. Participants, in pairs, were seated in front of each touch surface with their backs facing each other, as shown in Figure \ref{fig:eval_setup}.
+    The user study was conducted at FEUP, in the GIG laboratory in room I220. The setup included two VR-ready computers connected to a local network. One computer was equipped with an Intel Core i9-13900KF CPU, an NVIDIA GeForce RTX 4090 GPU, and 32 GB of RAM, while the other had an Intel Core i9-11900F CPU, an NVIDIA GeForce RTX 3080 GPU, and 32 GB of RAM. Each computer had an HTC Vive Pro 2 headset and a VR controller for table tracking. Two touch surfaces -- a 32-inch infrared frame and a 47-inch capacitive Displax Skin Ultra touchscreen -- were placed on opposite tables within the central VR play space. Participants, in pairs, were seated in front of each touch surface with their backs facing each other, as shown in Figure \ref{fig:eval_setup}.
 
     \begin{figure}[h]
         \centering
@@ -109,7 +107,7 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
     
     \subsection{Qualitative Data} \label{sec:qualitative_data}
 
-        After each test scenario, participants completed a questionnaire to provide qualitative feedback on their experience. The questionnaire included six questions from the NASA Task Load Index (NASA-TLX) \cite{hart1988development} for each task, along with three additional questions at the end of the questionnaire, each rated on a 5-point Likert scale. The NASA-TLX questions were:
+        After each test scenario, participants completed a questionnaire to provide qualitative feedback on their experience. The questionnaire included six questions from the NASA Task Load Index (NASA-TLX) \cite{hart1988development} for each task, merging task 4 and 5 into a single task, along with three additional questions at the end of the questionnaire, each rated on a 5-point Likert scale. The NASA-TLX questions were:
 
         \begin{itemize}
             \item How mentally demanding was the task?
@@ -399,15 +397,27 @@ A user study was conducted to evaluate Replico's efficiency, effectiveness, and 
 
         Two participants experienced difficulty focusing on objects in the city scenario. They struggled to understand the depth of the objects, which was discouraging for them. This issue could be attributed to the imperfect implementation of the illumination effect at the touch surface's limits. The glow effect was always directed outwards from the user's viewpoint instead of outwards or inwards from the touch surface's edges. For users with less depth perception or VR experience, seeing a single line of the limits made it difficult to discern whether it represented the farther or closer edge of the table.
 
-        Some general observations: participants rarely used the vertical transform gesture, as they felt no need to. The second scenario during test sessions usually performed better than the first, as participants got used to the system.
+        Some general observations include that participants rarely used the vertical transform gesture, as they felt no need to. The second scenario during test sessions usually performed better than the first, as participants became accustomed to the system.
 
-        Participants also offered some suggestions for improvement. They suggested adding a tutorial in the form of a step-by-step guide that they could follow along with, rather than a video. They also suggested adding a feature to show the user's gaze direction, as they found it hard to know where the other user was looking. Another suggestion was to allow the deletion/acknowledgment of multiple points of interest at once by increasing the size of the ballon. The balloon selection implementation described in \cite{benkoBalloonSelectionMultiFinger2007} actually allows increasing the size of the balloon so this could be implemented using the same technique. They also suggested a help feature that would show the user how to perform gestures. Participants also wanted a way to know their color and appearance, as they found it hard to differentiate between themselves and the other user.
+        Participants provided several suggestions for improvement. They recommended replacing the video tutorial with a step-by-step interactive guide with small videos for each gesture. Additionally, they proposed implementing a feature to indicate the user's gaze direction, either by creating a point of interest wherever the user looked in the to-scale model or by displaying a ray. Another suggestion was to enable the deletion or acknowledgment of multiple points of interest simultaneously by increasing the size of the balloon. Since the balloon selection technique described in \cite{benkoBalloonSelectionMultiFinger2007} supports resizing the balloon, this enhancement could be implemented using the same method. Furthermore, participants suggested incorporating a help feature to guide users on performing gestures. They also expressed a need for a distinct way to identify their color and appearance aside from their balloon, as they found it challenging to distinguish themselves from the other user.
 
-        As for positive feedback, participants liked that they could see each other, as it made the experience more social. They found balloon selection easy to use and intuitive. They also liked the general visual design and presentation of the system
+        Regarding positive feedback, participants appreciated being able to see each other, as it made the experience more social. They found balloon selection easy to use and intuitive. They also liked the general visual design and presentation of the system.
 
     \subsection{Discussion}
 
-    % trending towards same efficiency in both scenarios, but more effort in city scenario
-    % also talk about how despite the second object in the city scenario being more difficult, results were still valuable.
+        The evaluation results indicate that, overall, the city scenario was comparable to the rover scenario in terms of task completion time and active time across most tasks, with exceptions noted in tasks 3 and 5. This suggests that the approach is efficient for both larger and smaller 3D models. However, participants faced greater challenges in the city scenario, particularly in terms of finger movement, replica translation, and head translation throughout all tasks. The increased movement in these metrics can be attributed to the city's larger and more complex environment, where objects of interest are more widely dispersed, requiring more exploration and physical interaction. Consequently, the city scenario appears to impose greater physical demands on participants compared to the rover scenario.
+
+        Qualitative data analysis corroborates that participants did not perceive significant differences in physical strain, mental effort, feelings of being rushed, or insecurity between the city and rover scenarios for tasks 1, 2, and 3. However, task 2 revealed that the city scenario required significantly more effort to achieve the performance level compared to the rover scenario. Similarly, for task 4, the city scenario was found to be notably more mentally and physically demanding than the rover scenario. Participants also reported feeling significantly more successful in completing tasks in the rover scenario. Responses to general questions indicated that participants generally did not experience nausea during the tasks, found the WIM (World-in-Miniature) metaphor effective for communicating points of interest, and found the representation of user locations on the replica useful for understanding intent.
+
+        The three tasks identified as most challenging for users, tasks 3, 4, and 5, were characterized by both metrics and qualitative feedback. Qualitative data suggests these tasks are moderately physically and mentally demanding, requiring a moderate level of effort to achieve performance and moderate success in task completion. Metrics further demonstrate that participants spent more time on these tasks, increased their finger, replica, and head movements. Task 3 was primarily challenging due to difficulties with understanding the teleportation gesture, while tasks 4 and 5 were particularly pronounced in the city scenario, where finding objects was more challenging. Interestingly, despite Task 5 in the city scenario being particularly challenging in terms of completion time and active time, the metrics for finger transform, replica transform, and head transform do not indicate significant differences between Task 4 and Task 5. This suggests that the increased completion time experienced in Task 5 was not primarily due to heightened physical effort or manipulation of objects.
+        
+        With this, the research questions can be addressed:
+
+        \begin{itemize}
+            \item \textbf{RQ1: How efficiently can users create a point of interest on a given object?} The results indicate that participants were able to create points of interest efficiently in both scenarios, with no significant differences in task completion time and active time between the city and rover scenarios for the first task. For the city scenario, the mean completion time was 64.9198 seconds, while for the rover scenario, it was 54.9198 seconds. 
+            \item \textbf{RQ2}: How effectively does Replico notify users when a point of interest is created?
+            \item \textbf{RQ3}: How useful is the world-in-miniature metaphor for communicating points of interest? How useful is the representation of user locations on the replica for understanding intent? 
+            \item \textbf{RQ4}: How user-friendly is Replico, and how much physical effort is required to use it? 
+        \end{itemize}
 
     \section{Summary}
