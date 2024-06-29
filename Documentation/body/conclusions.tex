@@ -16,43 +16,19 @@
 
 \section{Future Work}
 
+    The evaluation of Replico revealed several areas for improvement and avenues for future work. One key area for improvement is the teleportation gesture, which was found to be confusing and difficult to execute. Future work could explore alternative gestures or methods for teleportation that are more intuitive and user-friendly. The teleportation orientation gesture could also be refined. A research article on desigining tactile interfaces for older users \cite{elderly} suggests that touches should not have multiple functions based on how long they are held or how quickly they are pressed, or even double taps. This could be applied to the teleportation gesture, which currently uses a long press to initiate the teleportation. Another improvement that can help with the teleportation gesture is to make the finger tracking more robust to hardware limitations, or to make the gestures more resilient to faulty tracking and accidental touches. A step-by-step interactive guide could assist users in learning the gestures, and a help menu could be added to the system to provide users with information on how to use the system.
+    
+    The feedback on gestures can be improved. For example color-coding the finger trails to provide feedback on the user's actions, like the visual feedback provided in the implementation of SIT6 \cite{almeidaSIT6IndirectTouchbased2023}. For example, fingers from one hand could be red, while fingers from the other hand could be blue. Another example is to provide audio feedback when a gesture is recognized, a finger is detected, or a point of interest is created, like suggested in a study about how auditory feedback can improve awareness in tabletop interfaces \cite{auditoryAwareness}. Yet another form of feedback could be haptic feedback, such as the use of vibrotactile feedback for when a point of interest is created.
 
-% teleport long press was confusing
-    % in general it was confusing with many steps
-% teleportation match head
+    Additionally, the teleportation behavior itself could be improved by matching the user's head to the balloon's position for a better frame or reference to where the user will be teleported. As it stands, its ambiguous where the vertical position of the user will be after teleportation.
 
-% do something about points of interest obscuring the objects they were meant to call attention to
+    Another point of improvement is to address the issue of points of interest obscuring the objects they were meant to call attention to. Future work could explore ways to make points of interest more transparent or to provide users with the ability to adjust their transparency.
 
-% better finger tracking to work better on faulty devices
-% ways to make accidental touches less significant
+    Users also reported difficulty in determining when they were within the touch frame limits. Future work could explore ways to provide clearer feedback on the touch frame limits, such as fading in from either inside or outside the frame limits. This requires a more complex shader implementation, but it could be a valuable addition to the system.
 
-% better implementation of the touch frame limits, as some people found it hard to know when it was in the limits
-    % fade in from either inside or outside, instead of from the camera's direction
-    % much harder to implement
+    New interactions could be added to the approach to enhance collaboration and communication. For example, users could be able to create zones of interest, encompassing an area instead of a single point. Users could also be able to delete and acknowledge multiple points at once, by increasing the size of the balloon. This could also be used to create larger or smaller points of interest, to give priority to some points. More transformations could be added, such as rotation on other axes. Another interaction that could be added is the ability to lock the replica in place to prevent accidental movement, or to reset the replica to the original position. Users could also be able to hide the replica from sight, to focus on the 3D model. 
 
-% something nice, the hands should be color coded or even size coded in the virtual touch frame -> for example primary hand are red, secondary hand are blue. in retrospect this makes immense sense, dumb idiot
-
-% networking could be improved, for example, the MoveUserToTableClientRpc does not need to exist, instead, whenever the tablenewtork object's seat's change, the user should be moved to the table. Much simpler.
-    % also support for more than 2 users
-
-% ability to create zones of interest, encompassing an area instead of a single point
-
-% multiple point deletion
-    % could also be used to create larger or smaller points of interest, to give priority to some points
-
-% raycast look to to-scale model -> would help with making the to-scale model more used
-
-% extend to more transformations, such as rotation on other axes.
-
-% audio feedback
-    % audio communication between users as well
-% way to know own color
-
-% help menu gestures
-
-% They also suggested adding a feature to lock the replica in place to prevent accidental movement
-% way to reset the replica to the original position
-% way to hide replica from sight
+    Other interactions include the ability to show the user's gaze direction, to help other users understand what the user is looking at. This could be done by showing a ray from the user's head to the object they are looking at. With this interaction, users could even be able to create points of interest by looking at an object and performing a gesture. Another possibility is to allow users in the same table to communicate with each other through audio, to further enhance collaboration.
 
 % BETTER TESTING, especially on the collaborative task
     % additional metric: finger movement on transform vs finger movement on balloon selection
