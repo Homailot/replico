@@ -1,1 +1,132 @@
-\chapter{Appendix 1} \label{ap1:Lorem}
+\chapter{Finger Trail Compute Shader}
+
+The following code snippet is the compute shader used to generate the finger trails in the virtual touch frame.
+
+\begin{lstlisting}[language=HLSL]
+#pragma kernel decay_finger_history
+
+// This is the compute shader that calculates the decay of the finger history
+// based on the current finger positions and the previous finger history.
+// Each texture can store the history of two fingers, so we have 5 textures
+// X is the inverse distance to the line, Y is the decay or longevity of the finger
+// Z is the inverse distance to the line for the second finger, W is the decay or longevity of the finger for the second finger
+RWTexture2D<float4> finger_history;
+RWTexture2D<float4> finger_history_2;
+RWTexture2D<float4> finger_history_3;
+RWTexture2D<float4> finger_history_4;
+RWTexture2D<float4> finger_history_5;
+
+RWStructuredBuffer<float4> finger_positions;
+RWStructuredBuffer<float4> last_finger_positions;
+RWStructuredBuffer<float> average_incline;
+
+float delta_time;
+float linear_decay_rate;
+float quadratic_decay_rate;
+float finger_radius;
+
+float distance_to_line (const float2 p, const float2 a, const float2 b)
+{
+    const float2 ab = b - a;
+    const float2 ap = p - a;
+
+    const float h = saturate(dot(ap, ab) / dot(ab, ab));
+    return length(ap - h * ab) / finger_radius;
+}
+
+float point_in_front (const float2 p, float2 a, const float incline)
+{
+    const float2 b = float2(a.x + finger_radius * cos(incline), a.y + finger_radius * sin(incline));
+
+    const float2 ab = b - a;
+    const float2 ap = p - a;
+
+    return (dot(ap, ab) / dot(ab, ab));
+}
+
+float2 get_finger_radius(const float2 p, const float2 a, const float2 b, const float average_incline, const float decay, const float previous_radius)
+{
+    const float finger_distance = distance_to_line(p, a, b);
+    const float in_front = point_in_front(p, a, average_incline);
+
+    const float inverse_finger_distance = saturate(1.0 - finger_distance);
+    const float previous_inverse_distance = previous_radius * (1.0 - step(1.0, 1.0 - decay));
+
+    return float2(
+        lerp(
+            previous_inverse_distance > 0.0 ? max(inverse_finger_distance, previous_inverse_distance) : inverse_finger_distance,
+            finger_distance <= 1.0 ? inverse_finger_distance : previous_inverse_distance,
+            saturate(in_front + 0.5)
+        ),
+        saturate(decay + 1.0 * (1.0 - step(1.0, finger_distance)))
+    );
+}
+
+float calculate_decay(const float decay)
+{
+    return decay - linear_decay_rate * delta_time - quadratic_decay_rate * delta_time * delta_time;
+}
+
+float4 calculate_finger_history(const float2 p, float4 previous_history, float4 last_positions, float4 current_positions, float2 average_incline)
+{
+    const float finger_1_decay = calculate_decay(previous_history.y);
+    const float2 a1 = last_positions.xy;
+    const float2 b1 = current_positions.xy;
+
+    const float2 finger1_radius = get_finger_radius(p, a1, b1, average_incline.x, finger_1_decay, previous_history.x);
+
+    const float finger_2_decay = calculate_decay(previous_history.w);
+    const float2 a2 = last_positions.zw;
+    const float2 b2 = current_positions.zw;
+
+    const float2 finger2_radius = get_finger_radius(p, a2, b2, average_incline.y, finger_2_decay, previous_history.z);
+
+    return float4(
+        finger1_radius.x,
+        finger1_radius.y,
+        finger2_radius.x,
+        finger2_radius.y
+    );
+}
+
+[numthreads(8,8,1)]
+void decay_finger_history (uint3 id : SV_DispatchThreadID)
+{
+    const float2 p = float2(id.xy);
+    float4 history;
+
+    switch (id.z)
+    {
+        case 0:
+            history = finger_history[id.xy];
+            const float4 first_finger_history = calculate_finger_history(p, history, last_finger_positions[id.z], finger_positions[id.z], float2(average_incline[id.z * 2], average_incline[id.z * 2 + 1]));
+
+            finger_history[id.xy] = first_finger_history;
+            break;
+        case 1:
+            history = finger_history_2[id.xy];
+
+            const float4 second_finger_history = calculate_finger_history(p, history, last_finger_positions[id.z], finger_positions[id.z], float2(average_incline[id.z * 2], average_incline[id.z * 2 + 1]));
+            finger_history_2[id.xy] = second_finger_history;
+            break;
+        case 2:
+            history = finger_history_3[id.xy];
+
+            const float4 third_finger_history = calculate_finger_history(p, history, last_finger_positions[id.z], finger_positions[id.z], float2(average_incline[id.z * 2], average_incline[id.z * 2 + 1]));
+            finger_history_3[id.xy] = third_finger_history;
+            break;
+        case 3:
+            history = finger_history_4[id.xy];
+
+            const float4 fourth_finger_history = calculate_finger_history(p, history, last_finger_positions[id.z], finger_positions[id.z], float2(average_incline[id.z * 2], average_incline[id.z * 2 + 1]));
+            finger_history_4[id.xy] = fourth_finger_history;
+            break;
+        default:
+            history = finger_history_5[id.xy];
+
+            const float4 fifth_finger_history = calculate_finger_history(p, history, last_finger_positions[id.z], finger_positions[id.z], float2(average_incline[id.z * 2], average_incline[id.z * 2 + 1]));
+            finger_history_5[id.xy] = fifth_finger_history;
+            break;
+    }
+}
+\end{lstlisting}

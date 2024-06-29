@@ -1,31 +1,62 @@
 \chapter{Conclusions} \label{chap:concl}
 
-This preparatory report for the dissertation explains the significance of fostering collaboration within DeskVR environments. It examines the foundational concepts of collaboration, explores methods to enhance communication in the digital realm, assesses the efficacy of VR in facilitating collaboration, and discusses the advantages and limitations specific to DeskVR.
+    Collaboration is an integral part of human life, and it is essential to understand how to effectively enable it in digital tools to ensure social information is preserved and users remain aware of it. Virtual Reality (VR) holds great promise in this regard, as it facilitates more natural interactions with the digital world and allows users to share the same space. However, prolonged VR use can be physically tiring, limiting user engagement duration. DeskVR addresses this issue by allowing users to remain seated at their desks while fully immersed in a virtual environment, thus reducing the physical strain of VR use. This dissertation aimed to explore and design a collaborative approach that enables seated users to interact with a virtual environment, considering the constraints of a seated position, and to evaluate how this approach impacts user experience and collaboration.
 
-Through a literature review, three primary themes were encountered. The first revolves around computer-supported cooperative work, investigating how users collaborate using computers. Within this topic, the exploration covered social translucence, workspace awareness, and the spatial model of interactions. The second area focused on concurrency control, which involves techniques used to preserve consistency amidst concurrent updates to objects. Three main approaches for concurrency control were detailed: object ownership, attribute separation, and distributed averages. The third area explored DeskVR interaction techniques, uncovering various methods for interacting with DeskVR environments, such as travel and object manipulation. This exploration provided insights into how to leverage DeskVR's constraints effectively.
+    The literature review explored concepts of social and workspace awareness, concurrency control, and existing work in the field of DeskVR. Although the study on concurrency control did not suggest specific avenues for exploration, it introduced the idea of personal workspaces, leading to an investigation of the world-in-miniature concept. Research in DeskVR highlighted the value of touch-based interactions in enhancing user comfort and reducing the physical strain of VR. The study on social and workspace awareness showed the importance of these concepts in collaboration and identified their key components. With this understanding, the requirements for the proposed approach were defined: to enable users to communicate collaboratively and effectively about objects or areas of interest in 3D models while minimizing physical effort and providing workspace awareness, all while remaining seated.
 
-The review highlights the potential value of creating replicas to enhance communication and maintain consistency in object arrangements within shared virtual environments in DeskVR. Moving forward, the next steps involve continuous experimentation with technology to refine the proposal, providing a deeper understanding of its requirements. The anticipated challenges encompass designing effective environmental interactions, presenting social information in a comprehensible and unobtrusive manner, and addressing the networking components. These challenges will guide the subsequent phases of research and experimentation.
+    This dissertation proposes Replico, a collaborative approach for DeskVR that allows users to communicate about 3D models in a virtual environment using the world-in-miniature metaphor. Replico enables users to explore the 3D model using touch controls to manipulate a personalized miniature replica and to create points of interest using the Balloon Selection metaphor. These points of interest are replicated in both the miniature and the 3D model. Users are anchored to virtual tables representing their real-life counterparts and can join other users' tables to share their perspectives. Additionally, users can teleport around the 3D model to explore it from different angles in true scale. The miniature displays social information about users, such as their positions, and identifies them by appearance. Points of interest are appearance-coded to correspond with the user who created them.
 
-% audio feedback
-% multiple point deletion
-    % could also be used to create larger or smaller points of interest, to give priority to some points
-% raycast look to to-scale model -> would help with making the to-scale model more used
-% way to know own color
-% help menu gestures
-% ways to make accidental touches less significant
-% people liked to see each other in the virtual environment
+    A prototype was developed using Unity to evaluate the proposed approach. Gesture detection was implemented using a state machine and uses the K-means clustering algorithm to track the user's hands. The system tracked the user's table with a VR controller to align with the real-life table. Various forms of visual feedback, such as finger trails and touch frame limits, were provided to enhance user interaction. Networking functionality was implemented using Unity's Netcode for GameObjects.
+
+    The approach was evaluated through a user study with 20 participants, forming ten pairs. Participants were required to perform five tasks to assess the efficacy and efficiency of several Replico techniques. These tasks were conducted in two scenarios to test the approach's applicability to various 3D models: a large city and a small but detailed Mars Perseverance rover. After each scenario, participants filled out forms based on the NASA-TLX to evaluate the usability of the approach and their experience with it.
+
+    The results showed that participants could efficiently create points of interest in both scenarios, with no significant differences in task completion and active time. Replico effectively notified users of new points of interest, though larger models required more effort from users. The world-in-miniature metaphor proved useful for communicating points of interest, especially in the smaller rover scenario. While users generally found the approach user-friendly and not physically demanding, they struggled with the teleportation gesture, indicating a need for a more intuitive solution.
+
+    These findings suggest that the approach is practical for collaborative interaction in VR, enabling efficient and user-friendly creation and acknowledgment of points of interest. The study highlights the potential and versatility of the world-in-miniature metaphor for enhancing workspace awareness and social information sharing in large, complex environments and smaller, detailed models. Additionally, it demonstrates the value of touch-based interactions and DeskVR in reducing physical strain and improving user comfort. However, the complexity of the environment increases the effort required from users, and the teleportation gesture needs further refinement. These insights point to areas for future improvement and further development.
+
+\section{Future Work}
+
+
 % teleport long press was confusing
     % in general it was confusing with many steps
 % teleportation match head
+
+% do something about points of interest obscuring the objects they were meant to call attention to
+
 % better finger tracking to work better on faulty devices
+% ways to make accidental touches less significant
+
 % better implementation of the touch frame limits, as some people found it hard to know when it was in the limits
     % fade in from either inside or outside, instead of from the camera's direction
     % much harder to implement
-% networking could be improved, for example, the MoveUserToTableClientRpc does not need to exist, instead, whenever the tablenewtork object's seat's change, the user should be moved to the table. Much simpler.
+
 % something nice, the hands should be color coded or even size coded in the virtual touch frame -> for example primary hand are red, secondary hand are blue. in retrospect this makes immense sense, dumb idiot
+
+% networking could be improved, for example, the MoveUserToTableClientRpc does not need to exist, instead, whenever the tablenewtork object's seat's change, the user should be moved to the table. Much simpler.
+    % also support for more than 2 users
+
+% ability to create zones of interest, encompassing an area instead of a single point
+
+% multiple point deletion
+    % could also be used to create larger or smaller points of interest, to give priority to some points
+
+% raycast look to to-scale model -> would help with making the to-scale model more used
+
+% extend to more transformations, such as rotation on other axes.
+
+% audio feedback
+    % audio communication between users as well
+% way to know own color
+
+% help menu gestures
+
 % They also suggested adding a feature to lock the replica in place to prevent accidental movement
 % way to reset the replica to the original position
 % way to hide replica from sight
+
 % BETTER TESTING, especially on the collaborative task
     % additional metric: finger movement on transform vs finger movement on balloon selection
+    % more careful planning of the tasks and hardware setup
+    % test with more users
+    % tasks to test the usefullness of teleportation
     % replica scale metric was wrongly calculated
