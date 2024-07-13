@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Utils;
@@ -240,5 +241,31 @@ namespace TouchPlane
                 _fingerHistory.height / ShaderGroupSize,
                 5);
         }
+        void OnApplicationFocus(bool focused)
+        {
+            if (focused)
+            {
+                _material = GetComponent<Renderer>().material;
+                _material.SetTexture(FingerHistory, _fingerHistory);
+                _material.SetTexture(Finger2History, _finger2History);
+                _material.SetTexture(Finger3History, _finger3History);
+                _material.SetTexture(Finger4History, _finger4History);
+                _material.SetTexture(Finger5History, _finger5History);
+            
+                decayFingerHistory.SetTexture(0, ComputeFingerHistory, _fingerHistory);
+                decayFingerHistory.SetTexture(0, ComputeFinger2History, _finger2History);
+                decayFingerHistory.SetTexture(0, ComputeFinger3History, _finger3History);
+                decayFingerHistory.SetTexture(0, ComputeFinger4History, _finger4History);
+                decayFingerHistory.SetTexture(0, ComputeFinger5History, _finger5History);
+                decayFingerHistory.SetBuffer(0, FingerPositions, _fingerPositionsBuffer);
+                decayFingerHistory.SetBuffer(0, LastFingerPositions, _lastFingerPositionsBuffer);
+                decayFingerHistory.SetBuffer(0, AverageIncline, _averageInclinationBuffer);
+                decayFingerHistory.SetFloat(LinearDecayRate, fingerDecay);
+                decayFingerHistory.SetFloat(QuadraticDecayRate, fingerQuadraticDecay);
+                decayFingerHistory.SetFloat(FingerRadius, fingerRadius);
+            }    
+        }
     }
+
+    
 }
