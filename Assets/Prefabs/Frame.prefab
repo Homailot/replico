@@ -1344,6 +1344,7 @@ GameObject:
   - component: {fileID: 6791617473146403138}
   - component: {fileID: 7017441591039797979}
   - component: {fileID: 8040134072806150556}
+  - component: {fileID: 1628036239932949491}
   m_Layer: 0
   m_Name: Touch Plane
   m_TagString: Untagged
@@ -1635,6 +1636,18 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   opaqueDuration: 0.5
+--- !u!114 &1628036239932949491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8475391149215074147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecc4d2ca60324d518ba48ef9ea98f5af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3547236919768570503
 PrefabInstance:
   m_ObjectHideFlags: 0

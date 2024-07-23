@@ -123,6 +123,4 @@ void decay_finger_history (uint3 id : SV_DispatchThreadID)
             finger_history_5[id.xy] = fifth_finger_history;
             break;
     }
-    
-    
 }
