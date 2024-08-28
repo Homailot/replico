@@ -1,1 +1,15 @@
-# orpheus
+# Replico
+
+![image](https://github.com/user-attachments/assets/d90cecb5-02fd-4a93-bbd9-9d2afca3e4f1)
+
+Replico is a collaborative DeskVR approach designed to enhance communication and interaction in the analysis of 3D models. Using the world-in-miniature (WIM) metaphor, Replico addresses common challenges in virtual collaboration, such as spatial referencing and awareness of other users’ activities.
+
+![Dissertation Document](https://hdl.handle.net/10216/161052)
+
+## Actions
+
+Actions in Replico are performed on a touch-sensitive surface. Users of Replico can use this surface to perform actions such as manipulating the world-in-miniature replica, creating points of interest, and teleporting around the 3D model.
+
+### Replica Transformation
+
+
