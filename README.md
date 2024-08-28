@@ -4,7 +4,7 @@
 
 Replico is a collaborative DeskVR approach designed to enhance communication and interaction in the analysis of 3D models. Using the world-in-miniature (WIM) metaphor, Replico addresses common challenges in virtual collaboration, such as spatial referencing and awareness of other users’ activities.
 
-![Dissertation Document](https://hdl.handle.net/10216/161052)
+[Dissertation Document](https://hdl.handle.net/10216/161052)
 
 ## Actions
 
