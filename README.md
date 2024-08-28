@@ -8,7 +8,7 @@ Replico is a collaborative DeskVR approach designed to enhance communication and
 
 ## Demonstration
 
-https://github.com/Homailot/replico/tree/develop/Documentation/readme/orpheus_demo.mp4
+[Replico Demonstration](https://youtu.be/ASTsTcqkwpc)
 
 [Replico Tutorial](https://youtu.be/yuiG-FS3Arc)
 
